@@ -1,0 +1,274 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<header th:fragment="header_navbar">
+    <!--  导航栏-开始  -->
+    <nav class="navbar fixed-top navbar-expand-md navbar-dark bg-dark">
+        <div class="container-xl">
+            <a class="navbar-brand mb-0 h1" th:href="@{/to_index}">AWSL</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+                    aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" th:href="@{/to_index}">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Features</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Pricing</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Dropdown link
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" href="#">Action</a>
+                            <a class="dropdown-item" href="#">Another action</a>
+                            <a class="dropdown-item" href="#">Something else here</a>
+                        </div>
+                    </li>
+                </ul>
+
+                <!--夜间模式开关-->
+                <a href="#" class="nav-item-padding "><i class="fas fa-moon night-mode-switch night-mode-switch-dark"
+                                                         id="nightModeSwitch" onclick="nightModeSwitch()"></i></a>
+
+                <!--搜索-->
+                <div class="btn-group nav-item-padding" id="searchButton">
+                    <a href="#" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false"><i class="fas fa-search navbar-icon"></i></a>
+                    </button>
+                    <div class="dropdown-menu" style="padding: 0">
+                        <form th:action="@{/search_post}" method="post">
+                            <input type="text" class="form-control" name="search_item" placeholder="Type to search..."
+                                   aria-label="Type to search" aria-describedby="button-addon3">
+                            <div class="input-group-append">
+                                <button class="btn btn-sm btn-outline-secondary" type="submit" id="button-addon3"
+                                        style="display: none"><i class="fas fa-search"></i>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!--消息-->
+                <div class="btn-group nav-item-padding online-user-button" id="NotificationButton"
+                     style="display: none">
+                    <a href="#" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false"><i class="fas fa-bell fa-fw navbar-icon"></i></a>
+                    </button>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="#">系统消息<span class="badge badge-primary">4</span></a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">
+                            <p>小明</p>
+                            <small>你是不是傻</small>
+                        </a>
+                    </div>
+                </div>
+
+                <!--用户-->
+                <div class="btn-group nav-item-padding online-user-button" id="UserButton" style="display: none">
+                    <button class="btn btn-dark btn-sm" style="color: #007bff" type="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-user-circle fa-2x"></i>
+                    </button>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" th:href="@{/home_page}"><span th:text="${session.name}"></span></a>
+                        <a class="dropdown-item" href="#">Setting</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" th:href="@{/logout.action}">Logout</a>
+                    </div>
+                </div>
+
+                <!--上传按钮-->
+                <button type="button" class="btn btn-primary btn-sm nav-item-padding online-user-button"
+                        id="UploadButton"
+                        style="font-weight: bold; display: none" data-toggle="modal"
+                        data-target="#uploadForm"><i class="fas fa-plus"></i> upload
+                </button>
+
+                <!--登录-->
+                <button type="button" class="btn btn-dark btn-sm nav-item-padding offline-user-button" id="LoginButton"
+                        data-toggle="modal"
+                        data-target="#loginForm">Log
+                    in
+                </button>
+
+                <!--注册-->
+                <button type="button" class="btn btn-primary btn-sm nav-item-padding offline-user-button"
+                        id="RegisterButton"
+                        style="font-weight: bold"
+                        data-toggle="modal"
+                        data-target="#registerForm">
+                    Sign up
+                </button>
+            </div>
+
+        </div>
+    </nav>
+</header>
+<header th:fragment="account_button"></header>
+    <div class="modal fade" id="loginForm" tabindex="-1" role="dialog"
+     aria-labelledby="loginFormTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="loginFormTitle">Log in</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="post" id="loginFormData" action="">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" class="form-control" id="username" name="username">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" class="form-control" id="password" name="password">
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button class="btn btn-primary" type="submit">Submit form</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+    <div class="modal fade" id="registerForm" tabindex="-1" role="dialog"
+     aria-labelledby="registerFormTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="registerFormTitle">Sign up</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="signupForm" method="post" action="">
+                <div class="modal-body">
+
+                    <div class="form-group">
+                        <label for="name">Name</label>
+
+                        <input type="text" class="form-control" id="name" name="name" placeholder="Name"/>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label for="regusername">Username</label>
+
+                        <input type="text" class="form-control" id="regusername" name="username"
+                               placeholder="Username"/>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label for="regpassword">Password</label>
+
+                        <input type="password" class="form-control" id="regpassword" name="password"
+                               placeholder="Password"/>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label for="confirm_password">Confirm password</label>
+
+                        <input type="password" class="form-control" id="confirm_password" name="confirm_password"
+                               placeholder="Confirm password"/>
+
+                    </div>
+
+                    <div class="form-group">
+                        <div class="form-check">
+                            <input type="checkbox" id="agree" name="agree" value="agree" class="form-check-input"/>
+                            <label class="form-check-label">Please agree to our policy</label>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" name="signup" value="Sign up">Sign up</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+    <div class="modal fade" id="uploadForm" data-backdrop="static" tabindex="-1" role="dialog"
+     aria-labelledby="uploadFormTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="uploadFormTitle">Upload</h5>
+                <button type="button" class="close" data-dismiss="modal" onclick="clearUploadForm()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="uploadFormData" method="post" action="">
+                <div class="modal-body">
+
+                    <div class="form-group">
+                        <div id="drop_area">Drag and drop an image here</div>
+                        <div id="preview"></div>
+
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="u_username" id="u_username" style="display: none">
+                        <input type="text" name="img_dir" id="img_dir" style="display: none">
+                    </div>
+
+                    <div class="form-group" id="formTitle" style="display: none">
+
+                        <!--<label for="regusername">Username</label>
+
+                        <input type="text" class="form-control" id="regusername" name="username"
+                               placeholder="Username"/>-->
+
+                        <label for="uploadTitle">Title</label>
+                        <input type="text" class="form-control" name="p_title" id="uploadTitle">
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="clearUploadForm()" data-dismiss="modal">
+                        Close
+                    </button>
+                    <button type="submit" class="btn btn-primary" name="signup" value="Submit">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</header>
+<header th:fragment="left_list">
+
+</header>
+<footer th:fragment="footer">
+    <div class="row">
+        <div class="zoom-img" style="background-image: url(../static/img/Snipaste_2019-12-24_09-05-09.png)"
+             th:style="'background-image:url(' + @{/static/img/Snipaste_2019-12-24_09-05-09.png} + ');'">
+        </div>
+
+        <address><strong>Twitter, Inc.</strong><br/> 795 Folsom Ave, Suite 600<br/> San Francisco, CA 94107<br/>
+            <abbr title="Phone">P:</abbr> (123) 456-7890
+        </address>
+        <p>
+            <em>Git</em>是一个分布式的版本控制系统，最初由<strong>Linus Torvalds</strong>编写，用作Linux内核代码的管理。在推出后，Git在其它项目中也取得了很大成功，尤其是在Ruby社区中。
+        </p>
+    </div>
+
+</footer>
+<footer th:fragment="footer2(start,now)">
+    <p th:text="|${start} - ${now} All Rights Reserved|"></p>
+</footer>
+</html>

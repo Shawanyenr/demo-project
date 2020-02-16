@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <link rel="stylesheet" type="text/css" media="all" href="../static/bootstrap-4.4.1-dist/css/bootstrap.min.css"
+          th:href="@{/static/bootstrap-4.4.1-dist/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" type="text/css" media="all" href="../static/fontawesome-free-5.12.0-web/css/all.css"
+          th:href="@{/static/fontawesome-free-5.12.0-web/css/all.css}"/>
+    <link rel="stylesheet" href="../static/css/customize.css" th:href="@{/static/css/customize.css}"/>
+    <link rel="stylesheet" href="../static/css/theme.css" th:href="@{/static/css/theme.css}"/>
+</head>
+
+<body>
+
+<div class="modal fade" id="loginForm" tabindex="-1" role="dialog" aria-labelledby="loginFormTitle"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="loginFormTitle">Log in</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="post" id="loginFormData" action="">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" class="form-control" id="username" name="username">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" class="form-control" id="password" name="password">
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button class="btn btn-primary" type="submit">Log in</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="registerForm" tabindex="-1" role="dialog" aria-labelledby="registerFormTitle"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="registerFormTitle">Sign up</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="signupForm" method="post" action="">
+                <div class="modal-body">
+
+                    <div class="form-group">
+                        <label for="name">Name</label>
+
+                        <input type="text" class="form-control" id="name" name="name" placeholder="Name"/>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label for="regusername">Username</label>
+
+                        <input type="text" class="form-control" id="regusername" name="username"
+                               placeholder="Username"/>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label for="regpassword">Password</label>
+
+                        <input type="password" class="form-control" id="regpassword" name="password"
+                               placeholder="Password"/>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label for="confirm_password">Confirm password</label>
+
+                        <input type="password" class="form-control" id="confirm_password" name="confirm_password"
+                               placeholder="Confirm password"/>
+
+                    </div>
+
+                    <div class="form-group">
+                        <div class="form-check">
+                            <input type="checkbox" id="agree" name="agree" value="agree" class="form-check-input"/>
+                            <label class="form-check-label">Please agree to our policy</label>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" name="signup" value="Sign up">Sign up</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="uploadForm" data-backdrop="static" tabindex="-1" role="dialog"
+     aria-labelledby="uploadFormTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="uploadFormTitle">Upload</h5>
+                <button type="button" class="close" data-dismiss="modal" onclick="clearUploadForm()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="uploadFormData" method="post" action="">
+                <div class="modal-body">
+
+                    <div class="form-group">
+                        <div id="drop_area">Drag and drop an image here</div>
+                        <div id="preview"></div>
+
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="u_username" id="u_username" style="display: none">
+                        <input type="text" name="img_dir" id="img_dir" style="display: none">
+                    </div>
+
+                    <div class="form-group" id="formTitle" style="display: none">
+
+                        <!--<label for="regusername">Username</label>
+
+                    <input type="text" class="form-control" id="regusername" name="username"
+                           placeholder="Username"/>-->
+
+                        <label for="uploadTitle">Title</label>
+                        <input type="text" class="form-control" name="p_title" id="uploadTitle">
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="clearUploadForm()" data-dismiss="modal">
+                        Close
+                    </button>
+                    <button type="submit" class="btn btn-primary" name="signup" value="Submit">Upload</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<a href="javaScript:;" class="top"><i class="fas fa-arrow-up" style="font-size: 150%; "></i></a>
+
+<div class="container-xl">
+    <!--内容-->
+    <div class="row">
+        <!--左边栏-->
+        <div class="col-xl-2 col-lg-1 col-2">
+            <div class="sidebar-item">
+                <div class="make-me-sticky">
+                    <div class="theme-switch-wrapper">
+                        <label class="theme-switch" for="checkbox">
+                            <input type="checkbox" id="checkbox"/>
+                            <div class="slider round"><i class="fas fa-moon"></i></div>
+                        </label>
+                        <em style="margin: 0 !important;font-size: 120%;">Dark Mode</em>
+                    </div>
+                    <ul class="list-unstyled">
+                        <li>
+                            <!--搜索-->
+                            <div class="btn-group" id="searchButton" style="display: none;">
+                                <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i
+                                        class="fas fa-search navbar-icon"></i></a>
+                                <div class="dropdown-menu" style="padding: 0">
+                                    <form th:action="@{/search_post}" method="post">
+                                        <input type="text" class="form-control" name="search_item"
+                                               placeholder="Type to search..."
+                                               aria-label="Type to search" aria-describedby="button-addon3">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-sm btn-outline-secondary" type="submit"
+                                                    id="button-addon3"
+                                                    style="display: none"><i class="fas fa-search"></i>
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <!--消息-->
+                            <div class="dropdown online-user-button" id="NotificationButton" style="display: none">
+                                <a class="custom-list-group-item custom-list-group-item-action" href="#" role="button"
+                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fas fa-bell" style="font-size: 1.5em;"></i>
+                                    Notification
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                    <a class="dropdown-item" href="#">系统消息<span class="badge badge-primary">4</span></a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="#">
+                                        <p>小明</p>
+                                        <small>你是不是傻</small>
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <!--用户-->
+                            <div class="dropdown online-user-button" id="UserButton" style="display: none">
+                                <a class="custom-list-group-item custom-list-group-item-action" href="#" role="button"
+                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fas fa-user" style="font-size: 1.5em;"></i>
+                                    User
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                    <a class="dropdown-item" th:href="@{/home_page}"><span
+                                            th:text="${session.name}"></span></a>
+                                    <a class="dropdown-item" href="#">Setting</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" th:href="@{/logout.action}">Logout</a>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <!--上传按钮-->
+                            <button type="button" class="btn btn-primary btn-sm online-user-button" id="UploadButton"
+                                    style="font-weight: bold; display: none" data-toggle="modal"
+                                    data-target="#uploadForm"><i
+                                    class="fas fa-plus"></i>
+                                upload
+                            </button>
+                        </li>
+                        <li>
+                            <!--登录-->
+                            <button type="button" class="btn btn-dark btn-sm offline-user-button" id="LoginButton"
+                                    data-toggle="modal" data-target="#loginForm">Log
+                                in
+                            </button>
+                        </li>
+                        <li>
+                            <!--注册-->
+                            <button type="button" class="btn btn-primary btn-sm offline-user-button" id="RegisterButton"
+                                    style="font-weight: bold" data-toggle="modal" data-target="#registerForm">
+                                Sign up
+                            </button>
+                        </li>
+                    </ul>
+
+                    <h5 style="color: #9d9d9d">POPULAR</h5>
+                    <ul class="list-unstyled">
+                        <a href="#" class="custom-list-group-item custom-list-group-item-action">
+                            <img src="../static/img/categories/1557376304.186_U5U7u5_100x100wp.webp"
+                                 th:src="@{/static/img/categories/1557376304.186_U5U7u5_100x100wp.webp}"
+                                 class="category-img" alt="Funny section">Funny
+                        </a>
+                        <a href="#" class="custom-list-group-item custom-list-group-item-action">
+                            <img src="../static/img/categories/1557391851.3248_Za4UdA_100x100wp.webp"
+                                 th:src="@{/static/img/categories/1557391851.3248_Za4UdA_100x100wp.webp}"
+                                 class="category-img" alt="Animals section">Animals
+                        </a>
+                        <a href="#" class="custom-list-group-item custom-list-group-item-action">
+                            <img src="../static/img/categories/1557376304.186_U5U7u5_100x100wp.webp"
+                                 th:src="@{/static/img/categories/1557376304.186_U5U7u5_100x100wp.webp}"
+                                 class="category-img">Funny
+                        </a>
+                        <a href="#" class="custom-list-group-item custom-list-group-item-action">
+                            <img src="../static/img/categories/1557391851.3248_Za4UdA_100x100wp.webp"
+                                 th:src="@{/static/img/categories/1557391851.3248_Za4UdA_100x100wp.webp}"
+                                 class="category-img">Animals
+                        </a>
+                        <a href="#" class="custom-list-group-item custom-list-group-item-action">
+                            <img src="../static/img/categories/1557376304.186_U5U7u5_100x100wp.webp"
+                                 th:src="@{/static/img/categories/1557376304.186_U5U7u5_100x100wp.webp}"
+                                 class="category-img">Funny
+                        </a>
+                        <a href="#" class="custom-list-group-item custom-list-group-item-action">
+                            <img src="../static/img/categories/1557391851.3248_Za4UdA_100x100wp.webp"
+                                 th:src="@{/static/img/categories/1557391851.3248_Za4UdA_100x100wp.webp}"
+                                 class="category-img">Animals
+                        </a>
+                    </ul>
+
+                </div>
+            </div>
+        </div>
+        <!--主体内容-->
+        <div class="col-xl-7 col-lg-8 col-10">
+
+            <div id="c123"></div>
+
+            <div class="page-load-status">
+                <div class="loader-ellips infinite-scroll-request">
+                    <span class="loader-ellips__dot"></span>
+                    <span class="loader-ellips__dot"></span>
+                    <span class="loader-ellips__dot"></span>
+                    <span class="loader-ellips__dot"></span>
+                </div>
+                <p class="infinite-scroll-last" style="text-align: center">End of content</p>
+                <p class="infinite-scroll-error" style="text-align: center">No more posts to load</p>
+            </div>
+        </div>
+        <!--右边栏-->
+        <div class="col-xl-3 col-lg-3 d-none d-lg-block">
+            <div class="sidebar-item">
+                <div class="make-me-sticky">
+                    <form th:action="@{/search_post}" method="post">
+                        <input type="text" class="form-control" name="search_item" placeholder="Type to search..."
+                               aria-label="Type to search" aria-describedby="button-addon4">
+                        <div class="input-group-append">
+                            <button class="btn btn-sm btn-outline-secondary" type="submit" id="button-addon4"
+                                    style="display: none"><i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </form>
+                    <div class="card">
+                        <img th:src="@{/static/img/Snipaste_2019-12-24_09-05-09.png}"
+                             src="../static/img/Snipaste_2019-12-24_09-05-09.png" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <p class="card-text">Some quick example text to build on the card title and make up the
+                                bulk
+                                of
+                                the
+                                card's content.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div th:replace="include::footer"></div>
+</div>
+
+<!--post模板-->
+<script type="text/html" id="photo-item-template">
+    <div class="card mb-3">
+        <img src="{{img_dir}}" class="card-img-top" alt="...">
+        <div class="card-body">
+            <h5 class="card-title" style="display: inline-block">{{p_title}}&nbsp;&nbsp;</h5>
+            <p class="card-text">{{u_username}}&nbsp;&nbsp;<small class="text-muted">{{upload_time}}</small></p>
+            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to
+                additional content. This content is a little bit longer.</p>
+
+            <div class="collapse" id="commentSection1">
+                <div class="card card-body">
+
+                    <div class="media">
+                        <img src="" class="mr-3" alt="...">
+                        <div class="media-body">
+                            <h5 class="mt-0">Media heading</h5>
+                            Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante
+                            sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis.
+                            Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in
+                            faucibus.
+
+                            <div class="media mt-3">
+                                <a class="mr-3" href="#">
+                                    <img src="" class="mr-3" alt="...">
+                                </a>
+                                <div class="media-body">
+                                    <h5 class="mt-0">Media heading</h5>
+                                    Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque
+                                    ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus
+                                    viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec
+                                    lacinia congue felis in faucibus.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <button class="btn btn-primary btn-sm" type="button" data-toggle="collapse" data-target="#commentSection1"
+                    aria-expanded="false" aria-controls="commentSection1">
+                Comments
+            </button>
+        </div>
+    </div>
+</script>
+<!--jQuery-->
+<script type="text/javascript" th:src="@{/static/jquery/jquery-3.4.1.min.js}"
+        src="../static/jquery/jquery-3.4.1.min.js"></script>
+<!--主题控制-->
+<script type="text/javascript">
+
+    const toggleSwitch = document.querySelector('.theme-switch input[type="checkbox"]');
+    const currentTheme = localStorage.getItem('theme');
+
+    if (currentTheme) {
+        document.documentElement.setAttribute('data-theme', currentTheme);
+
+        if (currentTheme === 'dark') {
+            toggleSwitch.checked = true;
+        }
+    }
+
+    function switchTheme(e) {
+        if (e.target.checked) {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            localStorage.setItem('theme', 'dark');
+        } else {
+            document.documentElement.setAttribute('data-theme', 'light');
+            localStorage.setItem('theme', 'light');
+        }
+    }
+
+    toggleSwitch.addEventListener('change', switchTheme, false);
+</script>
+<!--infinite-scroll-->
+<script type="text/javascript" th:src="@{/static/js/infinite-scroll.pkgd.js}"
+        src="../static/js/infinite-scroll.pkgd.js"></script>
+<!--popper-->
+<script type="text/javascript" src="../static/js/popper.min.js" th:src="@{/static/js/popper.min.js}"></script>
+<!--jquery validate-->
+<script type="text/javascript" src="../static/jquery-validation-1.19.1/dist/jquery.validate.js"
+        th:src="@{/static/jquery-validation-1.19.1/dist/jquery.validate.js}"></script>
+<!--bootstrap-->
+<script type="text/javascript" src="../static/bootstrap-4.4.1-dist/js/bootstrap.min.js"
+        th:src="@{/static/bootstrap-4.4.1-dist/js/bootstrap.min.js}"></script>
+<!--无限下拉-->
+<script type="text/javascript">
+    var $container = $('#c123').infiniteScroll({
+        path: function () {
+            return 'http://localhost:8080/loadMore?start=' + this.pageIndex;
+        },
+        // load response as flat text
+        responseType: 'text',
+        status: '.scroll-status',
+        history: false,
+    });
+
+    $container.on('load.infiniteScroll', function (event, response) {
+        // parse response into JSON data
+        var data = JSON.parse(response).list;
+        // compile data into HTML
+        var itemsHTML = data.map(getItemHTML).join('');
+        // convert HTML string into elements
+        var $items = $(itemsHTML);
+        // append item elements
+        $container.infiniteScroll('appendItems', $items);
+    });
+
+    // load initial page
+    $container.infiniteScroll('loadNextPage');
+
+    //------------------//
+
+    var itemTemplateSrc = $('#photo-item-template').html();
+
+    function getItemHTML(photo) {
+        return microTemplate(itemTemplateSrc, photo);
+    }
+
+    // micro templating, sort-of
+    function microTemplate(src, data) {
+        // replace {{tags}} in source
+        return src.replace(/\{\{([\w\-_\.]+)\}\}/gi, function (match, key) {
+            // walk through objects to get value
+            var value = data;
+            key.split('.').forEach(function (part) {
+                value = value[part];
+            });
+            return value;
+        });
+    }
+</script>
+
+<script th:inline="javascript" type="text/javascript">
+    var loginButton = document.getElementById("LoginButton");
+    var registerButton = document.getElementById("RegisterButton");
+    var notificationButton = document.getElementById("NotificationButton");
+    var userButton = document.getElementById("UserButton");
+    var uploadButton = document.getElementById("UploadButton");
+
+    var a = /*[[${session.name}]]*/ null;
+    console.log("登录时name" + /*[[${ session.name }]]*/ null);
+    console.log("登录时username" + /*[[${ session.username }]]*/ null);
+
+    $(function () {
+        if (a != null) {
+            $(".online-user-button").show();
+            $(".offline-user-button").hide();
+        }
+    });
+
+    $(function () {
+        //返回顶部===>出现与消失
+        //当屏幕滚动，触生 scroll 事件
+        $(window).scroll(function () {
+            var top1 = $(this).scrollTop();     //获取相对滚动条顶部的偏移
+            if (top1 > 200) {      //当偏移大于200px时让图标淡入（css设置为隐藏）
+                $(".top").stop().fadeIn();
+            } else {
+                //当偏移小于200px时让图标淡出
+                $(".top").stop().fadeOut();
+            }
+        });
+        //去往顶部
+        $(".top").click(function () {
+            $("body , html").animate({scrollTop: 0}, 300);   //300是所用时间
+        });
+    });
+    function login() {
+        $.post("/login.action",
+            $("#loginFormData").serialize(),
+            function (data) {
+                if (data === "success") {
+                    alert("登录成功");
+                    window.location.reload();
+                } else if (data == "fail: 0") {
+                    alert("用户名或密码错误");
+                } else if (data == "fail: 1") {
+                    alert("账户已停用");
+                } else {
+                    alert("登录失败");
+                }
+            });
+    }
+
+    function register() {
+        $.post("/register.action",
+            $("#signupForm").serialize(),
+            function (data) {
+                alert(data);
+                if (data === "ok") {
+                    alert("注册成功");
+                    window.location.reload();
+                } else if (data === "fail") {
+                    alert("用户名已被占用");
+                } else {
+                    alert("注册失败");
+                }
+            });
+    }
+
+    function uploadPost() {
+        var u_username = /*[[${ session.username }]]*/ null;
+        console.log("上传时username" + u_username);
+        $.post("/uploadForm",
+            $("#uploadFormData").serialize(),
+            function (data) {
+                if (data === "success") {
+                    document.getElementById("uploadFormData").reset();
+                    box.style.display = "";
+                    $("#preview").html("");
+                    $("#uploadTitle").removeClass("is-valid");
+                    alert("success");
+                }
+            });
+    }
+
+    function clearUploadForm() {
+        document.getElementById("uploadFormData").reset();
+        box.style.display = "";
+        $("#preview").html("");
+        $("#uploadTitle").removeClass("is-valid");
+    }
+
+    $(document).ready(function () {
+        $("#loginFormData").validate({
+            rules: {
+                username: {
+                    required: true
+                },
+                password: {
+                    required: true
+                }
+            },
+            messages: {
+                username: "Please enter your username",
+                password: "Please enter your password"
+            },
+            errorElement: "em",
+            errorPlacement: function (error, element) {
+                // Add the `invalid-feedback` class to the error element
+                error.addClass("invalid-feedback");
+                if (element.prop("type") === "checkbox") {
+                    error.insertAfter(element.next("label"));
+                } else {
+                    error.insertAfter(element);
+                }
+            },
+            highlight: function (element, errorClass, validClass) {
+                $(element).addClass("is-invalid").removeClass("is-valid");
+            },
+            unhighlight: function (element, errorClass, validClass) {
+                $(element).addClass("is-valid").removeClass("is-invalid");
+            },
+            submitHandler: function () {
+                login();
+            }
+        });
+        $("#signupForm").validate({
+            rules: {
+                name: "required",
+                username: {
+                    required: true,
+                    minlength: 2
+                },
+                password: {
+                    required: true,
+                    minlength: 5
+                },
+                confirm_password: {
+                    required: true,
+                    minlength: 5,
+                    equalTo: "#regpassword"
+                },
+                agree: "required"
+            },
+            messages: {
+                name: "Please enter your name",
+                username: {
+                    required: "Please enter a username",
+                    minlength: "Your username must consist of at least 2 characters"
+                },
+                password: {
+                    required: "Please provide a password",
+                    minlength: "Your password must be at least 5 characters long"
+                },
+                confirm_password: {
+                    required: "Please provide a password",
+                    minlength: "Your password must be at least 5 characters long",
+                    equalTo: "Please enter the same password as above"
+                },
+                agree: "Please accept our policy"
+            },
+            errorElement: "em",
+            errorPlacement: function (error, element) {
+                // Add the `invalid-feedback` class to the error element
+                error.addClass("invalid-feedback");
+                if (element.prop("type") === "checkbox") {
+                    error.insertAfter(element.next("label"));
+                } else {
+                    error.insertAfter(element);
+                }
+            },
+            highlight: function (element, errorClass, validClass) {
+                $(element).addClass("is-invalid").removeClass("is-valid");
+            },
+            unhighlight: function (element, errorClass, validClass) {
+                $(element).addClass("is-valid").removeClass("is-invalid");
+            },
+            submitHandler: function () {
+                register();
+            }
+        });
+        $("#uploadFormData").validate({
+            rules: {
+                p_title: {
+                    required: true
+                }
+            },
+            messages: {
+                p_title: "Please enter a title"
+            },
+            errorElement: "em",
+            errorPlacement: function (error, element) {
+                // Add the `invalid-feedback` class to the error element
+                error.addClass("invalid-feedback");
+                if (element.prop("type") === "checkbox") {
+                    error.insertAfter(element.next("label"));
+                } else {
+                    error.insertAfter(element);
+                }
+            },
+            highlight: function (element, errorClass, validClass) {
+                $(element).addClass("is-invalid").removeClass("is-valid");
+            },
+            unhighlight: function (element, errorClass, validClass) {
+                $(element).addClass("is-valid").removeClass("is-invalid");
+            },
+            submitHandler: function () {
+                uploadPost();
+            }
+        });
+    });
+
+
+    $(document).on({
+        dragleave: function (e) {	//拖离
+            e.preventDefault();
+        },
+        drop: function (e) {  //拖后放
+            e.preventDefault();
+        },
+        dragenter: function (e) {	//拖进
+            e.preventDefault();
+        },
+        dragover: function (e) {	//拖来拖去
+            e.preventDefault();
+        }
+    });
+
+    var box = document.getElementById('drop_area'); //拖拽区域
+    box.addEventListener("drop", function (e) {
+        e.preventDefault(); //取消默认浏览器拖拽效果
+        var fileList = e.dataTransfer.files; //获取文件对象
+        //检测是否是拖拽文件到页面的操作
+        if (fileList.length == 0) {
+            return false;
+        }
+        //检测文件是不是图片
+        if (fileList[0].type.indexOf('image') === -1) {
+            alert("您拖的不是图片！");
+            return false;
+        }
+        //拖拉图片到浏览器，可以实现预览功能
+        var img = window.webkitURL.createObjectURL(fileList[0]);
+        var filename = fileList[0].name; //图片名称
+        var filesize = Math.floor((fileList[0].size) / 1024);
+        alert(filesize);
+        if (filesize >= 20480) {
+            alert("图片过大")
+            return false;
+        }
+        var formData = new FormData();
+        var formTitle = document.getElementById("formTitle");
+
+        formData.append("upload", fileList[0]);
+        $.ajax({
+            type: "POST",
+            enctype: 'multipart/form-data',
+            url: "/imgUpload",
+            data: formData,
+            processData: false,  // Important!
+            contentType: false,
+            cache: false,
+            success: function (data) {
+                var str = "<img src='" + img + "' class='d-block mx-auto img-thumbnail'><p>filename: " + filename + "</p><p>filesize: " + filesize + "KB</p>";
+                $("#preview").html(str);
+                box.style.display = "none";
+                formTitle.style.display = "";
+                filename = data;
+                console.log("上传图片filename" + filename);
+                $("#img_dir").val(filename);
+                $("#u_username").val(/*[[${ session.username }]]*/ null);
+            },
+            error: function () {
+                alert("ERROR");
+            }
+        })
+    }, false);
+
+
+
+</script>
+<script>
+
+</script>
+</body>
+</html>

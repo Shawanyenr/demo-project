@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Title</title>
+
+    <link rel="stylesheet" type="text/css" media="all" href="../static/bootstrap-4.4.1-dist/css/bootstrap.min.css"
+          th:href="@{/static/bootstrap-4.4.1-dist/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" type="text/css" media="all" href="../static/fontawesome-free-5.12.0-web/css/all.css"
+          th:href="@{/static/fontawesome-free-5.12.0-web/css/all.css}"/>
+
+<!--    <style type="text/css">
+        .btn:focus, .btn:active {
+            outline: none !important;
+            box-shadow: none !important;
+        }
+
+        .nav-item-padding {
+            margin: 0 0.3em;
+        }
+
+        .navbar-icon {
+            color: #999999;
+            font-size: 150%;
+        }
+
+        .navbar-icon:hover, .navbar-icon:focus {
+            color: white;
+        }
+
+        .navbar-icon:active {
+            color: white;
+        }
+
+        .navbar-icon-active {
+            color: white;
+        }
+
+        .night-mode-switch {
+            font-size: 150%;
+        }
+
+        .night-mode-switch-dark {
+            color: #999999;
+        }
+
+        .night-mode-switch-light {
+            color: #ffcc00;
+        }
+
+        .night-mode-switch:hover, .night-mode-switch:focus {
+            color: #ffcc00;
+        }
+
+        .night-mode-switch:active {
+            color: #ffcc00;
+        }
+
+        .zoom-img {
+            width: 75px;
+            height: 100px;
+            overflow: hidden;
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            border: 2px solid #000;
+        }
+
+        .avator3 {
+            width: 15px;
+            height: 0px;
+            padding-bottom: 100%;
+            overflow: hidden;
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            border-radius: 2px;
+        }
+
+        .custom-list-group-item {
+            position: relative;
+            display: block;
+            border-radius: 0.25rem !important;
+        }
+
+        .custom-list-group-item-action {
+            width: 100%;
+            color: #000000;
+            text-align: inherit;
+        }
+
+        .custom-list-group-item-action:hover, .custom-list-group-item-action:focus {
+            z-index: 1;
+            color: #000000;
+            text-decoration: none;
+            background-color: #f8f9fa;
+        }
+
+        .custom-list-group-item-action:active {
+            color: #000000;
+            background-color: #e9ecef;
+        }
+
+        .custom-list-group-item-action-night {
+            width: 100%;
+            color: #90989f;
+            text-align: inherit;
+        }
+
+        .custom-list-group-item-action-night:hover, .custom-list-group-item-action-night:focus {
+            z-index: 1;
+            color: #90989f;
+            text-decoration: none;
+            background-color: #1a1a1a;
+        }
+
+        .custom-list-group-item-action-night:active {
+            color: #90989f;
+            background-color: #1a1a1a;
+        }
+
+        .category-img {
+            margin: 6px 6px 6px 4px !important;
+            border-radius: .2em !important;
+            width: 25px;
+        }
+
+        .custom-fixed-top {
+            position: fixed;
+            top: 0;
+            right: 0;
+            left: 0;
+            z-index: 30;
+        }
+
+        #drop_area {
+            width: 70%;
+            margin: auto;
+            height: 0px;
+            padding: 19.69% 0;
+            background-color: #CCC;
+            border: 2px dashed #4a4a4a;
+            text-align: center;
+        }
+
+    </style>
+    <script type="text/javascript">
+
+       /* function nightModeSwitch() {
+            var b = document.getElementById("body");
+            if (b.style.backgroundColor === "white") {
+                $("body").css({backgroundColor: "black"});
+                $("body").css({color: "#999999"})
+            } else {
+                $("body").css({backgroundColor: "white"});
+                $("body").css({color: "black"});
+            }
+
+            if (!$(".card").hasClass("bg-dark")) {
+                $(".card").addClass("bg-dark");
+            } else {
+                $(".card").removeClass("bg-dark");
+            }
+
+            if ($(".night-mode-switch").hasClass("night-mode-switch-dark")) {
+                $(".night-mode-switch").removeClass("night-mode-switch-dark");
+                $(".night-mode-switch").addClass("night-mode-switch-light");
+            } else {
+                $(".night-mode-switch").removeClass("night-mode-switch-light");
+                $(".night-mode-switch").addClass("night-mode-switch-dark");
+            }
+
+            if ($(".custom-list-group-item").hasClass("custom-list-group-item-action")) {
+                $(".custom-list-group-item").removeClass("custom-list-group-item-action");
+                $(".custom-list-group-item").addClass("custom-list-group-item-action-night");
+            } else {
+                $(".custom-list-group-item").removeClass("custom-list-group-item-action-night");
+                $(".custom-list-group-item").addClass("custom-list-group-item-action");
+            }
+
+        }
+*/
+
+    </script>
+    <style type="text/css">
+        @import url(https://fonts.googleapis.com/css?family=Lato:400,400italic,700|Sansita+One);
+
+        :root {
+            &#45;&#45;primary-color: #302AE6;
+            &#45;&#45;secondary-color: #536390;
+            &#45;&#45;font-color: #424242;
+            &#45;&#45;bg-color: #fff;
+            &#45;&#45;heading-color: #292922;
+        }
+
+        [data-theme="dark"] {
+            &#45;&#45;primary-color: #9A97F3;
+            &#45;&#45;secondary-color: #818cab;
+            &#45;&#45;font-color: #e1e1ff;
+            &#45;&#45;bg-color: #161625;
+            &#45;&#45;heading-color: #818cab;
+        }
+
+        body {
+            font-family: "Lato", sans-serif;
+            background-color: var(&#45;&#45;bg-color);
+            color: var(&#45;&#45;font-color);
+            max-width: 90%;
+            margin: 0 auto;
+            font-size: calc(1rem + 0.25vh);
+        }
+
+        h1 {
+            color: var(&#45;&#45;heading-color);
+            font-family: "Sansita One", serif;
+            font-size: 2rem;
+            margin-bottom: 1vh;
+        }
+
+        p {
+            font-size: 1.1rem;
+            line-height: 1.6rem;
+        }
+
+        a {
+            color: var(&#45;&#45;primary-color);
+            text-decoration: none;
+            border-bottom: 3px solid transparent;
+            font-weight: bold;
+        }
+
+        a:hover, a:focus {
+            border-bottom: 3px solid currentColor;
+        }
+
+        section {
+            max-width: 68%;
+            margin: 0 auto;
+        }
+
+        .post-meta {
+            font-size: 1rem;
+            font-style: italic;
+            display: block;
+            margin-bottom: 4vh;
+            color: var(&#45;&#45;secondary-color);
+        }
+
+        /*nav {
+            display: flex;
+            justify-content: flex-end;
+            padding: 20px 0;
+        }*/
+
+        /*slider switch css */
+        .theme-switch-wrapper {
+            display: flex;
+            align-items: center;
+        }
+
+        .theme-switch-wrapper em {
+            margin-left: 10px;
+            font-size: 1rem;
+        }
+
+        .theme-switch {
+            display: inline-block;
+            height: 34px;
+            position: relative;
+            width: 34px;
+        }
+
+        .theme-switch input {
+            display: none;
+        }
+
+        .slider {
+            color: #ccc;
+            font-size: 1.5em;
+            /* bottom: 0;*/
+            cursor: pointer;
+            /*left: 0;*/
+            position: absolute;
+            /*right: 0;
+            top: 0;*/
+            transition: .2s;
+        }
+
+        .slider:before {
+            /*background-color: #fff;
+            bottom: 4px;*/
+            content: "";
+            /*height: 26px;
+            left: 4px;
+            position: absolute;*/
+            transition: .2s;
+            /*width: 26px;*/
+        }
+
+        input:checked + .slider, input:hover + .slider {
+            color: #ffcc00;
+        }
+
+        /*input:checked + .slider:before {
+            transform: translateX(26px);
+        }*/
+
+        /*     .slider.round {
+                 border-radius: 34px;
+             }
+
+             .slider.round:before {
+                 border-radius: 50%;
+             }*/
+    </style>-->
+    <style type="text/css">
+        #sidebar {
+            overflow: hidden;
+            z-index: 3;
+        }
+        #sidebar .list-group {
+            min-width: 400px;
+            background-color: #333;
+            min-height: 100vh;
+        }
+        #sidebar i {
+            margin-right: 6px;
+        }
+
+        #sidebar .list-group-item {
+            border-radius: 0;
+            background-color: #333;
+            color: #ccc;
+            border-left: 0;
+            border-right: 0;
+            border-color: #2c2c2c;
+            white-space: nowrap;
+        }
+
+        /* highlight active menu */
+        #sidebar .list-group-item:not(.collapsed) {
+            background-color: #222;
+        }
+
+        /* closed state */
+        #sidebar .list-group .list-group-item[aria-expanded="false"]::after {
+            content: " \f0d7";
+            font-family: FontAwesome;
+            display: inline;
+            text-align: right;
+            padding-left: 5px;
+        }
+
+        /* open state */
+        #sidebar .list-group .list-group-item[aria-expanded="true"] {
+            background-color: #222;
+        }
+        #sidebar .list-group .list-group-item[aria-expanded="true"]::after {
+            content: " \f0da";
+            font-family: FontAwesome;
+            display: inline;
+            text-align: right;
+            padding-left: 5px;
+        }
+
+        /* level 1*/
+        #sidebar .list-group .collapse .list-group-item,
+        #sidebar .list-group .collapsing .list-group-item  {
+            padding-left: 20px;
+        }
+
+        /* level 2*/
+        #sidebar .list-group .collapse > .collapse .list-group-item,
+        #sidebar .list-group .collapse > .collapsing .list-group-item {
+            padding-left: 30px;
+        }
+
+        /* level 3*/
+        #sidebar .list-group .collapse > .collapse > .collapse .list-group-item {
+            padding-left: 40px;
+        }
+
+        @media (max-width:768px) {
+            #sidebar {
+                min-width: 35px;
+                max-width: 40px;
+                overflow-y: auto;
+                overflow-x: visible;
+                transition: all 0.25s ease;
+                transform: translateX(-45px);
+                position: fixed;
+            }
+
+            #sidebar.show {
+                transform: translateX(0);
+            }
+
+            #sidebar::-webkit-scrollbar{ width: 0px; }
+
+            #sidebar, #sidebar .list-group {
+                min-width: 35px;
+                overflow: visible;
+            }
+            /* overlay sub levels on small screens */
+            #sidebar .list-group .collapse.show, #sidebar .list-group .collapsing {
+                position: relative;
+                z-index: 1;
+                width: 190px;
+                top: 0;
+            }
+            #sidebar .list-group > .list-group-item {
+                text-align: center;
+                padding: .75rem .5rem;
+            }
+            /* hide caret icons of top level when collapsed */
+            #sidebar .list-group > .list-group-item[aria-expanded="true"]::after,
+            #sidebar .list-group > .list-group-item[aria-expanded="false"]::after {
+                display:none;
+            }
+        }
+
+        .collapse.show {
+            visibility: visible;
+        }
+        .collapsing {
+            visibility: visible;
+            height: 0;
+            -webkit-transition-property: height, visibility;
+            transition-property: height, visibility;
+            -webkit-transition-timing-function: ease-out;
+            transition-timing-function: ease-out;
+        }
+        .collapsing.width {
+            -webkit-transition-property: width, visibility;
+            transition-property: width, visibility;
+            width: 0;
+            height: 100%;
+            -webkit-transition-timing-function: ease-out;
+            transition-timing-function: ease-out;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container-xl">
+    <div class="row d-flex d-md-block flex-nowrap wrapper">
+        <div class="col-md-2 float-left col-1 pl-0 pr-0 collapse width show" id="sidebar">
+            <div class="list-group border-0 text-center text-md-left">
+                <a href="#menu1" class="list-group-item d-inline-block collapsed" data-toggle="collapse" aria-expanded="false"><i class="fa fa-dashboard"></i> <span class="d-none d-md-inline">Item 1</span> </a>
+                <div class="collapse" id="menu1" data-parent="#sidebar">
+                    <a href="#menu1sub1" class="list-group-item" data-toggle="collapse" aria-expanded="false">Subitem 1 </a>
+                    <div class="collapse" id="menu1sub1" data-parent="#menu1">
+                        <a href="#" class="list-group-item" data-parent="#menu1sub1">Subitem a</a>
+                        <a href="#" class="list-group-item" data-parent="#menu1sub1">Subitem b</a>
+                        <a href="#menu1sub1sub1" class="list-group-item" data-toggle="collapse" aria-expanded="false">Subitem c </a>
+                        <div class="collapse" id="menu1sub1sub1">
+                            <a href="#" class="list-group-item" data-parent="#menu1sub1sub1">Subitem c.1</a>
+                            <a href="#" class="list-group-item" data-parent="#menu1sub1sub1">Subitem c.2</a>
+                        </div>
+                        <a href="#" class="list-group-item" data-parent="#menu1sub1">Subitem d</a>
+                        <a href="#menu1sub1sub2" class="list-group-item" data-toggle="collapse" aria-expanded="false">Subitem e </a>
+                        <div class="collapse" id="menu1sub1sub2">
+                            <a href="#" class="list-group-item">Subitem e.1</a>
+                            <a href="#" class="list-group-item">Subitem e.2</a>
+                        </div>
+                    </div>
+                    <a href="#menu1sub2" class="list-group-item" data-toggle="collapse" aria-expanded="false">Subitem 2</a>
+                    <div class="collapse" id="menu1sub2" data-parent="#menu1">
+                        <a href="#" class="list-group-item" data-parent="#menu1sub1">Subitem 1 a</a>
+                        <a href="#" class="list-group-item" data-parent="#menu1sub1">Subitem 2 b</a>
+                        <a href="#menu1sub1sub1" class="list-group-item" data-toggle="collapse" aria-expanded="false">Subitem 3 c </a>
+                        <div class="collapse" id="menu1sub1sub1">
+                            <a href="#" class="list-group-item" data-parent="#menu1sub1sub1">Subitem 3 c.1</a>
+                            <a href="#" class="list-group-item" data-parent="#menu1sub1sub1">Subitem 3 c.2</a>
+                        </div>
+                        <a href="#" class="list-group-item" data-parent="#menu1sub1">Subitem 4 d</a>
+                        <a href="#menu1sub1sub2" class="list-group-item" data-toggle="collapse" aria-expanded="false">Subitem 5 e </a>
+                        <div class="collapse" id="menu1sub1sub2">
+                            <a href="#" class="list-group-item" data-parent="#menu1sub1sub2">Subitem 5 e.1</a>
+                            <a href="#" class="list-group-item" data-parent="#menu1sub1sub2">Subitem 5 e.2</a>
+                        </div>
+                    </div>
+                    <a href="#" class="list-group-item">Subitem 3</a>
+                </div>
+                <a href="#" class="list-group-item d-inline-block collapsed"><i class="fa fa-film"></i> <span class="d-none d-md-inline">Item 2</span></a>
+                <a href="#menu3" class="list-group-item d-inline-block collapsed" data-toggle="collapse" aria-expanded="false"><i class="fa fa-book"></i> <span class="d-none d-md-inline">Item 3 </span></a>
+                <div class="collapse" id="menu3" data-parent="#sidebar">
+                    <a href="#" class="list-group-item" data-parent="#menu3">3.1</a>
+                    <a href="#menu3sub2" class="list-group-item" data-toggle="collapse" aria-expanded="false">3.2 </a>
+                    <div class="collapse" id="menu3sub2">
+                        <a href="#" class="list-group-item" data-parent="#menu3sub2">3.2 a</a>
+                        <a href="#" class="list-group-item" data-parent="#menu3sub2">3.2 b</a>
+                        <a href="#" class="list-group-item" data-parent="#menu3sub2">3.2 c</a>
+                    </div>
+                    <a href="#" class="list-group-item" data-parent="#menu3">3.3</a>
+                </div>
+                <a href="#" class="list-group-item d-inline-block collapsed" data-parent="#sidebar"><i class="fa fa-heart"></i> <span class="d-none d-md-inline">Item 4</span></a>
+                <a href="#" class="list-group-item d-inline-block collapsed" data-parent="#sidebar"><i class="fa fa-list"></i> <span class="d-none d-md-inline">Item 5</span></a>
+                <a href="#" class="list-group-item d-inline-block collapsed" data-parent="#sidebar"><i class="fa fa-clock-o"></i> <span class="d-none d-md-inline">Link</span></a>
+                <a href="#" class="list-group-item d-inline-block collapsed" data-parent="#sidebar"><i class="fa fa-th"></i> <span class="d-none d-md-inline">Link</span></a>
+                <a href="#" class="list-group-item d-inline-block collapsed" data-parent="#sidebar"><i class="fa fa-gear"></i> <span class="d-none d-md-inline">Link</span></a>
+                <a href="#" class="list-group-item d-inline-block collapsed" data-parent="#sidebar"><i class="fa fa-calendar"></i> <span class="d-none d-md-inline">Link</span></a>
+                <a href="#" class="list-group-item d-inline-block collapsed" data-parent="#sidebar"><i class="fa fa-envelope"></i> <span class="d-none d-md-inline">Link</span></a>
+                <a href="#" class="list-group-item d-inline-block collapsed" data-parent="#sidebar"><i class="fa fa-bar-chart-o"></i> <span class="d-none d-md-inline">Link</span></a>
+                <a href="#" class="list-group-item d-inline-block collapsed" data-parent="#sidebar"><i class="fa fa-star"></i> <span class="d-none d-md-inline">Link</span></a>
+            </div>
+        </div>
+        <main class="col-md-10 float-left col px-5 pl-md-2 pt-2 main">
+            <a href="#" data-target="#sidebar" data-toggle="collapse"><i class="fa fa-navicon fa-2x py-2 p-1"></i></a>
+            <div class="page-header">
+                <h2 class="display-4 font-weight-light">Sidebar</h2>
+            </div>
+            <p class="lead">A responsive, multi-level vertical accordion.</p>
+            <hr>
+            <div class="row">
+                <div class="col-lg-6">
+                    <button role="button" class="btn btn-outline-dark" data-toggle="collapse" data-target="#demo" aria-expanded="true"> horizontal collapsible </button>
+                    <div id="demo" class="width collapse show" aria-expanded="true">
+                        <div class="list-group" style="width:400px">
+                            <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+                            <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <button role="button" class="btn btn-outline-dark" data-toggle="collapse" data-target="#demo2" aria-expanded="true"> vertical collapsible </button>
+                    <div id="demo2" class="height collapse show" aria-expanded="true">
+                        <div>
+                            <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+                            <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+
+<!--<script type="text/html" id="photo-item-template">
+
+    <div class="card mb-3">
+        <img src="{{img_dir}}" class="card-img-top" alt="...">
+        <div class="card-body">
+            <h5 class="card-title" style="display: inline-block">{{p_title}}&nbsp;&nbsp;</h5>
+            <p class="card-text">{{u_username}}&nbsp;&nbsp;<small class="text-muted">{{upload_time}}</small></p>
+            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to
+                additional content. This content is a little bit longer.</p>
+
+            <div class="collapse" id="commentSection1">
+                <div class="card card-body">
+
+                    <div class="media">
+                        <img src="" class="mr-3" alt="...">
+                        <div class="media-body">
+                            <h5 class="mt-0">Media heading</h5>
+                            Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante
+                            sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis.
+                            Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in
+                            faucibus.
+
+                            <div class="media mt-3">
+                                <a class="mr-3" href="#">
+                                    <img src="" class="mr-3" alt="...">
+                                </a>
+                                <div class="media-body">
+                                    <h5 class="mt-0">Media heading</h5>
+                                    Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque
+                                    ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus
+                                    viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec
+                                    lacinia congue felis in faucibus.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <button class="btn btn-primary btn-sm" type="button" data-toggle="collapse" data-target="#commentSection1" aria-expanded="false" aria-controls="commentSection1">
+                Comments
+            </button>
+        </div>
+    </div>
+</script>-->
+
+<script type="text/javascript" th:src="@{/static/jquery/jquery-3.4.1.min.js}"
+        src="../static/jquery/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" th:src="@{/static/js/infinite-scroll.pkgd.js}"
+        src="../static/js/infinite-scroll.pkgd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+<script type="text/javascript" src="../static/jquery-validation-1.19.1/dist/jquery.validate.js"
+        th:src="@{/static/jquery-validation-1.19.1/dist/jquery.validate.js}"></script>
+
+<script type="text/javascript" src="../static/bootstrap-4.4.1-dist/js/bootstrap.min.js"
+        th:src="@{/static/bootstrap-4.4.1-dist/js/bootstrap.min.js}"></script>
+
+
+<!--<script type="text/javascript">
+    var $container = $('#c123').infiniteScroll({
+        path: function () {
+            return 'http://localhost:8080/loadMore?start=' + this.pageIndex;
+        },
+        // load response as flat text
+        responseType: 'text',
+        status: '.scroll-status',
+        history: false,
+    });
+
+    $container.on('load.infiniteScroll', function (event, response) {
+        // parse response into JSON data
+        var data = JSON.parse(response).list;
+        // compile data into HTML
+        var itemsHTML = data.map(getItemHTML).join('');
+        // convert HTML string into elements
+        var $items = $(itemsHTML);
+        // append item elements
+        $container.infiniteScroll('appendItems', $items);
+    });
+
+    // load initial page
+    $container.infiniteScroll('loadNextPage');
+
+    //&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;//
+
+    var itemTemplateSrc = $('#photo-item-template').html();
+
+    function getItemHTML(photo) {
+        return microTemplate(itemTemplateSrc, photo);
+    }
+
+    // micro templating, sort-of
+    function microTemplate(src, data) {
+        // replace {{tags}} in source
+        return src.replace(/\{\{([\w\-_\.]+)\}\}/gi, function (match, key) {
+            // walk through objects to get value
+            var value = data;
+            key.split('.').forEach(function (part) {
+                value = value[part];
+            });
+            return value;
+        });
+    }
+</script>
+
+<script th:inline="javascript" type="text/javascript">
+    var loginButton = document.getElementById("LoginButton");
+    var registerButton = document.getElementById("RegisterButton");
+    var notificationButton = document.getElementById("NotificationButton");
+    var userButton = document.getElementById("UserButton");
+    var uploadButton = document.getElementById("UploadButton");
+
+    var a = [[${session.name}]];
+    console.log("登录时name" + a);
+    console.log("登录时username" + [[${session.username}]]);
+    if (a == null) {
+        /*未登录*/
+        loginButton.style.display = "";
+        registerButton.style.display = "";
+        notificationButton.style.display = "none";
+        userButton.style.display = "none";
+        uploadButton.style.display = "none";
+    } else {
+        /*已登录*/
+        loginButton.style.display = "none";
+        registerButton.style.display = "none";
+        notificationButton.style.display = "";
+        userButton.style.display = "";
+        uploadButton.style.display = "";
+    }
+
+    function login() {
+        $.post("/login.action",
+            $("#loginFormData").serialize(),
+            function (data) {
+                if (data === "success") {
+                    alert("登录成功");
+                    window.location.reload();
+                } else if (data == "fail: 0") {
+                    alert("用户名或密码错误");
+                } else if (data == "fail: 1") {
+                    alert("账户已停用");
+                } else {
+                    alert("登录失败");
+                }
+            });
+    }
+
+    $(document).ready(function () {
+        $("#loginFormData").validate({
+            rules: {
+                username: {
+                    required: true
+                },
+                password: {
+                    required: true
+                }
+            },
+            messages: {
+                username: "Please enter your username",
+                password: "Please enter your password"
+            },
+            errorElement: "em",
+            errorPlacement: function (error, element) {
+                // Add the `invalid-feedback` class to the error element
+                error.addClass("invalid-feedback");
+                if (element.prop("type") === "checkbox") {
+                    error.insertAfter(element.next("label"));
+                } else {
+                    error.insertAfter(element);
+                }
+            },
+            highlight: function (element, errorClass, validClass) {
+                $(element).addClass("is-invalid").removeClass("is-valid");
+            },
+            unhighlight: function (element, errorClass, validClass) {
+                $(element).addClass("is-valid").removeClass("is-invalid");
+            },
+            submitHandler: function () {
+                login();
+            }
+        });
+        $("#signupForm").validate({
+            rules: {
+                name: "required",
+                username: {
+                    required: true,
+                    minlength: 2
+                },
+                password: {
+                    required: true,
+                    minlength: 5
+                },
+                confirm_password: {
+                    required: true,
+                    minlength: 5,
+                    equalTo: "#regpassword"
+                },
+                agree: "required"
+            },
+            messages: {
+                name: "Please enter your name",
+                username: {
+                    required: "Please enter a username",
+                    minlength: "Your username must consist of at least 2 characters"
+                },
+                password: {
+                    required: "Please provide a password",
+                    minlength: "Your password must be at least 5 characters long"
+                },
+                confirm_password: {
+                    required: "Please provide a password",
+                    minlength: "Your password must be at least 5 characters long",
+                    equalTo: "Please enter the same password as above"
+                },
+                agree: "Please accept our policy"
+            },
+            errorElement: "em",
+            errorPlacement: function (error, element) {
+                // Add the `invalid-feedback` class to the error element
+                error.addClass("invalid-feedback");
+                if (element.prop("type") === "checkbox") {
+                    error.insertAfter(element.next("label"));
+                } else {
+                    error.insertAfter(element);
+                }
+            },
+            highlight: function (element, errorClass, validClass) {
+                $(element).addClass("is-invalid").removeClass("is-valid");
+            },
+            unhighlight: function (element, errorClass, validClass) {
+                $(element).addClass("is-valid").removeClass("is-invalid");
+            },
+            submitHandler: function () {
+                register();
+            }
+        });
+        $("#uploadFormData").validate({
+            rules: {
+                p_title: {
+                    required: true
+                }
+            },
+            messages: {
+                p_title: "Please enter a title"
+            },
+            errorElement: "em",
+            errorPlacement: function (error, element) {
+                // Add the `invalid-feedback` class to the error element
+                error.addClass("invalid-feedback");
+                if (element.prop("type") === "checkbox") {
+                    error.insertAfter(element.next("label"));
+                } else {
+                    error.insertAfter(element);
+                }
+            },
+            highlight: function (element, errorClass, validClass) {
+                $(element).addClass("is-invalid").removeClass("is-valid");
+            },
+            unhighlight: function (element, errorClass, validClass) {
+                $(element).addClass("is-valid").removeClass("is-invalid");
+            },
+            submitHandler: function () {
+                uploadPost();
+            }
+        });
+    });
+
+    function register() {
+        $.post("/register.action",
+            $("#signupForm").serialize(),
+            function (data) {
+                alert(data);
+                if (data === "ok") {
+                    alert("注册成功");
+                    window.location.reload();
+                } else if (data === "fail") {
+                    alert("用户名已被占用");
+                } else {
+                    alert("注册失败");
+                }
+            });
+    }
+
+
+    $(document).on({
+        dragleave: function (e) {	//拖离
+            e.preventDefault();
+        },
+        drop: function (e) {  //拖后放
+            e.preventDefault();
+        },
+        dragenter: function (e) {	//拖进
+            e.preventDefault();
+        },
+        dragover: function (e) {	//拖来拖去
+            e.preventDefault();
+        }
+    });
+
+    var box = document.getElementById('drop_area'); //拖拽区域
+    box.addEventListener("drop", function (e) {
+        e.preventDefault(); //取消默认浏览器拖拽效果
+        var fileList = e.dataTransfer.files; //获取文件对象
+        //检测是否是拖拽文件到页面的操作
+        if (fileList.length == 0) {
+            return false;
+        }
+        //检测文件是不是图片
+        if (fileList[0].type.indexOf('image') === -1) {
+            alert("您拖的不是图片！");
+            return false;
+        }
+
+        //拖拉图片到浏览器，可以实现预览功能
+        var img = window.webkitURL.createObjectURL(fileList[0]);
+        var filename = fileList[0].name; //图片名称
+        var filesize = Math.floor((fileList[0].size) / 1024);
+        alert(filesize);
+        if (filesize>=20480){
+            alert("图片过大")
+            return false;
+        }
+        var formData = new FormData();
+        var formTitle = document.getElementById("formTitle");
+
+        formData.append("upload", fileList[0]);
+        $.ajax({
+            type: "POST",
+            enctype: 'multipart/form-data',
+            url: "/imgUpload",
+            data: formData,
+            processData: false,  // Important!
+            contentType: false,
+            cache: false,
+            success: function (data) {
+                var str = "<img src='" + img + "' class='d-block mx-auto img-thumbnail'><p>filename: " + filename + "</p><p>filesize: " + filesize + "KB</p>";
+                $("#preview").html(str);
+                box.style.display = "none";
+                formTitle.style.display = "";
+                filename = data;
+                console.log("上传图片filename" + filename);
+                $("#img_dir").val(filename);
+                $("#u_username").val([[${session.username}]]);
+            },
+            error: function () {
+                alert("ERROR");
+            }
+        })
+    }, false);
+
+    function uploadPost() {
+        var u_username = [[${session.username}]];
+        console.log("上传时username" + u_username);
+        $.post("/uploadForm",
+            $("#uploadFormData").serialize(),
+            function (data) {
+                if (data === "success") {
+                    document.getElementById("uploadFormData").reset();
+                    box.style.display = "";
+                    $("#preview").html("");
+                    $("#uploadTitle").removeClass("is-valid");
+                    alert("success");
+                }
+            });
+    }
+
+</script>-->
+
+</body>
+</html>

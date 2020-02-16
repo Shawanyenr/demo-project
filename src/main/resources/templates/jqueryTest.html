@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" media="all" href="../static/bootstrap-4.4.1-dist/css/bootstrap.min.css"
+          th:href="@{/static/bootstrap-4.4.1-dist/css/bootstrap.min.css}" />
+    <style type="text/css">
+        .btn:focus,
+        .btn:active {
+            outline: none !important;
+            box-shadow: none !important;
+        }
+    </style>
+</head>
+
+<body>
+<button type="button" class="btn btn-primary">1</button>
+<button type="button" class="btn btn-primary">2</button>
+<button type="button" class="btn btn-primary"><span class="spinner-border spinner-border-sm" role="status"
+                                                    aria-hidden="true"></span>
+    <span class="sr-only">Loading...</span></button>
+
+<p>
+    aaaaaaaaaaaaaaaaaaaaaa
+</p>
+<p>
+    aaaaaaaaaaaaaaaaaaaaaa
+</p>
+<p>
+    aaaaaaaaaaaaaaaaaaaaaa
+</p>
+<p>
+    aaaaaaaaaaaaaaaaaaaaaa
+</p>
+<p>
+    aaaaaaaaaaaaaaaaaaaaaa
+</p>
+<p>
+    aaaaaaaaaaaaaaaaaaaaaa
+</p>
+<p>
+    aaaaaaaaaaaaaaaaaaaaaa
+</p>
+<input type="button" name="name" value="按钮" />
+
+<script type="text/javascript" th:src="@{/static/jquery/jquery-3.4.1.min.js}"
+        src="../static/jquery/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" src="../static/bootstrap-4.4.1-dist/js/bootstrap.min.js"
+        th:src="@{/static/bootstrap-4.4.1-dist/js/bootstrap.min.js}"></script>
+<script type="text/javascript">
+    $(function () {
+        $("button").click(function () {
+            $(this).html("<span class=\"spinner-border spinner-border-sm\" role=\"status\" aria-hidden=\"true\"></span>\n" +
+                "    <span class=\"sr-only\">Loading...</span>").attr("disabled",true);
+            // $(this).toggleClass("btn-dark", "btn-primary");
+        })
+    })
+</script>
+<script type="text/javascript">
+    $(function () {
+        $('input').click(function () {
+            // $('p').text('你们都是P');//通过JQuery的选择器选择出来的DOM元素存入JQuery的DOM数组中，返回的是一个数组集合
+            //JQuery的隐式迭代就是JQuery方法遍历内部DOM数组的过程。不用再像JS中循环遍历
+
+            $('p').eq(1).text('你们都是小青蛙').css({ "background-color": "red", "border": "10px double yellow" }).click(function () {
+                alert('呱呱呱呱呱呱');
+                alert($(this).text());
+            }); //链式编程，每个方法返回的都是调用者自己，JQuery中几乎都是方法，属性很少，方便实现链式编程
+            //每个JQuery对象的方法都是从 Jquery函数的 prototype属性中共享。
+        });
+    });
+</script>
+</body>
+
+</html>
