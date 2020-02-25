@@ -1,14 +1,17 @@
 package com.example.demo.po;
 
+import lombok.Data;
+
 import java.io.Serializable;
 
-public class User implements Serializable {
+@Data
+public class User {
     private Integer id;
     private String name;
     private String username;
     private String password;
     private Integer userState;
-
+/*
     public Integer getId() {
         return id;
     }
@@ -58,5 +61,5 @@ public class User implements Serializable {
                 ", password='" + password + '\'' +
                 ", userState=" + userState +
                 '}';
-    }
+    }*/
 }

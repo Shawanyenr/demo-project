@@ -1,8 +1,11 @@
 package com.example.demo.po;
 
+import lombok.Data;
+
 import java.io.Serializable;
 import java.util.Date;
 
+@Data
 public class Post implements Serializable {
     private Integer p_id;
     private String p_title;
@@ -11,7 +14,7 @@ public class Post implements Serializable {
     private Date upload_time;
     private Integer p_like;
     private Date p_last_edit_time;
-
+/*
     public Integer getP_id() {
         return p_id;
     }
@@ -79,5 +82,5 @@ public class Post implements Serializable {
                 ", p_like=" + p_like +
                 ", p_last_edit_time=" + p_last_edit_time +
                 '}';
-    }
+    }*/
 }

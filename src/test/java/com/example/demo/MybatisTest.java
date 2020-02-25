@@ -1,8 +1,7 @@
 package com.example.demo;
 
-
-import com.example.demo.dao.UserDao;
 import com.example.demo.po.User;
+import com.example.demo.service.UserDaoService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -13,11 +12,11 @@ import java.util.List;
 public class MybatisTest {
 
     @Autowired
-    private UserDao userDao;
+    private UserDaoService userDaoService;
 
     @Test
     public void findAll() {
-        List<User> users = userDao.findAll();
+        List<User> users = userDaoService.findAll();
         System.out.println(users);
     }
 
@@ -26,7 +25,7 @@ public class MybatisTest {
         User user = new User();
         user.setUsername("m78");
         user.setPassword("123456");
-        User one = userDao.findOne(user);
+        User one = userDaoService.findOne(user);
         System.out.println(one);
     }
 
@@ -36,7 +35,7 @@ public class MybatisTest {
         user.setName("吼吼");
         user.setUsername("m19");
         user.setPassword("123456");
-        Integer check = userDao.saveUser(user);
+        Integer check = userDaoService.saveUser(user);
         System.out.println(check);
     }
 
@@ -46,7 +45,7 @@ public class MybatisTest {
         user.setName("吼吼");
         user.setUsername("m19");
         user.setPassword("123456");
-        Integer check = userDao.checkUsername(user.getUsername());
+        Integer check = userDaoService.checkUsername(user.getUsername());
         System.out.println(check);
     }
 }
