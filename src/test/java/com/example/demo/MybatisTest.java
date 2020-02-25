@@ -1,6 +1,8 @@
 package com.example.demo;
 
+import com.example.demo.po.Post;
 import com.example.demo.po.User;
+import com.example.demo.service.PostDaoService;
 import com.example.demo.service.UserDaoService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,11 +15,17 @@ public class MybatisTest {
 
     @Autowired
     private UserDaoService userDaoService;
-
+    private PostDaoService postDaoService;
     @Test
     public void findAll() {
         List<User> users = userDaoService.findAll();
         System.out.println(users);
+    }
+
+    @Test
+    public void findAll1() {
+//        List<Post> posts = postDaoService.findAll();
+        System.out.println(postDaoService.findAll());
     }
 
     @Test
@@ -27,6 +35,10 @@ public class MybatisTest {
         user.setPassword("123456");
         User one = userDaoService.findOne(user);
         System.out.println(one);
+    }
+    @Test
+    public void findOne1(){
+        System.out.println(postDaoService.searchResult("Jerry"));
     }
 
     @Test
@@ -48,4 +60,6 @@ public class MybatisTest {
         Integer check = userDaoService.checkUsername(user.getUsername());
         System.out.println(check);
     }
+
+
 }

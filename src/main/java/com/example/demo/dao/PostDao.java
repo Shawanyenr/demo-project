@@ -2,17 +2,19 @@ package com.example.demo.dao;
 
 import com.example.demo.po.Post;
 import org.apache.ibatis.annotations.*;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+//@Component
 @Mapper
 public interface PostDao {
 
     @Select("select * from post")
     public List<Post> findAll();
 
-    @Select("select * from post where u_username=#{u_username}")
-    public List<Post> findAllOfOneUser(String u_username);
+    @Select("select * from post where u_id=#{u_id}")
+    public List<Post> findAllOfOneUser(Integer u_id);
 
     @Insert("insert into post(p_title,u_username,img_dir,upload_time)values(#{p_title},#{u_username},#{img_dir},#{upload_time})")
     public Integer saveOnePost(Post postInfo);

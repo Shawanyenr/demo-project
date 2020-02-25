@@ -1,5 +1,6 @@
 package com.example.demo.interceptor;
 
+import com.example.demo.po.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.ModelAndView;
@@ -13,18 +14,18 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-
-        System.out.println("Ex interceptor......");
-
         String url = request.getRequestURI();
-        System.out.println(url);
-        if (url.contains("/login.action") || url.contains("/register.action") || url.contains("/new_home") || url.contains("/static") || url.contains("/loadMore") || url.contains("/post_img")){
+//        System.out.println(url);
+        System.out.println("拦截器......url:" + url);
+
+
+        if (url.contains("/login.action") || url.contains("/register.action") || url.contains("/new_home") || url.contains("/static") || url.contains("/loadMore") || url.contains("/post_img") || url.contains("/error")){
 //            System.out.println(url);
             return true;
         }
         HttpSession session = request.getSession();
-        String username = (String) session.getAttribute("username");
-        if (username != null) {
+        User user = (User) session.getAttribute("user");
+        if (user != null) {
 //            request.logout();
 //            response.sendRedirect("/test");
             return true;

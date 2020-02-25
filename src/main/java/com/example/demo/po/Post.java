@@ -5,16 +5,17 @@ import lombok.Data;
 import java.io.Serializable;
 import java.util.Date;
 
-@Data
-public class Post implements Serializable {
+//@Data
+public class Post {
     private Integer p_id;
     private String p_title;
     private String u_username;
+    private Integer u_id;
     private String img_dir;
     private Date upload_time;
     private Integer p_like;
     private Date p_last_edit_time;
-/*
+
     public Integer getP_id() {
         return p_id;
     }
@@ -37,6 +38,14 @@ public class Post implements Serializable {
 
     public void setU_username(String u_username) {
         this.u_username = u_username;
+    }
+
+    public Integer getU_id() {
+        return u_id;
+    }
+
+    public void setU_id(Integer u_id) {
+        this.u_id = u_id;
     }
 
     public String getImg_dir() {
@@ -77,10 +86,11 @@ public class Post implements Serializable {
                 "p_id=" + p_id +
                 ", p_title='" + p_title + '\'' +
                 ", u_username='" + u_username + '\'' +
+                ", u_id=" + u_id +
                 ", img_dir='" + img_dir + '\'' +
                 ", upload_time=" + upload_time +
                 ", p_like=" + p_like +
                 ", p_last_edit_time=" + p_last_edit_time +
                 '}';
-    }*/
+    }
 }
