@@ -25,4 +25,9 @@ public class TestController {
         return "test";
     }
 
+    @RequestMapping("/tt")
+    public String tt(){
+        return "tt";
+    }
+
 }

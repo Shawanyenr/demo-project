@@ -46,4 +46,9 @@ public class PostDaoServiceImpl implements PostDaoService {
     public List<Post> searchResult(String search_item) {
         return postDao.searchResult(search_item);
     }
+
+    @Override
+    public Post onePost(Integer p_id) {
+        return postDao.onePost(p_id);
+    }
 }

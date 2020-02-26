@@ -15,17 +15,10 @@ public class MybatisTest {
 
     @Autowired
     private UserDaoService userDaoService;
-    private PostDaoService postDaoService;
     @Test
     public void findAll() {
         List<User> users = userDaoService.findAll();
         System.out.println(users);
-    }
-
-    @Test
-    public void findAll1() {
-//        List<Post> posts = postDaoService.findAll();
-        System.out.println(postDaoService.findAll());
     }
 
     @Test
@@ -35,10 +28,6 @@ public class MybatisTest {
         user.setPassword("123456");
         User one = userDaoService.findOne(user);
         System.out.println(one);
-    }
-    @Test
-    public void findOne1(){
-        System.out.println(postDaoService.searchResult("Jerry"));
     }
 
     @Test

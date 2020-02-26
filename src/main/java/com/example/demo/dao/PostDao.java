@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-//@Component
+@Component
 @Mapper
 public interface PostDao {
 
@@ -30,4 +30,7 @@ public interface PostDao {
 
     @Select("select * from post where p_title like #{search_item}")
     public List<Post> searchResult(String search_item);
+
+    @Select("select * from post where p_id=#{p_id}")
+    public Post onePost(Integer p_id);
 }

@@ -14,7 +14,7 @@ public interface UserDao {
 
     public List<User> findAll();
 
-    @Select("select name,userState from user where username=#{username} and password=#{password}")
+    @Select("select * from user where username=#{username} and password=#{password}")
     public User findOne(User user);
 
     @Insert("insert into user(name,username,password)values(#{name},#{username},#{password})")

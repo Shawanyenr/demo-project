@@ -39,6 +39,7 @@ public class UserController {
             s.invalidate();
             msg = "fail: 1";
         } else {
+            user.setPassword("");
             /*s.setAttribute("name", user.getName());
             s.setAttribute("username", loginInfo.getUsername());*/
             s.setAttribute("user", user);

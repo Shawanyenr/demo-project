@@ -77,7 +77,7 @@
                         <i class="fas fa-user-circle fa-2x"></i>
                     </button>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" th:href="@{/home_page}"><span th:text="${session.name}"></span></a>
+                        <a class="dropdown-item" th:href="@{/home_page}"><span th:text="${session.user.name}"></span></a>
                         <a class="dropdown-item" href="#">Setting</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" th:href="@{/logout.action}">Logout</a>

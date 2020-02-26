@@ -1,6 +1,5 @@
 package com.example.demo.config;
 
-import com.example.demo.interceptor.LoginInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -12,20 +11,20 @@ public class MyWebAppConfigurer implements WebMvcConfigurer {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/post_img/**").addResourceLocations("file:D:/00webappresources/user_upload/post_img/");
     }
-
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        String[] addPathPatterns = {
-                "/**"
-        };
-        String[] excludePathPatterns = {
-                "/test",
-                "/static",
-                "/login.action",
-                "/register.action",
-                "/loadMore"
-        };
-//        registry.addInterceptor(new LoginInterceptor()).addPathPatterns(addPathPatterns).excludePathPatterns(excludePathPatterns);
-        registry.addInterceptor(new LoginInterceptor());
-    }
+//
+//    @Override
+//    public void addInterceptors(InterceptorRegistry registry) {
+//        String[] addPathPatterns = {
+//                "/**"
+//        };
+//        String[] excludePathPatterns = {
+//                "/test",
+//                "/static",
+//                "/login.action",
+//                "/register.action",
+//                "/loadMore"
+//        };
+////        registry.addInterceptor(new LoginInterceptor()).addPathPatterns(addPathPatterns).excludePathPatterns(excludePathPatterns);
+//        registry.addInterceptor(new LoginInterceptor());
+//    }
 }
