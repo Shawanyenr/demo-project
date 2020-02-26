@@ -13,9 +13,15 @@
 		margin-left: auto !important;
 		margin-right: auto !important;
 		display: block;
+		padding: 0.25rem;
+		background-color: #fff;
+		border: 1px solid #dee2e6;
 	}
 	.sidebar-list {
 		display: flex;
+	}
+	.sidebar-item{
+		padding: 0 15px;
 	}
 }
 
@@ -308,7 +314,7 @@ a:hover, a:focus {
 	position: -webkit-sticky;
 	position: sticky;
 	display: flex;
-	top: 80px;
+	top: 100px;
 	padding: 0;
 }
 
