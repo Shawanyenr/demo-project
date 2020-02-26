@@ -312,6 +312,17 @@ a:hover, a:focus {
 	padding: 0;
 }
 
+/*上传框*/
+#drop_area {
+	width: 100%;
+	margin: auto;
+	height: 0;
+	padding: 19.69% 0;
+	background-color: rgba(170, 170, 170, 0.2);
+	border: 2px dashed #4a4a4a;
+	text-align: center;
+}
+
 /*返回顶部*/
 .top {
 	width: 37px;
