@@ -25,6 +25,7 @@
                     <button class='btn btn-link search-btn' type="submit"><i class="far fa-circle"></i></button>
                 </form>
             </div>
+            <a th:href="@{/home_page}"><i class="fas fa-user-circle" style="font-size: 30px;"></i></a>
         </div>
     </nav>
 </div>
@@ -49,7 +50,8 @@
                 <div class="make-me-sticky">
                     <ul class="nav-list-group">
                         <li><img th:src="@{/static/img/853c98689faa6d4ccde6acf4c1dd694.jpg}" alt="..."
-                                 class="avatar-img"></li>
+                                 class="avatar-img">
+                        </li>
                         <li class="online-button">
                             <h2 class="name" style="text-align: center;"><span th:text="${session.user?.name}"></span>
                             </h2>
@@ -74,21 +76,21 @@
                             <a href="#" class="nav-list-group-item active"><i class="fas fa-home"></i>
                                 <span>Home</span></a>
                         </li>
-                        <li class="online-button" style="display: none"><a href="#" class="nav-list-group-item "><i
-                                class="fas fa-tags"></i><span>Label</span></a></li>
+                        <!--<li class="online-button" style="display: none"><a href="#" class="nav-list-group-item "><i
+                                class="fas fa-tags"></i><span>Label</span></a></li>-->
                         <li class="online-button" style="display: none"><a href="#" class="nav-list-group-item "><i
                                 class="fas fa-bell"></i><span>Notification</span></a>
                         </li>
                         <li class="online-button" style="display: none"><a href="#" class="nav-list-group-item "><i
                                 class="fas fa-user-friends"></i><span>Friends</span></a>
                         </li>
-                        <li class="online-button" style="display: none"><a href="#" class="nav-list-group-item "><i
+                        <!--<li class="online-button" style="display: none"><a href="#" class="nav-list-group-item "><i
                                 class="fas fa-bookmark"></i><span>Bookmarks</span></a>
                         </li>
                         <li class="online-button" style="display: none"><a th:href="@{/home_page}"
                                                                            class="nav-list-group-item "><i
                                 class="fas fa-user-circle"></i><span>Profile</span></a>
-                        </li>
+                        </li>-->
                         <li><a href="#" class="nav-list-group-item "><i
                                 class="fas fa-info-circle"></i><span>About</span></a>
                         </li>
