@@ -23,6 +23,9 @@
 }
 
 @media(max-width: 768px) {
+	nav .navbar-brand{
+		display: none;
+	}
 	.make-me-sticky {
 		top: 56px !important;
 	}
