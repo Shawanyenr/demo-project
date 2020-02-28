@@ -27,12 +27,15 @@ public class PostController {
 
     @RequestMapping("/loadMore")
     @ResponseBody
-    public PageInfo<Post> loadMore(@RequestParam(value = "start", defaultValue = "0") int start, @RequestParam(value = "size", defaultValue = "5") int size) throws Exception {
+    public PageInfo<Post> loadMore(@RequestParam(value = "start", defaultValue = "1") int start, @RequestParam(value = "size", defaultValue = "5") int size) throws Exception {
 
         PageHelper.startPage(start, size, "p_id desc");
         List<Post> cs = postDaoService.findAll();
         PageInfo<Post> page = new PageInfo<>(cs);
         System.out.println(page);
+        if (start>=page.getPages()){
+            return null;
+        }
         return page;
     }
 

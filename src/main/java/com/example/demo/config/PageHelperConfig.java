@@ -15,7 +15,7 @@ public class PageHelperConfig {
         Properties p = new Properties();
         p.setProperty("offsetAsPageNum", "true");
         p.setProperty("rowBoundsWithCount", "true");
-        p.setProperty("reasonable", "false");
+        p.setProperty("reasonable", "true");
         pageHelper.setProperties(p);
         return pageHelper;
     }
