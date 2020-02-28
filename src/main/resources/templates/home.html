@@ -19,7 +19,7 @@
         <div class="card card-body post-card">
             <ul class="list-group m-list">
                 <li class="online-button" style="display: none">
-                    <a th:href="@{/home}"><i class="fas fa-home"></i>
+                    <a href="#"><i class="fas fa-home"></i>
                         <span th:text="${session.user?.name}"></span></a>
                 </li>
                 <li class="offline-button">
@@ -305,7 +305,7 @@
 <script type="text/javascript">
     var $container = $('#c123').infiniteScroll({
         path: function () {
-            return '/loadMore?start=' + this.pageIndex;
+            return '/loadMine?start=' + this.pageIndex + '&u_id=[[${session.user?.id}]]';
         },
         // load response as flat text
         responseType: 'text',

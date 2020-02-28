@@ -15,9 +15,9 @@ public class ViewController {
         return "post_detail";
     }
 
-    @RequestMapping("/home_page")
+    @RequestMapping("/home")
     public String toHomePage() {
-        return "home_page";
+        return "home";
     }
 
 
