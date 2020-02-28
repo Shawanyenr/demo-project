@@ -21,4 +21,11 @@ public class ViewController {
     }
 
 
+    @RequestMapping("/test")
+    public String toTestPage(){
+        return "test";
+    }
+
+
+
 }
