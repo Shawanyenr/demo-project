@@ -15,6 +15,7 @@ public class MybatisTest {
 
     @Autowired
     private UserDaoService userDaoService;
+
     @Test
     public void findAll() {
         List<User> users = userDaoService.findAll();
@@ -22,7 +23,7 @@ public class MybatisTest {
     }
 
     @Test
-    public void findOne(){
+    public void findOne() {
         User user = new User();
         user.setUsername("m78");
         user.setPassword("123456");
@@ -31,7 +32,7 @@ public class MybatisTest {
     }
 
     @Test
-    public void saveUser(){
+    public void saveUser() {
         User user = new User();
         user.setName("吼吼");
         user.setUsername("m19");
@@ -41,7 +42,7 @@ public class MybatisTest {
     }
 
     @Test
-    public void checkUsername(){
+    public void checkUsername() {
         User user = new User();
         user.setName("吼吼");
         user.setUsername("m19");

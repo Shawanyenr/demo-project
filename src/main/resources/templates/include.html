@@ -77,7 +77,8 @@
                         <i class="fas fa-user-circle fa-2x"></i>
                     </button>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" th:href="@{/home_page}"><span th:text="${session.user.name}"></span></a>
+                        <a class="dropdown-item" th:href="@{/home_page}"><span
+                                th:text="${session.user.name}"></span></a>
                         <a class="dropdown-item" href="#">Setting</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" th:href="@{/logout.action}">Logout</a>
@@ -113,142 +114,144 @@
 </header>
 <header th:fragment="account_button">
     <div class="modal fade" id="loginForm" tabindex="-1" role="dialog"
-     aria-labelledby="loginFormTitle" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="loginFormTitle">Log in</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <form method="post" id="loginFormData" action="">
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label for="username">Username</label>
-                        <input type="text" class="form-control" id="username" name="username">
-                    </div>
-                    <div class="form-group">
-                        <label for="password">Password</label>
-                        <input type="password" class="form-control" id="password" name="password">
-                    </div>
+         aria-labelledby="loginFormTitle" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="loginFormTitle">Log in</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
-
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button class="btn btn-primary" type="submit">Submit form</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-    <div class="modal fade" id="registerForm" tabindex="-1" role="dialog"
-     aria-labelledby="registerFormTitle" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="registerFormTitle">Sign up</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <form id="signupForm" method="post" action="">
-                <div class="modal-body">
-
-                    <div class="form-group">
-                        <label for="name">Name</label>
-
-                        <input type="text" class="form-control" id="name" name="name" placeholder="Name"/>
-
-                    </div>
-
-                    <div class="form-group">
-                        <label for="regusername">Username</label>
-
-                        <input type="text" class="form-control" id="regusername" name="username"
-                               placeholder="Username"/>
-
-                    </div>
-
-                    <div class="form-group">
-                        <label for="regpassword">Password</label>
-
-                        <input type="password" class="form-control" id="regpassword" name="password"
-                               placeholder="Password"/>
-
-                    </div>
-
-                    <div class="form-group">
-                        <label for="confirm_password">Confirm password</label>
-
-                        <input type="password" class="form-control" id="confirm_password" name="confirm_password"
-                               placeholder="Confirm password"/>
-
-                    </div>
-
-                    <div class="form-group">
-                        <div class="form-check">
-                            <input type="checkbox" id="agree" name="agree" value="agree" class="form-check-input"/>
-                            <label class="form-check-label">Please agree to our policy</label>
+                <form method="post" id="loginFormData" action="">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="username">Username</label>
+                            <input type="text" class="form-control" id="username" name="username">
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" class="form-control" id="password" name="password">
                         </div>
                     </div>
 
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary" name="signup" value="Sign up">Sign up</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-    <div class="modal fade" id="uploadForm" data-backdrop="static" tabindex="-1" role="dialog"
-     aria-labelledby="uploadFormTitle" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="uploadFormTitle">Upload</h5>
-                <button type="button" class="close" data-dismiss="modal" onclick="clearUploadForm()" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button class="btn btn-primary" type="submit">Submit form</button>
+                    </div>
+                </form>
             </div>
-            <form id="uploadFormData" method="post" action="">
-                <div class="modal-body">
-
-                    <div class="form-group">
-                        <div id="drop_area">Drag and drop an image here</div>
-                        <div id="preview"></div>
-
-                    </div>
-                    <div class="form-group">
-                        <input type="text" name="u_username" id="u_username" style="display: none">
-                        <input type="text" name="img_dir" id="img_dir" style="display: none">
-                    </div>
-
-                    <div class="form-group" id="formTitle" style="display: none">
-
-                        <!--<label for="regusername">Username</label>
-
-                        <input type="text" class="form-control" id="regusername" name="username"
-                               placeholder="Username"/>-->
-
-                        <label for="uploadTitle">Title</label>
-                        <input type="text" class="form-control" name="p_title" id="uploadTitle">
-                    </div>
-
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" onclick="clearUploadForm()" data-dismiss="modal">
-                        Close
-                    </button>
-                    <button type="submit" class="btn btn-primary" name="signup" value="Submit">Submit</button>
-                </div>
-            </form>
         </div>
     </div>
-</div>
+    <div class="modal fade" id="registerForm" tabindex="-1" role="dialog"
+         aria-labelledby="registerFormTitle" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="registerFormTitle">Sign up</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form id="signupForm" method="post" action="">
+                    <div class="modal-body">
+
+                        <div class="form-group">
+                            <label for="name">Name</label>
+
+                            <input type="text" class="form-control" id="name" name="name" placeholder="Name"/>
+
+                        </div>
+
+                        <div class="form-group">
+                            <label for="regusername">Username</label>
+
+                            <input type="text" class="form-control" id="regusername" name="username"
+                                   placeholder="Username"/>
+
+                        </div>
+
+                        <div class="form-group">
+                            <label for="regpassword">Password</label>
+
+                            <input type="password" class="form-control" id="regpassword" name="password"
+                                   placeholder="Password"/>
+
+                        </div>
+
+                        <div class="form-group">
+                            <label for="confirm_password">Confirm password</label>
+
+                            <input type="password" class="form-control" id="confirm_password" name="confirm_password"
+                                   placeholder="Confirm password"/>
+
+                        </div>
+
+                        <div class="form-group">
+                            <div class="form-check">
+                                <input type="checkbox" id="agree" name="agree" value="agree" class="form-check-input"/>
+                                <label class="form-check-label">Please agree to our policy</label>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary" name="signup" value="Sign up">Sign up</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="uploadForm" data-backdrop="static" tabindex="-1" role="dialog"
+         aria-labelledby="uploadFormTitle" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="uploadFormTitle">Upload</h5>
+                    <button type="button" class="close" data-dismiss="modal" onclick="clearUploadForm()"
+                            aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form id="uploadFormData" method="post" action="">
+                    <div class="modal-body">
+
+                        <div class="form-group">
+                            <div id="drop_area">Drag and drop an image here</div>
+                            <div id="preview"></div>
+
+                        </div>
+                        <div class="form-group">
+                            <input type="text" name="u_username" id="u_username" style="display: none">
+                            <input type="text" name="img_dir" id="img_dir" style="display: none">
+                        </div>
+
+                        <div class="form-group" id="formTitle" style="display: none">
+
+                            <!--<label for="regusername">Username</label>
+
+                            <input type="text" class="form-control" id="regusername" name="username"
+                                   placeholder="Username"/>-->
+
+                            <label for="uploadTitle">Title</label>
+                            <input type="text" class="form-control" name="p_title" id="uploadTitle">
+                        </div>
+
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" onclick="clearUploadForm()"
+                                data-dismiss="modal">
+                            Close
+                        </button>
+                        <button type="submit" class="btn btn-primary" name="signup" value="Submit">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </header>
 
 <footer th:fragment="footer">

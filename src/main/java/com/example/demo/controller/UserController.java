@@ -28,7 +28,7 @@ public class UserController {
     @RequestMapping("/login.action")
     @ResponseBody
     public String findOne(User loginInfo, Model m, HttpSession s) {
-        System.out.println("登录信息"+loginInfo);
+        System.out.println("登录信息" + loginInfo);
         User user = userDaoService.findOne(loginInfo);
         System.out.println(user);
         String msg = null;
@@ -47,28 +47,29 @@ public class UserController {
         }
         return msg;
     }
+
     @Transactional
     @RequestMapping("/register.action")
     @ResponseBody
     public String saveOne(User registerInfo, Model m, HttpSession s) {
-        System.out.println("注册信息："+registerInfo);
+        System.out.println("注册信息：" + registerInfo);
         Integer check = userDaoService.checkUsername(registerInfo.getUsername());
-        System.out.println("重名个数："+check);
+        System.out.println("重名个数：" + check);
         String msg = null;
         if (check != 0) {
             msg = "fail";
             s.invalidate();
         } else {
             Integer trySaveOne = userDaoService.saveUser(registerInfo);
-            System.out.println("存储了"+trySaveOne+"个信息");
-            if (trySaveOne == 1){
+            System.out.println("存储了" + trySaveOne + "个信息");
+            if (trySaveOne == 1) {
                 msg = "ok";
-            }else{
+            } else {
                 s.invalidate();
                 msg = "x";
             }
         }
-        System.out.println("msg: "+msg);
+        System.out.println("msg: " + msg);
         return msg;
     }
 

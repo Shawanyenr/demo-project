@@ -6,24 +6,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class ViewController {
     @RequestMapping("/new_home")
-    public String toNewHome(){
+    public String toNewHome() {
         return "new_home";
     }
 
     @RequestMapping("/post_detail")
-    public String toPostDetail(){
+    public String toPostDetail() {
         return "post_detail";
     }
 
     @RequestMapping("/home_page")
-    public String toHomePage(){
+    public String toHomePage() {
         return "home_page";
-    }
-
-
-    @RequestMapping("/test")
-    public String toTestPage(){
-        return "test";
     }
 
 

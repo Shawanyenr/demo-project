@@ -20,7 +20,7 @@ public interface PostDao {
     public Integer saveOnePost(Post postInfo);
 
     @Select("select * from post order by id #{order} limit #{start},#{end}")
-    public List<Post> loadSomePost(Integer start,Integer end,String order);
+    public List<Post> loadSomePost(Integer start, Integer end, String order);
 
     @Delete("delete from post where p_id=#{p_id}")
     public Integer deletePostId(Integer p_id);

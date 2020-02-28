@@ -17,6 +17,7 @@ public class MybatisTestPost {
 
         System.out.println(postDaoService.findAll());
     }
+
     @Test
     public void findOne() {
         System.out.println(postDaoService.onePost(15));

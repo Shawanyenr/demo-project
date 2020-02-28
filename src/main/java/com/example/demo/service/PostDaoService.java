@@ -11,7 +11,7 @@ public interface PostDaoService {
 
     public Integer saveOnePost(Post postInfo);
 
-    public List<Post> loadSomePost(Integer start,Integer end,String order);
+    public List<Post> loadSomePost(Integer start, Integer end, String order);
 
     public Integer deletePostId(Integer p_id);
 

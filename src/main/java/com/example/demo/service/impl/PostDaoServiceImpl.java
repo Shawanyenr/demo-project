@@ -12,6 +12,7 @@ import java.util.List;
 public class PostDaoServiceImpl implements PostDaoService {
     @Autowired
     private PostDao postDao;
+
     @Override
     public List<Post> findAll() {
         return postDao.findAll();

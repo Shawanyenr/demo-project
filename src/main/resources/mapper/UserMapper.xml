@@ -5,6 +5,6 @@
 
 <mapper namespace="com.example.demo.dao.UserDao">
     <select id="findAll" resultType="User">
-            select * from user
+        select * from user
     </select>
 </mapper>

@@ -26,8 +26,13 @@ public class TestController {
     }
 
     @RequestMapping("/tt")
-    public String tt(){
+    public String tt() {
         return "tt";
+    }
+
+    @RequestMapping("/test")
+    public String toTestPage() {
+        return "test";
     }
 
 }

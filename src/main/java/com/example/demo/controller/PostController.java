@@ -33,7 +33,7 @@ public class PostController {
         List<Post> cs = postDaoService.findAll();
         PageInfo<Post> page = new PageInfo<>(cs);
         System.out.println(page);
-        if (start>=page.getPages()){
+        if (start >= page.getPages()) {
             return null;
         }
         return page;
@@ -117,7 +117,7 @@ public class PostController {
         String msg = null;
         if (check != 1) {
             msg = "fail";
-        }else {
+        } else {
             msg = "success";
         }
         return msg;

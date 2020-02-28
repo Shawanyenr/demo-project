@@ -12,6 +12,7 @@ import java.util.List;
 public class UserDaoServiceImpl implements UserDaoService {
     @Autowired
     private UserDao userDao;
+
     @Override
     public List<User> findAll() {
         return userDao.findAll();
