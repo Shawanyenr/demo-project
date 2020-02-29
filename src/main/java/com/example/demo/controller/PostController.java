@@ -28,12 +28,12 @@ public class PostController {
     @RequestMapping("/loadMore")
     @ResponseBody
     public PageInfo<Post> loadMore(@RequestParam(value = "start", defaultValue = "1") int start, @RequestParam(value = "size", defaultValue = "5") int size) throws Exception {
-
+        System.out.println("请求第" + start + "页");
         PageHelper.startPage(start, size, "p_id desc");
         List<Post> cs = postDaoService.findAll();
         PageInfo<Post> page = new PageInfo<>(cs);
         System.out.println(page);
-        if (start >= page.getPages()) {
+        if (start > page.getPages()) {
             return null;
         }
         return page;
@@ -42,12 +42,12 @@ public class PostController {
     @RequestMapping("/loadMine")
     @ResponseBody
     public PageInfo<Post> loadMine(@RequestParam(value = "start", defaultValue = "1") int start, @RequestParam(value = "size", defaultValue = "5") int size, @RequestParam(value = "u_id") Integer u_id) throws Exception {
-        System.out.println(u_id);
+        System.out.println(u_id + "请求第" + start + "页");
         PageHelper.startPage(start, size, "p_id desc");
         List<Post> cs = postDaoService.findAllOfOneUser(u_id);
         PageInfo<Post> page = new PageInfo<>(cs);
         System.out.println(page);
-        if (start >= page.getPages()) {
+        if (start > page.getPages()) {
             return null;
         }
         return page;
