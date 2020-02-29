@@ -1,9 +1,12 @@
 package com.example.demo;
 
+import com.example.demo.po.Post;
 import com.example.demo.service.PostDaoService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.util.List;
 
 @SpringBootTest(classes = DemoApplication.class)
 public class MybatisTestPost {
@@ -14,8 +17,8 @@ public class MybatisTestPost {
 
     @Test
     public void findAll1() {
-
-        System.out.println(postDaoService.findAll());
+        List<Post> all = postDaoService.findAll();
+        System.out.println(all);
     }
 
     @Test

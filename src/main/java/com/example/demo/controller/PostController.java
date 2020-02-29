@@ -41,7 +41,7 @@ public class PostController {
 
     @RequestMapping("/loadMine")
     @ResponseBody
-    public PageInfo<Post> loadMine(@RequestParam(value = "start", defaultValue = "0") int start, @RequestParam(value = "size", defaultValue = "5") int size, @RequestParam(value = "u_id") Integer u_id) throws Exception {
+    public PageInfo<Post> loadMine(@RequestParam(value = "start", defaultValue = "1") int start, @RequestParam(value = "size", defaultValue = "5") int size, @RequestParam(value = "u_id") Integer u_id) throws Exception {
         System.out.println(u_id);
         PageHelper.startPage(start, size, "p_id desc");
         List<Post> cs = postDaoService.findAllOfOneUser(u_id);

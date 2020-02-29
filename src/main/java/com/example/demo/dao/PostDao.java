@@ -10,13 +10,17 @@ import java.util.List;
 @Mapper
 public interface PostDao {
 
-    @Select("select * from post")
+    @Select("SELECT post.p_id as p_id,user.id as u_id,  post.u_username as u_username, user.avatar as u_avatar,post.p_title,post.img_dir,post.p_like,post.upload_time,post.p_last_edit_time " +
+            "from user " +
+            "inner join post " +
+            "on user.id=post.u_id " +
+            "order by p_id")
     public List<Post> findAll();
 
     @Select("select * from post where u_id=#{u_id}")
     public List<Post> findAllOfOneUser(Integer u_id);
 
-    @Insert("insert into post(p_title,u_username,img_dir,upload_time)values(#{p_title},#{u_username},#{img_dir},#{upload_time})")
+    @Insert("insert into post(p_title,img_dir,upload_time,u_id)values(#{p_title},#{img_dir},#{upload_time},#{u_id})")
     public Integer saveOnePost(Post postInfo);
 
     @Select("select * from post order by id #{order} limit #{start},#{end}")

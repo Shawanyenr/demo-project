@@ -38,7 +38,7 @@
                 </a>
                 <a href="#" class="m-list-item online-button" style="display: none"><i
                         class="fas fa-bell"></i><span> Notification</span></a>
-                <a href="#" class="m-list-item online-button" style="display: none"><i class="far fa-comment-alt"></i><span> Message</span></a>
+                <a href="#" class="m-list-item online-button" style="display: none"><i class="fas fa-comment-alt"></i><span> Message</span></a>
 
                 <a href="#" class="m-list-item"><i
                         class="fas fa-info-circle"></i><span> About</span></a>
@@ -208,7 +208,7 @@
         </div>-->
     </div>
 </div>
-<!--登录、注册、上传-->
+<!--登录、注册、上传模态框-->
 <div th:replace="include::account_button"></div>
 
 <!-- 过渡动画 -->
@@ -356,16 +356,6 @@
 
     });
 
-
-    var a = /*[[${session.user}]]*/ null;
-    console.log("user: " + /*[[${ session.user}]]*/ null);
-
-    $(function () {
-        if (a != null) {
-            $(".online-button").show();
-            $(".offline-button").hide();
-        }
-    });
     /*页面过渡动画*/
     $(document).ready(function () {
         //Preloader
@@ -394,6 +384,16 @@
         $(".top").click(function () {
             $("body , html").animate({scrollTop: 0}, 300);   //300是所用时间
         });
+    });
+
+    var a = /*[[${session.user}]]*/ null;
+    console.log("user: " + /*[[${ session.user}]]*/ null);
+
+    $(function () {
+        if (a != null) {
+            $(".online-button").show();
+            $(".offline-button").hide();
+        }
     });
 
     function login() {
@@ -430,8 +430,8 @@
     }
 
     function uploadPost() {
-        var u_username = /*[[${ session.user?.username }]]*/ null;
-        console.log("上传时username" + u_username);
+        var u_id = /*[[${ session.user?.id }]]*/ null;
+        console.log("上传时username" + u_id);
         $.post("/uploadForm",
             $("#uploadFormData").serialize(),
             function (data) {
@@ -630,7 +630,7 @@
                 filename = data;
                 console.log("上传图片filename" + filename);
                 $("#img_dir").val(filename);
-                $("#u_username").val(/*[[${ session.user?.username }]]*/ null);
+                $("#u_id").val(/*[[${ session.user?.id }]]*/ null);
             },
             error: function () {
                 alert("ERROR");
