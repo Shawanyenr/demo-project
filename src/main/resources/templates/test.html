@@ -36,6 +36,11 @@
                     <i class="fas fa-hat-wizard"></i>
                     <span> Sign up</span>
                 </a>
+                <a href="#" class="m-list-item online-button"
+                        id="UploadButton"
+                        style="display: none" data-toggle="modal"
+                        data-target="#uploadForm"><i class="fas fa-plus"></i> upload
+                </a>
                 <a href="#" class="m-list-item online-button" style="display: none"><i
                         class="fas fa-bell"></i><span> Notification</span></a>
                 <a href="#" class="m-list-item online-button" style="display: none"><i class="fas fa-comment-alt"></i><span> Message</span></a>
@@ -231,7 +236,7 @@
 <script type="text/html" id="photo-item-template">
     <div class="card mb-3">
         <div class="d-flex bd-highlight pt-1 pb-1">
-            <div class="pl-3 pr-2 bd-highlight"><img src="{{img_dir}}"
+            <div class="pl-3 pr-2 bd-highlight"><img src="{{u_avatar}}"
                                                      alt="..." class="rounded-circle post-avator"></div>
             <div class="pl-2 pr-2 bd-highlight">
                 <div class="d-flex flex-column bd-highlight">
@@ -242,7 +247,7 @@
         </div>
         <img src="{{img_dir}}" class="post-card-img" alt="...">
         <div class="d-flex justify-content-around">
-            <div class="p-2 bd-highlight"><a href="#"><i class="far fa-heart icon-size"></i>{{p_like}}</a></div>
+            <div class="p-2 bd-highlight"><a href="#"><i class="far fa-heart icon-size"></i></a></div>
             <div class="p-2 bd-highlight"><a href="#"><i class="far fa-comment-dots icon-size"></i></a></div>
             <div class="p-2 bd-highlight"><a href="#"><i class="far fa-bookmark icon-size"></i></a></div>
             <div class="p-2 bd-highlight dropdown">
@@ -596,7 +601,7 @@
         e.preventDefault(); //取消默认浏览器拖拽效果
         var fileList = e.dataTransfer.files; //获取文件对象
         //检测是否是拖拽文件到页面的操作
-        if (fileList.length == 0) {
+        if (fileList.length === 0) {
             return false;
         }
         //检测文件是不是图片
@@ -608,7 +613,7 @@
         var img = window.webkitURL.createObjectURL(fileList[0]);
         var filename = fileList[0].name; //图片名称
         var filesize = Math.floor((fileList[0].size) / 1024);
-        alert(filesize);
+        // alert(filesize);
         if (filesize >= 20480) {
             alert("图片过大")
             return false;

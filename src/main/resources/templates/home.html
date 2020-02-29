@@ -14,40 +14,45 @@
 </head>
 
 <body>
+
+<!--底部弹出菜单-->
 <div class="collapse fixed-bottom" id="collapseExample">
     <div class="container" style="max-width: 612px;padding: 0 !important;">
         <div class="card card-body post-card">
             <ul class="list-group m-list">
-                <li class="online-button" style="display: none">
-                    <a href="#"><i class="fas fa-home"></i>
-                        <span th:text="${session.user?.name}"></span></a>
-                </li>
-                <li class="offline-button">
-                    <a href="#" id="LoginButton"
-                       data-toggle="modal"
-                       data-target="#loginForm">
-                        <i class="fas fa-sign-in-alt"></i>
-                        <span> Log in</span>
-                    </a>
-                </li>
-                <li class="offline-button">
-                    <a href="#" id="RegisterButton"
-                       data-toggle="modal"
-                       data-target="#registerForm">
-                        <i class="fas fa-hat-wizard"></i>
-                        <span> Sign up</span>
-                    </a>
-                </li>
-                <li class="online-button" style="display: none"><a href="#"><i
+                <a th:href="@{/home}" class="m-list-item online-button" style="display: none"><i class="fas fa-home"></i>
+                    <span th:text="${session.user?.name}"></span></a>
+
+                <a href="#" class="m-list-item offline-button" id="LoginButton"
+                   data-toggle="modal"
+                   data-target="#loginForm">
+                    <i class="fas fa-sign-in-alt"></i>
+                    <span> Log in</span>
+                </a>
+
+                <a href="#" class="m-list-item offline-button" id="RegisterButton"
+                   data-toggle="modal"
+                   data-target="#registerForm">
+                    <i class="fas fa-hat-wizard"></i>
+                    <span> Sign up</span>
+                </a>
+                <a href="#" class="m-list-item online-button"
+                   id="UploadButton"
+                   style="display: none" data-toggle="modal"
+                   data-target="#uploadForm"><i class="fas fa-plus"></i> upload
+                </a>
+                <a href="#" class="m-list-item online-button" style="display: none"><i
                         class="fas fa-bell"></i><span> Notification</span></a>
-                </li>
-                <li class="online-button" style="display: none"><a href="#"><i class="far fa-comment-alt"></i><span> Message</span></a>
-                </li>
-                <li><a href="#"><i
+                <a href="#" class="m-list-item online-button" style="display: none"><i class="fas fa-comment-alt"></i><span> Message</span></a>
+
+                <a href="#" class="m-list-item"><i
                         class="fas fa-info-circle"></i><span> About</span></a>
-                </li>
+
+                <a th:href="@{/logout.action}" class="m-list-item online-button" style="display: none"><i
+                        class="fas fa-sign-out-alt"></i><span> Log out</span></a>
+
                 <li>
-                    <div class="theme-switch-wrapper">
+                    <div class="theme-switch-wrapper ">
                         <label class="theme-switch" for="checkbox">
                             <input type="checkbox" id="checkbox"/>
                             <div class="slider round"></div>
@@ -100,7 +105,6 @@
             </ul>-->
         </div>
     </div>
-
 </div>
 <div class="row">
     <nav class="navbar fixed-top nav-m">
@@ -238,9 +242,9 @@
                 </div>
             </div>
         </div>
-        <img src="{{img_dir}}" class="post-card-img" alt="...">
+        <img src="{{u_avatar}}" class="post-card-img" alt="...">
         <div class="d-flex justify-content-around">
-            <div class="p-2 bd-highlight"><a href="#"><i class="far fa-heart icon-size"></i>{{p_like}}</a></div>
+            <div class="p-2 bd-highlight"><a href="#"><i class="far fa-heart icon-size"></i></a></div>
             <div class="p-2 bd-highlight"><a href="#"><i class="far fa-comment-dots icon-size"></i></a></div>
             <div class="p-2 bd-highlight"><a href="#"><i class="far fa-bookmark icon-size"></i></a></div>
             <div class="p-2 bd-highlight dropdown">
