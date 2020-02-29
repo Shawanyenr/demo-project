@@ -35,8 +35,8 @@ public interface PostDao {
     @Delete("delete from post where p_id=#{p_id}")
     public Integer deletePostId(Integer p_id);
 
-    @Update("update post set p_title=#{p_title},img_dir=#{img_dir} where p_id=#{p_id}")
-    public Integer updatePostId(Integer p_id);
+    @Update("update post set p_title=#{p_title} where p_id=#{p_id}")
+    public Integer updatePostId(Integer p_id,String p_title);
 
     @Select("select * from post where p_title like #{search_item}")
     public List<Post> searchResult(String search_item);

@@ -39,8 +39,8 @@ public class PostDaoServiceImpl implements PostDaoService {
     }
 
     @Override
-    public Integer updatePostId(Integer p_id) {
-        return postDao.updatePostId(p_id);
+    public Integer updatePostId(Integer p_id,String p_title) {
+        return postDao.updatePostId(p_id,p_title);
     }
 
     @Override

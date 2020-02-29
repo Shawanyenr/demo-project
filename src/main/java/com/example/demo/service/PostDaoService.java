@@ -15,7 +15,7 @@ public interface PostDaoService {
 
     public Integer deletePostId(Integer p_id);
 
-    public Integer updatePostId(Integer p_id);
+    public Integer updatePostId(Integer p_id,String p_title);
 
     public List<Post> searchResult(String search_item);
 
