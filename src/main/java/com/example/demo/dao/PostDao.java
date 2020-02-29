@@ -17,7 +17,13 @@ public interface PostDao {
             "order by p_id")
     public List<Post> findAll();
 
-    @Select("select * from post where u_id=#{u_id}")
+    @Select("select * from (SELECT post.p_id as p_id,user.id as u_id,post.u_username as u_username, user.avatar as u_avatar,post.p_title,post.img_dir,post.p_like,post.upload_time,post.p_last_edit_time " +
+            "from user " +
+            "inner join post " +
+            "on user.id=post.u_id " +
+            "order by p_id) as m_post " +
+            "where " +
+            "u_id = #{u_id}")
     public List<Post> findAllOfOneUser(Integer u_id);
 
     @Insert("insert into post(p_title,img_dir,upload_time,u_id)values(#{p_title},#{img_dir},#{upload_time},#{u_id})")

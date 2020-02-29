@@ -47,6 +47,9 @@ public class PostController {
         List<Post> cs = postDaoService.findAllOfOneUser(u_id);
         PageInfo<Post> page = new PageInfo<>(cs);
         System.out.println(page);
+        if (start >= page.getPages()) {
+            return null;
+        }
         return page;
     }
 

@@ -22,6 +22,12 @@ public class MybatisTestPost {
     }
 
     @Test
+    public void findOneUser() {
+        List<Post> all = postDaoService.findAllOfOneUser(1);
+        System.out.println(all);
+    }
+
+    @Test
     public void findOne() {
         System.out.println(postDaoService.onePost(15));
     }
