@@ -314,6 +314,10 @@ a:hover, a:focus {
     line-height: 15px;
 }
 
+.post-card{
+    padding-top: 15px !important;
+    padding-bottom: 5px !important;
+}
 .post-card-img {
     -ms-flex-negative: 0;
     flex-shrink: 0;
@@ -348,11 +352,11 @@ a:hover, a:focus {
     list-style: none;
 }
 .m-list li{
-    padding: 15px 30px;
+    padding: 10px 30px;
 }
 .m-list-item{
     width: 100%;
-    padding: 1em 2em;
+    padding: 0.75em 2em;
 }
 /*.m-list li a{
     width: 100%;
