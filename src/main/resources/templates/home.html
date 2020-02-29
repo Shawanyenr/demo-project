@@ -257,6 +257,8 @@
                     <a class="dropdown-item" href='{{img_dir}}' download><i class="fas fa-download"></i> Download Image</a>
                     <!--                    <a class="dropdown-item" href="#">Another action</a>-->
                     <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#" onclick="deletePost('{{p_id}}')"><i class="fas fa-trash-alt"></i> Delete</a>
+                    <a class="dropdown-item" href="#"><i class="fas fa-info-circle"></i> pid: {{p_id}}</a>
                     <a class="dropdown-item" href="#"><i class="fas fa-exclamation-circle"></i> Report</a>
                 </div>
             </div>
@@ -643,6 +645,20 @@
         })
     }, false);
 
+    function deletePost(p_id) {
+        if (confirm('Confirm to delete?')) {
+            $.post("/delete_post_id", {"p_id": p_id},
+                function (data) {
+                    if (data === "OK") {
+                        alert("success");
+                        window.location.reload();
+                    } else {
+                        alert("Fail");
+                        window.location.reload();
+                    }
+                });
+        }
+    }
 
 </script>
 
