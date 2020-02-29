@@ -18,23 +18,23 @@
     <div class="container" style="max-width: 612px;padding: 0 !important;">
         <div class="card card-body post-card">
             <ul class="list-group m-list">
-                <a th:href="@{/home}" class="m-list-item" style="display: none"><i class="fas fa-home"></i>
+                <a th:href="@{/home}" class="m-list-item online-button" style="display: none"><i class="fas fa-home"></i>
                     <span th:text="${session.user?.name}"></span></a>
 
-                <a href="#" class="m-list-item" id="LoginButton"
+                <a href="#" class="m-list-item offline-button" id="LoginButton"
                    data-toggle="modal"
                    data-target="#loginForm">
                     <i class="fas fa-sign-in-alt"></i>
                     <span> Log in</span>
                 </a>
 
-                <a href="#" class="m-list-item" id="RegisterButton"
+                <a href="#" class="m-list-item offline-button" id="RegisterButton"
                    data-toggle="modal"
                    data-target="#registerForm">
                     <i class="fas fa-hat-wizard"></i>
                     <span> Sign up</span>
                 </a>
-                <a href="#" class="m-list-item" style="display: none"><i
+                <a href="#" class="m-list-item online-button" style="display: none"><i
                         class="fas fa-bell"></i><span> Notification</span></a>
                 <a href="#" class="m-list-item" style="display: none"><i class="far fa-comment-alt"></i><span> Message</span></a>
 
