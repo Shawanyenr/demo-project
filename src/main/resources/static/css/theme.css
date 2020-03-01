@@ -1,12 +1,16 @@
 /*小屏幕*/
+@media (max-width: 576px) {
+    .posts-m {
+        padding: 0 !important;
+    }
+}
+
 @media (max-width: 768px) {
     .nav-m .navbar-brand {
         display: none;
     }
 
-    .posts-m {
-        padding: 0 !important;
-    }
+
 
     .make-me-sticky {
         top: 56px !important;

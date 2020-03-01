@@ -85,12 +85,15 @@ public class PostController {
 
     @RequestMapping("/search_result")
     @ResponseBody
-    public PageInfo<Post> searchResult(@RequestParam(value = "start", defaultValue = "0") int start, @RequestParam(value = "size", defaultValue = "5") int size, @RequestParam(value = "search_item") String search_item) {
+    public PageInfo<Post> searchResult(@RequestParam(value = "start", defaultValue = "1") int start, @RequestParam(value = "size", defaultValue = "5") int size, @RequestParam(value = "search_item") String search_item) {
         PageHelper.startPage(start, size, "p_id desc");
         List<Post> cs = postDaoService.searchResult("%" + search_item + "%");
         PageInfo<Post> page = new PageInfo<>(cs);
         System.out.println("searching: " + search_item);
         System.out.println(page);
+        if (start > page.getPages()) {
+            return null;
+        }
         return page;
     }
 
