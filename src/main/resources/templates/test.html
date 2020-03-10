@@ -288,7 +288,7 @@
 <!--主题控制-->
 <script type="text/javascript">
 
-    const toggleSwitch = document.querySelector('.theme-switch input[type="checkbox"]');
+    /*const toggleSwitch = document.querySelector('.theme-switch input[type="checkbox"]');
     const currentTheme = localStorage.getItem('theme');
 
     if (currentTheme) {
@@ -309,7 +309,7 @@
         }
     }
 
-    toggleSwitch.addEventListener('change', switchTheme, false);
+    toggleSwitch.addEventListener('change', switchTheme, false);*/
 </script>
 <script type="text/javascript" th:src="@{/static/js/infinite-scroll.pkgd.js}"
         src="../static/js/infinite-scroll.pkgd.js"></script>
@@ -321,6 +321,7 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
         integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
         crossorigin="anonymous"></script>
+<script type="text/javascript" th:inline="javascript" th:src="@{/static/js/customize.js}"></script>
 <!--无限下拉-->
 <script type="text/javascript">
     var $container = $('#c123').infiniteScroll({
@@ -372,44 +373,27 @@
 
 <script th:inline="javascript" type="text/javascript">
 
-    $(document).on('click', ':not(#collapseExample)', function () {
-        $("#collapseExample").removeClass("show");
 
-    });
-
+    var a = /*[[${session.user}]]*/ null;
+    console.log("user: " + /*[[${ session.user}]]*/ null);
     /*页面过渡动画*/
     $(document).ready(function () {
         //Preloader
-        preloaderFadeOutTime = 1000;
+        preloaderFadeOutTime = 500;
 
         function hidePreloader() {
+
             var preloader = $('.spinner-wrapper');
-            preloader.fadeOut(preloaderFadeOutTime);
+            if (a == null){
+                preloader.delay(2000).fadeOut(preloaderFadeOutTime);
+            }
+            else {
+                preloader.delay(800).fadeOut(preloaderFadeOutTime);
+            }
         }
 
         hidePreloader();
     });
-    $(function () {
-        //返回顶部===>出现与消失
-        //当屏幕滚动，触生 scroll 事件
-        $(window).scroll(function () {
-            var top1 = $(this).scrollTop();     //获取相对滚动条顶部的偏移
-            if (top1 > 200) {      //当偏移大于200px时让图标淡入（css设置为隐藏）
-                $(".top").stop().fadeIn();
-            } else {
-                //当偏移小于200px时让图标淡出
-                $(".top").stop().fadeOut();
-            }
-        });
-        //去往顶部
-        $(".top").click(function () {
-            $("body , html").animate({scrollTop: 0}, 300);   //300是所用时间
-        });
-    });
-
-    var a = /*[[${session.user}]]*/ null;
-    console.log("user: " + /*[[${ session.user}]]*/ null);
-
     $(function () {
         if (a != null) {
             $(".online-button").show();
