@@ -23,7 +23,7 @@ toggleSwitch.addEventListener('change', switchTheme, false);
 
 
 $(document).on('click', ':not(#collapseExample)', function () {
-    $("#collapseExample").removeClass("show");
+    $("#collapseExample").collapse('hide');
 
 });
 

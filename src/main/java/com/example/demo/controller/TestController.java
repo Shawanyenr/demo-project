@@ -64,5 +64,9 @@ public class TestController {
     public String toTestPage() {
         return "test";
     }
+    @RequestMapping("/123")
+    public String to123() {
+        return "123";
+    }
 
 }

@@ -291,65 +291,14 @@
                     <a th:href="@{/logout.action}" class="m-list-item online-button" style="display: none"><i
                             class="fas fa-sign-out-alt"></i><span> Log out</span></a>
 
-                    <!-- <div class="theme-switch-wrapper ">
-                         <label class="theme-switch" for="checkbox">
-                             <input type="checkbox" id="checkbox"/>
-                             <div class="slider round"></div>
-                         </label>
-                     </div>-->
                     <div class="theme-switch">
                         <input type="checkbox" id="theme-switch" style="display: none"/>
                         <label for="theme-switch" class="m-list-item" style="cursor: pointer">
-                            <i class="fas fa-adjust"></i><span> Dark mode</span>
+                            <i class="fas fa-adjust"></i><span style="font-weight: bold"> Dark mode</span>
                         </label>
                     </div>
 
-
-
                 </div>
-                <!--<ul class="nav-list-group">
-                    <li class="online-button">
-                        <h2 class="name" style="text-align: center;"><span th:text="${session.user?.name}"></span>
-                        </h2>
-                    </li>
-                    <li class="offline-button">
-                        <a href="#" class="nav-list-group-item" id="LoginButton"
-                           data-toggle="modal"
-                           data-target="#loginForm">
-                            <i class="fas fa-sign-in-alt"></i>
-                            <span>Log in</span>
-                        </a>
-                    </li>
-                    <li class="offline-button">
-                        <a href="#" class="nav-list-group-item" id="RegisterButton"
-                           data-toggle="modal"
-                           data-target="#registerForm">
-                            <i class="fas fa-hat-wizard"></i>
-                            <span>Sign up</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="nav-list-group-item active"><i class="fas fa-home"></i>
-                            <span>Home</span></a>
-                    </li>
-                    <li class="online-button" style="display: none"><a href="#" class="nav-list-group-item "><i
-                            class="fas fa-bell"></i><span>Notification</span></a>
-                    </li>
-                    <li class="online-button" style="display: none"><a href="#" class="nav-list-group-item "><i
-                            class="fas fa-user-friends"></i><span>Friends</span></a>
-                    </li>
-                    <li><a href="#" class="nav-list-group-item "><i
-                            class="fas fa-info-circle"></i><span>About</span></a>
-                    </li>
-                    <li>
-                        <div class="theme-switch-wrapper">
-                            <label class="theme-switch" for="checkbox">
-                                <input type="checkbox" id="checkbox"/>
-                                <div class="slider round"></div>
-                            </label>
-                        </div>
-                    </li>
-                </ul>-->
             </div>
         </div>
     </div>
@@ -375,21 +324,6 @@
     </div>
 </header>
 
-<footer th:fragment="footer">
-    <div class="row">
-        <div class="zoom-img" style="background-image: url(../static/img/Snipaste_2019-12-24_09-05-09.png)"
-             th:style="'background-image:url(' + @{/static/img/Snipaste_2019-12-24_09-05-09.png} + ');'">
-        </div>
-
-        <address><strong>Twitter, Inc.</strong><br/> 795 Folsom Ave, Suite 600<br/> San Francisco, CA 94107<br/>
-            <abbr title="Phone">P:</abbr> (123) 456-7890
-        </address>
-        <p>
-            <em>Git</em>是一个分布式的版本控制系统，最初由<strong>Linus Torvalds</strong>编写，用作Linux内核代码的管理。在推出后，Git在其它项目中也取得了很大成功，尤其是在Ruby社区中。
-        </p>
-    </div>
-
-</footer>
 <footer th:fragment="footer2(start,now)">
     <p th:text="|${start} - ${now} All Rights Reserved|"></p>
 </footer>
