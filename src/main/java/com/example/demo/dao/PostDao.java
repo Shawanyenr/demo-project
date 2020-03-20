@@ -46,6 +46,17 @@ public interface PostDao {
             "where p_title like #{search_item}")
     public List<Post> searchResult(String search_item);
 
-    @Select("select * from post where p_id=#{p_id}")
+    @Select("select * from (SELECT \n" +
+            "post.p_id as p_id, \n" +
+            "user.id as u_id, \n" +
+            "user.username as u_username, \n" +
+            "user.avatar as u_avatar, \n" +
+            "post.p_title, post.img_dir, post.p_like, post.upload_time, post.p_last_edit_time\n" +
+            "from user\n" +
+            "inner join post\n" +
+            "on user.id=post.u_id\n" +
+            "order by p_id) as m_post\n" +
+            "where\n" +
+            "p_id=#{p_id}")
     public Post onePost(Integer p_id);
 }

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Title</title>
+
+    <link rel="stylesheet" type="text/css" media="all" href="../static/bootstrap-4.4.1-dist/css/bootstrap.min.css"
+          th:href="@{/static/bootstrap-4.4.1-dist/css/bootstrap.min.css}"/>
+    <link href="https://cdn.bootcss.com/font-awesome/5.12.1/css/all.css" rel="stylesheet">
+    <link rel="stylesheet" href="../static/css/theme.css" th:href="@{/static/css/theme.css}"/>
+</head>
+<body>
+<div class="container content-m">
+    <div class="row">
+        <div class="col-md-8 col posts-m"
+             style="max-width: 614px;margin-left: auto !important;margin-right: auto !important;">
+            <div id="c123"></div>
+            <div class="card mb-3">
+                <div class="card-header bg-transparent pt-1 pb-1" style="display: flex; flex-direction: row; align-items: center">
+                    <div class="pr-2 bd-highlight"><img th:src="@{${post.u_avatar}}"
+                                                             alt="..." class="rounded-circle post-avator "></div>
+                    <div class="pl-1 bd-highlight">
+                        <div class="d-flex flex-column bd-highlight">
+                            <div class="bd-highlight" th:text="${post.u_username}">null</div>
+                            <div class="small-m text-muted" th:text="${#dates.format(post.upload_time,'yyyy-MM-dd hh:mm')}">null</div>
+                        </div>
+                    </div>
+                </div>
+                <img th:src="@{${post.img_dir}}" class="post-card-img" alt="...">
+                <div class="d-flex justify-content-around">
+                    <div class="p-2 bd-highlight"><a href="#"><i class="far fa-heart icon-size"></i></a></div>
+                    <div class="p-2 bd-highlight"><a href="#"><i class="far fa-comment-dots icon-size"></i></a></div>
+                    <div class="p-2 bd-highlight"><a href="#"><i class="far fa-bookmark icon-size"></i></a></div>
+                    <div class="p-2 bd-highlight dropdown">
+                        <a href="#" role="button" th:id="${post.p_id}" data-toggle="dropdown" aria-haspopup="true"
+                           aria-expanded="false">
+                            <i class="fas fa-ellipsis-h"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-left"
+                             th:aria-labelledby="${post.p_id}">
+                            <a class="dropdown-item" th:href='@{${post.img_dir}}' download><i class="fas fa-download"></i>
+                                Download Image</a>
+                            <!--                    <a class="dropdown-item" href="#">Another action</a>-->
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#"><i class="fas fa-exclamation-circle"></i> Report</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="pl-3 pr-3 pb-3">
+                    <p class="card-text" th:text="${post.p_title}">null</p>
+                </div>
+            </div>
+
+            <div class="page-load-status">
+                <div class="loader-ellips infinite-scroll-request">
+                    <span class="loader-ellips__dot"></span>
+                    <span class="loader-ellips__dot"></span>
+                    <span class="loader-ellips__dot"></span>
+                    <span class="loader-ellips__dot"></span>
+                </div>
+                <p class="infinite-scroll-last" style="text-align: center">End of content</p>
+                <p class="infinite-scroll-error" style="text-align: center">No more posts to load</p>
+            </div>
+        </div>
+        <div class="col-md-4 d-none d-md-block">
+            <div class="sidebar-item">
+                <div class="make-me-sticky">
+                    <ul class="nav-list-group">
+                        <li><img th:src="@{/static/img/853c98689faa6d4ccde6acf4c1dd694.jpg}" alt="..."
+                                 class="avatar-img">
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="include::nav_and_menu"></div>
+<!--jQuery-->
+<script type="text/javascript" th:src="@{/static/js/jquery-3.4.1.min.js}"
+        src="../static/js/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" th:src="@{/static/js/infinite-scroll.pkgd.js}"
+        src="../static/js/infinite-scroll.pkgd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+<script type="text/javascript" src="../static/js/jquery.validate.js"
+        th:src="@{/static/js/jquery.validate.js}"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+<script type="text/javascript" th:inline="javascript" th:src="@{/static/js/customize.js}"></script>
+
+</body>
+</html>

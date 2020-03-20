@@ -6,11 +6,6 @@
 }
 
 @media (max-width: 768px) {
-    .nav-m .navbar-brand {
-        display: none;
-    }
-
-
 
     .make-me-sticky {
         top: 56px !important;
@@ -53,12 +48,12 @@
         display: none;
     }
 
-    .avatar .box {
+/*    .avatar .box {
         margin: 0 10px;
         width: 80%;
         height: 0;
         padding-bottom: 40%;
-    }
+    }*/
 
     .name {
         display: none;
@@ -70,10 +65,10 @@
         padding-right: 18px !important;
     }
 
-    .avatar img {
+/*    .avatar img {
         border-radius: 0 !important;
         border: none !important;
-    }
+    }*/
 
     .theme-switch-wrapper {
         float: left;
@@ -289,24 +284,37 @@ a:hover, a:focus {
     border-color: var(--input-bg-color);
 }
 
-.avatar {
-    width: 100%;
-    padding-top: 2em;
+.avatar-nr {
+    font-size: 38px;
 }
 
+.avatar-sm {
+    font-size: 30px;
+}
+
+
+/*
 .avatar .box {
     width: 120px;
     height: 120px;
-}
+}*/
 
-.avatar img {
+/*.avatar img {
     object-fit: cover;
     border-radius: 50%;
+}*/
+
+.small-m{
+    font-size: 70% !important;
+}
+
+.img-cover{
+    object-fit: cover;
 }
 
 .post-avator {
-    width: 48px;
-    height: 48px;
+    width: 40px;
+    height: 40px;
     object-fit: cover;
 }
 
@@ -461,12 +469,12 @@ a:hover, a:focus {
     font-size: 1rem;
 }
 
-.theme-switch {
+/*.theme-switch {
     display: inline-block;
     height: 25.5px;
     position: relative;
     width: 45px;
-}
+}*/
 
 .theme-switch input {
     display: none;
@@ -487,7 +495,7 @@ a:hover, a:focus {
     background-color: #fff;
     bottom: 3px;
     content: "";
-    height: 19.5px;
+    height: 20px;
     left: 3px;
     position: absolute;
     transition: .4s;
@@ -515,12 +523,13 @@ input:checked + .slider:before {
 .spinner {
     /*margin: 100px auto;*/
     position: absolute;
-    top: 48%;
-    left: 48%;
+    top: 50%;
+    left: 50%;
     width: 50px;
     height: 40px;
     text-align: center;
     font-size: 10px;
+    transform: translate(-50%,-50%);
 }
 
 .spinner > div {
@@ -605,3 +614,5 @@ input:checked + .slider:before {
     padding-top: 20px;
     padding-bottom: 20px;
 }
+
+/*自定义夜间按钮*/
