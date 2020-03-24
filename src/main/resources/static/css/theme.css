@@ -1,12 +1,14 @@
 /*小屏幕*/
 @media (max-width: 576px) {
-    .posts-m {
+    /*.posts-m {
         padding: 0 !important;
-    }
+    }*/
 }
 
-@media (max-width: 768px) {
-
+@media (max-width: 767px) {
+   /* .posts-m {
+        padding: 0 !important;
+    }*/
     .make-me-sticky {
         top: 56px !important;
     }
@@ -83,11 +85,21 @@
 }
 
 /*中屏幕*/
+@media (max-width: 992px) {
+    .posts-m{
+        max-width: 600px;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        padding: 0 !important;
+    }
+}
+
+/*中屏幕*/
 @media (min-width: 992px) {
-    .nav-m {
+    /*.nav-m {
         padding-top: 15px;
         padding-bottom: 15px;
-    }
+    }*/
 }
 
 /*大屏幕*/
@@ -95,7 +107,7 @@
 
     .nav-list-group li .avatar-img {
         border-radius: 50%;
-        padding: 0.25rem;
+        /*padding: 0.25rem;*/
         background-color: #fff;
         border: 1px solid #dee2e6;
     }
@@ -127,10 +139,11 @@
     --card-bg-color: #fff;
     --input-bg-color: #ffffff;
     --modal-bg-color: #ffffff;
-    --nav-bg-color: rgb(245, 245, 245);
+    --nav-bg-color: #fff;
     --spinner-color: #333;
     --spinner-bg-bolor: #5274fa;
     --float-menu-bg: #fff;
+    --border-color: #dbdbdb;
 }
 
 [data-theme="dark"] {
@@ -149,6 +162,7 @@
     --spinner-color: #5274fa;
     --spinner-bg-bolor: #333;
     --float-menu-bg: rgb(36, 36, 49);
+    --border-color: rgb(36, 36, 49);
 }
 
 body {
@@ -164,7 +178,7 @@ body {
 }
 
 input[type=text], input[type=password] {
-    background-color: var(--input-bg-color);
+    background-color: var(--input-bg-color)!important;
 }
 
 h1 {

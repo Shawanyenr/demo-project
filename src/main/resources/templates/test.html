@@ -19,7 +19,7 @@
 <!--主内容-->
 <div class="container content-m">
     <div class="row">
-        <div class="col-md-8 col posts-m" style="max-width: 614px;margin-left: auto !important;margin-right: auto !important;">
+        <div class="col-lg-8 col posts-m">
             <div id="c123"></div>
             <div class="page-load-status">
                 <div class="loader-ellips infinite-scroll-request">
@@ -32,7 +32,7 @@
                 <p class="infinite-scroll-error" style="text-align: center">No more posts to load</p>
             </div>
         </div>
-        <div class="col-md-4 d-none d-md-block">
+        <div class="col-lg-4 d-none d-lg-block">
             <div class="sidebar-item">
                 <div class="make-me-sticky">
                     <ul class="nav-list-group">
@@ -43,80 +43,6 @@
                 </div>
             </div>
         </div>
-        <!--<div class="col-lg-8 col-md-9 col posts-m">
-            <div id="c123"></div>
-            <div class="page-load-status">
-                <div class="loader-ellips infinite-scroll-request">
-                    <span class="loader-ellips__dot"></span>
-                    <span class="loader-ellips__dot"></span>
-                    <span class="loader-ellips__dot"></span>
-                    <span class="loader-ellips__dot"></span>
-                </div>
-                <p class="infinite-scroll-last" style="text-align: center">End of content</p>
-                <p class="infinite-scroll-error" style="text-align: center">No more posts to load</p>
-            </div>
-        </div>
-        <div class="col-lg-4 col-md-3 col-min-m">
-            <div class="sidebar-item">
-                <div class="make-me-sticky">
-                    <ul class="nav-list-group">
-                        <li><img th:src="@{/static/img/853c98689faa6d4ccde6acf4c1dd694.jpg}" alt="..."
-                                 class="avatar-img">
-                        </li>
-                        <li class="online-button">
-                            <h2 class="name" style="text-align: center;"><span th:text="${session.user?.name}"></span>
-                            </h2>
-                        </li>
-                        <li class="offline-button">
-                            <a href="#" class="nav-list-group-item" id="LoginButton"
-                               data-toggle="modal"
-                               data-target="#loginForm">
-                                <i class="fas fa-sign-in-alt"></i>
-                                <span>Log in</span>
-                            </a>
-                        </li>
-                        <li class="offline-button">
-                            <a href="#" class="nav-list-group-item" id="RegisterButton"
-                               data-toggle="modal"
-                               data-target="#registerForm">
-                                <i class="fas fa-hat-wizard"></i>
-                                <span>Sign up</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="nav-list-group-item active"><i class="fas fa-home"></i>
-                                <span>Home</span></a>
-                        </li>
-                        &lt;!&ndash;<li class="online-button" style="display: none"><a href="#" class="nav-list-group-item "><i
-                                class="fas fa-tags"></i><span>Label</span></a></li>&ndash;&gt;
-                        <li class="online-button" style="display: none"><a href="#" class="nav-list-group-item "><i
-                                class="fas fa-bell"></i><span>Notification</span></a>
-                        </li>
-                        <li class="online-button" style="display: none"><a href="#" class="nav-list-group-item "><i
-                                class="fas fa-user-friends"></i><span>Friends</span></a>
-                        </li>
-                        &lt;!&ndash;<li class="online-button" style="display: none"><a href="#" class="nav-list-group-item "><i
-                                class="fas fa-bookmark"></i><span>Bookmarks</span></a>
-                        </li>
-                        <li class="online-button" style="display: none"><a th:href="@{/home_page}"
-                                                                           class="nav-list-group-item "><i
-                                class="fas fa-user-circle"></i><span>Profile</span></a>
-                        </li>&ndash;&gt;
-                        <li><a href="#" class="nav-list-group-item "><i
-                                class="fas fa-info-circle"></i><span>About</span></a>
-                        </li>
-                        <li>
-                            <div class="theme-switch-wrapper">
-                                <label class="theme-switch" for="checkbox">
-                                    <input type="checkbox" id="checkbox"/>
-                                    <div class="slider round"></div>
-                                </label>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>-->
     </div>
 </div>
 <!--登录、注册、上传模态框-->
@@ -138,7 +64,17 @@
 <!--post模板-->
 <script type="text/html" id="photo-item-template">
     <div class="card mb-3">
-        <div class="d-flex bd-highlight pt-1 pb-1">
+        <div class="card-header bg-transparent pt-1 pb-1" style="display: flex; flex-direction: row; align-items: center">
+            <div class="pr-2 bd-highlight"><img src="{{u_avatar}}"
+                                                alt="..." class="rounded-circle post-avator "></div>
+            <div class="pl-1 bd-highlight">
+                <div class="d-flex flex-column bd-highlight">
+                    <div class="bd-highlight">{{u_username}}</div>
+                    <div class="small-m text-muted">{{upload_time}}</div>
+                </div>
+            </div>
+        </div>
+        <!--<div class="d-flex bd-highlight pt-1 pb-1">
             <div class="pl-3 pr-2 bd-highlight"><img src="{{u_avatar}}"
                                                      alt="..." class="rounded-circle post-avator"></div>
             <div class="pl-2 pr-2 bd-highlight">
@@ -147,7 +83,7 @@
                     <div class="small text-muted">{{upload_time}}</div>
                 </div>
             </div>
-        </div>
+        </div>-->
         <img src="{{img_dir}}" class="post-card-img" alt="...">
         <div class="d-flex justify-content-around">
             <div class="p-2 bd-highlight"><a href="#"><i class="far fa-heart icon-size"></i></a></div>
@@ -175,32 +111,6 @@
 <!--jQuery-->
 <script type="text/javascript" th:src="@{/static/js/jquery-3.4.1.min.js}"
         src="../static/js/jquery-3.4.1.min.js"></script>
-<!--主题控制-->
-<script type="text/javascript">
-
-    /*const toggleSwitch = document.querySelector('.theme-switch input[type="checkbox"]');
-    const currentTheme = localStorage.getItem('theme');
-
-    if (currentTheme) {
-        document.documentElement.setAttribute('data-theme', currentTheme);
-
-        if (currentTheme === 'dark') {
-            toggleSwitch.checked = true;
-        }
-    }
-
-    function switchTheme(e) {
-        if (e.target.checked) {
-            document.documentElement.setAttribute('data-theme', 'dark');
-            localStorage.setItem('theme', 'dark');
-        } else {
-            document.documentElement.setAttribute('data-theme', 'light');
-            localStorage.setItem('theme', 'light');
-        }
-    }
-
-    toggleSwitch.addEventListener('change', switchTheme, false);*/
-</script>
 <script type="text/javascript" th:src="@{/static/js/infinite-scroll.pkgd.js}"
         src="../static/js/infinite-scroll.pkgd.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
@@ -276,10 +186,8 @@
             var preloader = $('.spinner-wrapper');
             if (a == null){
                 preloader.delay(2000).fadeOut(preloaderFadeOutTime);
-            }
-            else {
-                preloader.delay(800).fadeOut(preloaderFadeOutTime);
-            }
+            }else
+                preloader.fadeOut(preloaderFadeOutTime);
         }
 
         hidePreloader();

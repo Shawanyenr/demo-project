@@ -305,19 +305,25 @@
 
     <!--顶部导航栏-->
     <div class="row">
-        <nav class="navbar fixed-top nav-m">
-            <div class="container p-0"
-                 style="max-width: 992px;display: flex; flex-direction: row; align-items: center;flex-wrap: nowrap">
-                <a th:href="@{/test}" class="navbar-brand pr-3">Pic</a>
-                <div class="search-box">
+        <nav class="navbar fixed-top nav-m p-0" style="border-bottom: 1px solid var(--border-color);">
+            <div class="container"
+                 style="max-width: 992px;height:54px;display: flex; flex-direction: row; align-items: center;flex-wrap: nowrap;">
+                <a th:href="@{/test}" class="pr-3">Pic</a>
+                <!--<div class="search-box">
                     <form th:action="@{/search_post}" method="post" style="position: relative">
                         <input class='form-control' name="search_item" placeholder='Type to search' type='text'>
                         <button class='btn btn-link search-btn' type="submit"><i class="far fa-circle "></i></button>
                     </form>
-                </div>
+                </div>-->
+                <form th:action="@{/search_post}" method="post">
+                    <div class="input-group input-group-sm" style="max-width: 200px;">
+                        <input type="text" class="form-control" name="search_item">
+                    </div>
+                </form>
+
                 <a class="pl-3" data-toggle="collapse" href="#collapseExample" role="button"
                    aria-expanded="false" aria-controls="collapseExample" style="text-decoration: none;">
-                    <i class="fas fa-user-circle" style="font-size: calc(1.5em + 0.7rem)!important;"></i>
+                    <i class="fas fa-user-circle" style="font-size: 22px!important;"></i>
                 </a>
             </div>
         </nav>
