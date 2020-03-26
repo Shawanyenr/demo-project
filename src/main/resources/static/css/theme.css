@@ -5,6 +5,12 @@
     }*/
 }
 
+@media (max-width: 614px) {
+    #c123 > .card{
+        border: none;
+    }
+}
+
 @media (max-width: 767px) {
    /* .posts-m {
         padding: 0 !important;
@@ -166,7 +172,8 @@
 }
 
 body {
-    font-family: "Lato", sans-serif;
+    font-family: "Lato", "微软雅黑", sans-serif;
+    letter-spacing: normal;
     background-color: var(--bg-color);
     color: var(--font-color);
     /*max-width: 90%;*/
@@ -327,8 +334,8 @@ a:hover, a:focus {
 }
 
 .post-avator {
-    width: 40px;
-    height: 40px;
+    width: 32px;
+    height: 32px;
     object-fit: cover;
 }
 

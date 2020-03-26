@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.demo.dao.PostDao">
+    <select id="findAll" resultType="Post">
+        select user.id as u_id,user.name as u_username, avatar as u_avatar, post.p_id as p_id,  post.img_dir as img_dir, post.p_title as p_title,  post.p_last_edit_time as p_last_edit_time,post.upload_time as upload_time, post.p_like_count as p_like_count, p_like_flag, post.p_fav_count as p_fav_count, p_fav_flag
+from (user inner join post
+on user.id=post.u_id)
+left join postflag
+on user.id=postflag.u_id
+    </select>
+    <select id="findAllOfOneUser" resultType="Post" parameterType="Integer">
+        select user.id as u_id,user.name as u_username, avatar as u_avatar, post.p_id as p_id,  post.img_dir as img_dir, post.p_title as p_title,  post.p_last_edit_time as p_last_edit_time,post.upload_time as upload_time, post.p_like_count as p_like_count, p_like_flag, post.p_fav_count as p_fav_count, p_fav_flag
+from (user inner join post
+on user.id=post.u_id)
+left join postflag
+on user.id=postflag.u_id
+where post.u_id=#{u_id}
+    </select>
+    <select id="searchResult" resultType="Post" parameterType="String">
+        select user.id as u_id,user.name as u_username, avatar as u_avatar, post.p_id as p_id,  post.img_dir as img_dir, post.p_title as p_title,  post.p_last_edit_time as p_last_edit_time,post.upload_time as upload_time, post.p_like_count as p_like_count, p_like_flag, post.p_fav_count as p_fav_count, p_fav_flag
+from (user inner join post
+on user.id=post.u_id)
+left join postflag
+on user.id=postflag.u_id
+where p_title like #{search_item}
+order by p_id
+    </select>
+</mapper>

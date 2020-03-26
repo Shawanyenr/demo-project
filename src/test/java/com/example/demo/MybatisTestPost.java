@@ -19,12 +19,19 @@ public class MybatisTestPost {
     public void findAll1() {
         List<Post> all = postDaoService.findAll();
         System.out.println(all);
+        System.out.println(all.size());
     }
 
     @Test
     public void findOneUser() {
         List<Post> all = postDaoService.findAllOfOneUser(1);
         System.out.println(all);
+    }
+    @Test
+    public void searchResult() {
+        List<Post> all = postDaoService.searchResult("%哈哈%");
+        System.out.println(all);
+        System.out.println(all.size());
     }
 
     @Test

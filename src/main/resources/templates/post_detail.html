@@ -13,18 +13,22 @@
 </head>
 <body>
 <div class="container content-m">
+    <button id="button">say hi!</button>
     <div class="row">
         <div class="col-md-8 col posts-m"
              style="max-width: 614px;margin-left: auto !important;margin-right: auto !important;">
             <div id="c123"></div>
             <div class="card mb-3">
-                <div class="card-header bg-transparent pt-1 pb-1" style="display: flex; flex-direction: row; align-items: center">
+                <div class="card-header bg-transparent pt-1 pb-1"
+                     style="display: flex; flex-direction: row; align-items: center">
                     <div class="pr-2 bd-highlight"><img th:src="@{${post.u_avatar}}"
-                                                             alt="..." class="rounded-circle post-avator "></div>
+                                                        alt="..." class="rounded-circle post-avator "></div>
                     <div class="pl-1 bd-highlight">
                         <div class="d-flex flex-column bd-highlight">
                             <div class="bd-highlight" th:text="${post.u_username}">null</div>
-                            <div class="small-m text-muted" th:text="${#dates.format(post.upload_time,'yyyy-MM-dd hh:mm')}">null</div>
+                            <div class="small-m text-muted"
+                                 th:text="${#dates.format(post.upload_time,'yyyy-MM-dd hh:mm')}">null
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -40,7 +44,8 @@
                         </a>
                         <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-left"
                              th:aria-labelledby="${post.p_id}">
-                            <a class="dropdown-item" th:href='@{${post.img_dir}}' download><i class="fas fa-download"></i>
+                            <a class="dropdown-item" th:href='@{${post.img_dir}}' download><i
+                                    class="fas fa-download"></i>
                                 Download Image</a>
                             <!--                    <a class="dropdown-item" href="#">Another action</a>-->
                             <div class="dropdown-divider"></div>
@@ -92,6 +97,72 @@
         integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
         crossorigin="anonymous"></script>
 <script type="text/javascript" th:inline="javascript" th:src="@{/static/js/customize.js}"></script>
+<script type="text/javascript">
+    if (window.Notification) {
+        console.log('浏览器支持Notification');
+        if (Notification.permission === 'granted') {
+            console.log('用户允许通知');
+        } else if (Notification.permission === 'denied') {
+            console.log('用户拒绝通知');
+        } else {
+            console.log('用户还没选择，去向用户申请权限吧');
+        }
+
+        Notification.requestPermission().then(function (permission) {
+            if (permission === 'granted') {
+                console.log('用户允许通知');
+                var n = new Notification('状态更新提醒', {
+                    body: '你的朋友圈有3条新状态，快去查看吧',
+                    /*tag: 'linxin',
+                    icon: 'http://blog.gdfengshuo.com/images/avatar.jpg',*/
+                    requireInteraction: true
+                })
+
+            } else if (permission === 'denied') {
+                console.log('用户拒绝通知');
+            }
+        });
+    } else {
+        console.log('浏览器不支持Notification');
+    }
+
+
+    var button = document.getElementById("button");
+    button.addEventListener('click', function () {
+        // 如果用户同意就创建一个通知
+        if (window.Notification && Notification.permission === "granted") {
+            console.log('正在推送通知');
+            /*for (var i = 0; i < 10; i++) {
+                // 感谢标记，我们应该只看到内容为 "Hi! 9" 的通知
+                var n = new Notification("Hi! " + i, {tag: 'soManyNotification'});
+            }*/
+            /*var n = new Notification("Hi!", {
+                body: '你的朋友圈有3条新状态，快去查看吧',
+                /!*tag: 'linxin',
+                icon: 'http://blog.gdfengshuo.com/images/avatar.jpg',*!/
+                requireInteraction: true
+            });*/
+            navigator.serviceWorker.getRegistration().then(function(reg) {
+                var options = {
+                    body: 'Here is a notification body!',
+                    icon: 'images/example.png',
+                    vibrate: [100, 50, 100],
+                    data: {
+                        dateOfArrival: Date.now(),
+                        primaryKey: 1
+                    },
+                    actions: [
+                        {action: 'explore', title: 'Explore this new world',
+                            icon: 'images/checkmark.png'},
+                        {action: 'close', title: 'Close notification',
+                            icon: 'images/xmark.png'},
+                    ]
+                };
+                reg.showNotification('Hello world!', options);
+            });
+        }
+    });
+</script>
 
 </body>
 </html>

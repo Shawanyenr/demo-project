@@ -64,13 +64,13 @@
 <!--post模板-->
 <script type="text/html" id="photo-item-template">
     <div class="card mb-3">
-        <div class="card-header bg-transparent pt-1 pb-1" style="display: flex; flex-direction: row; align-items: center">
-            <div class="pr-2 bd-highlight"><img src="{{u_avatar}}"
+        <div class="card-header bg-transparent pl-3 pr-3" style="display: flex; flex-direction: row; align-items: center">
+            <div class="pr-3 bd-highlight"><img src="{{u_avatar}}"
                                                 alt="..." class="rounded-circle post-avator "></div>
-            <div class="pl-1 bd-highlight">
+            <div class="bd-highlight">
                 <div class="d-flex flex-column bd-highlight">
-                    <div class="bd-highlight">{{u_username}}</div>
-                    <div class="small-m text-muted">{{upload_time}}</div>
+                    <div class="bd-highlight" style="font-size: 66% !important;font-weight: bold">{{u_username}}</div>
+                    <div class="text-muted" style="font-size: 55% !important;">{{upload_time}}</div>
                 </div>
             </div>
         </div>
@@ -104,7 +104,7 @@
             </div>
         </div>
         <div class="pl-3 pr-3 pb-3">
-            <p class="card-text">{{p_title}}</p>
+            <p class="card-text" style="font-size: 80%"><span style="font-weight: bold">{{u_username}}&nbsp;&nbsp;</span>{{p_title}}</p>
         </div>
     </div>
 </script>
