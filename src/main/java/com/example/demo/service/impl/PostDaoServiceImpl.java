@@ -50,7 +50,7 @@ public class PostDaoServiceImpl implements PostDaoService {
     }
 
     @Override
-    public Post onePost(Integer p_id) {
-        return postDao.onePost(p_id);
+    public Post onePost(Integer p_id, Integer u_id) {
+        return postDao.onePost(p_id,u_id);
     }
 }

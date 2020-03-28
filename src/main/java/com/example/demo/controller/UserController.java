@@ -60,6 +60,7 @@ public class UserController {
             msg = "fail";
             s.invalidate();
         } else {
+            registerInfo.setAvatar("/user_avatar/default_user_avatar.jpg");
             Integer trySaveOne = userDaoService.saveUser(registerInfo);
             System.out.println("存储了" + trySaveOne + "个信息");
             if (trySaveOne == 1) {

@@ -38,7 +38,7 @@ public class TestController {
     }
 
     @RequestMapping("/posts/{id}")
-    public String posts_detail(@PathVariable Integer id, Model model) throws Exception {
+    public String posts_detail(@PathVariable Integer id, RequestParam(value="u_id", defaultValue = null) Integer u_id, Model model) {
         System.out.println("请求post_id:" + id);
         Post post = postDaoService.onePost(id);
         if (null==post){

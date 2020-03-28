@@ -20,6 +20,6 @@ public interface PostDaoService {
 
     public List<Post> searchResult(String search_item);
 
-    public Post onePost(Integer p_id);
+    public Post onePost(Integer p_id, Integer u_id);
 
 }

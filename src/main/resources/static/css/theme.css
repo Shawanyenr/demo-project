@@ -636,4 +636,6 @@ input:checked + .slider:before {
     padding-bottom: 20px;
 }
 
-/*自定义夜间按钮*/
+.like-flag{
+    color: red;!important;
+}

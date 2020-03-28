@@ -9,14 +9,14 @@
 from (user inner join post
 on user.id=post.u_id)
 left join postflag
-on user.id=postflag.u_id
+on post.p_id=postflag.p_id
     </select>
     <select id="findAllOfOneUser" resultType="Post" parameterType="Integer">
         select user.id as u_id,user.name as u_username, avatar as u_avatar, post.p_id as p_id,  post.img_dir as img_dir, post.p_title as p_title,  post.p_last_edit_time as p_last_edit_time,post.upload_time as upload_time, post.p_like_count as p_like_count, p_like_flag, post.p_fav_count as p_fav_count, p_fav_flag
 from (user inner join post
 on user.id=post.u_id)
 left join postflag
-on user.id=postflag.u_id
+on post.p_id=postflag.p_id
 where post.u_id=#{u_id}
     </select>
     <select id="searchResult" resultType="Post" parameterType="String">
@@ -24,8 +24,18 @@ where post.u_id=#{u_id}
 from (user inner join post
 on user.id=post.u_id)
 left join postflag
-on user.id=postflag.u_id
+on post.p_id=postflag.p_id
 where p_title like #{search_item}
 order by p_id
+    </select>
+    <select id="onePost" resultType="Post" parameterType="Integer">
+select post.p_id, post.u_id, p_title,img_dir, upload_time, p_last_edit_time, p_like_count, p_fav_count, p_like_flag, p_fav_flag, name, username as u_username, userState, avatar as u_avatar, email
+from (
+post inner join user
+on post.u_id=user.id
+left JOIN (select * from postflag WHERE u_id=7) as temp
+on post.p_id=temp.p_id
+)
+where post.p_id=#{p_id}
     </select>
 </mapper>

@@ -34,7 +34,7 @@
                 </div>
                 <img th:src="@{${post.img_dir}}" class="post-card-img" alt="...">
                 <div class="d-flex justify-content-around">
-                    <div class="p-2 bd-highlight"><a href="#"><i class="far fa-heart icon-size"></i></a></div>
+                    <div class="p-2 bd-highlight"><a href="#"><i th:class="${post.p_like_flag}==1?'fas fa-heart icon-size love-flag':'far fa-heart icon-size'"></i></a></div>
                     <div class="p-2 bd-highlight"><a href="#"><i class="far fa-comment-dots icon-size"></i></a></div>
                     <div class="p-2 bd-highlight"><a href="#"><i class="far fa-bookmark icon-size"></i></a></div>
                     <div class="p-2 bd-highlight dropdown">

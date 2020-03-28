@@ -47,7 +47,7 @@ public interface PostDao {
             "where p_title like #{search_item}")*/
     public List<Post> searchResult(String search_item);
 
-    @Select("select * from (SELECT \n" +
+    /*@Select("select * from (SELECT \n" +
             "post.p_id as p_id, \n" +
             "user.id as u_id, \n" +
             "user.username as u_username, \n" +
@@ -58,6 +58,6 @@ public interface PostDao {
             "on user.id=post.u_id\n" +
             "order by p_id) as m_post\n" +
             "where\n" +
-            "p_id=#{p_id}")
-    public Post onePost(Integer p_id);
+            "p_id=#{p_id}")*/
+    public Post onePost(@Param("p_id") Integer p_id,@Param("u_id") Integer u_id);
 }
