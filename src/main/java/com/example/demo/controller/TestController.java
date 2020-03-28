@@ -37,17 +37,17 @@ public class TestController {
         return page;
     }
 
-    @RequestMapping("/posts/{id}")
-    public String posts_detail(@PathVariable Integer id, RequestParam(value="u_id", defaultValue = null) Integer u_id, Model model) {
+    @RequestMapping("/posts/p/{id}")
+    public String posts_detail(@PathVariable Integer id, @RequestParam(value = "u_id") int u_id, Model model) {
         System.out.println("请求post_id:" + id);
-        Post post = postDaoService.onePost(id);
-        if (null==post){
-            model.addAttribute("msg","The resource you requested dose not exist.");
+        Post post = postDaoService.onePost(id, u_id);
+        if (null == post) {
+            model.addAttribute("msg", "The resource you requested dose not exist.");
             return "error/404";
-        }else
+        } else
             System.out.println(post);
-            model.addAttribute("post", post);
-            return "post_detail";
+        model.addAttribute("post", post);
+        return "post_detail";
     }
 
     @RequestMapping("/to_index")
@@ -64,6 +64,7 @@ public class TestController {
     public String toTestPage() {
         return "test";
     }
+
     @RequestMapping("/123")
     public String to123() {
         return "123";

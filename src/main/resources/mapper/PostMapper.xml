@@ -33,7 +33,7 @@ select post.p_id, post.u_id, p_title,img_dir, upload_time, p_last_edit_time, p_l
 from (
 post inner join user
 on post.u_id=user.id
-left JOIN (select * from postflag WHERE u_id=7) as temp
+left JOIN (select * from postflag WHERE u_id=#{u_id}) as temp
 on post.p_id=temp.p_id
 )
 where post.p_id=#{p_id}

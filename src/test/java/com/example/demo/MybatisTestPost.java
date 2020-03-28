@@ -37,7 +37,7 @@ public class MybatisTestPost {
 
     @Test
     public void findOne() {
-        System.out.println(postDaoService.onePost(33));
+        System.out.println(postDaoService.onePost(32,null));
     }
 
     @Test
