@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.Date;
 import java.util.List;
 
 @SpringBootTest(classes = DemoApplication.class)
@@ -37,6 +38,11 @@ public class MybatisTestPost {
     @Test
     public void findOne() {
         System.out.println(postDaoService.onePost(15));
+    }
+
+    @Test
+    public void updateOne() {
+        System.out.println(postDaoService.updatePostId(16,new Date(),"一个游艇"));
     }
 
 

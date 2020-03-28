@@ -6,6 +6,7 @@ import com.example.demo.service.PostDaoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -39,8 +40,8 @@ public class PostDaoServiceImpl implements PostDaoService {
     }
 
     @Override
-    public Integer updatePostId(Integer p_id,String p_title) {
-        return postDao.updatePostId(p_id,p_title);
+    public Integer updatePostId(Integer p_id, Date p_last_edit_time, String p_title) {
+        return postDao.updatePostId(p_id, p_last_edit_time, p_title);
     }
 
     @Override

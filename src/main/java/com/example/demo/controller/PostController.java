@@ -69,7 +69,7 @@ public class PostController {
     @ResponseBody
     public String updatePostId(Integer p_id,String p_title) {
         System.out.println("updating: " + p_id + "set title = " + p_title);
-        Integer check = postDaoService.updatePostId(p_id,p_title);
+        Integer check = postDaoService.updatePostId(p_id,new Date(),p_title);
         if (check == 1) {
             return "OK";
         } else

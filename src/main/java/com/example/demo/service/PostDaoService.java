@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.po.Post;
 
+import java.util.Date;
 import java.util.List;
 
 public interface PostDaoService {
@@ -15,7 +16,7 @@ public interface PostDaoService {
 
     public Integer deletePostId(Integer p_id);
 
-    public Integer updatePostId(Integer p_id,String p_title);
+    public Integer updatePostId(Integer p_id, Date p_last_edit_time, String p_title);
 
     public List<Post> searchResult(String search_item);
 
