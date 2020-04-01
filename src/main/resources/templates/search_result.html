@@ -78,17 +78,41 @@
 <!--主内容-->
 <div class="container content-m">
     <div class="row">
-        <div class="col-md-8 col">
-            <div id="c123"></div>
-            <div class="page-load-status">
-                <div class="loader-ellips infinite-scroll-request">
-                    <span class="loader-ellips__dot"></span>
-                    <span class="loader-ellips__dot"></span>
-                    <span class="loader-ellips__dot"></span>
-                    <span class="loader-ellips__dot"></span>
+        <div id="posts" class="col-lg-8 col posts-m">
+            <div class="card mb-3" th:each="post : ${posts}">
+                <div class="card-header bg-transparent pl-3 pr-3" style="display: flex; flex-direction: row; align-items: center">
+                    <div class="pr-3 bd-highlight"><img th:src="@{${post.u_avatar}}"
+                                                        alt="..." class="rounded-circle post-avator "></div>
+                    <div class="bd-highlight">
+                        <div class="d-flex flex-column bd-highlight">
+                            <div class="bd-highlight" style="font-size: 66% !important;font-weight: bold" th:text="${post.u_username}">null</div>
+                            <div class="text-muted" style="font-size: 55% !important;" th:text="${#dates.format(post.upload_time,'yyyy-MM-dd HH:mm')}">null</div>
+                        </div>
+                    </div>
                 </div>
-                <p class="infinite-scroll-last" style="text-align: center">End of content</p>
-                <p class="infinite-scroll-error" style="text-align: center">No more posts to load</p>
+                <img th:src="@{${post.img_dir}}" class="post-card-img" alt="...">
+                <div class="d-flex justify-content-around">
+                    <div class="p-2 bd-highlight"><a href="#"><i th:class="${post.p_like_flag}==1?'fas fa-heart icon-size love-flag':'far fa-heart icon-size'"></i></a></div>
+                    <div class="p-2 bd-highlight"><a href="#"><i class="far fa-comment-dots icon-size"></i></a></div>
+                    <div class="p-2 bd-highlight"><a href="#"><i class="far fa-bookmark icon-size"></i></a></div>
+                    <div class="p-2 bd-highlight dropdown">
+                        <a href="#" role="button" th:id="${post.p_id}" data-toggle="dropdown" aria-haspopup="true"
+                           aria-expanded="false">
+                            <i class="fas fa-ellipsis-h"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-left"
+                             th:aria-labelledby="${post.p_id}">
+                            <a class="dropdown-item" th:href='@{${post.img_dir}}' download><i class="fas fa-download"></i> Download Image</a>
+                            <!--<a class="dropdown-item" href="#">Another action</a>-->
+                            <div class="dropdown-divider"></div>
+<!--                            <a class="dropdown-item" href="#" th:onclick="'deletePost('+${post.p_id}+')'"><i class="fas fa-trash-alt"></i> Delete</a>-->
+                            <a class="dropdown-item" href="#"><i class="fas fa-exclamation-circle"></i> Report</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="pl-3 pr-3 pb-3">
+                    <p class="card-text" style="font-size: 80%"><span style="font-weight: bold" th:text="${post.u_username}">null&nbsp;&nbsp;</span> <span th:text="${post.p_title}">null</span></p>
+                </div>
             </div>
         </div>
         <div class="col-md-4 d-none d-md-block">
@@ -149,7 +173,7 @@
 <a href="javaScript:;" class="top"><i class="fas fa-arrow-up" style="font-size: 150%; "></i></a>
 
 <!--post模板-->
-<script type="text/html" id="photo-item-template">
+<!--<script type="text/html" id="photo-item-template">
     <div class="card mb-3">
         <div class="d-flex bd-highlight pt-1 pb-1">
             <div class="pl-3 pr-2 bd-highlight"><img src="{{u_avatar}}"
@@ -174,7 +198,7 @@
                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-left"
                      aria-labelledby="dropdown{{p_id}}">
                     <a class="dropdown-item" href='{{img_dir}}' download><i class="fas fa-download"></i> Download Image</a>
-                    <!--                    <a class="dropdown-item" href="#">Another action</a>-->
+                    &lt;!&ndash;                    <a class="dropdown-item" href="#">Another action</a>&ndash;&gt;
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="#"><i class="fas fa-exclamation-circle"></i> Report</a>
                 </div>
@@ -184,12 +208,12 @@
             <p class="card-text">{{p_title}}</p>
         </div>
     </div>
-</script>
+</script>-->
 <!--jQuery-->
 <script type="text/javascript" th:src="@{/static/js/jquery-3.4.1.min.js}"
         src="../static/js/jquery-3.4.1.min.js"></script>
 <!--主题控制-->
-<script type="text/javascript">
+<!--<script type="text/javascript">
 
     const toggleSwitch = document.querySelector('.theme-switch input[type="checkbox"]');
     const currentTheme = localStorage.getItem('theme');
@@ -213,7 +237,7 @@
     }
 
     toggleSwitch.addEventListener('change', switchTheme, false);
-</script>
+</script>-->
 <script type="text/javascript" th:src="@{/static/js/infinite-scroll.pkgd.js}"
         src="../static/js/infinite-scroll.pkgd.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"

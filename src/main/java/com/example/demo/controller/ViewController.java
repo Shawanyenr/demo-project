@@ -15,26 +15,26 @@ import java.util.List;
 public class ViewController {
     @Autowired
     private PostDaoService postDaoService;
-
     @RequestMapping("/new_home")
     public String toNewHome() {
         return "new_home";
     }
 
-    @RequestMapping("/post_detail")
-    public String toPostDetail() {
-        return "post_detail";
-    }
 
     @RequestMapping("/home")
     public String toHomePage(HttpSession session, Model model) {
         User user = (User) session.getAttribute("user");
         System.out.println(user);
-
-        List<Post> posts = postDaoService.findAllOfOneUser(user.getId(), user.getId());
-        model.addAttribute("posts", posts);
+        if (null == user) {
+            List<Post> posts = postDaoService.findAll(null);
+            model.addAttribute("posts", posts);
+        } else {
+            List<Post> posts  = postDaoService.findAll(user.getId());
+            model.addAttribute("posts", posts);
+        }
         return "home";
     }
+
 
 
 }

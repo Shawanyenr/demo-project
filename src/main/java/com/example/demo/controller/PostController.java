@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.po.Post;
+import com.example.demo.po.User;
 import com.example.demo.service.PostDaoService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
@@ -77,9 +79,17 @@ public class PostController {
     }
 
     @RequestMapping("/search_post")
-    public String searchPost(@RequestParam(value = "search_item") String search_item, Model model) {
+    public String searchPost(@RequestParam(value = "search_item") String search_item, Model model, HttpSession session) {
         System.out.println("search_post: " + search_item);
-        model.addAttribute("search_item", search_item);
+        User user = (User) session.getAttribute("user");
+        System.out.println(user);
+        if (null == user) {
+            List<Post> posts = postDaoService.searchResult("%"+search_item+"%",null);
+            model.addAttribute("posts", posts);
+        } else {
+            List<Post> posts  = postDaoService.searchResult("%"+search_item+"%",user.getId());
+            model.addAttribute("posts", posts);
+        }
         return "search_result";
     }
 
