@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.dao.PostDao;
 import com.example.demo.po.Post;
+import com.example.demo.po.User;
 import com.example.demo.service.PostDaoService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -28,7 +30,7 @@ public class TestController {
     public PageInfo<Post> posts(@RequestParam(value = "start", defaultValue = "1") int start, @RequestParam(value = "size", defaultValue = "5") int size) throws Exception {
         System.out.println("请求第" + start + "页");
         PageHelper.startPage(start, size, "p_id desc");
-        List<Post> cs = postDaoService.findAll();
+        List<Post> cs = postDaoService.findAll(null);
         PageInfo<Post> page = new PageInfo<>(cs);
         System.out.println(page);
         if (start > page.getPages()) {
@@ -37,18 +39,34 @@ public class TestController {
         return page;
     }
 
-    @RequestMapping("/posts/p/{id}")
-    public String posts_detail(@PathVariable Integer id, @RequestParam(value = "u_id") int u_id, Model model) {
+    @RequestMapping("/posts/{id}")
+    public String posts_detail(@PathVariable Integer id, HttpSession session, Model model) {
         System.out.println("请求post_id:" + id);
-        Post post = postDaoService.onePost(id, u_id);
-        if (null == post) {
-            model.addAttribute("msg", "The resource you requested dose not exist.");
-            return "error/404";
-        } else
-            System.out.println(post);
-        model.addAttribute("post", post);
+        User user = (User) session.getAttribute("user");
+        System.out.println(user);
+        if (null == user) {
+            Post post = postDaoService.onePost(id, null);
+            if (null == post) {
+                model.addAttribute("msg", "The resource you requested does not exist.");
+                return "error/404";
+            } else {
+                System.out.println(post);
+                model.addAttribute("post", post);
+            }
+        } else {
+            Post post = postDaoService.onePost(id, user.getId());
+            if (null == post) {
+                model.addAttribute("msg", "The resource you requested does not exist.");
+                return "error/404";
+            } else {
+                System.out.println(post);
+                model.addAttribute("post", post);
+            }
+        }
+
         return "post_detail";
     }
+
 
     @RequestMapping("/to_index")
     public String index() {
@@ -68,6 +86,21 @@ public class TestController {
     @RequestMapping("/123")
     public String to123() {
         return "123";
+    }
+
+    @RequestMapping("/index")
+    public String toIndex(Model model, HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        System.out.println(user);
+        if (null == user) {
+            List<Post> posts = postDaoService.findAll(null);
+            model.addAttribute("posts", posts);
+        } else {
+            List<Post> posts  = postDaoService.findAll(user.getId());
+            model.addAttribute("posts", posts);
+        }
+
+        return "index";
     }
 
 }

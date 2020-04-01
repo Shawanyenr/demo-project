@@ -30,7 +30,7 @@ public class PostController {
     public PageInfo<Post> loadMore(@RequestParam(value = "start", defaultValue = "1") int start, @RequestParam(value = "size", defaultValue = "5") int size) throws Exception {
         System.out.println("请求第" + start + "页");
         PageHelper.startPage(start, size, "p_id desc");
-        List<Post> cs = postDaoService.findAll();
+        List<Post> cs = postDaoService.findAll(null);
         PageInfo<Post> page = new PageInfo<>(cs);
         System.out.println(page);
         if (start > page.getPages()) {
@@ -44,7 +44,7 @@ public class PostController {
     public PageInfo<Post> loadMine(@RequestParam(value = "start", defaultValue = "1") int start, @RequestParam(value = "size", defaultValue = "5") int size, @RequestParam(value = "u_id") Integer u_id) throws Exception {
         System.out.println(u_id + "请求第" + start + "页");
         PageHelper.startPage(start, size, "p_id desc");
-        List<Post> cs = postDaoService.findAllOfOneUser(u_id);
+        List<Post> cs = postDaoService.findAllOfOneUser(null,u_id);
         PageInfo<Post> page = new PageInfo<>(cs);
         System.out.println(page);
         if (start > page.getPages()) {
@@ -87,7 +87,7 @@ public class PostController {
     @ResponseBody
     public PageInfo<Post> searchResult(@RequestParam(value = "start", defaultValue = "1") int start, @RequestParam(value = "size", defaultValue = "5") int size, @RequestParam(value = "search_item") String search_item) {
         PageHelper.startPage(start, size, "p_id desc");
-        List<Post> cs = postDaoService.searchResult("%" + search_item + "%");
+        List<Post> cs = postDaoService.searchResult("%" + search_item + "%",null);
         PageInfo<Post> page = new PageInfo<>(cs);
         System.out.println("searching: " + search_item);
         System.out.println(page);

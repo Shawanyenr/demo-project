@@ -15,13 +15,13 @@ public class PostDaoServiceImpl implements PostDaoService {
     private PostDao postDao;
 
     @Override
-    public List<Post> findAll() {
-        return postDao.findAll();
+    public List<Post> findAll(Integer u_id) {
+        return postDao.findAll(u_id);
     }
 
     @Override
-    public List<Post> findAllOfOneUser(Integer u_id) {
-        return postDao.findAllOfOneUser(u_id);
+    public List<Post> findAllOfOneUser(Integer u_id,Integer uid) {
+        return postDao.findAllOfOneUser(u_id,uid);
     }
 
     @Override
@@ -45,8 +45,8 @@ public class PostDaoServiceImpl implements PostDaoService {
     }
 
     @Override
-    public List<Post> searchResult(String search_item) {
-        return postDao.searchResult(search_item);
+    public List<Post> searchResult(String search_item, Integer u_id) {
+        return postDao.searchResult(search_item,u_id);
     }
 
     @Override

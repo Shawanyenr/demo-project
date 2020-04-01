@@ -1,5 +1,6 @@
 package com.example.demo.po;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.util.Date;
@@ -16,7 +17,9 @@ public class Post {
     private Integer p_like_flag;
     private Integer p_fav_count;
     private Integer p_fav_flag;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm",timezone="GMT+8")
     private Date upload_time;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm",timezone="GMT+8")
     private Date p_last_edit_time;
 
 }

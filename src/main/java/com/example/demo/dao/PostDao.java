@@ -11,53 +11,23 @@ import java.util.List;
 @Mapper
 public interface PostDao {
 
-    /*@Select("SELECT post.p_id as p_id,user.id as u_id, user.username as u_username, user.avatar as u_avatar,post.p_title,post.img_dir,post.p_like_count,post.p_fav_count,post.upload_time,post.p_last_edit_time " +
-            "from user " +
-            "inner join post " +
-            "on user.id=post.u_id " +
-            "order by p_id")*/
-    public List<Post> findAll();
+    List<Post> findAll(Integer u_id);
 
-    /*@Select("select * from (SELECT post.p_id as p_id,user.id as u_id,user.username as u_username, user.avatar as u_avatar,post.p_title,post.img_dir,post.p_like,post.upload_time,post.p_last_edit_time " +
-            "from user " +
-            "inner join post " +
-            "on user.id=post.u_id " +
-            "order by p_id) as m_post " +
-            "where " +
-            "u_id = #{u_id}")*/
-    public List<Post> findAllOfOneUser(Integer u_id);
+    List<Post> findAllOfOneUser(@Param("u_id") Integer u_id,@Param("uid") Integer uid);
 
     @Insert("insert into post(p_title,img_dir,upload_time,u_id)values(#{p_title},#{img_dir},#{upload_time},#{u_id})")
-    public Integer saveOnePost(Post postInfo);
+    Integer saveOnePost(Post postInfo);
 
     @Select("select * from post order by id #{order} limit #{start},#{end}")
-    public List<Post> loadSomePost(Integer start, Integer end, String order);
+    List<Post> loadSomePost(Integer start, Integer end, String order);
 
     @Delete("delete from post where p_id=#{p_id}")
-    public Integer deletePostId(Integer p_id);
+    Integer deletePostId(Integer p_id);
 
     @Update("update post set p_title=#{p_title}, p_last_edit_time=#{p_last_edit_time} where p_id=#{p_id}")
-    public Integer updatePostId(Integer p_id, Date p_last_edit_time, String p_title);
+    Integer updatePostId(Integer p_id, Date p_last_edit_time, String p_title);
 
-    /*@Select("select * from (SELECT post.p_id as p_id,user.id as u_id,user.username as u_username, user.avatar as u_avatar,post.p_title,post.img_dir,post.p_like,post.upload_time,post.p_last_edit_time " +
-            "from user " +
-            "inner join post " +
-            "on user.id=post.u_id " +
-            "order by p_id) as m_post " +
-            "where p_title like #{search_item}")*/
-    public List<Post> searchResult(String search_item);
+    List<Post> searchResult(@Param("search_item") String search_item, @Param("u_id") Integer u_id);
 
-    /*@Select("select * from (SELECT \n" +
-            "post.p_id as p_id, \n" +
-            "user.id as u_id, \n" +
-            "user.username as u_username, \n" +
-            "user.avatar as u_avatar, \n" +
-            "post.p_title, post.img_dir, post.p_like, post.upload_time, post.p_last_edit_time\n" +
-            "from user\n" +
-            "inner join post\n" +
-            "on user.id=post.u_id\n" +
-            "order by p_id) as m_post\n" +
-            "where\n" +
-            "p_id=#{p_id}")*/
-    public Post onePost(@Param("p_id") Integer p_id,@Param("u_id") Integer u_id);
+    Post onePost(@Param("p_id") Integer p_id, @Param("u_id") Integer u_id);
 }

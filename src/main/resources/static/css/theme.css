@@ -9,6 +9,9 @@
     #c123 > .card{
         border: none;
     }
+    #posts > .card{
+        border: none;
+    }
 }
 
 @media (max-width: 767px) {
