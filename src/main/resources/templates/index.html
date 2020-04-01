@@ -31,16 +31,6 @@
                         </div>
                     </div>
                 </div>
-                <!--<div class="d-flex bd-highlight pt-1 pb-1">
-                    <div class="pl-3 pr-2 bd-highlight"><img src="{{u_avatar}}"
-                                                             alt="..." class="rounded-circle post-avator"></div>
-                    <div class="pl-2 pr-2 bd-highlight">
-                        <div class="d-flex flex-column bd-highlight">
-                            <div class="bd-highlight">{{u_username}}</div>
-                            <div class="small text-muted">{{upload_time}}</div>
-                        </div>
-                    </div>
-                </div>-->
                 <img th:src="@{${post.img_dir}}" class="post-card-img" alt="...">
                 <div class="d-flex justify-content-around">
                     <div class="p-2 bd-highlight"><a href="#"><i th:class="${post.p_like_flag}==1?'fas fa-heart icon-size love-flag':'far fa-heart icon-size'"></i></a></div>
@@ -54,7 +44,7 @@
                         <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-left"
                              th:aria-labelledby="${post.p_id}">
                             <a class="dropdown-item" th:href='@{${post.img_dir}}' download><i class="fas fa-download"></i> Download Image</a>
-                            <!--                    <a class="dropdown-item" href="#">Another action</a>-->
+                            <!--<a class="dropdown-item" href="#">Another action</a>-->
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="#"><i class="fas fa-exclamation-circle"></i> Report</a>
                         </div>
@@ -94,53 +84,6 @@
 </div>
 <a href="javaScript:;" class="top"><i class="fas fa-arrow-up" style="font-size: 150%; "></i></a>
 
-<!--post模板-->
-<script type="text/html" id="photo-item-template">
-    <div class="card mb-3">
-        <div class="card-header bg-transparent pl-3 pr-3" style="display: flex; flex-direction: row; align-items: center">
-            <div class="pr-3 bd-highlight"><img src="{{u_avatar}}"
-                                                alt="..." class="rounded-circle post-avator "></div>
-            <div class="bd-highlight">
-                <div class="d-flex flex-column bd-highlight">
-                    <div class="bd-highlight" style="font-size: 66% !important;font-weight: bold">{{u_username}}</div>
-                    <div class="text-muted" style="font-size: 55% !important;">{{upload_time}}</div>
-                </div>
-            </div>
-        </div>
-        <!--<div class="d-flex bd-highlight pt-1 pb-1">
-            <div class="pl-3 pr-2 bd-highlight"><img src="{{u_avatar}}"
-                                                     alt="..." class="rounded-circle post-avator"></div>
-            <div class="pl-2 pr-2 bd-highlight">
-                <div class="d-flex flex-column bd-highlight">
-                    <div class="bd-highlight">{{u_username}}</div>
-                    <div class="small text-muted">{{upload_time}}</div>
-                </div>
-            </div>
-        </div>-->
-        <img src="{{img_dir}}" class="post-card-img" alt="...">
-        <div class="d-flex justify-content-around">
-            <div class="p-2 bd-highlight"><a href="#"><i class="far fa-heart icon-size"></i></a></div>
-            <div class="p-2 bd-highlight"><a href="#"><i class="far fa-comment-dots icon-size"></i></a></div>
-            <div class="p-2 bd-highlight"><a href="#"><i class="far fa-bookmark icon-size"></i></a></div>
-            <div class="p-2 bd-highlight dropdown">
-                <a href="#" role="button" id="dropdown{{p_id}}" data-toggle="dropdown" aria-haspopup="true"
-                   aria-expanded="false">
-                    <i class="fas fa-ellipsis-h"></i>
-                </a>
-                <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-left"
-                     aria-labelledby="dropdown{{p_id}}">
-                    <a class="dropdown-item" href='{{img_dir}}' download><i class="fas fa-download"></i> Download Image</a>
-                    <!--                    <a class="dropdown-item" href="#">Another action</a>-->
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#"><i class="fas fa-exclamation-circle"></i> Report</a>
-                </div>
-            </div>
-        </div>
-        <div class="pl-3 pr-3 pb-3">
-            <p class="card-text" style="font-size: 80%"><span style="font-weight: bold">{{u_username}}&nbsp;&nbsp;</span>{{p_title}}</p>
-        </div>
-    </div>
-</script>
 <!--jQuery-->
 <script type="text/javascript" th:src="@{/static/js/jquery-3.4.1.min.js}"
         src="../static/js/jquery-3.4.1.min.js"></script>
@@ -155,54 +98,6 @@
         integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
         crossorigin="anonymous"></script>
 <script type="text/javascript" th:inline="javascript" th:src="@{/static/js/customize.js}"></script>
-<!--无限下拉-->
-<!--<script type="text/javascript">
-    var $container = $('#c123').infiniteScroll({
-        path: function () {
-            return '/loadMore?start=' + this.pageIndex;
-        },
-        // load response as flat text
-        responseType: 'text',
-        status: '.scroll-status',
-        history: false,
-    });
-
-    $container.on('load.infiniteScroll', function (event, response) {
-        // parse response into JSON data
-        var data = JSON.parse(response).list;
-        console.log(data);
-        // compile data into HTML
-        var itemsHTML = data.map(getItemHTML).join('');
-        // convert HTML string into elements
-        var $items = $(itemsHTML);
-        // append item elements
-        $container.infiniteScroll('appendItems', $items);
-    });
-
-    // load initial page
-    $container.infiniteScroll('loadNextPage');
-
-    //&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;//
-
-    var itemTemplateSrc = $('#photo-item-template').html();
-
-    function getItemHTML(photo) {
-        return microTemplate(itemTemplateSrc, photo);
-    }
-
-    // micro templating, sort-of
-    function microTemplate(src, data) {
-        // replace {{tags}} in source
-        return src.replace(/\{\{([\w\-_\.]+)\}\}/gi, function (match, key) {
-            // walk through objects to get value
-            var value = data;
-            key.split('.').forEach(function (part) {
-                value = value[part];
-            });
-            return value;
-        });
-    }
-</script>-->
 
 <script th:inline="javascript" type="text/javascript">
 

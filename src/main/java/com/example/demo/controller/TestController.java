@@ -19,8 +19,6 @@ import java.util.List;
 
 @Controller
 public class TestController {
-    @Autowired
-    private PostDao postDao;
 
     @Autowired
     private PostDaoService postDaoService;
@@ -99,7 +97,6 @@ public class TestController {
             List<Post> posts  = postDaoService.findAll(user.getId());
             model.addAttribute("posts", posts);
         }
-
         return "index";
     }
 
