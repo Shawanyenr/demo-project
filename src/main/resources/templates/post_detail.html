@@ -10,10 +10,22 @@
           th:href="@{/static/bootstrap-4.4.1-dist/css/bootstrap.min.css}"/>
     <link href="https://cdn.bootcss.com/font-awesome/5.12.1/css/all.css" rel="stylesheet">
     <link rel="stylesheet" href="../static/css/theme.css" th:href="@{/static/css/theme.css}"/>
+    <style type="text/css">
+        input[type=checkbox]:checked + i{
+            color: red;
+        }
+    </style>
 </head>
 <body>
 <div class="container content-m">
-    <button id="button">say hi!</button>
+    <!--    <button id="button">say hi!</button>-->
+    <div class="row">
+        <label for="test">
+            <input type="checkbox" class="like" id="test">
+            <i class="far fa-heart icon-size"></i>
+
+        </label>
+    </div>
     <div class="row">
         <div class="col-md-8 col posts-m"
              style="max-width: 614px;margin-left: auto !important;margin-right: auto !important;">
@@ -34,7 +46,9 @@
                 </div>
                 <img th:src="@{${post.img_dir}}" class="post-card-img" alt="...">
                 <div class="d-flex justify-content-around">
-                    <div class="p-2 bd-highlight"><a href="#"><i th:class="${post.p_like_flag}==1?'fas fa-heart icon-size love-flag':'far fa-heart icon-size'"></i></a></div>
+                    <div class="p-2 bd-highlight"><a href="#"><i
+                            th:class="${post.p_like_flag}==1?'fas fa-heart icon-size love-flag':'far fa-heart icon-size'"></i></a>
+                    </div>
                     <div class="p-2 bd-highlight"><a href="#"><i class="far fa-comment-dots icon-size"></i></a></div>
                     <div class="p-2 bd-highlight"><a href="#"><i class="far fa-bookmark icon-size"></i></a></div>
                     <div class="p-2 bd-highlight dropdown">
@@ -97,7 +111,7 @@
         integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
         crossorigin="anonymous"></script>
 <script type="text/javascript" th:inline="javascript" th:src="@{/static/js/customize.js}"></script>
-<script type="text/javascript">
+<!--<script type="text/javascript">
     if (window.Notification) {
         console.log('浏览器支持Notification');
         if (Notification.permission === 'granted') {
@@ -162,7 +176,7 @@
             });
         }
     });
-</script>
+</script>-->
 
 </body>
 </html>
