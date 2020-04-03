@@ -21,29 +21,47 @@
     <div class="row">
         <div id="posts" class="col-lg-8 col posts-m">
             <div class="card mb-3" th:each="post : ${posts}">
-                <div class="card-header bg-transparent pl-3 pr-3" style="display: flex; flex-direction: row; align-items: center">
+                <div class="card-header bg-transparent pl-3 pr-3"
+                     style="display: flex; flex-direction: row; align-items: center">
                     <div class="pr-3 bd-highlight"><img th:src="@{${post.u_avatar}}"
                                                         alt="..." class="rounded-circle post-avator "></div>
                     <div class="bd-highlight">
                         <div class="d-flex flex-column bd-highlight">
-                            <div class="bd-highlight" style="font-size: 66% !important;font-weight: bold" th:text="${post.u_username}">null</div>
-                            <div class="text-muted" style="font-size: 55% !important;" th:text="${#dates.format(post.upload_time,'yyyy-MM-dd HH:mm')}">null</div>
+                            <div class="bd-highlight" style="font-size: 66% !important;font-weight: bold"
+                                 th:text="${post.u_username}">null
+                            </div>
+                            <div class="text-muted" style="font-size: 55% !important;"
+                                 th:text="${#dates.format(post.upload_time,'yyyy-MM-dd HH:mm')}">null
+                            </div>
                         </div>
                     </div>
                 </div>
                 <img th:src="@{${post.img_dir}}" class="post-card-img" alt="...">
                 <div class="d-flex justify-content-around">
-                    <div class="p-2 bd-highlight"><a href="#"><i th:class="${post.p_like_flag}==1?'fas fa-heart icon-size love-flag':'far fa-heart icon-size'"></i></a></div>
+                    <div class="p-2 bd-highlight">
+                        <label th:for="'like'+${post.p_id}" class="like">
+                            <input type="checkbox" class="like" th:id="'like'+${post.p_id}"
+                                   th:checked="${post.p_like_flag==1}">
+                            <i class="fas fa-heart icon-size"></i>
+                        </label>
+                    </div>
                     <div class="p-2 bd-highlight"><a href="#"><i class="far fa-comment-dots icon-size"></i></a></div>
-                    <div class="p-2 bd-highlight"><a href="#"><i class="far fa-bookmark icon-size"></i></a></div>
+                    <div class="p-2 bd-highlight"><!--<a href="#"><i class="far fa-bookmark icon-size"></i></a>-->
+                        <label th:for="'fav_'+${post.p_id}" class="fav">
+                            <input type="checkbox" th:id="'fav_'+${post.p_id}"
+                                   th:checked="${post.p_fav_flag==1}">
+                            <i class="fas fa-bookmark icon-size"></i>
+                        </label>
+                    </div>
                     <div class="p-2 bd-highlight dropdown">
-                        <a href="#" role="button" th:id="${post.p_id}" data-toggle="dropdown" aria-haspopup="true"
+                        <a href="#" role="button" th:id="'dropdown'+${post.p_id}" data-toggle="dropdown" aria-haspopup="true"
                            aria-expanded="false">
                             <i class="fas fa-ellipsis-h"></i>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-left"
-                             th:aria-labelledby="${post.p_id}">
-                            <a class="dropdown-item" th:href='@{${post.img_dir}}' download><i class="fas fa-download"></i> Download Image</a>
+                             th:aria-labelledby="'dropdown'+${post.p_id}">
+                            <a class="dropdown-item" th:href='@{${post.img_dir}}' download><i
+                                    class="fas fa-download"></i> Download Image</a>
                             <!--<a class="dropdown-item" href="#">Another action</a>-->
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="#"><i class="fas fa-exclamation-circle"></i> Report</a>
@@ -51,7 +69,9 @@
                     </div>
                 </div>
                 <div class="pl-3 pr-3 pb-3">
-                    <p class="card-text" style="font-size: 80%"><span style="font-weight: bold" th:text="${post.u_username}">null&nbsp;&nbsp;</span> <span th:text="${post.p_title}">null</span></p>
+                    <p class="card-text" style="font-size: 80%"><span style="font-weight: bold"
+                                                                      th:text="${post.u_username}">null&nbsp;&nbsp;</span>
+                        <span th:text="${post.p_title}">null</span></p>
                 </div>
             </div>
         </div>
@@ -101,6 +121,7 @@
 
 <script th:inline="javascript" type="text/javascript">
 
+    // console.log("fav_123_bgjhkdnvsh".substring(4));
 
     var a = /*[[${session.user}]]*/ null;
     console.log("user: " + /*[[${ session.user}]]*/ null);
@@ -112,9 +133,9 @@
         function hidePreloader() {
 
             var preloader = $('.spinner-wrapper');
-            if (a == null){
+            if (a == null) {
                 preloader.delay(2000).fadeOut(preloaderFadeOutTime);
-            }else
+            } else
                 preloader.fadeOut(preloaderFadeOutTime);
         }
 
@@ -368,7 +389,6 @@
             }
         })
     }, false);
-
 
 </script>
 

@@ -20,11 +20,7 @@
 <div class="container content-m">
     <!--    <button id="button">say hi!</button>-->
     <div class="row">
-        <label for="test">
-            <input type="checkbox" class="like" id="test">
-            <i class="far fa-heart icon-size"></i>
 
-        </label>
     </div>
     <div class="row">
         <div class="col-md-8 col posts-m"
@@ -46,8 +42,14 @@
                 </div>
                 <img th:src="@{${post.img_dir}}" class="post-card-img" alt="...">
                 <div class="d-flex justify-content-around">
-                    <div class="p-2 bd-highlight"><a href="#"><i
-                            th:class="${post.p_like_flag}==1?'fas fa-heart icon-size love-flag':'far fa-heart icon-size'"></i></a>
+                    <div class="p-2 bd-highlight">
+                        <!--<a href="#">
+                            <i th:class="${post.p_like_flag}==1?'fas fa-heart icon-size love-flag':'far fa-heart icon-size'"></i>
+                        </a>-->
+                        <label th:for="'like'+${post.p_id}">
+                            <input type="checkbox" class="like" th:id="'like'+${post.p_id}" th:checked="${post.p_like_flag==1}">
+                            <i class="far fa-heart icon-size"></i>
+                        </label>
                     </div>
                     <div class="p-2 bd-highlight"><a href="#"><i class="far fa-comment-dots icon-size"></i></a></div>
                     <div class="p-2 bd-highlight"><a href="#"><i class="far fa-bookmark icon-size"></i></a></div>

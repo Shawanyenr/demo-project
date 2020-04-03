@@ -180,13 +180,13 @@
     }
 
     input[type=text]:not(:placeholder-shown), input[type=password]:not(:placeholder-shown) {
-        background-color: #222232;
+        background-color: #222232!important;
     }
 
     /*.search-box */
-    input[type=text]:focus, .search-box input[type=text]:active {
-        color: #e1e1ff;
-        background-color: #161625;
+    input[type=text]:focus, input[type=text]:active, input[type=password]:focus, input[type=password]:active {
+        color: #e1e1ff!important;
+        background-color: #161625!important;
     }
 
     h1 {
@@ -214,7 +214,7 @@
 
     .dropdown-menu {
         color: #e1e1ff;
-        background-color: rgb(36, 36, 49);
+        background-color: rgb(36, 36, 49)!important;
     }
 
     .dropdown-item {
@@ -230,7 +230,7 @@
     }
 
     .dropdown-divider {
-        border-color: #222232;
+        border-color: #222232!important;
     }
 
     .top {
@@ -725,4 +725,15 @@ input:checked + .slider:before {
 
 .like-flag {
     color: red !important;
+}
+input[type=checkbox] + i {
+    cursor: pointer;
+}
+.like input[type=checkbox]:checked + i{
+    color: red;
+    cursor: pointer;
+}
+.fav input[type=checkbox]:checked + i{
+    color: yellow;
+    cursor: pointer;
 }

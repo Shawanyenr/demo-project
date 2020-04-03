@@ -17,7 +17,7 @@ public interface UserDao {
     @Select("select * from user where username=#{username} and password=#{password}")
     public User findOne(User user);
 
-    @Insert("insert into user(name,username,password)values(#{name},#{username},#{password})")
+    @Insert("insert into user(name,username,password,avatar)values(#{name},#{username},#{password},#{avatar})")
     public Integer saveUser(User user);
 
     @Select("select count(*) from user where username=#{username}")
