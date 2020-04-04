@@ -15,6 +15,8 @@ public interface PostDao {
 
     List<Post> findAllOfOneUser(@Param("u_id") Integer u_id,@Param("uid") Integer uid);
 
+    List<Post> mySubs(@Param("u_id") Integer u_id,@Param("u_id") Integer uid);
+
     @Insert("insert into post(p_title,img_dir,upload_time,u_id)values(#{p_title},#{img_dir},#{upload_time},#{u_id})")
     Integer saveOnePost(Post postInfo);
 
@@ -30,4 +32,6 @@ public interface PostDao {
     List<Post> searchResult(@Param("search_item") String search_item, @Param("u_id") Integer u_id);
 
     Post onePost(@Param("p_id") Integer p_id, @Param("u_id") Integer u_id);
+
+
 }

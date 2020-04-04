@@ -19,7 +19,7 @@
 <!--主内容-->
 <div class="container content-m">
     <div class="row">
-        <div id="posts" class="col-lg-8 col posts-m">
+        <div id="posts" class="col-lg-8 col posts-m" th:fragment="post-list">
             <div class="card mb-3" th:each="post : ${posts}">
                 <div class="card-header bg-transparent pl-3 pr-3"
                      style="display: flex; flex-direction: row; align-items: center">
@@ -41,7 +41,7 @@
                     <div class="p-2 bd-highlight">
                         <label th:for="'like'+${post.p_id}" class="like">
                             <input type="checkbox" class="like" th:id="'like'+${post.p_id}"
-                                   th:checked="${post.p_like_flag==1}">
+                                   th:checked="${post.p_like_flag==1}" style="display: none">
                             <i class="fas fa-heart icon-size"></i>
                         </label>
                     </div>
@@ -49,7 +49,7 @@
                     <div class="p-2 bd-highlight"><!--<a href="#"><i class="far fa-bookmark icon-size"></i></a>-->
                         <label th:for="'fav_'+${post.p_id}" class="fav">
                             <input type="checkbox" th:id="'fav_'+${post.p_id}"
-                                   th:checked="${post.p_fav_flag==1}">
+                                   th:checked="${post.p_fav_flag==1}" style="display: none">
                             <i class="fas fa-bookmark icon-size"></i>
                         </label>
                     </div>

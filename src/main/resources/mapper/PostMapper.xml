@@ -70,4 +70,21 @@
         )
         where post.p_id=#{p_id}
     </select>
+    <select id="mySubs" resultType="Post">
+        select post.p_id, post.u_id, p_title,img_dir, upload_time, p_last_edit_time, p_like_count, p_fav_count,
+        <if test="u_id != null">
+            p_like_flag, p_fav_flag,
+        </if>
+        name, username as u_username, userState, avatar as u_avatar, email
+        from (
+        post inner join user
+        on post.u_id=user.id
+        <if test="u_id != null">
+            left JOIN (select * from postflag WHERE u_id=#{u_id}) as temp
+            on post.p_id=temp.p_id
+        </if>
+        )
+        where post.u_id in (SELECT sub_id u_id FROM subscription WHERE own_id = #{u_id})
+    </select>
+
 </mapper>

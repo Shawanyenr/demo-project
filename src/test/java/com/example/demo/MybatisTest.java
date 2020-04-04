@@ -51,5 +51,17 @@ public class MybatisTest {
         System.out.println(check);
     }
 
+    @Test
+    public void addSub() {
+        Integer check = userDaoService.addSubscription(1,7);
+        System.out.println(check);
+    }
+
+    @Test
+    public void rmSub() {
+        Integer check = userDaoService.removeSubscription(1,2);
+        System.out.println(check);
+    }
+
 
 }

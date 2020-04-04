@@ -32,4 +32,14 @@ public class UserDaoServiceImpl implements UserDaoService {
     public Integer checkUsername(String username) {
         return userDao.checkUsername(username);
     }
+
+    @Override
+    public Integer addSubscription(Integer own_id, Integer sub_id) {
+        return userDao.addSubscription(own_id,sub_id);
+    }
+
+    @Override
+    public Integer removeSubscription(Integer own_id, Integer sub_id) {
+        return userDao.removeSubscription(own_id,sub_id);
+    }
 }

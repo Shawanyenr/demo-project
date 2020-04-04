@@ -67,6 +67,7 @@ public class PostController {
             return "FAIL";
     }
 
+    @Transactional
     @RequestMapping("/update_post_id")
     @ResponseBody
     public String updatePostId(Integer p_id,String p_title) {
@@ -107,6 +108,7 @@ public class PostController {
         return page;
     }
 
+    @Transactional
     @RequestMapping(value = "/imgUpload", method = RequestMethod.POST)
     @ResponseBody
     public String testupload(MultipartFile upload, Model m) throws IOException {
@@ -123,6 +125,7 @@ public class PostController {
         return "/post_img/" + filename;
     }
 
+    @Transactional
     @RequestMapping("/uploadForm")
     @ResponseBody
     public String uploadForm(Post postInfo) {

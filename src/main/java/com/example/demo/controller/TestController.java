@@ -100,4 +100,18 @@ public class TestController {
         return "index";
     }
 
+    @RequestMapping("/subscription")
+    public String toOne(Model model, HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        System.out.println(user);
+        if (null == user) {
+            return "error/404";
+        } else {
+            List<Post> posts  = postDaoService.mySubs(user.getId(),user.getId());
+            model.addAttribute("posts", posts);
+        }
+        return "index::post-list";
+    }
+
+
 }

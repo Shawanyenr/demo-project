@@ -45,5 +45,10 @@ public class MybatisTestPost {
         System.out.println(postDaoService.updatePostId(16,new Date(),"一个游艇"));
     }
 
+    @Test
+    public void mySubs() {
+        System.out.println(postDaoService.mySubs(1,1));
+    }
+
 
 }

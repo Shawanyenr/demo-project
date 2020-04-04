@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
@@ -27,8 +28,8 @@ public class UserController {
 
     @RequestMapping("/login.action")
     @ResponseBody
-    public String findOne(User loginInfo, Model m, HttpSession s) {
-        System.out.println("登录信息" + loginInfo);
+    public String findOne(User loginInfo, HttpSession s) {
+        System.out.println("登录信息\n" + loginInfo);
         User user = userDaoService.findOne(loginInfo);
         System.out.println(user);
         String msg = null;
@@ -55,7 +56,7 @@ public class UserController {
         System.out.println("注册信息：" + registerInfo);
         Integer check = userDaoService.checkUsername(registerInfo.getUsername());
         System.out.println("重名个数：" + check);
-        String msg = null;
+        String msg = "";
         if (check != 0) {
             msg = "fail";
             s.invalidate();
@@ -81,4 +82,40 @@ public class UserController {
         // 重定向到登录页面的跳转方法
         return "redirect:test";
     }
+
+    @Transactional
+    @ResponseBody
+    @RequestMapping("/addSub")
+    public String addSub(HttpSession session, @RequestParam Integer sub_id) {
+        User user = (User) session.getAttribute("user");
+        String msg = "";
+        if (null == user || null == sub_id) {
+            msg = "error";
+        } else {
+            Integer check = userDaoService.addSubscription(user.getId(), sub_id);
+            if (check == 1) {
+                msg = "ok";
+            } else msg = "error";
+        }
+        return msg;
+    }
+
+    @Transactional
+    @ResponseBody
+    @RequestMapping("/rmSub")
+    public String rmSub(HttpSession session, @RequestParam Integer sub_id) {
+        User user = (User) session.getAttribute("user");
+        String msg = "";
+        if (null == user || null == sub_id) {
+            msg = "error";
+        } else {
+            Integer check = userDaoService.removeSubscription(user.getId(), sub_id);
+            if (check == 1) {
+                msg = "ok";
+            } else msg = "error";
+        }
+        return msg;
+    }
+
+
 }

@@ -25,6 +25,11 @@ public class PostDaoServiceImpl implements PostDaoService {
     }
 
     @Override
+    public List<Post> mySubs(Integer u_id, Integer uid) {
+        return postDao.mySubs(u_id,uid);
+    }
+
+    @Override
     public Integer saveOnePost(Post postInfo) {
         return postDao.saveOnePost(postInfo);
     }

@@ -1,6 +1,7 @@
 package com.example.demo.dao;
 
 import com.example.demo.po.User;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -12,15 +13,20 @@ import java.util.List;
 @Mapper
 public interface UserDao {
 
-    public List<User> findAll();
+    List<User> findAll();
 
     @Select("select * from user where username=#{username} and password=#{password}")
-    public User findOne(User user);
+    User findOne(User user);
 
     @Insert("insert into user(name,username,password,avatar)values(#{name},#{username},#{password},#{avatar})")
-    public Integer saveUser(User user);
+    Integer saveUser(User user);
 
     @Select("select count(*) from user where username=#{username}")
-    public Integer checkUsername(String username);
+    Integer checkUsername(String username);
 
+    @Insert("insert into subscription(own_id,sub_id)values(#{own_id},#{sub_id})")
+    Integer addSubscription(Integer own_id, Integer sub_id);
+
+    @Delete("delete from subscription where own_id=#{own_id} and sub_id=#{sub_id}")
+    Integer removeSubscription(Integer own_id, Integer sub_id);
 }

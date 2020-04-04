@@ -11,6 +11,8 @@ public interface PostDaoService {
 
     public List<Post> findAllOfOneUser(Integer u_id,Integer uid);
 
+    public List<Post> mySubs(Integer u_id,Integer uid);
+
     public Integer saveOnePost(Post postInfo);
 
     public List<Post> loadSomePost(Integer start, Integer end, String order);

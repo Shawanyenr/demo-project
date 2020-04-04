@@ -1,15 +1,20 @@
 package com.example.demo.service;
 
 import com.example.demo.po.User;
+import org.apache.ibatis.annotations.Delete;
 
 import java.util.List;
 
 public interface UserDaoService {
-    public List<User> findAll();
+    List<User> findAll();
 
-    public User findOne(User user);
+    User findOne(User user);
 
-    public Integer saveUser(User user);
+    Integer saveUser(User user);
 
-    public Integer checkUsername(String username);
+    Integer checkUsername(String username);
+
+    Integer addSubscription(Integer own_id, Integer sub_id);
+
+    Integer removeSubscription(Integer own_id, Integer sub_id);
 }
