@@ -105,7 +105,7 @@ public class TestController {
         User user = (User) session.getAttribute("user");
         System.out.println(user);
         if (null == user) {
-            return "error/404";
+            return "login";
         } else {
             List<Post> posts  = postDaoService.mySubs(user.getId(),user.getId());
             model.addAttribute("posts", posts);

@@ -20,6 +20,15 @@ public class ViewController {
         return "new_home";
     }
 
+    @RequestMapping("/login")
+    public String toLogin() {
+        return "login";
+    }
+    @RequestMapping("/register")
+    public String toRegister() {
+        return "register";
+    }
+
 
     @RequestMapping("/home")
     public String toHomePage(HttpSession session, Model model) {

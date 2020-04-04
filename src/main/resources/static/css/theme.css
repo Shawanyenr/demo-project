@@ -530,7 +530,7 @@ a:hover, a:focus {
 }
 
 /*.search-box */
-input[type=text]:focus, .search-box input[type=text]:active {
+input[type=text]:focus, input[type=text]:active, input[type=password]:focus, input[type=password]:active {
     color: #424242;
     background-color: #fafafa;
     border: 1px solid #aaa;
