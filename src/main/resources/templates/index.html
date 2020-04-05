@@ -79,13 +79,14 @@
         <div class="col-lg-4 d-none d-lg-block">
             <div class="sidebar-item">
                 <div class="make-me-sticky">
-                    <ul class="nav-list-group">
+                    <!--<ul class="nav-list-group">
                         <li><img th:src="@{/static/img/853c98689faa6d4ccde6acf4c1dd694.jpg}" alt="..."
                                  class="avatar-img">
                         </li>
-                    </ul>
-                    <div class="mb-3">
-
+                    </ul>-->
+                    <div class="mb-3 user-section" th:if="${session.user}">
+                        <img th:src="@{/static/img/853c98689faa6d4ccde6acf4c1dd694.jpg}" alt="..."
+                             class="avatar-img">
                     </div>
                     <div class="card" th:unless="${session.user}">
                         <div class="modal-header">

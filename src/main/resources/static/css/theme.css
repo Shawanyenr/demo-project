@@ -11,7 +11,7 @@
     }
 
     .content-m {
-        margin-top: 55px;
+        margin-top: 55px!important;
     }
 
     #posts > .card {
@@ -52,10 +52,10 @@
         width: 58px;
     }
 
-    .nav-list-group li .avatar-img {
+    /*.nav-list-group li .avatar-img {
         width: 58px !important;
         height: 58px !important;
-    }
+    }*/
 
     .nav-list-group-item span {
         display: none;
@@ -113,17 +113,20 @@
         padding-top: 15px;
         padding-bottom: 15px;
     }*/
+    .content-m{
+        margin-top: 140px;
+    }
 }
 
 /*大屏幕*/
 @media (min-width: 768px) {
 
-    .nav-list-group li .avatar-img {
+    /*.nav-list-group li .avatar-img {
         border-radius: 50%;
-        /*padding: 0.25rem;*/
-        /*background-color: #fff;*/
+        !*padding: 0.25rem;*!
+        !*background-color: #fff;*!
         border: 1px solid #dee2e6;
-    }
+    }*/
 
     .sidebar-list {
         display: flex;
@@ -314,7 +317,6 @@ a:hover, a:focus {
 
 .content-m {
     max-width: 992px;
-    margin-top: 140px;
 }
 
 .card {
@@ -381,10 +383,12 @@ a:hover, a:focus {
     background-color: #5274fa !important;
 }
 
-.nav-list-group li .avatar-img {
+.user-section .avatar-img {
     width: 90px;
     height: 90px;
     object-fit: cover;
+    border-radius: 50%;
+    border: 1px solid #dee2e6;
 }
 
 .dropdown-divider {
