@@ -94,14 +94,14 @@ public class TestController {
             List<Post> posts = postDaoService.findAll(null);
             model.addAttribute("posts", posts);
         } else {
-            List<Post> posts  = postDaoService.findAll(user.getId());
+            List<Post> posts  = postDaoService.findAll(user.getId());/*.findAll(user.getId());*/
             model.addAttribute("posts", posts);
         }
         return "index";
     }
 
     @RequestMapping("/subscription")
-    public String toOne(Model model, HttpSession session) {
+    public String toSubs(Model model, HttpSession session) {
         User user = (User) session.getAttribute("user");
         System.out.println(user);
         if (null == user) {
@@ -110,8 +110,9 @@ public class TestController {
             List<Post> posts  = postDaoService.mySubs(user.getId(),user.getId());
             model.addAttribute("posts", posts);
         }
-        return "index::post-list";
+        return "subscription";
     }
+
 
 
 }
