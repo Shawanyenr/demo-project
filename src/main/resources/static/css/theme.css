@@ -10,6 +10,10 @@
         border: none;
     }
 
+    .content-m {
+        margin-top: 55px;
+    }
+
     #posts > .card {
         border: none;
     }
@@ -32,9 +36,6 @@
         width: 86px;
     }
 
-    .content-m {
-        margin-top: 56px !important;
-    }
 
     .top-navbar-pd .row .col-min-m {
         width: 58px !important;
@@ -100,6 +101,10 @@
         margin-right: auto !important;
         padding: 0 !important;
     }
+
+    .content-m {
+        margin-top: 97px;
+    }
 }
 
 /*中屏幕*/
@@ -116,7 +121,7 @@
     .nav-list-group li .avatar-img {
         border-radius: 50%;
         /*padding: 0.25rem;*/
-        background-color: #fff;
+        /*background-color: #fff;*/
         border: 1px solid #dee2e6;
     }
 

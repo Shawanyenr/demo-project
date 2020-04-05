@@ -84,15 +84,18 @@
                                  class="avatar-img">
                         </li>
                     </ul>
+                    <div class="mb-3">
+
+                    </div>
                     <div class="card" th:unless="${session.user}">
                         <div class="modal-header">
                             <h5 class="modal-title">Pic.com</h5>
                         </div>
                         <div class="modal-body">
-                            <div class="form-group">
-                                <a class="btn btn-outline-primary text-primary" style="width: 100%" th:href="@{/login}" role="button">Log in</a>
-                            </div>
-                            <a class="btn btn-outline-secondary text-secondary" style="width: 100%" th:href="@{/register}" role="button">Register</a>
+                            <a class="btn btn-outline-primary text-primary mb-3" style="width: 100%" th:href="@{/login}"
+                               role="button">Log in</a>
+                            <a class="btn btn-outline-secondary text-secondary" style="width: 100%"
+                               th:href="@{/register}" role="button">Register</a>
                         </div>
                     </div>
                 </div>
