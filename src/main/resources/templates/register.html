@@ -15,7 +15,6 @@
 
 <body>
 
-
 <!--主内容-->
 <div style="display: flex;flex-direction: column; justify-content: center; align-items: center;min-height: 100vh;">
     <div class="card" style="max-width: 500px;width: 100%">
@@ -56,9 +55,6 @@
     <a class="nav-link" style="font-weight: lighter" th:href="@{/index}">Enter directly</a>
 </div>
 
-
-<!--登录、注册、上传模态框-->
-<div th:replace="include::account_button"></div>
 <!-- 过渡动画 -->
 <!--CSS Spinner-->
 <div class="spinner-wrapper">
@@ -83,59 +79,26 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
         integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
         crossorigin="anonymous"></script>
-<!--<script type="text/javascript" th:inline="javascript" th:src="@{/static/js/customize.js}"></script>-->
 
 <script th:inline="javascript" type="text/javascript">
 
-    // console.log("fav_123_bgjhkdnvsh".substring(4));
 
-    var a = /*[[${session.user}]]*/ null;
-    console.log("user: " + /*[[${ session.user}]]*/ null);
     /*页面过渡动画*/
     $(document).ready(function () {
-        //Preloader
-        preloaderFadeOutTime = 500;
-
         function hidePreloader() {
-
-            var preloader = $('.spinner-wrapper');
-                preloader.delay(2000).fadeOut(preloaderFadeOutTime);
+            $('.spinner-wrapper').delay(2000).fadeOut(500);
         }
-
         hidePreloader();
     });
-/*    $(function () {
-        if (a != null) {
-            $(".online-button").show();
-            $(".offline-button").hide();
-        }
-    });*/
-
-    /*function login() {
-        $.post("/login.action",
-            $("#loginFormData").serialize(),
-            function (data) {
-                if (data === "success") {
-                    alert("登录成功");
-                    window.location.reload();
-                } else if (data == "fail: 0") {
-                    alert("用户名或密码错误");
-                } else if (data == "fail: 1") {
-                    alert("账户已停用");
-                } else {
-                    alert("登录失败");
-                }
-            });
-    }*/
 
     function register() {
         $.post("/register.action",
             $("#signupForm").serialize(),
             function (data) {
-                alert(data);
+                // alert(data);
                 if (data === "ok") {
                     alert("注册成功");
-                    window.location.reload();
+                    window.location=/*[[@{/login}]]*/"";
                 } else if (data === "fail") {
                     alert("用户名已被占用");
                 } else {
@@ -144,214 +107,61 @@
             });
     }
 
-    /*function uploadPost() {
-        var u_id = /!*[[${ session.user?.id }]]*!/ null;
-        console.log("上传时username" + u_id);
-        $.post("/uploadForm",
-            $("#uploadFormData").serialize(),
-            function (data) {
-                if (data === "success") {
-                    document.getElementById("uploadFormData").reset();
-                    box.style.display = "";
-                    $("#preview").html("");
-                    $("#uploadTitle").removeClass("is-valid");
-                    alert("success");
-                }
-            });
-    }*/
-
-    /*function clearUploadForm() {
-        document.getElementById("uploadFormData").reset();
-        box.style.display = "";
-        $("#preview").html("");
-        $("#uploadTitle").removeClass("is-valid");
-    }*/
-
-    $(document).ready(function () {
-        /*$("#loginFormData").validate({
-            rules: {
-                username: {
-                    required: true
-                },
-                password: {
-                    required: true
-                }
+    $("#signupForm").validate({
+        rules: {
+            name: "required",
+            username: {
+                required: true,
+                minlength: 2
             },
-            messages: {
-                username: "Please enter your username",
-                password: "Please enter your password"
+            password: {
+                required: true,
+                minlength: 5
             },
-            errorElement: "em",
-            errorPlacement: function (error, element) {
-                // Add the `invalid-feedback` class to the error element
-                error.addClass("invalid-feedback");
-                if (element.prop("type") === "checkbox") {
-                    error.insertAfter(element.next("label"));
-                } else {
-                    error.insertAfter(element);
-                }
+            confirm_password: {
+                required: true,
+                minlength: 5,
+                equalTo: "#regpassword"
             },
-            highlight: function (element, errorClass, validClass) {
-                $(element).addClass("is-invalid").removeClass("is-valid");
-            },
-            unhighlight: function (element, errorClass, validClass) {
-                $(element).addClass("is-valid").removeClass("is-invalid");
-            },
-            submitHandler: function () {
-                login();
-            }
-        });*/
-        $("#signupForm").validate({
-            rules: {
-                name: "required",
-                username: {
-                    required: true,
-                    minlength: 2
-                },
-                password: {
-                    required: true,
-                    minlength: 5
-                },
-                confirm_password: {
-                    required: true,
-                    minlength: 5,
-                    equalTo: "#regpassword"
-                },
-                agree: "required"
-            },
-            messages: {
-                name: "Please enter your name",
-                username: {
-                    required: "Please enter a username",
-                    minlength: "Your username must consist of at least 2 characters"
-                },
-                password: {
-                    required: "Please provide a password",
-                    minlength: "Your password must be at least 5 characters long"
-                },
-                confirm_password: {
-                    required: "Please provide a password",
-                    minlength: "Your password must be at least 5 characters long",
-                    equalTo: "Please enter the same password as above"
-                },
-                agree: "Please accept our policy"
-            },
-            errorElement: "em",
-            errorPlacement: function (error, element) {
-                // Add the `invalid-feedback` class to the error element
-                error.addClass("invalid-feedback");
-                if (element.prop("type") === "checkbox") {
-                    error.insertAfter(element.next("label"));
-                } else {
-                    error.insertAfter(element);
-                }
-            },
-            highlight: function (element, errorClass, validClass) {
-                $(element).addClass("is-invalid").removeClass("is-valid");
-            },
-            unhighlight: function (element, errorClass, validClass) {
-                $(element).addClass("is-valid").removeClass("is-invalid");
-            },
-            submitHandler: function () {
-                register();
-            }
-        });
-        /*$("#uploadFormData").validate({
-            rules: {
-                p_title: {
-                    required: true
-                }
-            },
-            messages: {
-                p_title: "Please enter a title"
-            },
-            errorElement: "em",
-            errorPlacement: function (error, element) {
-                // Add the `invalid-feedback` class to the error element
-                error.addClass("invalid-feedback");
-                if (element.prop("type") === "checkbox") {
-                    error.insertAfter(element.next("label"));
-                } else {
-                    error.insertAfter(element);
-                }
-            },
-            highlight: function (element, errorClass, validClass) {
-                $(element).addClass("is-invalid").removeClass("is-valid");
-            },
-            unhighlight: function (element, errorClass, validClass) {
-                $(element).addClass("is-valid").removeClass("is-invalid");
-            },
-            submitHandler: function () {
-                uploadPost();
-            }
-        });*/
-    });
-
-
-    /*$(document).on({
-        dragleave: function (e) {	//拖离
-            e.preventDefault();
+            agree: "required"
         },
-        drop: function (e) {  //拖后放
-            e.preventDefault();
+        messages: {
+            name: "Please enter your name",
+            username: {
+                required: "Please enter a username",
+                minlength: "Your username must consist of at least 2 characters"
+            },
+            password: {
+                required: "Please provide a password",
+                minlength: "Your password must be at least 5 characters long"
+            },
+            confirm_password: {
+                required: "Please provide a password",
+                minlength: "Your password must be at least 5 characters long",
+                equalTo: "Please enter the same password as above"
+            },
+            agree: "Please accept our policy"
         },
-        dragenter: function (e) {	//拖进
-            e.preventDefault();
+        errorElement: "em",
+        errorPlacement: function (error, element) {
+            // Add the `invalid-feedback` class to the error element
+            error.addClass("invalid-feedback");
+            if (element.prop("type") === "checkbox") {
+                error.insertAfter(element.next("label"));
+            } else {
+                error.insertAfter(element);
+            }
         },
-        dragover: function (e) {	//拖来拖去
-            e.preventDefault();
+        highlight: function (element, errorClass, validClass) {
+            $(element).addClass("is-invalid").removeClass("is-valid");
+        },
+        unhighlight: function (element, errorClass, validClass) {
+            $(element).addClass("is-valid").removeClass("is-invalid");
+        },
+        submitHandler: function () {
+            register();
         }
     });
-
-    var box = document.getElementById('drop_area'); //拖拽区域
-    box.addEventListener("drop", function (e) {
-        e.preventDefault(); //取消默认浏览器拖拽效果
-        var fileList = e.dataTransfer.files; //获取文件对象
-        //检测是否是拖拽文件到页面的操作
-        if (fileList.length === 0) {
-            return false;
-        }
-        //检测文件是不是图片
-        if (fileList[0].type.indexOf('image') === -1) {
-            alert("您拖的不是图片！");
-            return false;
-        }
-        //拖拉图片到浏览器，可以实现预览功能
-        var img = window.webkitURL.createObjectURL(fileList[0]);
-        var filename = fileList[0].name; //图片名称
-        var filesize = Math.floor((fileList[0].size) / 1024);
-        // alert(filesize);
-        if (filesize >= 20480) {
-            alert("图片过大")
-            return false;
-        }
-        var formData = new FormData();
-        var formTitle = document.getElementById("formTitle");
-
-        formData.append("upload", fileList[0]);
-        $.ajax({
-            type: "POST",
-            enctype: 'multipart/form-data',
-            url: "/imgUpload",
-            data: formData,
-            processData: false,  // Important!
-            contentType: false,
-            cache: false,
-            success: function (data) {
-                var str = "<img src='" + img + "' class='d-block mx-auto img-thumbnail'><p>filename: " + filename + "</p><p>filesize: " + filesize + "KB</p>";
-                $("#preview").html(str);
-                box.style.display = "none";
-                formTitle.style.display = "";
-                filename = data;
-                console.log("上传图片filename" + filename);
-                $("#img_dir").val(filename);
-                $("#u_id").val(/!*[[${ session.user?.id }]]*!/ null);
-            },
-            error: function () {
-                alert("ERROR");
-            }
-        })
-    }, false);*/
 
 </script>
 
