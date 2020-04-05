@@ -25,7 +25,7 @@ public class ViewController {
         return "login";
     }
     @RequestMapping("/register")
-    public String toRegister() {
+    public String toRegister(Model model) {
         return "register";
     }
 

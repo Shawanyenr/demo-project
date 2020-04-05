@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -27,52 +28,41 @@ public class UserController {
     }
 
     @RequestMapping("/login.action")
-    @ResponseBody
-    public String findOne(User loginInfo, HttpSession s) {
-        System.out.println("登录信息\n" + loginInfo);
+    public String findOne(User loginInfo, HttpSession s, Model model) {
+        System.out.println("登录信息:\n" + loginInfo);
         User user = userDaoService.findOne(loginInfo);
         System.out.println(user);
-        String msg = null;
         if (user == null) {
-            msg = "fail: 0";
-            s.invalidate();
+            model.addAttribute("msg", "Wrong username or password!");
         } else if (user.getUserState() == 0) {
-            s.invalidate();
-            msg = "fail: 1";
+            model.addAttribute("msg", "Account suspended!");
         } else {
             user.setPassword("");
-            /*s.setAttribute("name", user.getName());
-            s.setAttribute("username", loginInfo.getUsername());*/
             s.setAttribute("user", user);
-            msg = "success";
+            return "redirect:/index";
         }
-        return msg;
+        return "redirect:/login";
     }
 
     @Transactional
     @RequestMapping("/register.action")
-    @ResponseBody
-    public String saveOne(User registerInfo, Model m, HttpSession s) {
-        System.out.println("注册信息：" + registerInfo);
+    public String saveOne(User registerInfo, Model model) {
+        System.out.println("注册信息:\n" + registerInfo);
         Integer check = userDaoService.checkUsername(registerInfo.getUsername());
-        System.out.println("重名个数：" + check);
-        String msg = "";
+        System.out.println("重名个数: " + check);
         if (check != 0) {
-            msg = "fail";
-            s.invalidate();
+            model.addAttribute("msg", "Username is already taken!");
         } else {
             registerInfo.setAvatar("/user_avatar/default_user_avatar.jpg");
             Integer trySaveOne = userDaoService.saveUser(registerInfo);
             System.out.println("存储了" + trySaveOne + "个信息");
             if (trySaveOne == 1) {
-                msg = "ok";
+                model.addAttribute("success", "Registration success!");
             } else {
-                s.invalidate();
-                msg = "x";
+                model.addAttribute("msg", "Registration failed!");
             }
         }
-        System.out.println("msg: " + msg);
-        return msg;
+        return "register::msg-section";
     }
 
     @RequestMapping("/logout.action")

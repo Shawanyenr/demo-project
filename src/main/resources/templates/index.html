@@ -83,13 +83,17 @@
                                  class="avatar-img">
                         </li>
                     </ul>
+                    <div class="card p-3" th:unless="${session.user}">
+                        <button type="button" class="btn btn-lg btn-primary" disabled>Primary button</button>
+
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
 <!--登录、注册、上传模态框-->
-<div th:replace="include::account_button"></div>
+<!--<div th:replace="include::account_button"></div>-->
 <div th:replace="include::nav_and_menu"></div>
 <!-- 过渡动画 -->
 <!--CSS Spinner-->
@@ -102,13 +106,14 @@
         <div class="rect5"></div>
     </div>
 </div>
+<!-- 返回顶部 -->
 <a href="javaScript:;" class="top"><i class="fas fa-arrow-up" style="font-size: 150%; "></i></a>
 
 <!--jQuery-->
 <script type="text/javascript" th:src="@{/static/js/jquery-3.4.1.min.js}"
         src="../static/js/jquery-3.4.1.min.js"></script>
-<script type="text/javascript" th:src="@{/static/js/infinite-scroll.pkgd.js}"
-        src="../static/js/infinite-scroll.pkgd.js"></script>
+<!--<script type="text/javascript" th:src="@{/static/js/infinite-scroll.pkgd.js}"
+        src="../static/js/infinite-scroll.pkgd.js"></script>-->
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
         integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
         crossorigin="anonymous"></script>
@@ -122,23 +127,12 @@
 <script th:inline="javascript" type="text/javascript">
 
     // console.log("fav_123_bgjhkdnvsh".substring(4));
-
     var a = /*[[${session.user}]]*/ null;
     console.log("user: " + /*[[${ session.user}]]*/ null);
-    /*页面过渡动画*/
-    $(document).ready(function () {
-        //Preloader
-        preloaderFadeOutTime = 500;
-
+    $(function () {
         function hidePreloader() {
-
-            var preloader = $('.spinner-wrapper');
-            if (a == null) {
-                preloader.delay(2000).fadeOut(preloaderFadeOutTime);
-            } else
-                preloader.fadeOut(preloaderFadeOutTime);
+            $('.spinner-wrapper').fadeOut(500);
         }
-
         hidePreloader();
     });
     $(function () {
@@ -147,39 +141,6 @@
             $(".offline-button").hide();
         }
     });
-
-    function login() {
-        $.post("/login.action",
-            $("#loginFormData").serialize(),
-            function (data) {
-                if (data === "success") {
-                    alert("登录成功");
-                    window.location.reload();
-                } else if (data == "fail: 0") {
-                    alert("用户名或密码错误");
-                } else if (data == "fail: 1") {
-                    alert("账户已停用");
-                } else {
-                    alert("登录失败");
-                }
-            });
-    }
-
-    function register() {
-        $.post("/register.action",
-            $("#signupForm").serialize(),
-            function (data) {
-                alert(data);
-                if (data === "ok") {
-                    alert("注册成功");
-                    window.location.reload();
-                } else if (data === "fail") {
-                    alert("用户名已被占用");
-                } else {
-                    alert("注册失败");
-                }
-            });
-    }
 
     function uploadPost() {
         var u_id = /*[[${ session.user?.id }]]*/ null;
@@ -204,95 +165,6 @@
         $("#uploadTitle").removeClass("is-valid");
     }
 
-    $(document).ready(function () {
-        $("#loginFormData").validate({
-            rules: {
-                username: {
-                    required: true
-                },
-                password: {
-                    required: true
-                }
-            },
-            messages: {
-                username: "Please enter your username",
-                password: "Please enter your password"
-            },
-            errorElement: "em",
-            errorPlacement: function (error, element) {
-                // Add the `invalid-feedback` class to the error element
-                error.addClass("invalid-feedback");
-                if (element.prop("type") === "checkbox") {
-                    error.insertAfter(element.next("label"));
-                } else {
-                    error.insertAfter(element);
-                }
-            },
-            highlight: function (element, errorClass, validClass) {
-                $(element).addClass("is-invalid").removeClass("is-valid");
-            },
-            unhighlight: function (element, errorClass, validClass) {
-                $(element).addClass("is-valid").removeClass("is-invalid");
-            },
-            submitHandler: function () {
-                login();
-            }
-        });
-        $("#signupForm").validate({
-            rules: {
-                name: "required",
-                username: {
-                    required: true,
-                    minlength: 2
-                },
-                password: {
-                    required: true,
-                    minlength: 5
-                },
-                confirm_password: {
-                    required: true,
-                    minlength: 5,
-                    equalTo: "#regpassword"
-                },
-                agree: "required"
-            },
-            messages: {
-                name: "Please enter your name",
-                username: {
-                    required: "Please enter a username",
-                    minlength: "Your username must consist of at least 2 characters"
-                },
-                password: {
-                    required: "Please provide a password",
-                    minlength: "Your password must be at least 5 characters long"
-                },
-                confirm_password: {
-                    required: "Please provide a password",
-                    minlength: "Your password must be at least 5 characters long",
-                    equalTo: "Please enter the same password as above"
-                },
-                agree: "Please accept our policy"
-            },
-            errorElement: "em",
-            errorPlacement: function (error, element) {
-                // Add the `invalid-feedback` class to the error element
-                error.addClass("invalid-feedback");
-                if (element.prop("type") === "checkbox") {
-                    error.insertAfter(element.next("label"));
-                } else {
-                    error.insertAfter(element);
-                }
-            },
-            highlight: function (element, errorClass, validClass) {
-                $(element).addClass("is-invalid").removeClass("is-valid");
-            },
-            unhighlight: function (element, errorClass, validClass) {
-                $(element).addClass("is-valid").removeClass("is-invalid");
-            },
-            submitHandler: function () {
-                register();
-            }
-        });
         $("#uploadFormData").validate({
             rules: {
                 p_title: {
@@ -322,7 +194,6 @@
                 uploadPost();
             }
         });
-    });
 
 
     $(document).on({

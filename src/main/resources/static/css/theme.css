@@ -460,6 +460,7 @@ a:hover, a:focus {
     position: -webkit-sticky;
     position: sticky;
     display: flex;
+    flex-direction: column;
     top: 100px;
     padding: 0;
 }

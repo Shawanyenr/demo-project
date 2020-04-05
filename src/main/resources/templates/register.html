@@ -17,11 +17,23 @@
 
 <!--主内容-->
 <div style="display: flex;flex-direction: column; justify-content: center; align-items: center;min-height: 100vh;">
+    <div id="msg-section" th:fragment="msg-section" style="width: 500px">
+        <div class="alert alert-danger alert-dismissible fade show" role="alert" th:unless="${#strings.isEmpty(msg)}" th:text="${msg}" style="width: 100%">
+            null
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="alert alert-success" role="alert" th:unless="${#strings.isEmpty(success)}" th:text="${success}" style="width: 100%">
+            null
+        </div>
+    </div>
+
     <div class="card" style="max-width: 500px;width: 100%">
         <div class="modal-header">
             <h5 class="modal-title" id="registerFormTitle">Sign up</h5>
         </div>
-        <form id="signupForm" method="post" action="">
+        <form id="signupForm" method="post" >
             <div class="modal-body">
                 <div class="form-group">
                     <label for="name">Name</label>
@@ -82,30 +94,29 @@
 
 <script th:inline="javascript" type="text/javascript">
 
-
     /*页面过渡动画*/
-    $(document).ready(function () {
+    $(function () {
         function hidePreloader() {
             $('.spinner-wrapper').delay(2000).fadeOut(500);
         }
         hidePreloader();
     });
 
-    function register() {
+    /*function register() {
         $.post("/register.action",
             $("#signupForm").serialize(),
             function (data) {
                 // alert(data);
                 if (data === "ok") {
                     alert("注册成功");
-                    window.location=/*[[@{/login}]]*/"";
+                    window.location=/!*[[@{/login}]]*!/"";
                 } else if (data === "fail") {
                     alert("用户名已被占用");
                 } else {
                     alert("注册失败");
                 }
             });
-    }
+    }*/
 
     $("#signupForm").validate({
         rules: {
@@ -159,7 +170,7 @@
             $(element).addClass("is-valid").removeClass("is-invalid");
         },
         submitHandler: function () {
-            register();
+            $("#msg-section").load("/register.action?"+$("#signupForm").serialize());
         }
     });
 
