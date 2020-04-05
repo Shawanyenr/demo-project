@@ -34,7 +34,10 @@
                         </div>
                     </div>
                 </div>
-                <img th:src="@{${post.img_dir}}" class="post-card-img" alt="...">
+                <a href="javascript:" data-toggle="modal" data-target="#showImgModal" th:data-whatever="${post.img_dir}">
+                    <img th:src="@{${post.img_dir}}" class="post-card-img" alt="...">
+                </a>
+
                 <div class="d-flex justify-content-around">
                     <div class="p-2 bd-highlight">
                         <label th:for="'like'+${post.p_id}" class="like">
@@ -126,6 +129,7 @@
                             <a href="#" class="text-muted mr-1" style="font-weight: lighter">Privacy</a>
                             <a href="#" class="text-muted mr-1" style="font-weight: lighter">Terms</a>
                         </small>
+
                         <!--<div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
                             <div class="toast-header">
                                 <img src="..." class="rounded mr-2" alt="...">
@@ -194,6 +198,15 @@
             $(".offline-button").hide();
         }
     });
+
+    $('#showImgModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget) // Button that triggered the modal
+        var recipient = button.data('whatever') // Extract info from data-* attributes
+        // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+        // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+        var modal = $(this)
+        $('#modal-img').attr("src", recipient);
+    })
 
     function uploadPost() {
         var u_id = /*[[${ session.user?.id }]]*/ null;
