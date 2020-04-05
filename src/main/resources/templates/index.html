@@ -54,7 +54,8 @@
                         </label>
                     </div>
                     <div class="p-2 bd-highlight dropdown">
-                        <a href="#" role="button" th:id="'dropdown'+${post.p_id}" data-toggle="dropdown" aria-haspopup="true"
+                        <a href="#" role="button" th:id="'dropdown'+${post.p_id}" data-toggle="dropdown"
+                           aria-haspopup="true"
                            aria-expanded="false">
                             <i class="fas fa-ellipsis-h"></i>
                         </a>
@@ -83,9 +84,16 @@
                                  class="avatar-img">
                         </li>
                     </ul>
-                    <div class="card p-3" th:unless="${session.user}">
-                        <button type="button" class="btn btn-lg btn-primary" disabled>Primary button</button>
-
+                    <div class="card" th:unless="${session.user}">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Pic.com</h5>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <a class="btn btn-outline-primary text-primary" style="width: 100%" th:href="@{/login}" role="button">Log in</a>
+                            </div>
+                            <a class="btn btn-outline-secondary text-secondary" style="width: 100%" th:href="@{/register}" role="button">Register</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -133,6 +141,7 @@
         function hidePreloader() {
             $('.spinner-wrapper').fadeOut(500);
         }
+
         hidePreloader();
     });
     $(function () {
@@ -165,35 +174,35 @@
         $("#uploadTitle").removeClass("is-valid");
     }
 
-        $("#uploadFormData").validate({
-            rules: {
-                p_title: {
-                    required: true
-                }
-            },
-            messages: {
-                p_title: "Please enter a title"
-            },
-            errorElement: "em",
-            errorPlacement: function (error, element) {
-                // Add the `invalid-feedback` class to the error element
-                error.addClass("invalid-feedback");
-                if (element.prop("type") === "checkbox") {
-                    error.insertAfter(element.next("label"));
-                } else {
-                    error.insertAfter(element);
-                }
-            },
-            highlight: function (element, errorClass, validClass) {
-                $(element).addClass("is-invalid").removeClass("is-valid");
-            },
-            unhighlight: function (element, errorClass, validClass) {
-                $(element).addClass("is-valid").removeClass("is-invalid");
-            },
-            submitHandler: function () {
-                uploadPost();
+    $("#uploadFormData").validate({
+        rules: {
+            p_title: {
+                required: true
             }
-        });
+        },
+        messages: {
+            p_title: "Please enter a title"
+        },
+        errorElement: "em",
+        errorPlacement: function (error, element) {
+            // Add the `invalid-feedback` class to the error element
+            error.addClass("invalid-feedback");
+            if (element.prop("type") === "checkbox") {
+                error.insertAfter(element.next("label"));
+            } else {
+                error.insertAfter(element);
+            }
+        },
+        highlight: function (element, errorClass, validClass) {
+            $(element).addClass("is-invalid").removeClass("is-valid");
+        },
+        unhighlight: function (element, errorClass, validClass) {
+            $(element).addClass("is-valid").removeClass("is-invalid");
+        },
+        submitHandler: function () {
+            uploadPost();
+        }
+    });
 
 
     $(document).on({

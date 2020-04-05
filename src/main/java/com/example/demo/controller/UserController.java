@@ -70,7 +70,7 @@ public class UserController {
         // 清除Session
         session.invalidate();
         // 重定向到登录页面的跳转方法
-        return "redirect:test";
+        return "redirect:/login";
     }
 
     @Transactional
