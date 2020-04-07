@@ -494,12 +494,10 @@ a:hover, a:focus {
 /*上传框*/
 #drop_area {
     width: 100%;
-    margin: auto;
-    height: 0;
-    padding: 19.69% 0;
+    height: 150px;
     background-color: rgba(170, 170, 170, 0.2);
     border: 2px dashed #4a4a4a;
-    text-align: center;
+    border-radius: 5px;
 }
 
 /*返回顶部*/

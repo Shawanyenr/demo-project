@@ -105,22 +105,6 @@
         hidePreloader();
     });
 
-    /*function register() {
-        $.post("/register.action",
-            $("#signupForm").serialize(),
-            function (data) {
-                // alert(data);
-                if (data === "ok") {
-                    alert("注册成功");
-                    window.location=/!*[[@{/login}]]*!/"";
-                } else if (data === "fail") {
-                    alert("用户名已被占用");
-                } else {
-                    alert("注册失败");
-                }
-            });
-    }*/
-
     $("#signupForm").validate({
         rules: {
             name: "required",

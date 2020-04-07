@@ -342,31 +342,30 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
+                <div class="modal-body" id="choose-area">
+                    <form>
+                        <div class="form-group">
+                            Choose an image: <label for="exampleFormControlFile1" class="btn btn-primary">Select</label>
+                            <input type="file" class="form-control-file" id="exampleFormControlFile1" name="upload"
+                                   style="display: none">
+                        </div>
+                    </form>
+                    <div id="drop_area" class="d-flex justify-content-center align-items-center"><p>Drag and drop an
+                        image here</p></div>
+                </div>
                 <form id="uploadFormData" method="post" action="">
                     <div class="modal-body">
-
                         <div class="form-group">
-                            <div id="drop_area">Drag and drop an image here</div>
                             <div id="preview"></div>
-
                         </div>
                         <div class="form-group">
-                            <input type="text" name="u_id" id="u_id" style="display: none">
-                            <input type="text" name="img_dir" id="img_dir" style="display: none">
+                            <input type="hidden" name="u_id" id="u_id">
+                            <input type="hidden" name="img_dir" id="img_dir">
                         </div>
-
                         <div class="form-group" id="formTitle" style="display: none">
-
-                            <!--<label for="regusername">Username</label>
-
-                            <input type="text" class="form-control" id="regusername" name="username"
-                                   placeholder="Username"/>-->
-
                             <label for="uploadTitle">Title</label>
                             <input type="text" class="form-control" name="p_title" id="uploadTitle">
                         </div>
-
-
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" onclick="clearUploadForm()"
@@ -385,7 +384,7 @@
          aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
             <div class="modal-content">
-                    <img id="modal-img" src="" alt="" style="width: 100%">
+                <img id="modal-img" src="" alt="" style="width: 100%">
             </div>
         </div>
     </div>

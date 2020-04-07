@@ -28,14 +28,14 @@ public class UserController {
     }
 
     @RequestMapping("/login.action")
-    public String findOne(User loginInfo, HttpSession s, Model model) {
+    public String findOne(User loginInfo, HttpSession s,RedirectAttributes attributes) {
         System.out.println("登录信息:\n" + loginInfo);
         User user = userDaoService.findOne(loginInfo);
         System.out.println(user);
         if (user == null) {
-            model.addAttribute("msg", "Wrong username or password!");
+            attributes.addFlashAttribute("msg", "Wrong username or password!");
         } else if (user.getUserState() == 0) {
-            model.addAttribute("msg", "Account suspended!");
+            attributes.addFlashAttribute("msg", "Account suspended!");
         } else {
             user.setPassword("");
             s.setAttribute("user", user);

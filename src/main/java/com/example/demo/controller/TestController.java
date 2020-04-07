@@ -113,6 +113,20 @@ public class TestController {
         return "subscription";
     }
 
+    @RequestMapping("/user/{id}")
+    public String toUser(Model model, HttpSession session, @PathVariable Integer id) {
+        User user = (User) session.getAttribute("user");
+        System.out.println(user);
+        if (null == user) {
+            List<Post> allOfOneUser = postDaoService.findAllOfOneUser(null, id);
+            model.addAttribute("posts", allOfOneUser);
+        } else {
+            List<Post> posts  = postDaoService.findAllOfOneUser(user.getId(),id);
+            model.addAttribute("posts", posts);
+        }
+        return "home";
+    }
+
 
 
 }

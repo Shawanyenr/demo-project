@@ -20,7 +20,7 @@
 <div class="container content-m">
     <div class="row">
         <div class="col-lg-8 col posts-m">
-            <div id="post-list" class="card mb-3" th:if="${posts}" th:each="post : ${posts}" th:fragment="post-list">
+            <div class="card mb-3" th:if="${posts}" th:each="post : ${posts}">
                 <div class="card-header bg-transparent d-flex flex-row align-items-center pl-3 pr-3">
                     <div class="pr-3">
                         <img th:src="@{${post.u_avatar}}" alt="..." class="rounded-circle post-avator">
@@ -94,7 +94,7 @@
                         </a>
                     </div>
                     <div class="d-flex flex-column mb-2 subs-section" th:if="${session.user}">
-                        <a class="btn btn-outline-secondary mb-2" th:href="@{/subscription}" role="button">Subscription</a>
+                        <a class="btn btn-outline-dark mb-2" th:href="@{/subscription}" role="button">Subscription</a>
                         <a class="btn btn-primary mb-2" th:href="@{/index}" role="button">All posts</a>
                         <div class="dropdown-divider"></div>
                     </div>
@@ -106,7 +106,7 @@
                             <i class="fas fa-bell"></i><span> Notification</span>
                             <span class="badge badge-pill badge-light">99+</span>
                         </a>
-                        <a class="btn btn-outline-dark mb-2"href="#" role="button">
+                        <a class="btn btn-outline-dark mb-2" href="#" role="button">
                             <i class="fas fa-comment-alt"></i><span> Message</span></a>
                         <div class="dropdown-divider"></div>
                     </div>
@@ -215,10 +215,12 @@
             $("#uploadFormData").serialize(),
             function (data) {
                 if (data === "success") {
-                    document.getElementById("uploadFormData").reset();
-                    box.style.display = "";
+                    /*document.getElementById("uploadFormData").reset();
+                    $('#choose-area').show();
                     $("#preview").html("");
                     $("#uploadTitle").removeClass("is-valid");
+                    $("#uploadTitle").hide();*/
+                    clearUploadForm();
                     alert("success");
                 }
             });
@@ -226,9 +228,10 @@
 
     function clearUploadForm() {
         document.getElementById("uploadFormData").reset();
-        box.style.display = "";
+        $('#choose-area').show()
         $("#preview").html("");
         $("#uploadTitle").removeClass("is-valid");
+        $("#formTitle").hide();
     }
 
     $("#uploadFormData").validate({
@@ -314,7 +317,7 @@
             success: function (data) {
                 var str = "<img src='" + img + "' class='d-block mx-auto img-thumbnail'><p>filename: " + filename + "</p><p>filesize: " + filesize + "KB</p>";
                 $("#preview").html(str);
-                box.style.display = "none";
+                $('#choose-area').hide();
                 formTitle.style.display = "";
                 filename = data;
                 console.log("上传图片filename" + filename);
@@ -327,6 +330,39 @@
         })
     }, false);
 
+
+    $("#exampleFormControlFile1").change(function () {
+        var formData = new FormData();
+        var fileList = $("#exampleFormControlFile1")[0].files;
+        formData.append("upload", fileList[0]);
+        alert(fileList[0].name);
+        // $("#exampleFormControlFile1")[0].files;
+        var img = window.webkitURL.createObjectURL(fileList[0]);
+        var filename = fileList[0].name; //图片名称
+        var filesize = Math.floor((fileList[0].size) / 1024);
+        $.ajax({
+            type: "POST",
+            enctype: 'multipart/form-data',
+            url: "/imgUpload",
+            data: formData,
+            processData: false,  // Important!
+            contentType: false,
+            cache: false,
+            success: function (data) {
+                var str = "<img src='" + img + "' class='d-block mx-auto img-thumbnail'><p>filename: " + filename + "</p><p>filesize: " + filesize + "KB</p>";
+                $("#preview").html(str);
+                $('#choose-area').hide();
+                document.getElementById("formTitle").style.display = "";
+                // filename = data;
+                console.log("上传图片filename" + data);
+                $("#img_dir").val(data);
+                $("#u_id").val(/*[[${ session.user?.id }]]*/ null);
+            },
+            error: function () {
+                alert("ERROR");
+            }
+        })
+    })
 </script>
 
 </body>
