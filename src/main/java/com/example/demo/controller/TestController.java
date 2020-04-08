@@ -23,7 +23,7 @@ public class TestController {
     @Autowired
     private PostDaoService postDaoService;
 
-    @RequestMapping("/posts")
+    /*@RequestMapping("/posts")
     @ResponseBody
     public PageInfo<Post> posts(@RequestParam(value = "start", defaultValue = "1") int start, @RequestParam(value = "size", defaultValue = "5") int size) throws Exception {
         System.out.println("请求第" + start + "页");
@@ -35,7 +35,7 @@ public class TestController {
             return null;
         }
         return page;
-    }
+    }*/
 
     @RequestMapping("/posts/{id}")
     public String posts_detail(@PathVariable Integer id, HttpSession session, Model model) {

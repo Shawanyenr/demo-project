@@ -33,5 +33,8 @@ public interface PostDao {
 
     Post onePost(@Param("p_id") Integer p_id, @Param("u_id") Integer u_id);
 
+    List<Post> findAllLike(@Param("u_id") Integer u_id);
+
+    List<Post> findAllFav(@Param("u_id") Integer u_id);
 
 }

@@ -58,4 +58,14 @@ public class PostDaoServiceImpl implements PostDaoService {
     public Post onePost(Integer p_id, Integer u_id) {
         return postDao.onePost(p_id,u_id);
     }
+
+    @Override
+    public List<Post> findAllLike(Integer u_id) {
+        return postDao.findAllLike(u_id);
+    }
+
+    @Override
+    public List<Post> findAllFav(Integer u_id) {
+        return postDao.findAllFav(u_id);
+    }
 }

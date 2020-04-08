@@ -35,11 +35,14 @@ public class ViewController {
         User user = (User) session.getAttribute("user");
         System.out.println(user);
         if (null == user) {
-            List<Post> posts = postDaoService.findAll(null);
-            model.addAttribute("posts", posts);
+            return "error/404";
         } else {
             List<Post> posts  = postDaoService.findAll(user.getId());
             model.addAttribute("posts", posts);
+            List<Post> likes = postDaoService.findAllLike(user.getId());
+            model.addAttribute("likes", likes);
+            List<Post> favs = postDaoService.findAllFav(user.getId());
+            model.addAttribute("favs", favs);
         }
         return "home";
     }

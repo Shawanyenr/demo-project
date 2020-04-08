@@ -10,11 +10,7 @@
           th:href="@{/static/bootstrap-4.4.1-dist/css/bootstrap.min.css}"/>
     <link href="https://cdn.bootcss.com/font-awesome/5.12.1/css/all.css" rel="stylesheet">
     <link rel="stylesheet" href="../static/css/theme.css" th:href="@{/static/css/theme.css}"/>
-    <style type="text/css">
-        input[type=checkbox]:checked + i{
-            color: red;
-        }
-    </style>
+
 </head>
 <body>
 <div class="container content-m">
@@ -23,76 +19,117 @@
 
     </div>
     <div class="row">
-        <div class="col-md-8 col posts-m"
-             style="max-width: 614px;margin-left: auto !important;margin-right: auto !important;">
-            <div id="c123"></div>
-            <div class="card mb-3">
-                <div class="card-header bg-transparent pt-1 pb-1"
-                     style="display: flex; flex-direction: row; align-items: center">
-                    <div class="pr-2 bd-highlight"><img th:src="@{${post.u_avatar}}"
-                                                        alt="..." class="rounded-circle post-avator "></div>
-                    <div class="pl-1 bd-highlight">
-                        <div class="d-flex flex-column bd-highlight">
-                            <div class="bd-highlight" th:text="${post.u_username}">null</div>
-                            <div class="small-m text-muted"
-                                 th:text="${#dates.format(post.upload_time,'yyyy-MM-dd hh:mm')}">null
-                            </div>
+        <div class="col-md-8 col posts-m">
+            <div class="card mb-3" th:if="${post}">
+                <div class="card-header bg-transparent d-flex flex-row align-items-center pl-3 pr-3" style="position: relative">
+                    <div class="pr-3">
+                        <img th:src="@{${post.u_avatar}}" alt="..." class="rounded-circle post-avator">
+                    </div>
+                    <div class="d-flex flex-column">
+                        <a th:href="@{'/user/'+${post.getU_id()}}" class="stretched-link" style="font-size: 66% !important;font-weight: bold"
+                           th:text="${post.u_username}">null
+                        </a>
+                        <div class="text-muted" style="font-size: 55% !important;"
+                             th:text="${#dates.format(post.upload_time,'yyyy-MM-dd HH:mm')}">null
                         </div>
                     </div>
                 </div>
-                <img th:src="@{${post.img_dir}}" class="post-card-img" alt="...">
+                <a href="javascript:" data-toggle="modal" data-target="#showImgModal" th:data-whatever="${post.img_dir}">
+                    <img th:src="@{${post.img_dir}}" class="post-card-img" alt="...">
+                </a>
+
                 <div class="d-flex justify-content-around">
                     <div class="p-2 bd-highlight">
-                        <!--<a href="#">
-                            <i th:class="${post.p_like_flag}==1?'fas fa-heart icon-size love-flag':'far fa-heart icon-size'"></i>
-                        </a>-->
-                        <label th:for="'like'+${post.p_id}">
-                            <input type="checkbox" class="like" th:id="'like'+${post.p_id}" th:checked="${post.p_like_flag==1}">
-                            <i class="far fa-heart icon-size"></i>
+                        <label th:for="'like'+${post.p_id}" class="like">
+                            <input type="checkbox" class="like" th:id="'like'+${post.p_id}"
+                                   th:checked="${post.p_like_flag==1}" style="display: none">
+                            <i class="fas fa-heart icon-size"></i>
                         </label>
                     </div>
                     <div class="p-2 bd-highlight"><a href="#"><i class="far fa-comment-dots icon-size"></i></a></div>
-                    <div class="p-2 bd-highlight"><a href="#"><i class="far fa-bookmark icon-size"></i></a></div>
+                    <div class="p-2 bd-highlight"><!--<a href="#"><i class="far fa-bookmark icon-size"></i></a>-->
+                        <label th:for="'fav_'+${post.p_id}" class="fav">
+                            <input type="checkbox" th:id="'fav_'+${post.p_id}"
+                                   th:checked="${post.p_fav_flag==1}" style="display: none">
+                            <i class="fas fa-bookmark icon-size"></i>
+                        </label>
+                    </div>
                     <div class="p-2 bd-highlight dropdown">
-                        <a href="#" role="button" th:id="${post.p_id}" data-toggle="dropdown" aria-haspopup="true"
+                        <a href="#" role="button" th:id="'dropdown'+${post.p_id}" data-toggle="dropdown"
+                           aria-haspopup="true"
                            aria-expanded="false">
                             <i class="fas fa-ellipsis-h"></i>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-left"
-                             th:aria-labelledby="${post.p_id}">
+                             th:aria-labelledby="'dropdown'+${post.p_id}">
                             <a class="dropdown-item" th:href='@{${post.img_dir}}' download><i
-                                    class="fas fa-download"></i>
-                                Download Image</a>
-                            <!--                    <a class="dropdown-item" href="#">Another action</a>-->
+                                    class="fas fa-download"></i> Download Image</a>
+                            <!--<a class="dropdown-item" href="#">Another action</a>-->
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="#"><i class="fas fa-exclamation-circle"></i> Report</a>
                         </div>
                     </div>
                 </div>
                 <div class="pl-3 pr-3 pb-3">
-                    <p class="card-text" th:text="${post.p_title}">null</p>
+                    <p class="card-text" style="font-size: 80%">
+                        <span style="font-weight: bold" th:text="${post.u_username}">null&nbsp;&nbsp;</span>
+                        <span th:href="@{'/posts/'+${post.getP_id()}}" th:text="${post.p_title}">null</span>
+                    </p>
                 </div>
-            </div>
-
-            <div class="page-load-status">
-                <div class="loader-ellips infinite-scroll-request">
-                    <span class="loader-ellips__dot"></span>
-                    <span class="loader-ellips__dot"></span>
-                    <span class="loader-ellips__dot"></span>
-                    <span class="loader-ellips__dot"></span>
-                </div>
-                <p class="infinite-scroll-last" style="text-align: center">End of content</p>
-                <p class="infinite-scroll-error" style="text-align: center">No more posts to load</p>
             </div>
         </div>
         <div class="col-md-4 d-none d-md-block">
             <div class="sidebar-item">
                 <div class="make-me-sticky">
-                    <ul class="nav-list-group">
-                        <li><img th:src="@{/static/img/853c98689faa6d4ccde6acf4c1dd694.jpg}" alt="..."
+                    <div class="d-flex flex-row align-items-center mb-3 user-section" th:if="${session.user}">
+                        <a th:href="@{/home}">
+                            <img th:src="@{${session.user.getAvatar()}}" alt="..."
                                  class="avatar-img">
-                        </li>
-                    </ul>
+                        </a>
+                        <a th:href="@{/home}">
+                            <div class="d-flex flex-column pl-3">
+                                <div th:text="${session.user.getName()}">null</div>
+                                <div class="text-secondary" th:text="'@'+${session.user.getUsername()}">null</div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="d-flex flex-column mb-2 subs-section" th:if="${session.user}">
+                        <a class="btn btn-outline-dark mb-2" th:href="@{/subscription}" role="button">Subscription</a>
+                        <a class="btn btn-primary mb-2" th:href="@{/index}" role="button">All posts</a>
+                        <div class="dropdown-divider"></div>
+                    </div>
+                    <div class="d-flex flex-column mb-2 subs-section" th:if="${session.user}">
+                        <a class="btn btn-primary mb-2" href="#" data-toggle="modal" data-target="#uploadForm" role="button">
+                            <i class="fas fa-plus"></i> Upload
+                        </a>
+                        <a class="btn btn-outline-dark mb-2" href="#" role="button">
+                            <i class="fas fa-bell"></i><span> Notification</span>
+                            <span class="badge badge-pill badge-light">99+</span>
+                        </a>
+                        <a class="btn btn-outline-dark mb-2" href="#" role="button">
+                            <i class="fas fa-comment-alt"></i><span> Message</span></a>
+                        <div class="dropdown-divider"></div>
+                    </div>
+                    <div class="card mb-2" th:unless="${session.user}">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Pic.com</h5>
+                        </div>
+                        <div class="modal-body">
+                            <a class="btn btn-outline-primary text-primary mb-3" style="width: 100%" th:href="@{/login}"
+                               role="button">Log in</a>
+                            <a class="btn btn-outline-secondary text-secondary" style="width: 100%"
+                               th:href="@{/register}" role="button">Register</a>
+                        </div>
+                    </div>
+                    <div style="width: 100%">
+                        <small>
+                            <a href="#" class="text-muted mr-1" style="font-weight: lighter">About</a>
+                            <a href="#" class="text-muted mr-1" style="font-weight: lighter">Help</a>
+                            <a href="#" class="text-muted mr-1" style="font-weight: lighter">API</a>
+                            <a href="#" class="text-muted mr-1" style="font-weight: lighter">Privacy</a>
+                            <a href="#" class="text-muted mr-1" style="font-weight: lighter">Terms</a>
+                        </small>
+                    </div>
                 </div>
             </div>
         </div>

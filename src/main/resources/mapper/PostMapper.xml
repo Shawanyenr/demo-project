@@ -86,5 +86,31 @@
         )
         where post.u_id in (SELECT sub_id u_id FROM subscription WHERE own_id = #{u_id})
     </select>
+    <select id="findAllLike" resultType="Post">
+        select post.p_id, post.u_id, p_title,img_dir, upload_time, p_last_edit_time, p_like_count, p_fav_count,
+            p_like_flag, p_fav_flag,
+        name, username as u_username, userState, avatar as u_avatar, email
+        from (
+        post inner join user
+        on post.u_id=user.id
+            left JOIN (select * from postflag WHERE u_id=#{u_id}) as temp
+            on post.p_id=temp.p_id
+        )
+        where p_like_flag=1
+        order by post.p_id desc
+    </select>
+    <select id="findAllFav" resultType="Post">
+        select post.p_id, post.u_id, p_title,img_dir, upload_time, p_last_edit_time, p_like_count, p_fav_count,
+            p_like_flag, p_fav_flag,
+        name, username as u_username, userState, avatar as u_avatar, email
+        from (
+        post inner join user
+        on post.u_id=user.id
+            left JOIN (select * from postflag WHERE u_id=#{u_id}) as temp
+            on post.p_id=temp.p_id
+        )
+        where p_fav_flag=1
+        order by post.p_id desc
+    </select>
 
 </mapper>

@@ -125,133 +125,62 @@
 </div>-->
 
 <div class="container content-m">
-    <div class="row">
-        <div id="posts" class="col-lg-8 col posts-m">
-            <div class="card mb-3" th:each="post : ${posts}">
-                <div class="card-header bg-transparent pl-3 pr-3" style="display: flex; flex-direction: row; align-items: center">
-                    <div class="pr-3 bd-highlight"><img th:src="@{${post.u_avatar}}"
-                                                        alt="..." class="rounded-circle post-avator "></div>
-                    <div class="bd-highlight">
-                        <div class="d-flex flex-column bd-highlight">
-                            <div class="bd-highlight" style="font-size: 66% !important;font-weight: bold" th:text="${post.u_username}">null</div>
-                            <div class="text-muted" style="font-size: 55% !important;" th:text="${#dates.format(post.upload_time,'yyyy-MM-dd HH:mm')}">null</div>
+    <div class="row mr-0 ml-0">
+        <div class="d-flex flex-row align-items-center mb-3 user-section" th:if="${session.user}">
+            <img th:src="@{${session.user.getAvatar()}}" alt="..."
+                 class="avatar-img">
+            <div class="ml-3" th:text="${session.user.getName()}">null</div>
+            <small class="ml-3 text-secondary" th:text="'@'+${session.user.getUsername()}">null</small>
+            <a class="btn btn-primary ml-3" th:href="@{/editProfile}" role="button">Setting</a>
+        </div>
+    </div>
+    <div class="row  justify-content-center mr-0 ml-0">
+        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">Posts</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">Like</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false">Favorite</a>
+            </li>
+        </ul>
+    </div>
+    <div class="row ml-0 mr-0">
+        <div class="tab-content" id="pills-tabContent">
+            <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                <div th:if="${posts}">
+                    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 ml-0 mr-0">
+                        <div class="col p-2" th:each="post : ${posts}">
+                            <img th:src="@{${post.getImg_dir()}}" alt="" width="100%">
                         </div>
                     </div>
                 </div>
-                <img th:src="@{${post.img_dir}}" class="post-card-img" alt="...">
-                <div class="d-flex justify-content-around">
-                    <div class="p-2 bd-highlight"><a href="#"><i th:class="${post.p_like_flag}==1?'fas fa-heart icon-size love-flag':'far fa-heart icon-size'"></i></a></div>
-                    <div class="p-2 bd-highlight"><a href="#"><i class="far fa-comment-dots icon-size"></i></a></div>
-                    <div class="p-2 bd-highlight"><a href="#"><i class="far fa-bookmark icon-size"></i></a></div>
-                    <div class="p-2 bd-highlight dropdown">
-                        <a href="#" role="button" th:id="${post.p_id}" data-toggle="dropdown" aria-haspopup="true"
-                           aria-expanded="false">
-                            <i class="fas fa-ellipsis-h"></i>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-left"
-                             th:aria-labelledby="${post.p_id}">
-                            <a class="dropdown-item" th:href='@{${post.img_dir}}' download><i class="fas fa-download"></i> Download Image</a>
-                            <!--<a class="dropdown-item" href="#">Another action</a>-->
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#" th:onclick="'deletePost('+${post.p_id}+')'"><i class="fas fa-trash-alt"></i> Delete</a>
-                            <a class="dropdown-item" href="#"><i class="fas fa-exclamation-circle"></i> Report</a>
+            </div>
+            <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                <div th:if="${likes}">
+                    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 ml-0 mr-0">
+                        <div class="col p-2" th:each="like : ${likes}">
+                            <img th:src="@{${like.getImg_dir()}}" alt="" width="100%">
                         </div>
                     </div>
                 </div>
-                <div class="pl-3 pr-3 pb-3">
-                    <p class="card-text" style="font-size: 80%"><span style="font-weight: bold" th:text="${post.u_username}">null&nbsp;&nbsp;</span> <span th:text="${post.p_title}">null</span></p>
+            </div>
+            <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
+                <div th:if="${favs}">
+                    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 ml-0 mr-0">
+                        <div class="col p-2" th:each="fav : ${favs}">
+                            <img th:src="@{${fav.getImg_dir()}}" alt="" width="100%">
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-4 d-none d-md-block">
-            <div class="sidebar-item">
-                <div class="make-me-sticky">
-                    <ul class="nav-list-group">
-                        <li><img th:src="@{/static/img/853c98689faa6d4ccde6acf4c1dd694.jpg}" alt="..."
-                                 class="avatar-img">
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <!--<div class="col-lg-8 col-md-9 col posts-m">
-            <div id="c123"></div>
-            <div class="page-load-status">
-                <div class="loader-ellips infinite-scroll-request">
-                    <span class="loader-ellips__dot"></span>
-                    <span class="loader-ellips__dot"></span>
-                    <span class="loader-ellips__dot"></span>
-                    <span class="loader-ellips__dot"></span>
-                </div>
-                <p class="infinite-scroll-last" style="text-align: center">End of content</p>
-                <p class="infinite-scroll-error" style="text-align: center">No more posts to load</p>
-            </div>
-        </div>
-        <div class="col-lg-4 col-md-3 col-min-m">
-            <div class="sidebar-item">
-                <div class="make-me-sticky">
-                    <ul class="nav-list-group">
-                        <li><img th:src="@{/static/img/853c98689faa6d4ccde6acf4c1dd694.jpg}" alt="..."
-                                 class="avatar-img">
-                        </li>
-                        <li class="online-button">
-                            <h2 class="name" style="text-align: center;"><span th:text="${session.user?.name}"></span>
-                            </h2>
-                        </li>
-                        <li class="offline-button">
-                            <a href="#" class="nav-list-group-item" id="LoginButton"
-                               data-toggle="modal"
-                               data-target="#loginForm">
-                                <i class="fas fa-sign-in-alt"></i>
-                                <span>Log in</span>
-                            </a>
-                        </li>
-                        <li class="offline-button">
-                            <a href="#" class="nav-list-group-item" id="RegisterButton"
-                               data-toggle="modal"
-                               data-target="#registerForm">
-                                <i class="fas fa-hat-wizard"></i>
-                                <span>Sign up</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="nav-list-group-item active"><i class="fas fa-home"></i>
-                                <span>Home</span></a>
-                        </li>
-                        &lt;!&ndash;<li class="online-button" style="display: none"><a href="#" class="nav-list-group-item "><i
-                                class="fas fa-tags"></i><span>Label</span></a></li>&ndash;&gt;
-                        <li class="online-button" style="display: none"><a href="#" class="nav-list-group-item "><i
-                                class="fas fa-bell"></i><span>Notification</span></a>
-                        </li>
-                        <li class="online-button" style="display: none"><a href="#" class="nav-list-group-item "><i
-                                class="fas fa-user-friends"></i><span>Friends</span></a>
-                        </li>
-                        &lt;!&ndash;<li class="online-button" style="display: none"><a href="#" class="nav-list-group-item "><i
-                                class="fas fa-bookmark"></i><span>Bookmarks</span></a>
-                        </li>
-                        <li class="online-button" style="display: none"><a th:href="@{/home_page}"
-                                                                           class="nav-list-group-item "><i
-                                class="fas fa-user-circle"></i><span>Profile</span></a>
-                        </li>&ndash;&gt;
-                        <li><a href="#" class="nav-list-group-item "><i
-                                class="fas fa-info-circle"></i><span>About</span></a>
-                        </li>
-                        <li>
-                            <div class="theme-switch-wrapper">
-                                <label class="theme-switch" for="checkbox">
-                                    <input type="checkbox" id="checkbox"/>
-                                    <div class="slider round"></div>
-                                </label>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>-->
     </div>
 </div>
 <!--登录、注册、上传-->
-<div th:replace="include::account_button"></div>
+<!--<div th:replace="include::account_button"></div>-->
 <div th:replace="include::nav_and_menu"></div>
 <!-- 过渡动画 -->
 <!--CSS Spinner-->
@@ -394,292 +323,31 @@
 
 <script th:inline="javascript" type="text/javascript">
 
-    $(document).on('click',':not(#collapseExample)',function(){
-        $("#collapseExample").removeClass("show");
-
-    });
-
-
+    // console.log("fav_123_bgjhkdnvsh".substring(4));
     var a = /*[[${session.user}]]*/ null;
     console.log("user: " + /*[[${ session.user}]]*/ null);
+    $(function () {
+        function hidePreloader() {
+            $('.spinner-wrapper').fadeOut(500);
+        }
 
+        hidePreloader();
+    });
     $(function () {
         if (a != null) {
             $(".online-button").show();
             $(".offline-button").hide();
         }
     });
-    /*页面过渡动画*/
-    $(document).ready(function () {
-        //Preloader
-        preloaderFadeOutTime = 1000;
 
-        function hidePreloader() {
-            var preloader = $('.spinner-wrapper');
-            preloader.fadeOut(preloaderFadeOutTime);
-        }
-
-        hidePreloader();
-    });
-    $(function () {
-        //返回顶部===>出现与消失
-        //当屏幕滚动，触生 scroll 事件
-        $(window).scroll(function () {
-            var top1 = $(this).scrollTop();     //获取相对滚动条顶部的偏移
-            if (top1 > 200) {      //当偏移大于200px时让图标淡入（css设置为隐藏）
-                $(".top").stop().fadeIn();
-            } else {
-                //当偏移小于200px时让图标淡出
-                $(".top").stop().fadeOut();
-            }
-        });
-        //去往顶部
-        $(".top").click(function () {
-            $("body , html").animate({scrollTop: 0}, 300);   //300是所用时间
-        });
-    });
-
-    function login() {
-        $.post("/login.action",
-            $("#loginFormData").serialize(),
-            function (data) {
-                if (data === "success") {
-                    alert("登录成功");
-                    window.location.reload();
-                } else if (data == "fail: 0") {
-                    alert("用户名或密码错误");
-                } else if (data == "fail: 1") {
-                    alert("账户已停用");
-                } else {
-                    alert("登录失败");
-                }
-            });
-    }
-
-    function register() {
-        $.post("/register.action",
-            $("#signupForm").serialize(),
-            function (data) {
-                alert(data);
-                if (data === "ok") {
-                    alert("注册成功");
-                    window.location.reload();
-                } else if (data === "fail") {
-                    alert("用户名已被占用");
-                } else {
-                    alert("注册失败");
-                }
-            });
-    }
-
-    function uploadPost() {
-        var u_username = /*[[${ session.user?.username }]]*/ null;
-        console.log("上传时username" + u_username);
-        $.post("/uploadForm",
-            $("#uploadFormData").serialize(),
-            function (data) {
-                if (data === "success") {
-                    document.getElementById("uploadFormData").reset();
-                    box.style.display = "";
-                    $("#preview").html("");
-                    $("#uploadTitle").removeClass("is-valid");
-                    alert("success");
-                }
-            });
-    }
-
-    function clearUploadForm() {
-        document.getElementById("uploadFormData").reset();
-        box.style.display = "";
-        $("#preview").html("");
-        $("#uploadTitle").removeClass("is-valid");
-    }
-
-    $(document).ready(function () {
-        $("#loginFormData").validate({
-            rules: {
-                username: {
-                    required: true
-                },
-                password: {
-                    required: true
-                }
-            },
-            messages: {
-                username: "Please enter your username",
-                password: "Please enter your password"
-            },
-            errorElement: "em",
-            errorPlacement: function (error, element) {
-                // Add the `invalid-feedback` class to the error element
-                error.addClass("invalid-feedback");
-                if (element.prop("type") === "checkbox") {
-                    error.insertAfter(element.next("label"));
-                } else {
-                    error.insertAfter(element);
-                }
-            },
-            highlight: function (element, errorClass, validClass) {
-                $(element).addClass("is-invalid").removeClass("is-valid");
-            },
-            unhighlight: function (element, errorClass, validClass) {
-                $(element).addClass("is-valid").removeClass("is-invalid");
-            },
-            submitHandler: function () {
-                login();
-            }
-        });
-        $("#signupForm").validate({
-            rules: {
-                name: "required",
-                username: {
-                    required: true,
-                    minlength: 2
-                },
-                password: {
-                    required: true,
-                    minlength: 5
-                },
-                confirm_password: {
-                    required: true,
-                    minlength: 5,
-                    equalTo: "#regpassword"
-                },
-                agree: "required"
-            },
-            messages: {
-                name: "Please enter your name",
-                username: {
-                    required: "Please enter a username",
-                    minlength: "Your username must consist of at least 2 characters"
-                },
-                password: {
-                    required: "Please provide a password",
-                    minlength: "Your password must be at least 5 characters long"
-                },
-                confirm_password: {
-                    required: "Please provide a password",
-                    minlength: "Your password must be at least 5 characters long",
-                    equalTo: "Please enter the same password as above"
-                },
-                agree: "Please accept our policy"
-            },
-            errorElement: "em",
-            errorPlacement: function (error, element) {
-                // Add the `invalid-feedback` class to the error element
-                error.addClass("invalid-feedback");
-                if (element.prop("type") === "checkbox") {
-                    error.insertAfter(element.next("label"));
-                } else {
-                    error.insertAfter(element);
-                }
-            },
-            highlight: function (element, errorClass, validClass) {
-                $(element).addClass("is-invalid").removeClass("is-valid");
-            },
-            unhighlight: function (element, errorClass, validClass) {
-                $(element).addClass("is-valid").removeClass("is-invalid");
-            },
-            submitHandler: function () {
-                register();
-            }
-        });
-        $("#uploadFormData").validate({
-            rules: {
-                p_title: {
-                    required: true
-                }
-            },
-            messages: {
-                p_title: "Please enter a title"
-            },
-            errorElement: "em",
-            errorPlacement: function (error, element) {
-                // Add the `invalid-feedback` class to the error element
-                error.addClass("invalid-feedback");
-                if (element.prop("type") === "checkbox") {
-                    error.insertAfter(element.next("label"));
-                } else {
-                    error.insertAfter(element);
-                }
-            },
-            highlight: function (element, errorClass, validClass) {
-                $(element).addClass("is-invalid").removeClass("is-valid");
-            },
-            unhighlight: function (element, errorClass, validClass) {
-                $(element).addClass("is-valid").removeClass("is-invalid");
-            },
-            submitHandler: function () {
-                uploadPost();
-            }
-        });
-    });
-
-
-    $(document).on({
-        dragleave: function (e) {	//拖离
-            e.preventDefault();
-        },
-        drop: function (e) {  //拖后放
-            e.preventDefault();
-        },
-        dragenter: function (e) {	//拖进
-            e.preventDefault();
-        },
-        dragover: function (e) {	//拖来拖去
-            e.preventDefault();
-        }
-    });
-
-    var box = document.getElementById('drop_area'); //拖拽区域
-    box.addEventListener("drop", function (e) {
-        e.preventDefault(); //取消默认浏览器拖拽效果
-        var fileList = e.dataTransfer.files; //获取文件对象
-        //检测是否是拖拽文件到页面的操作
-        if (fileList.length == 0) {
-            return false;
-        }
-        //检测文件是不是图片
-        if (fileList[0].type.indexOf('image') === -1) {
-            alert("您拖的不是图片！");
-            return false;
-        }
-        //拖拉图片到浏览器，可以实现预览功能
-        var img = window.webkitURL.createObjectURL(fileList[0]);
-        var filename = fileList[0].name; //图片名称
-        var filesize = Math.floor((fileList[0].size) / 1024);
-        alert(filesize);
-        if (filesize >= 20480) {
-            alert("图片过大")
-            return false;
-        }
-        var formData = new FormData();
-        var formTitle = document.getElementById("formTitle");
-
-        formData.append("upload", fileList[0]);
-        $.ajax({
-            type: "POST",
-            enctype: 'multipart/form-data',
-            url: "/imgUpload",
-            data: formData,
-            processData: false,  // Important!
-            contentType: false,
-            cache: false,
-            success: function (data) {
-                var str = "<img src='" + img + "' class='d-block mx-auto img-thumbnail'><p>filename: " + filename + "</p><p>filesize: " + filesize + "KB</p>";
-                $("#preview").html(str);
-                box.style.display = "none";
-                formTitle.style.display = "";
-                filename = data;
-                console.log("上传图片filename" + filename);
-                $("#img_dir").val(filename);
-                $("#u_username").val(/*[[${ session.user?.username }]]*/ null);
-            },
-            error: function () {
-                alert("ERROR");
-            }
-        })
-    }, false);
+    $('#showImgModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget) // Button that triggered the modal
+        var recipient = button.data('whatever') // Extract info from data-* attributes
+        // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+        // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+        var modal = $(this)
+        $('#modal-img').attr("src", recipient);
+    })
 
     function deletePost(p_id) {
         if (confirm('Confirm to delete?')) {
@@ -695,6 +363,19 @@
                 });
         }
     }
+
+    $('#myTab a[href="#v-pills-posts"]').on('click', function (e) {
+        e.preventDefault();
+        $('#myTab a[href="#v-pills-posts"]').tab('show')
+    })
+    $('#myTab a[href="#v-pills-fav"]').on('click', function (e) {
+        e.preventDefault();
+        $('#myTab a[href="#v-pills-fav"]').tab('show')
+    })
+    $('#myTab a[href="#v-pills-like"]').on('click', function (e) {
+        e.preventDefault();
+        $('#myTab a[href="#v-pills-like"]').tab('show')
+    })
 
 </script>
 

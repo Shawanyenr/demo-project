@@ -28,6 +28,12 @@ public class MybatisTestPost {
         List<Post> all = postDaoService.findAllOfOneUser(7,1);
         System.out.println(all);
     }
+
+    @Test
+    public void findAllLike() {
+        List<Post> all = postDaoService.findAllLike(1);
+        System.out.println(all);
+    }
     @Test
     public void searchResult() {
         List<Post> all = postDaoService.searchResult("%游艇%",1);

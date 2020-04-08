@@ -25,4 +25,8 @@ public interface PostDaoService {
 
     public Post onePost(Integer p_id, Integer u_id);
 
+    List<Post> findAllLike(Integer u_id);
+
+    List<Post> findAllFav(Integer u_id);
+
 }
