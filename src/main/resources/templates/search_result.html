@@ -118,46 +118,60 @@
         <div class="col-md-4 d-none d-md-block">
             <div class="sidebar-item">
                 <div class="make-me-sticky">
-                    <ul class="nav-list-group">
-                        <li><img th:src="@{/static/img/853c98689faa6d4ccde6acf4c1dd694.jpg}" alt="..."
+                    <div class="d-flex flex-row align-items-center mb-3 user-section" th:if="${session.user}">
+                        <a th:href="@{/home}">
+                            <img th:src="@{${session.user.getAvatar()}}" alt="..."
                                  class="avatar-img">
-                        </li>
-                    </ul>
+                        </a>
+                        <a th:href="@{/home}">
+                            <div class="d-flex flex-column pl-3">
+                                <div th:text="${session.user.getName()}">null</div>
+                                <div class="text-secondary" th:text="'@'+${session.user.getUsername()}">null</div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="d-flex flex-column mb-2 subs-section" th:if="${session.user}">
+                        <a class="btn btn-outline-dark mb-2" th:href="@{/subscription}" role="button">Subscription</a>
+                        <a class="btn btn-outline-dark mb-2" th:href="@{/index}" role="button">All posts</a>
+                        <div class="dropdown-divider"></div>
+                    </div>
+                    <div class="d-flex flex-column mb-2 subs-section" th:if="${session.user}">
+                        <a class="btn btn-primary mb-2" href="#" data-toggle="modal" data-target="#uploadForm" role="button">
+                            <i class="fas fa-plus"></i> Upload
+                        </a>
+                        <a class="btn btn-outline-dark mb-2" href="#" role="button">
+                            <i class="fas fa-bell"></i><span> Notification</span>
+                            <span class="badge badge-pill badge-light">99+</span>
+                        </a>
+                        <a class="btn btn-outline-dark mb-2" href="#" role="button">
+                            <i class="fas fa-comment-alt"></i><span> Message</span></a>
+                        <div class="dropdown-divider"></div>
+                    </div>
+                    <div class="card mb-2" th:unless="${session.user}">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Pic.com</h5>
+                        </div>
+                        <div class="modal-body">
+                            <a class="btn btn-outline-primary text-primary mb-3" style="width: 100%" th:href="@{/login}"
+                               role="button">Log in</a>
+                            <a class="btn btn-outline-secondary text-secondary" style="width: 100%"
+                               th:href="@{/register}" role="button">Register</a>
+                        </div>
+                    </div>
+                    <div style="width: 100%">
+                        <small>
+                            <a href="#" class="text-muted mr-1" style="font-weight: lighter">About</a>
+                            <a href="#" class="text-muted mr-1" style="font-weight: lighter">Help</a>
+                            <a href="#" class="text-muted mr-1" style="font-weight: lighter">API</a>
+                            <a href="#" class="text-muted mr-1" style="font-weight: lighter">Privacy</a>
+                            <a href="#" class="text-muted mr-1" style="font-weight: lighter">Terms</a>
+                        </small>
+                    </div>
                 </div>
             </div>
         </div>
-        <!--<div class="col-lg-8 col-md-9 col posts-m">
-            <div id="c123"></div>
-            <div class="page-load-status">
-                <div class="loader-ellips infinite-scroll-request">
-                    <span class="loader-ellips__dot"></span>
-                    <span class="loader-ellips__dot"></span>
-                    <span class="loader-ellips__dot"></span>
-                    <span class="loader-ellips__dot"></span>
-                </div>
-                <p class="infinite-scroll-last" style="text-align: center">End of content</p>
-                <p class="infinite-scroll-error" style="text-align: center">No more posts to load</p>
-            </div>
-        </div>
-        <div class="col-lg-4 col-md-3 col-min-m">
-            <div class="sidebar-item">
-                <div class="make-me-sticky">
-                    <ul class="nav-list-group">
-                        <li><img th:src="@{/static/img/853c98689faa6d4ccde6acf4c1dd694.jpg}" alt="..."
-                                 class="avatar-img">
-                        </li>
-                        <li class="online-button">
-                            <h2 class="name" style="text-align: center;"><span th:text="${session.user?.name}"></span>
-                            </h2>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>-->
     </div>
 </div>
-<!--登录、注册、上传模态框-->
-<div th:replace="include::account_button"></div>
 <div th:replace="include::nav_and_menu"></div>
 <!-- 过渡动画 -->
 <!--CSS Spinner-->
@@ -172,72 +186,9 @@
 </div>
 <a href="javaScript:;" class="top"><i class="fas fa-arrow-up" style="font-size: 150%; "></i></a>
 
-<!--post模板-->
-<!--<script type="text/html" id="photo-item-template">
-    <div class="card mb-3">
-        <div class="d-flex bd-highlight pt-1 pb-1">
-            <div class="pl-3 pr-2 bd-highlight"><img src="{{u_avatar}}"
-                                                     alt="..." class="rounded-circle post-avator"></div>
-            <div class="pl-2 pr-2 bd-highlight">
-                <div class="d-flex flex-column bd-highlight">
-                    <div class="bd-highlight">{{u_username}}</div>
-                    <div class="small text-muted">{{upload_time}}</div>
-                </div>
-            </div>
-        </div>
-        <img src="{{img_dir}}" class="post-card-img" alt="...">
-        <div class="d-flex justify-content-around">
-            <div class="p-2 bd-highlight"><a href="#"><i class="far fa-heart icon-size"></i></a></div>
-            <div class="p-2 bd-highlight"><a href="#"><i class="far fa-comment-dots icon-size"></i></a></div>
-            <div class="p-2 bd-highlight"><a href="#"><i class="far fa-bookmark icon-size"></i></a></div>
-            <div class="p-2 bd-highlight dropdown">
-                <a href="#" role="button" id="dropdown{{p_id}}" data-toggle="dropdown" aria-haspopup="true"
-                   aria-expanded="false">
-                    <i class="fas fa-ellipsis-h"></i>
-                </a>
-                <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-left"
-                     aria-labelledby="dropdown{{p_id}}">
-                    <a class="dropdown-item" href='{{img_dir}}' download><i class="fas fa-download"></i> Download Image</a>
-                    &lt;!&ndash;                    <a class="dropdown-item" href="#">Another action</a>&ndash;&gt;
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#"><i class="fas fa-exclamation-circle"></i> Report</a>
-                </div>
-            </div>
-        </div>
-        <div class="pl-3 pr-3 pb-3">
-            <p class="card-text">{{p_title}}</p>
-        </div>
-    </div>
-</script>-->
 <!--jQuery-->
 <script type="text/javascript" th:src="@{/static/js/jquery-3.4.1.min.js}"
         src="../static/js/jquery-3.4.1.min.js"></script>
-<!--主题控制-->
-<!--<script type="text/javascript">
-
-    const toggleSwitch = document.querySelector('.theme-switch input[type="checkbox"]');
-    const currentTheme = localStorage.getItem('theme');
-
-    if (currentTheme) {
-        document.documentElement.setAttribute('data-theme', currentTheme);
-
-        if (currentTheme === 'dark') {
-            toggleSwitch.checked = true;
-        }
-    }
-
-    function switchTheme(e) {
-        if (e.target.checked) {
-            document.documentElement.setAttribute('data-theme', 'dark');
-            localStorage.setItem('theme', 'dark');
-        } else {
-            document.documentElement.setAttribute('data-theme', 'light');
-            localStorage.setItem('theme', 'light');
-        }
-    }
-
-    toggleSwitch.addEventListener('change', switchTheme, false);
-</script>-->
 <script type="text/javascript" th:src="@{/static/js/infinite-scroll.pkgd.js}"
         src="../static/js/infinite-scroll.pkgd.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
@@ -248,54 +199,7 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
         integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
         crossorigin="anonymous"></script>
-<!--无限下拉-->
-<script type="text/javascript">
-    var $container = $('#c123').infiniteScroll({
-        path: function () {
-            return '/search_result?start=' + this.pageIndex + '&search_item=[[${search_item}]]';
-        },
-        // load response as flat text
-        responseType: 'text',
-        status: '.scroll-status',
-        history: false,
-    });
-
-    $container.on('load.infiniteScroll', function (event, response) {
-        // parse response into JSON data
-        var data = JSON.parse(response).list;
-        console.log(data);
-        // compile data into HTML
-        var itemsHTML = data.map(getItemHTML).join('');
-        // convert HTML string into elements
-        var $items = $(itemsHTML);
-        // append item elements
-        $container.infiniteScroll('appendItems', $items);
-    });
-
-    // load initial page
-    $container.infiniteScroll('loadNextPage');
-
-    //------------------//
-
-    var itemTemplateSrc = $('#photo-item-template').html();
-
-    function getItemHTML(photo) {
-        return microTemplate(itemTemplateSrc, photo);
-    }
-
-    // micro templating, sort-of
-    function microTemplate(src, data) {
-        // replace {{tags}} in source
-        return src.replace(/\{\{([\w\-_\.]+)\}\}/gi, function (match, key) {
-            // walk through objects to get value
-            var value = data;
-            key.split('.').forEach(function (part) {
-                value = value[part];
-            });
-            return value;
-        });
-    }
-</script>
+<script type="text/javascript" th:inline="javascript" th:src="@{/static/js/customize.js}"></script>
 
 <script th:inline="javascript" type="text/javascript">
 

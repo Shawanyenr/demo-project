@@ -42,4 +42,14 @@ public class UserDaoServiceImpl implements UserDaoService {
     public Integer removeSubscription(Integer own_id, Integer sub_id) {
         return userDao.removeSubscription(own_id,sub_id);
     }
+
+    @Override
+    public Integer checkSub(Integer own_id, Integer sub_id) {
+        return userDao.checkSub(own_id,sub_id);
+    }
+
+    @Override
+    public User findById(Integer id) {
+        return userDao.findById(id);
+    }
 }

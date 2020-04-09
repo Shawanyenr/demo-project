@@ -29,4 +29,10 @@ public interface UserDao {
 
     @Delete("delete from subscription where own_id=#{own_id} and sub_id=#{sub_id}")
     Integer removeSubscription(Integer own_id, Integer sub_id);
+
+    @Select("select count(*) from subscription where own_id=#{own_id} and sub_id=#{sub_id}")
+    Integer checkSub(Integer own_id, Integer sub_id);
+
+    @Select("select * from user where id = #{id}")
+    User findById(Integer id);
 }

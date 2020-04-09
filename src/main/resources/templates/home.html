@@ -137,13 +137,16 @@
     <div class="row  justify-content-center mr-0 ml-0">
         <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
             <li class="nav-item">
-                <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">Posts</a>
+                <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab"
+                   aria-controls="pills-home" aria-selected="true">Posts</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">Like</a>
+                <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab"
+                   aria-controls="pills-profile" aria-selected="false">Like</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false">Favorite</a>
+                <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab"
+                   aria-controls="pills-contact" aria-selected="false">Favorite</a>
             </li>
         </ul>
     </div>
@@ -153,7 +156,9 @@
                 <div th:if="${posts}">
                     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 ml-0 mr-0">
                         <div class="col p-2" th:each="post : ${posts}">
-                            <img th:src="@{${post.getImg_dir()}}" alt="" width="100%">
+                            <a th:href="@{'/posts/'+${post.getP_id()}}">
+                                <img th:src="@{${post.getImg_dir()}}" alt="" width="100%">
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -162,7 +167,9 @@
                 <div th:if="${likes}">
                     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 ml-0 mr-0">
                         <div class="col p-2" th:each="like : ${likes}">
-                            <img th:src="@{${like.getImg_dir()}}" alt="" width="100%">
+                            <a th:href="@{'/posts/'+${like.getP_id()}}">
+                                <img th:src="@{${like.getImg_dir()}}" alt="" width="100%">
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -171,7 +178,9 @@
                 <div th:if="${favs}">
                     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 ml-0 mr-0">
                         <div class="col p-2" th:each="fav : ${favs}">
-                            <img th:src="@{${fav.getImg_dir()}}" alt="" width="100%">
+                            <a th:href="@{'/posts/'+${fav.getP_id()}}">
+                                <img th:src="@{${fav.getImg_dir()}}" alt="" width="100%">
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -195,44 +204,6 @@
 </div>
 <a href="javaScript:;" class="top"><i class="fas fa-arrow-up" style="font-size: 150%; "></i></a>
 
-<!--post模板-->
-<!--<script type="text/html" id="photo-item-template">
-    <div class="card mb-3">
-        <div class="d-flex bd-highlight pt-1 pb-1">
-            <div class="pl-3 pr-2 bd-highlight"><img src="{{u_avatar}}"
-                                                     alt="..." class="rounded-circle post-avator"></div>
-            <div class="pl-2 pr-2 bd-highlight">
-                <div class="d-flex flex-column bd-highlight">
-                    <div class="bd-highlight">{{u_username}}</div>
-                    <div class="small text-muted">{{upload_time}}</div>
-                </div>
-            </div>
-        </div>
-        <img src="{{img_dir}}" class="post-card-img" alt="...">
-        <div class="d-flex justify-content-around">
-            <div class="p-2 bd-highlight"><a href="#"><i class="far fa-heart icon-size"></i></a></div>
-            <div class="p-2 bd-highlight"><a href="#"><i class="far fa-comment-dots icon-size"></i></a></div>
-            <div class="p-2 bd-highlight"><a href="#"><i class="far fa-bookmark icon-size"></i></a></div>
-            <div class="p-2 bd-highlight dropdown">
-                <a href="#" role="button" id="dropdown{{p_id}}" data-toggle="dropdown" aria-haspopup="true"
-                   aria-expanded="false">
-                    <i class="fas fa-ellipsis-h"></i>
-                </a>
-                <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-left"
-                     aria-labelledby="dropdown{{p_id}}">
-                    <a class="dropdown-item" href='{{img_dir}}' download><i class="fas fa-download"></i> Download Image</a>
-                    &lt;!&ndash;                    <a class="dropdown-item" href="#">Another action</a>&ndash;&gt;
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#" onclick="deletePost('{{p_id}}')"><i class="fas fa-trash-alt"></i> Delete</a>
-                    <a class="dropdown-item" href="#"><i class="fas fa-info-circle"></i> pid: {{p_id}}</a>
-                </div>
-            </div>
-        </div>
-        <div class="pl-3 pr-3 pb-3">
-            <p class="card-text">{{p_title}}</p>
-        </div>
-    </div>
-</script>-->
 <!--jQuery-->
 <script type="text/javascript" th:src="@{/static/js/jquery-3.4.1.min.js}"
         src="../static/js/jquery-3.4.1.min.js"></script>
@@ -272,54 +243,8 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
         integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
         crossorigin="anonymous"></script>
-<!--无限下拉-->
-<!--<script type="text/javascript">
-    var $container = $('#c123').infiniteScroll({
-        path: function () {
-            return '/loadMine?start=' + this.pageIndex + '&u_id=[[${session.user?.id}]]';
-        },
-        // load response as flat text
-        responseType: 'text',
-        status: '.scroll-status',
-        history: false,
-    });
+<script type="text/javascript" th:inline="javascript" th:src="@{/static/js/customize.js}"></script>
 
-    $container.on('load.infiniteScroll', function (event, response) {
-        // parse response into JSON data
-        var data = JSON.parse(response).list;
-        console.log(data);
-        // compile data into HTML
-        var itemsHTML = data.map(getItemHTML).join('');
-        // convert HTML string into elements
-        var $items = $(itemsHTML);
-        // append item elements
-        $container.infiniteScroll('appendItems', $items);
-    });
-
-    // load initial page
-    $container.infiniteScroll('loadNextPage');
-
-    //&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;//
-
-    var itemTemplateSrc = $('#photo-item-template').html();
-
-    function getItemHTML(photo) {
-        return microTemplate(itemTemplateSrc, photo);
-    }
-
-    // micro templating, sort-of
-    function microTemplate(src, data) {
-        // replace {{tags}} in source
-        return src.replace(/\{\{([\w\-_\.]+)\}\}/gi, function (match, key) {
-            // walk through objects to get value
-            var value = data;
-            key.split('.').forEach(function (part) {
-                value = value[part];
-            });
-            return value;
-        });
-    }
-</script>-->
 
 <script th:inline="javascript" type="text/javascript">
 

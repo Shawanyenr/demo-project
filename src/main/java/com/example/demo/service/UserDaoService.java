@@ -17,4 +17,8 @@ public interface UserDaoService {
     Integer addSubscription(Integer own_id, Integer sub_id);
 
     Integer removeSubscription(Integer own_id, Integer sub_id);
+
+    Integer checkSub(Integer own_id, Integer sub_id);
+
+    User findById(Integer id);
 }

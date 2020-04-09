@@ -4,6 +4,7 @@ import com.example.demo.dao.PostDao;
 import com.example.demo.po.Post;
 import com.example.demo.po.User;
 import com.example.demo.service.PostDaoService;
+import com.example.demo.service.UserDaoService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,9 @@ public class TestController {
 
     @Autowired
     private PostDaoService postDaoService;
+
+    @Autowired
+    private UserDaoService userDaoService;
 
     /*@RequestMapping("/posts")
     @ResponseBody
@@ -117,14 +121,21 @@ public class TestController {
     public String toUser(Model model, HttpSession session, @PathVariable Integer id) {
         User user = (User) session.getAttribute("user");
         System.out.println(user);
+        User one = userDaoService.findById(id);
+        one.setPassword("");
         if (null == user) {
             List<Post> allOfOneUser = postDaoService.findAllOfOneUser(null, id);
             model.addAttribute("posts", allOfOneUser);
+            model.addAttribute("one", one);
         } else {
+            if (user.getId()==id) return "redirect:/home";
+            Integer checkSub = userDaoService.checkSub(user.getId(),id);
             List<Post> posts  = postDaoService.findAllOfOneUser(user.getId(),id);
             model.addAttribute("posts", posts);
+            model.addAttribute("one", one);
+            model.addAttribute("subState", checkSub);
         }
-        return "home";
+        return "oneUser";
     }
 
 

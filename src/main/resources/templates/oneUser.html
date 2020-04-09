@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" media="all" href="../static/bootstrap-4.4.1-dist/css/bootstrap.min.css"
+          th:href="@{/static/bootstrap-4.4.1-dist/css/bootstrap.min.css}"/>
+    <link href="https://cdn.bootcss.com/font-awesome/5.12.1/css/all.css" rel="stylesheet">
+    <link rel="stylesheet" href="../static/css/theme.css" th:href="@{/static/css/theme.css}"/>
+
+</head>
+
+<body>
+
+<div class="container content-m">
+    <div class="row mr-0 ml-0">
+        <div class="d-flex flex-row align-items-center mb-3 user-section" th:if="${one}">
+            <img th:src="@{${one.getAvatar()}}" alt="..."
+                 class="avatar-img">
+            <div class="ml-3" th:text="${one.getName()}">null</div>
+            <small class="ml-3 text-secondary" th:text="'@'+${one.getUsername()}">null</small>
+            <div id="subBtn" th:fragment="subBtn" th:if="${session.user}">
+                <button class="btn-success btn ml-3" th:if="${subState}" th:onclick="'toggleSub('+${one.getId()}+')'">Subscribed</button>
+                <button class="btn-primary btn ml-3" th:unless="${subState}" th:onclick="'toggleSub('+${one.getId()}+')'">Subscribe</button>
+            </div>
+            <a class="btn btn-outline-dark ml-3" th:if="${session.user}" th:href="@{/message(sub_id=${one.getId()})}" role="button">Message</a>
+        </div>
+    </div>
+    <div class="row  justify-content-center mr-0 ml-0">
+        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">Posts</a>
+            </li>
+
+        </ul>
+    </div>
+    <div class="row ml-0 mr-0">
+        <div class="tab-content" id="pills-tabContent">
+            <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                <div th:if="${posts}">
+                    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 ml-0 mr-0">
+                        <div class="col p-2" th:each="post : ${posts}">
+                            <a th:href="@{'/posts/'+${post.getP_id()}}">
+                                <img th:src="@{${post.getImg_dir()}}" alt="" width="100%">
+                            </a>
+                        </div>
+                        <div class="col p-2"></div>
+                        <div class="col p-2"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--登录、注册、上传-->
+<!--<div th:replace="include::account_button"></div>-->
+<div th:replace="include::nav_and_menu"></div>
+<!-- 过渡动画 -->
+<!--CSS Spinner-->
+<div class="spinner-wrapper">
+    <div class="spinner">
+        <div class="rect1"></div>
+        <div class="rect2"></div>
+        <div class="rect3"></div>
+        <div class="rect4"></div>
+        <div class="rect5"></div>
+    </div>
+</div>
+<a href="javaScript:;" class="top"><i class="fas fa-arrow-up" style="font-size: 150%; "></i></a>
+
+<!--jQuery-->
+<script type="text/javascript" th:src="@{/static/js/jquery-3.4.1.min.js}"
+        src="../static/js/jquery-3.4.1.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+<script type="text/javascript" src="../static/js/jquery.validate.js"
+        th:src="@{/static/js/jquery.validate.js}"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+<script type="text/javascript" th:inline="javascript" th:src="@{/static/js/customize.js}"></script>
+
+<script th:inline="javascript" type="text/javascript">
+
+    // console.log("fav_123_bgjhkdnvsh".substring(4));
+    var a = /*[[${session.user}]]*/ null;
+    console.log("user: " + /*[[${ session.user}]]*/ null);
+    $(function () {
+        function hidePreloader() {
+            $('.spinner-wrapper').fadeOut(500);
+        }
+
+        hidePreloader();
+    });
+    $(function () {
+        if (a != null) {
+            $(".online-button").show();
+            $(".offline-button").hide();
+        }
+    });
+
+    function toggleSub(sub_id){
+        $("#subBtn").load("/toggleSub?sub_id="+sub_id);
+    }
+
+    $('#showImgModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget) // Button that triggered the modal
+        var recipient = button.data('whatever') // Extract info from data-* attributes
+        // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+        // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+        var modal = $(this)
+        $('#modal-img').attr("src", recipient);
+    });
+
+
+    $('#myTab a[href="#v-pills-posts"]').on('click', function (e) {
+        e.preventDefault();
+        $('#myTab a[href="#v-pills-posts"]').tab('show')
+    })
+
+</script>
+
+</body>
+</html>

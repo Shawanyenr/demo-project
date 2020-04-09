@@ -107,5 +107,33 @@ public class UserController {
         return msg;
     }
 
+    @Transactional
+    @RequestMapping("/toggleSub")
+    public String toggleSub(HttpSession session, @RequestParam Integer sub_id, Model model) {
+        User user = (User) session.getAttribute("user");
+        User one = userDaoService.findById(sub_id);
+        Integer check;
+        Integer state;
+        if (null == user || null == sub_id) {
+            return "error/404";
+        } else {
+            System.out.println(user.getId() + " toggleSubing " + sub_id);
+            check = userDaoService.checkSub(user.getId(), sub_id);
+            if (check == 1) {
+                state= userDaoService.removeSubscription(user.getId(),sub_id);
+            } else {
+                state = userDaoService.addSubscription(user.getId(),sub_id);
+            }
+
+        }
+        if (state>=1){
+            check = userDaoService.checkSub(user.getId(), sub_id);
+            model.addAttribute("subState",check);
+            model.addAttribute("one", one);
+            return "oneUser::subBtn";
+        }else return "error/404";
+
+    }
+
 
 }

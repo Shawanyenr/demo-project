@@ -21,14 +21,14 @@
     <div class="row">
         <div class="col-lg-8 col posts-m">
             <div id="post-list" class="card mb-3" th:if="${posts}" th:each="post : ${posts}" th:fragment="post-list">
-                <div class="card-header bg-transparent d-flex flex-row align-items-center pl-3 pr-3">
+                <div class="card-header bg-transparent d-flex flex-row align-items-center pl-3 pr-3" style="position: relative">
                     <div class="pr-3">
                         <img th:src="@{${post.u_avatar}}" alt="..." class="rounded-circle post-avator">
                     </div>
                     <div class="d-flex flex-column">
-                        <div style="font-size: 66% !important;font-weight: bold"
-                             th:text="${post.u_username}">null
-                        </div>
+                        <a th:href="@{'/user/'+${post.getU_id()}}" class="stretched-link" style="font-size: 66% !important;font-weight: bold"
+                           th:text="${post.u_username}">null
+                        </a>
                         <div class="text-muted" style="font-size: 55% !important;"
                              th:text="${#dates.format(post.upload_time,'yyyy-MM-dd HH:mm')}">null
                         </div>
@@ -69,10 +69,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="pl-3 pr-3 pb-3">
+                <div class="pl-3 pr-3 pb-3" style="position: relative">
                     <p class="card-text" style="font-size: 80%">
                         <span style="font-weight: bold" th:text="${post.u_username}">null&nbsp;&nbsp;</span>
-                        <span th:text="${post.p_title}">null</span>
+                        <a th:href="@{'/posts/'+${post.getP_id()}}" class="stretched-link" th:text="${post.p_title}">null</a>
                     </p>
                 </div>
             </div>

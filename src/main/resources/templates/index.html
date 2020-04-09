@@ -20,7 +20,7 @@
 <div class="container content-m">
     <div class="row">
         <div class="col-lg-8 col posts-m">
-            <div class="card mb-3" th:if="${posts}" th:each="post : ${posts}">
+            <div id="posts" class="card mb-3" th:if="${posts}" th:each="post : ${posts}">
                 <div class="card-header bg-transparent d-flex flex-row align-items-center pl-3 pr-3" style="position: relative">
                     <div class="pr-3">
                         <img th:src="@{${post.u_avatar}}" alt="..." class="rounded-circle post-avator">

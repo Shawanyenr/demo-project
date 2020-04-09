@@ -63,5 +63,8 @@ public class MybatisTest {
         System.out.println(check);
     }
 
-
+    @Test
+    public void checkSub() {
+        System.out.println(userDaoService.checkSub(5,7));
+    }
 }
