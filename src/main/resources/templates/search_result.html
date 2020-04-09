@@ -80,38 +80,63 @@
     <div class="row">
         <div id="posts" class="col-lg-8 col posts-m">
             <div class="card mb-3" th:each="post : ${posts}">
-                <div class="card-header bg-transparent pl-3 pr-3" style="display: flex; flex-direction: row; align-items: center">
-                    <div class="pr-3 bd-highlight"><img th:src="@{${post.u_avatar}}"
-                                                        alt="..." class="rounded-circle post-avator "></div>
-                    <div class="bd-highlight">
-                        <div class="d-flex flex-column bd-highlight">
-                            <div class="bd-highlight" style="font-size: 66% !important;font-weight: bold" th:text="${post.u_username}">null</div>
-                            <div class="text-muted" style="font-size: 55% !important;" th:text="${#dates.format(post.upload_time,'yyyy-MM-dd HH:mm')}">null</div>
+                <div class="card-header bg-transparent d-flex flex-row align-items-center pl-3 pr-3" style="position: relative">
+                    <div class="pr-3">
+                        <img th:src="@{${post.u_avatar}}" alt="..." class="rounded-circle post-avator">
+                    </div>
+                    <div class="d-flex flex-column">
+                        <a th:href="@{'/user/'+${post.getU_id()}}" class="stretched-link" style="font-size: 66% !important;font-weight: bold"
+                           th:text="${post.u_username}">null
+                        </a>
+                        <div class="text-muted" style="font-size: 55% !important;"
+                             th:text="${#dates.format(post.upload_time,'yyyy-MM-dd HH:mm')}">null
                         </div>
                     </div>
                 </div>
-                <img th:src="@{${post.img_dir}}" class="post-card-img" alt="...">
+                <a href="javascript:" data-toggle="modal" data-target="#showImgModal" th:data-whatever="${post.img_dir}">
+                    <img th:src="@{${post.img_dir}}" class="post-card-img" alt="...">
+                </a>
+
                 <div class="d-flex justify-content-around">
-                    <div class="p-2 bd-highlight"><a href="#"><i th:class="${post.p_like_flag}==1?'fas fa-heart icon-size love-flag':'far fa-heart icon-size'"></i></a></div>
+                    <div class="p-2 bd-highlight">
+                        <label th:for="'like'+${post.p_id}" class="like">
+                            <input type="checkbox" class="like" th:id="'like'+${post.p_id}"
+                                   th:checked="${post.p_like_flag==1}" style="display: none">
+                            <i class="fas fa-heart icon-size"></i>
+                        </label>
+                    </div>
                     <div class="p-2 bd-highlight"><a href="#"><i class="far fa-comment-dots icon-size"></i></a></div>
-                    <div class="p-2 bd-highlight"><a href="#"><i class="far fa-bookmark icon-size"></i></a></div>
+                    <div class="p-2 bd-highlight"><!--<a href="#"><i class="far fa-bookmark icon-size"></i></a>-->
+                        <label th:for="'fav_'+${post.p_id}" class="fav">
+                            <input type="checkbox" th:id="'fav_'+${post.p_id}"
+                                   th:checked="${post.p_fav_flag==1}" style="display: none">
+                            <i class="fas fa-bookmark icon-size"></i>
+                        </label>
+                    </div>
                     <div class="p-2 bd-highlight dropdown">
-                        <a href="#" role="button" th:id="${post.p_id}" data-toggle="dropdown" aria-haspopup="true"
+                        <a href="#" role="button" th:id="'dropdown'+${post.p_id}" data-toggle="dropdown"
+                           aria-haspopup="true"
                            aria-expanded="false">
                             <i class="fas fa-ellipsis-h"></i>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-left"
-                             th:aria-labelledby="${post.p_id}">
-                            <a class="dropdown-item" th:href='@{${post.img_dir}}' download><i class="fas fa-download"></i> Download Image</a>
+                             th:aria-labelledby="'dropdown'+${post.p_id}">
+                            <a class="dropdown-item" th:href='@{${post.img_dir}}' download><i
+                                    class="fas fa-download"></i> Download Image</a>
                             <!--<a class="dropdown-item" href="#">Another action</a>-->
                             <div class="dropdown-divider"></div>
-<!--                            <a class="dropdown-item" href="#" th:onclick="'deletePost('+${post.p_id}+')'"><i class="fas fa-trash-alt"></i> Delete</a>-->
+                            <div th:if="${session.user}">
+                                <a class="dropdown-item" href="#" th:if="${post.getU_id()==session.user.getId()}" th:onclick="'deletePost('+${post.p_id}+')'"><i class="fas fa-trash-alt"></i> Delete</a>
+                            </div>
                             <a class="dropdown-item" href="#"><i class="fas fa-exclamation-circle"></i> Report</a>
                         </div>
                     </div>
                 </div>
-                <div class="pl-3 pr-3 pb-3">
-                    <p class="card-text" style="font-size: 80%"><span style="font-weight: bold" th:text="${post.u_username}">null&nbsp;&nbsp;</span> <span th:text="${post.p_title}">null</span></p>
+                <div class="pl-3 pr-3 pb-3" style="position: relative">
+                    <p class="card-text" style="font-size: 80%">
+                        <span style="font-weight: bold" th:text="${post.u_username}">null&nbsp;&nbsp;</span>
+                        <a th:href="@{'/posts/'+${post.getP_id()}}" class="stretched-link" th:text="${post.p_title}">null</a>
+                    </p>
                 </div>
             </div>
         </div>
@@ -203,39 +228,13 @@
 
 <script th:inline="javascript" type="text/javascript">
 
-    $(document).on('click', ':not(#collapseExample)', function () {
-        $("#collapseExample").removeClass("show");
-
-    });
-
     /*页面过渡动画*/
     $(document).ready(function () {
-        //Preloader
-        preloaderFadeOutTime = 1000;
-
         function hidePreloader() {
             var preloader = $('.spinner-wrapper');
-            preloader.fadeOut(preloaderFadeOutTime);
+            preloader.fadeOut(500);
         }
-
         hidePreloader();
-    });
-    $(function () {
-        //返回顶部===>出现与消失
-        //当屏幕滚动，触生 scroll 事件
-        $(window).scroll(function () {
-            var top1 = $(this).scrollTop();     //获取相对滚动条顶部的偏移
-            if (top1 > 200) {      //当偏移大于200px时让图标淡入（css设置为隐藏）
-                $(".top").stop().fadeIn();
-            } else {
-                //当偏移小于200px时让图标淡出
-                $(".top").stop().fadeOut();
-            }
-        });
-        //去往顶部
-        $(".top").click(function () {
-            $("body , html").animate({scrollTop: 0}, 300);   //300是所用时间
-        });
     });
 
     var a = /*[[${session.user}]]*/ null;
@@ -248,39 +247,6 @@
         }
     });
 
-    function login() {
-        $.post("/login.action",
-            $("#loginFormData").serialize(),
-            function (data) {
-                if (data === "success") {
-                    alert("登录成功");
-                    window.location.reload();
-                } else if (data == "fail: 0") {
-                    alert("用户名或密码错误");
-                } else if (data == "fail: 1") {
-                    alert("账户已停用");
-                } else {
-                    alert("登录失败");
-                }
-            });
-    }
-
-    function register() {
-        $.post("/register.action",
-            $("#signupForm").serialize(),
-            function (data) {
-                alert(data);
-                if (data === "ok") {
-                    alert("注册成功");
-                    window.location.reload();
-                } else if (data === "fail") {
-                    alert("用户名已被占用");
-                } else {
-                    alert("注册失败");
-                }
-            });
-    }
-
     function uploadPost() {
         var u_id = /*[[${ session.user?.id }]]*/ null;
         console.log("上传时username" + u_id);
@@ -288,140 +254,54 @@
             $("#uploadFormData").serialize(),
             function (data) {
                 if (data === "success") {
-                    document.getElementById("uploadFormData").reset();
-                    box.style.display = "";
+                    /*document.getElementById("uploadFormData").reset();
+                    $('#choose-area').show();
                     $("#preview").html("");
                     $("#uploadTitle").removeClass("is-valid");
+                    $("#uploadTitle").hide();*/
+                    clearUploadForm();
                     alert("success");
                 }
             });
     }
 
+
     function clearUploadForm() {
         document.getElementById("uploadFormData").reset();
-        box.style.display = "";
+        $('#choose-area').show()
         $("#preview").html("");
         $("#uploadTitle").removeClass("is-valid");
+        $("#formTitle").hide();
     }
 
-    $(document).ready(function () {
-        $("#loginFormData").validate({
-            rules: {
-                username: {
-                    required: true
-                },
-                password: {
-                    required: true
-                }
-            },
-            messages: {
-                username: "Please enter your username",
-                password: "Please enter your password"
-            },
-            errorElement: "em",
-            errorPlacement: function (error, element) {
-                // Add the `invalid-feedback` class to the error element
-                error.addClass("invalid-feedback");
-                if (element.prop("type") === "checkbox") {
-                    error.insertAfter(element.next("label"));
-                } else {
-                    error.insertAfter(element);
-                }
-            },
-            highlight: function (element, errorClass, validClass) {
-                $(element).addClass("is-invalid").removeClass("is-valid");
-            },
-            unhighlight: function (element, errorClass, validClass) {
-                $(element).addClass("is-valid").removeClass("is-invalid");
-            },
-            submitHandler: function () {
-                login();
+    $("#uploadFormData").validate({
+        rules: {
+            p_title: {
+                required: true
             }
-        });
-        $("#signupForm").validate({
-            rules: {
-                name: "required",
-                username: {
-                    required: true,
-                    minlength: 2
-                },
-                password: {
-                    required: true,
-                    minlength: 5
-                },
-                confirm_password: {
-                    required: true,
-                    minlength: 5,
-                    equalTo: "#regpassword"
-                },
-                agree: "required"
-            },
-            messages: {
-                name: "Please enter your name",
-                username: {
-                    required: "Please enter a username",
-                    minlength: "Your username must consist of at least 2 characters"
-                },
-                password: {
-                    required: "Please provide a password",
-                    minlength: "Your password must be at least 5 characters long"
-                },
-                confirm_password: {
-                    required: "Please provide a password",
-                    minlength: "Your password must be at least 5 characters long",
-                    equalTo: "Please enter the same password as above"
-                },
-                agree: "Please accept our policy"
-            },
-            errorElement: "em",
-            errorPlacement: function (error, element) {
-                // Add the `invalid-feedback` class to the error element
-                error.addClass("invalid-feedback");
-                if (element.prop("type") === "checkbox") {
-                    error.insertAfter(element.next("label"));
-                } else {
-                    error.insertAfter(element);
-                }
-            },
-            highlight: function (element, errorClass, validClass) {
-                $(element).addClass("is-invalid").removeClass("is-valid");
-            },
-            unhighlight: function (element, errorClass, validClass) {
-                $(element).addClass("is-valid").removeClass("is-invalid");
-            },
-            submitHandler: function () {
-                register();
+        },
+        messages: {
+            p_title: "Please enter a title"
+        },
+        errorElement: "em",
+        errorPlacement: function (error, element) {
+            // Add the `invalid-feedback` class to the error element
+            error.addClass("invalid-feedback");
+            if (element.prop("type") === "checkbox") {
+                error.insertAfter(element.next("label"));
+            } else {
+                error.insertAfter(element);
             }
-        });
-        $("#uploadFormData").validate({
-            rules: {
-                p_title: {
-                    required: true
-                }
-            },
-            messages: {
-                p_title: "Please enter a title"
-            },
-            errorElement: "em",
-            errorPlacement: function (error, element) {
-                // Add the `invalid-feedback` class to the error element
-                error.addClass("invalid-feedback");
-                if (element.prop("type") === "checkbox") {
-                    error.insertAfter(element.next("label"));
-                } else {
-                    error.insertAfter(element);
-                }
-            },
-            highlight: function (element, errorClass, validClass) {
-                $(element).addClass("is-invalid").removeClass("is-valid");
-            },
-            unhighlight: function (element, errorClass, validClass) {
-                $(element).addClass("is-valid").removeClass("is-invalid");
-            },
-            submitHandler: function () {
-                uploadPost();
-            }
-        });
+        },
+        highlight: function (element, errorClass, validClass) {
+            $(element).addClass("is-invalid").removeClass("is-valid");
+        },
+        unhighlight: function (element, errorClass, validClass) {
+            $(element).addClass("is-valid").removeClass("is-invalid");
+        },
+        submitHandler: function () {
+            uploadPost();
+        }
     });
 
 
@@ -445,7 +325,7 @@
         e.preventDefault(); //取消默认浏览器拖拽效果
         var fileList = e.dataTransfer.files; //获取文件对象
         //检测是否是拖拽文件到页面的操作
-        if (fileList.length == 0) {
+        if (fileList.length === 0) {
             return false;
         }
         //检测文件是不是图片
@@ -457,7 +337,7 @@
         var img = window.webkitURL.createObjectURL(fileList[0]);
         var filename = fileList[0].name; //图片名称
         var filesize = Math.floor((fileList[0].size) / 1024);
-        alert(filesize);
+        // alert(filesize);
         if (filesize >= 20480) {
             alert("图片过大")
             return false;
@@ -477,7 +357,7 @@
             success: function (data) {
                 var str = "<img src='" + img + "' class='d-block mx-auto img-thumbnail'><p>filename: " + filename + "</p><p>filesize: " + filesize + "KB</p>";
                 $("#preview").html(str);
-                box.style.display = "none";
+                $('#choose-area').hide();
                 formTitle.style.display = "";
                 filename = data;
                 console.log("上传图片filename" + filename);
@@ -490,6 +370,54 @@
         })
     }, false);
 
+
+    $("#exampleFormControlFile1").change(function () {
+        var formData = new FormData();
+        var fileList = $("#exampleFormControlFile1")[0].files;
+        formData.append("upload", fileList[0]);
+        alert(fileList[0].name);
+        // $("#exampleFormControlFile1")[0].files;
+        var img = window.webkitURL.createObjectURL(fileList[0]);
+        var filename = fileList[0].name; //图片名称
+        var filesize = Math.floor((fileList[0].size) / 1024);
+        $.ajax({
+            type: "POST",
+            enctype: 'multipart/form-data',
+            url: "/imgUpload",
+            data: formData,
+            processData: false,  // Important!
+            contentType: false,
+            cache: false,
+            success: function (data) {
+                var str = "<img src='" + img + "' class='d-block mx-auto img-thumbnail'><p>filename: " + filename + "</p><p>filesize: " + filesize + "KB</p>";
+                $("#preview").html(str);
+                $('#choose-area').hide();
+                document.getElementById("formTitle").style.display = "";
+                // filename = data;
+                console.log("上传图片filename" + data);
+                $("#img_dir").val(data);
+                $("#u_id").val(/*[[${ session.user?.id }]]*/ null);
+            },
+            error: function () {
+                alert("ERROR");
+            }
+        })
+    })
+
+    function deletePost(p_id) {
+        if (confirm('Confirm to delete?')) {
+            $.post("/delete_post_id", {"p_id": p_id},
+                function (data) {
+                    if (data === "OK") {
+                        alert("success");
+                        window.location.reload();
+                    } else {
+                        alert("Fail");
+                        window.location.reload();
+                    }
+                });
+        }
+    }
 
 </script>
 

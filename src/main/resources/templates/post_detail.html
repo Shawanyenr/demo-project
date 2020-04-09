@@ -66,6 +66,9 @@
                                     class="fas fa-download"></i> Download Image</a>
                             <!--<a class="dropdown-item" href="#">Another action</a>-->
                             <div class="dropdown-divider"></div>
+                            <div th:if="${session.user}">
+                                <a class="dropdown-item" href="#" th:if="${post.getU_id()==session.user.getId()}" th:onclick="'deletePost('+${post.p_id}+')'"><i class="fas fa-trash-alt"></i> Delete</a>
+                            </div>
                             <a class="dropdown-item" href="#"><i class="fas fa-exclamation-circle"></i> Report</a>
                         </div>
                     </div>
@@ -216,6 +219,188 @@
         }
     });
 </script>-->
+<script th:inline="javascript" type="text/javascript">
 
+    $('#showImgModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget) // Button that triggered the modal
+        var recipient = button.data('whatever') // Extract info from data-* attributes
+        // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+        // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+        var modal = $(this)
+        $('#modal-img').attr("src", recipient);
+    })
+
+    function deletePost(p_id) {
+        if (confirm('Confirm to delete?')) {
+            $.post("/delete_post_id", {"p_id": p_id},
+                function (data) {
+                    if (data === "OK") {
+                        alert("success");
+                        window.location.href="/home";
+                    } else {
+                        alert("Fail");
+                        window.location.reload();
+                    }
+                });
+        }
+    }
+
+    function uploadPost() {
+        var u_id = /*[[${ session.user?.id }]]*/ null;
+        console.log("上传时username" + u_id);
+        $.post("/uploadForm",
+            $("#uploadFormData").serialize(),
+            function (data) {
+                if (data === "success") {
+                    /*document.getElementById("uploadFormData").reset();
+                    $('#choose-area').show();
+                    $("#preview").html("");
+                    $("#uploadTitle").removeClass("is-valid");
+                    $("#uploadTitle").hide();*/
+                    clearUploadForm();
+                    alert("success");
+                }
+            });
+    }
+
+
+    function clearUploadForm() {
+        document.getElementById("uploadFormData").reset();
+        $('#choose-area').show()
+        $("#preview").html("");
+        $("#uploadTitle").removeClass("is-valid");
+        $("#formTitle").hide();
+    }
+
+    $("#uploadFormData").validate({
+        rules: {
+            p_title: {
+                required: true
+            }
+        },
+        messages: {
+            p_title: "Please enter a title"
+        },
+        errorElement: "em",
+        errorPlacement: function (error, element) {
+            // Add the `invalid-feedback` class to the error element
+            error.addClass("invalid-feedback");
+            if (element.prop("type") === "checkbox") {
+                error.insertAfter(element.next("label"));
+            } else {
+                error.insertAfter(element);
+            }
+        },
+        highlight: function (element, errorClass, validClass) {
+            $(element).addClass("is-invalid").removeClass("is-valid");
+        },
+        unhighlight: function (element, errorClass, validClass) {
+            $(element).addClass("is-valid").removeClass("is-invalid");
+        },
+        submitHandler: function () {
+            uploadPost();
+        }
+    });
+
+
+    $(document).on({
+        dragleave: function (e) {	//拖离
+            e.preventDefault();
+        },
+        drop: function (e) {  //拖后放
+            e.preventDefault();
+        },
+        dragenter: function (e) {	//拖进
+            e.preventDefault();
+        },
+        dragover: function (e) {	//拖来拖去
+            e.preventDefault();
+        }
+    });
+
+    var box = document.getElementById('drop_area'); //拖拽区域
+    box.addEventListener("drop", function (e) {
+        e.preventDefault(); //取消默认浏览器拖拽效果
+        var fileList = e.dataTransfer.files; //获取文件对象
+        //检测是否是拖拽文件到页面的操作
+        if (fileList.length === 0) {
+            return false;
+        }
+        //检测文件是不是图片
+        if (fileList[0].type.indexOf('image') === -1) {
+            alert("您拖的不是图片！");
+            return false;
+        }
+        //拖拉图片到浏览器，可以实现预览功能
+        var img = window.webkitURL.createObjectURL(fileList[0]);
+        var filename = fileList[0].name; //图片名称
+        var filesize = Math.floor((fileList[0].size) / 1024);
+        // alert(filesize);
+        if (filesize >= 20480) {
+            alert("图片过大")
+            return false;
+        }
+        var formData = new FormData();
+        var formTitle = document.getElementById("formTitle");
+
+        formData.append("upload", fileList[0]);
+        $.ajax({
+            type: "POST",
+            enctype: 'multipart/form-data',
+            url: "/imgUpload",
+            data: formData,
+            processData: false,  // Important!
+            contentType: false,
+            cache: false,
+            success: function (data) {
+                var str = "<img src='" + img + "' class='d-block mx-auto img-thumbnail'><p>filename: " + filename + "</p><p>filesize: " + filesize + "KB</p>";
+                $("#preview").html(str);
+                $('#choose-area').hide();
+                formTitle.style.display = "";
+                filename = data;
+                console.log("上传图片filename" + filename);
+                $("#img_dir").val(filename);
+                $("#u_id").val(/*[[${ session.user?.id }]]*/ null);
+            },
+            error: function () {
+                alert("ERROR");
+            }
+        })
+    }, false);
+
+
+    $("#exampleFormControlFile1").change(function () {
+        var formData = new FormData();
+        var fileList = $("#exampleFormControlFile1")[0].files;
+        formData.append("upload", fileList[0]);
+        alert(fileList[0].name);
+        // $("#exampleFormControlFile1")[0].files;
+        var img = window.webkitURL.createObjectURL(fileList[0]);
+        var filename = fileList[0].name; //图片名称
+        var filesize = Math.floor((fileList[0].size) / 1024);
+        $.ajax({
+            type: "POST",
+            enctype: 'multipart/form-data',
+            url: "/imgUpload",
+            data: formData,
+            processData: false,  // Important!
+            contentType: false,
+            cache: false,
+            success: function (data) {
+                var str = "<img src='" + img + "' class='d-block mx-auto img-thumbnail'><p>filename: " + filename + "</p><p>filesize: " + filesize + "KB</p>";
+                $("#preview").html(str);
+                $('#choose-area').hide();
+                document.getElementById("formTitle").style.display = "";
+                // filename = data;
+                console.log("上传图片filename" + data);
+                $("#img_dir").val(data);
+                $("#u_id").val(/*[[${ session.user?.id }]]*/ null);
+            },
+            error: function () {
+                alert("ERROR");
+            }
+        })
+    })
+</script>
 </body>
 </html>

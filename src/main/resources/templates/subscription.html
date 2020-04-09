@@ -213,20 +213,24 @@
             $("#uploadFormData").serialize(),
             function (data) {
                 if (data === "success") {
-                    document.getElementById("uploadFormData").reset();
-                    box.style.display = "";
+                    /*document.getElementById("uploadFormData").reset();
+                    $('#choose-area').show();
                     $("#preview").html("");
                     $("#uploadTitle").removeClass("is-valid");
+                    $("#uploadTitle").hide();*/
+                    clearUploadForm();
                     alert("success");
                 }
             });
     }
 
+
     function clearUploadForm() {
         document.getElementById("uploadFormData").reset();
-        box.style.display = "";
+        $('#choose-area').show()
         $("#preview").html("");
         $("#uploadTitle").removeClass("is-valid");
+        $("#formTitle").hide();
     }
 
     $("#uploadFormData").validate({
@@ -312,7 +316,7 @@
             success: function (data) {
                 var str = "<img src='" + img + "' class='d-block mx-auto img-thumbnail'><p>filename: " + filename + "</p><p>filesize: " + filesize + "KB</p>";
                 $("#preview").html(str);
-                box.style.display = "none";
+                $('#choose-area').hide();
                 formTitle.style.display = "";
                 filename = data;
                 console.log("上传图片filename" + filename);
@@ -324,6 +328,40 @@
             }
         })
     }, false);
+
+
+    $("#exampleFormControlFile1").change(function () {
+        var formData = new FormData();
+        var fileList = $("#exampleFormControlFile1")[0].files;
+        formData.append("upload", fileList[0]);
+        alert(fileList[0].name);
+        // $("#exampleFormControlFile1")[0].files;
+        var img = window.webkitURL.createObjectURL(fileList[0]);
+        var filename = fileList[0].name; //图片名称
+        var filesize = Math.floor((fileList[0].size) / 1024);
+        $.ajax({
+            type: "POST",
+            enctype: 'multipart/form-data',
+            url: "/imgUpload",
+            data: formData,
+            processData: false,  // Important!
+            contentType: false,
+            cache: false,
+            success: function (data) {
+                var str = "<img src='" + img + "' class='d-block mx-auto img-thumbnail'><p>filename: " + filename + "</p><p>filesize: " + filesize + "KB</p>";
+                $("#preview").html(str);
+                $('#choose-area').hide();
+                document.getElementById("formTitle").style.display = "";
+                // filename = data;
+                console.log("上传图片filename" + data);
+                $("#img_dir").val(data);
+                $("#u_id").val(/*[[${ session.user?.id }]]*/ null);
+            },
+            error: function () {
+                alert("ERROR");
+            }
+        })
+    })
 
 </script>
 

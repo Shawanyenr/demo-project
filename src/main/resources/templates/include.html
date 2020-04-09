@@ -264,16 +264,12 @@
                             class="fas fa-home"></i>
                         <span th:text="${session.user?.name}"></span></a>
 
-                    <a href="#" class="m-list-item offline-button"
-                       data-toggle="modal"
-                       data-target="#loginForm">
+                    <a th:href="@{/login}" class="m-list-item offline-button">
                         <i class="fas fa-sign-in-alt"></i>
                         <span> Log in</span>
                     </a>
 
-                    <a href="#" class="m-list-item offline-button"
-                       data-toggle="modal"
-                       data-target="#registerForm">
+                    <a th:href="@{/register}" class="m-list-item offline-button">
                         <i class="fas fa-hat-wizard"></i>
                         <span> Sign up</span>
                     </a>

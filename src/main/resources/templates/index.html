@@ -66,6 +66,9 @@
                                     class="fas fa-download"></i> Download Image</a>
                             <!--<a class="dropdown-item" href="#">Another action</a>-->
                             <div class="dropdown-divider"></div>
+                            <div th:if="${session.user}">
+                                <a class="dropdown-item" href="#" th:if="${post.getU_id()==session.user.getId()}" th:onclick="'deletePost('+${post.p_id}+')'"><i class="fas fa-trash-alt"></i> Delete</a>
+                            </div>
                             <a class="dropdown-item" href="#"><i class="fas fa-exclamation-circle"></i> Report</a>
                         </div>
                     </div>
@@ -208,6 +211,21 @@
         $('#modal-img').attr("src", recipient);
     })
 
+
+    function deletePost(p_id) {
+        if (confirm('Confirm to delete?')) {
+            $.post("/delete_post_id", {"p_id": p_id},
+                function (data) {
+                    if (data === "OK") {
+                        alert("success");
+                        window.location.reload();
+                    } else {
+                        alert("Fail");
+                        window.location.reload();
+                    }
+                });
+        }
+    }
     function uploadPost() {
         var u_id = /*[[${ session.user?.id }]]*/ null;
         console.log("上传时username" + u_id);
@@ -225,6 +243,7 @@
                 }
             });
     }
+
 
     function clearUploadForm() {
         document.getElementById("uploadFormData").reset();
