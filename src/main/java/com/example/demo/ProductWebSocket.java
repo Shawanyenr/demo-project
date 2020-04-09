@@ -100,11 +100,11 @@ public class ProductWebSocket {
 
         try {
             if (webSocketSet.get(sendUserId) != null) {
-                webSocketSet.get(sendUserId).sendMessage(userId + "给我发来消息，消息内容为--->>" + message);
+                webSocketSet.get(sendUserId).sendMessage(userId + ": " + message);
             } else {
 
                 if (webSocketSet.get(userId) != null) {
-                    webSocketSet.get(userId).sendMessage("用户id：" + sendUserId + "已离线，未收到您的信息！");
+                    webSocketSet.get(userId).sendMessage(sendUserId + "已离线，未收到您的信息！");
                 }
                 System.out.println("消息接受人:" + sendUserId + "已经离线！");
             }

@@ -137,8 +137,16 @@ public class TestController {
     }
 
 
-    @RequestMapping(value = "/ws")
-    public String ws() {
+    @RequestMapping("/message")
+    public String ws(Model model, HttpSession session, @RequestParam(value = "sub_id") Integer id) {
+        User user = (User) session.getAttribute("user");
+        System.out.println(user);
+        if (null == user || null == id){
+            return "error/404";
+        }
+        User one = userDaoService.findById(id);
+        one.setPassword("");
+        model.addAttribute("one", one);
         return "ws";
     }
 

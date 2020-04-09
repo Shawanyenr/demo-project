@@ -6,30 +6,86 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>WebSocket SpringBootDemo</title>
+
+    <link rel="stylesheet" type="text/css" media="all" href="../static/bootstrap-4.4.1-dist/css/bootstrap.min.css"
+          th:href="@{/static/bootstrap-4.4.1-dist/css/bootstrap.min.css}"/>
+    <link href="https://cdn.bootcss.com/font-awesome/5.12.1/css/all.css" rel="stylesheet">
+    <link rel="stylesheet" href="../static/css/theme.css" th:href="@{/static/css/theme.css}"/>
 </head>
 <body>
+<!--顶栏-->
+<nav class="navbar fixed-top shadow-sm nav-m p-0" style="border-bottom: 1px solid #dbdbdb;">
+    <div class="container d-flex flex-row align-items-center flex-nowrap"
+         style="max-width: 992px;height:54px">
+        <a th:href="@{/index}" class="pr-3">Pic</a>
+
+        <div th:text="${one.name}"></div>
+
+        <button class="navbar-toggler" type="button">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
+</nav>
+<!--底栏-->
+<nav class="navbar fixed-bottom shadow-sm nav-m p-0" style="border-bottom: 1px solid #dbdbdb;">
+    <div class="container d-flex flex-row align-items-center flex-nowrap pt-3 pb-3"
+         style="max-width: 992px;min-height:54px">
+        <div class="form-group btn-block mb-0 mr-3">
+            <textarea class="form-control btn-block" id="text" rows="1"></textarea>
+        </div>
+
+        <button class="btn btn-outline-secondary d-inline-block" onclick="send()">Send</button>
+    </div>
+</nav>
+
 <!--userId:发送消息人的编号-->
-<div th:text="${session.user.getUsername()}">默认用户id：xiaoyou001（后期可以根据业务逻辑替换）</div>
+<!--<div th:text="${session.user.getUsername()}">默认用户id：xiaoyou001（后期可以根据业务逻辑替换）</div>
 <br/>
 <input id="text" type="text"/>
 <input placeholder="请输入接收人的用户id" id="sendUserId"/>
 <button onclick="send()">发送消息</button>
-<br/>
+<br/>-->
 
 <button onclick="closeWebSocket()">关闭WebSocket连接</button>
 <br/>
-<div>公众号：猿码优创</div>
-<br/>
 <div id="message"></div>
+
+
+<!--jQuery-->
+<script type="text/javascript" th:src="@{/static/js/jquery-3.4.1.min.js}"
+        src="../static/js/jquery-3.4.1.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+<script type="text/javascript" src="../static/js/jquery.validate.js"
+        th:src="@{/static/js/jquery.validate.js}"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+<script type="text/javascript" th:inline="javascript" th:src="@{/static/js/customize.js}"></script>
+
+<script th:inline="javascript" type="text/javascript">
+
+    // console.log("fav_123_bgjhkdnvsh".substring(4));
+    var a = /*[[${session.user}]]*/ null;
+    console.log("user: " + /*[[${ session.user}]]*/ null);
+    $(function () {
+        function hidePreloader() {
+            $('.spinner-wrapper').fadeOut(500);
+        }
+
+        hidePreloader();
+    });
+</script>
 </body>
 
 <script th:inline="javascript" type="text/javascript">
     var websocket = null;
 
-
     var userId = /*[[${session.user.getUsername()}]]*/"";
-    console.log(/*[[${session.user}]]*/);
-    console.log(/*[[${session.user.username}]]*/);
+    /*console.log(/!*[[${session.user}]]*!/);
+    console.log(/!*[[${session.user.username}]]*!/);*/
     console.log(userId);
     //判断当前浏览器是否支持WebSocket
     if ('WebSocket' in window) {
@@ -49,12 +105,15 @@
 
     //连接发生错误的回调方法
     websocket.onerror = function () {
-        setMessageInnerHTML("WebSocket连接发生错误");
+        // setMessageInnerHTML("WebSocket连接发生错误");
+        console.log("WebSocket连接发生错误");
+        setMessageInnerHTML("连接发生错误");
     };
 
     //连接成功建立的回调方法
     websocket.onopen = function () {
-        setMessageInnerHTML("WebSocket连接成功");
+        // setMessageInnerHTML("WebSocket连接成功");
+        console.log("WebSocket连接成功");
     }
 
     //接收到消息的回调方法
@@ -64,7 +123,8 @@
 
     //连接关闭的回调方法
     websocket.onclose = function () {
-        setMessageInnerHTML("WebSocket连接关闭");
+        // setMessageInnerHTML("WebSocket连接关闭");
+        console.log("WebSocket连接关闭");
     }
 
     //监听窗口关闭事件，当窗口关闭时，主动去关闭websocket连接，防止连接还没断开就关闭窗口，server端会抛异常。
@@ -90,15 +150,16 @@
             alert("发送信息不能为空！");
             return;
         } //获取发送人用户id
-        var sendUserId = document.getElementById('sendUserId').value;
+        var sendUserId = /*[[${one.getUsername()}]]*/"";
         if (sendUserId === "") {
             alert("发送人用户id不能为空！");
             return;
         }
 
-        document.getElementById('message').innerHTML += (userId + "给" + sendUserId + "发送消息,消息内容为---->>" + message + '<br/>');
+        document.getElementById('message').innerHTML += ("我: " + message + '<br/>');
         message = message + "," + sendUserId; //将要发送的信息和内容拼起来，以便于服务端知道消息要发给谁
         websocket.send(message);
+        document.getElementById('text').value="";
     }
 </script>
 </html>
