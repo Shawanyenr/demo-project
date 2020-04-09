@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.ProductWebSocket;
 import com.example.demo.dao.PostDao;
 import com.example.demo.po.Post;
 import com.example.demo.po.User;
@@ -10,10 +11,7 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -80,10 +78,10 @@ public class TestController {
         return "tt";
     }
 
-    @RequestMapping("/test")
+    /*@RequestMapping("/test")
     public String toTestPage() {
         return "test";
-    }
+    }*/
 
     @RequestMapping("/123")
     public String to123() {
@@ -139,5 +137,23 @@ public class TestController {
     }
 
 
+    @RequestMapping(value = "/ws")
+    public String ws() {
+        return "ws";
+    }
+
+
+    @ResponseBody
+    @GetMapping("test")
+    public String test(String userId, String message) throws Exception {
+        if (userId == "" || userId == null) {
+            return "发送用户id不能为空";
+        }
+        if (message == "" || message == null) {
+            return "发送信息不能为空";
+        }
+        new ProductWebSocket().systemSendToUser(userId, message);
+        return "发送成功！";
+    }
 
 }
