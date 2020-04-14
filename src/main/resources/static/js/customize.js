@@ -65,3 +65,34 @@ $(function () {
         $("body , html").animate({scrollTop: 0}, 300);   //300是所用时间
     });
 });
+
+/*like&fav*/
+$(function () {
+    $("input[class=like]").change(function () {
+        /*if (this.checked){
+            alert($(this).prop('id'));
+        }else alert("123")*/
+        var likeId = $(this).prop('id').substring($(this).prop('id').split("_", 2)[0].length + 1);
+        console.log(likeId);
+        $.ajax({
+            url: "/toggleLike?id=" + likeId,
+            success: function (data) {
+                if (data === "FAIL") {
+                    window.location.href = "/login";
+                }
+            }
+        })
+    });
+    $("input[class=fav]").change(function () {
+        var favId = $(this).prop('id').substring($(this).prop('id').split("_", 2)[0].length + 1);
+        console.log(favId);
+        $.ajax({
+            url: "/toggleFav?id=" + favId,
+            success: function (data) {
+                if (data === "FAIL") {
+                    window.location.href = "/login";
+                }
+            }
+        })
+    })
+})
