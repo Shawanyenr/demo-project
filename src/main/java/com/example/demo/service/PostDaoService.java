@@ -1,7 +1,6 @@
 package com.example.demo.service;
 
 import com.example.demo.po.Post;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.Date;
 import java.util.List;
@@ -28,5 +27,19 @@ public interface PostDaoService {
     List<Post> findAllLike(Integer u_id);
 
     List<Post> findAllFav(Integer u_id);
+
+    Integer checkLike(Integer p_id, Integer u_id);
+
+    void addLike(Integer p_id, Integer u_id);
+
+    void removeLike(Integer p_id, Integer u_id);
+
+    Integer checkFav(Integer p_id, Integer u_id);
+
+    void addFav(Integer p_id, Integer u_id);
+
+    void removeFav(Integer p_id, Integer u_id);
+
+    void addPostFlag(Integer p_id, Integer u_id, Integer like, Integer fav);
 
 }

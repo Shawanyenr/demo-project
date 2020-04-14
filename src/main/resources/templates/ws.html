@@ -25,7 +25,7 @@
     </div>
 </nav>
 <!--底栏-->
-<nav class="navbar fixed-bottom shadow-sm nav-m p-0" style="border-bottom: 1px solid #dbdbdb;">
+<nav class="navbar fixed-bottom shadow nav-m p-0" style="border-bottom: 1px solid #dbdbdb;">
     <div class="container d-flex flex-row align-items-center flex-nowrap pt-3 pb-3"
          style="max-width: 992px;height:54px">
         <div class="form-group btn-block mb-0 mr-3">
@@ -36,7 +36,9 @@
     </div>
 </nav>
 
-<div id="message" style="padding: 54px 0;height: 100vh; overflow: auto"></div>
+<div id="message" class="shadow container" style="padding: 54px 0;height: 100vh; overflow: auto; max-width: 992px">
+
+</div>
 
 
 <!--jQuery-->
@@ -58,8 +60,6 @@
     var websocket = null;
 
     var userId = /*[[${session.user.getUsername()}]]*/"";
-    /*console.log(/!*[[${session.user}]]*!/);
-    console.log(/!*[[${session.user.username}]]*!/);*/
     console.log(userId);
     var sendUserId = /*[[${one.getUsername()}]]*/"";
     console.log(sendUserId);
@@ -139,9 +139,7 @@
             alert("发送人用户id不能为空！");
             return;
         }
-
         myMessage(message);
-
         document.getElementById('message').scrollTop = document.getElementById('message').scrollHeight;
         message = sendUserId + "," + message; //将要发送的信息和内容拼起来，以便于服务端知道消息要发给谁
         websocket.send(message);

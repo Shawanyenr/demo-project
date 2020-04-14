@@ -37,4 +37,25 @@ public interface PostDao {
 
     List<Post> findAllFav(@Param("u_id") Integer u_id);
 
+    @Select("select p_like_flag from postflag where p_id=#{p_id} and u_id=#{u_id}")
+    Integer checkLike(Integer p_id, Integer u_id);
+
+    @Update("update postflag set p_like_flag=1 where p_id=#{p_id} and u_id=#{u_id}")
+    void addLike(Integer p_id, Integer u_id);
+
+    @Update("update postflag set p_like_flag=0 where p_id=#{p_id} and u_id=#{u_id}")
+    void removeLike(Integer p_id, Integer u_id);
+
+    @Select("select p_fav_flag from postflag where p_id=#{p_id} and u_id=#{u_id}")
+    Integer checkFav(Integer p_id, Integer u_id);
+
+    @Update("update postflag set p_fav_flag=1 where p_id=#{p_id} and u_id=#{u_id}")
+    void addFav(Integer p_id, Integer u_id);
+
+    @Update("update postflag set p_fav_flag=0 where p_id=#{p_id} and u_id=#{u_id}")
+    void removeFav(Integer p_id, Integer u_id);
+
+    @Insert("insert into postflag (p_id,u_id,p_like_flag,p_fav_flag) values(#{p_id},#{u_id},#{like},#{fav})")
+    void addPostFlag(Integer p_id, Integer u_id, Integer like, Integer fav);
+
 }

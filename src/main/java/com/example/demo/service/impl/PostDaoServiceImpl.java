@@ -68,4 +68,39 @@ public class PostDaoServiceImpl implements PostDaoService {
     public List<Post> findAllFav(Integer u_id) {
         return postDao.findAllFav(u_id);
     }
+
+    @Override
+    public Integer checkLike(Integer p_id, Integer u_id) {
+        return postDao.checkLike(p_id,u_id);
+    }
+
+    @Override
+    public void addLike(Integer p_id, Integer u_id) {
+        postDao.addLike(p_id,u_id);
+    }
+
+    @Override
+    public void removeLike(Integer p_id, Integer u_id) {
+        postDao.removeLike(p_id,u_id);
+    }
+
+    @Override
+    public Integer checkFav(Integer p_id, Integer u_id) {
+        return postDao.checkFav(p_id,u_id);
+    }
+
+    @Override
+    public void addFav(Integer p_id, Integer u_id) {
+        postDao.addFav(p_id, u_id);
+    }
+
+    @Override
+    public void removeFav(Integer p_id, Integer u_id) {
+        postDao.removeFav(p_id, u_id);
+    }
+
+    @Override
+    public void addPostFlag(Integer p_id, Integer u_id, Integer like, Integer fav) {
+        postDao.addPostFlag(p_id, u_id, like, fav);
+    }
 }

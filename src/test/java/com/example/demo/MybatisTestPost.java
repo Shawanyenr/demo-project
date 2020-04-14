@@ -9,7 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.Date;
 import java.util.List;
 
-@SpringBootTest(classes = DemoApplication.class)
+@SpringBootTest(classes = DemoApplication.class,webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class MybatisTestPost {
 
     @Autowired
@@ -56,6 +56,10 @@ public class MybatisTestPost {
         System.out.println(postDaoService.mySubs(1,1));
     }
 
+    @Test
+    public void checkPostFlag() {
+        System.out.println(postDaoService.checkLike(49,5));
+    }
 
 
 

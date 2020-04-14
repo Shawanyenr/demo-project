@@ -21,27 +21,30 @@
     <div class="row">
         <div class="col-lg-8 col posts-m">
             <div id="posts" class="card mb-3" th:if="${posts}" th:each="post : ${posts}">
-                <div class="card-header bg-transparent d-flex flex-row align-items-center pl-3 pr-3" style="position: relative">
+                <div class="card-header bg-transparent d-flex flex-row align-items-center pl-3 pr-3"
+                     style="position: relative">
                     <div class="pr-3">
                         <img th:src="@{${post.u_avatar}}" alt="..." class="rounded-circle post-avator">
                     </div>
                     <div class="d-flex flex-column">
-                        <a th:href="@{'/user/'+${post.getU_id()}}" class="stretched-link" style="font-size: 66% !important;font-weight: bold"
-                             th:text="${post.u_username}">null
+                        <a th:href="@{'/user/'+${post.getU_id()}}" class="stretched-link"
+                           style="font-size: 66% !important;font-weight: bold"
+                           th:text="${post.u_username}">null
                         </a>
                         <div class="text-muted" style="font-size: 55% !important;"
                              th:text="${#dates.format(post.upload_time,'yyyy-MM-dd HH:mm')}">null
                         </div>
                     </div>
                 </div>
-                <a href="javascript:" data-toggle="modal" data-target="#showImgModal" th:data-whatever="${post.img_dir}">
+                <a href="javascript:" data-toggle="modal" data-target="#showImgModal"
+                   th:data-whatever="${post.img_dir}">
                     <img th:src="@{${post.img_dir}}" class="post-card-img" alt="...">
                 </a>
 
                 <div class="d-flex justify-content-around">
                     <div class="p-2 bd-highlight">
-                        <label th:for="'like'+${post.p_id}" class="like">
-                            <input type="checkbox" class="like" th:id="'like'+${post.p_id}"
+                        <label th:for="'like_'+${post.p_id}" class="like">
+                            <input type="checkbox" class="like" th:id="'like_'+${post.p_id}"
                                    th:checked="${post.p_like_flag==1}" style="display: none">
                             <i class="fas fa-heart icon-size"></i>
                         </label>
@@ -49,7 +52,7 @@
                     <div class="p-2 bd-highlight"><a href="#"><i class="far fa-comment-dots icon-size"></i></a></div>
                     <div class="p-2 bd-highlight"><!--<a href="#"><i class="far fa-bookmark icon-size"></i></a>-->
                         <label th:for="'fav_'+${post.p_id}" class="fav">
-                            <input type="checkbox" th:id="'fav_'+${post.p_id}"
+                            <input type="checkbox" class="fav" th:id="'fav_'+${post.p_id}"
                                    th:checked="${post.p_fav_flag==1}" style="display: none">
                             <i class="fas fa-bookmark icon-size"></i>
                         </label>
@@ -67,7 +70,9 @@
                             <!--<a class="dropdown-item" href="#">Another action</a>-->
                             <div class="dropdown-divider"></div>
                             <div th:if="${session.user}">
-                                <a class="dropdown-item" href="#" th:if="${post.getU_id()==session.user.getId()}" th:onclick="'deletePost('+${post.p_id}+')'"><i class="fas fa-trash-alt"></i> Delete</a>
+                                <a class="dropdown-item" href="#" th:if="${post.getU_id()==session.user.getId()}"
+                                   th:onclick="'deletePost('+${post.p_id}+')'"><i class="fas fa-trash-alt"></i>
+                                    Delete</a>
                             </div>
                             <a class="dropdown-item" href="#"><i class="fas fa-exclamation-circle"></i> Report</a>
                         </div>
@@ -102,7 +107,8 @@
                         <div class="dropdown-divider"></div>
                     </div>
                     <div class="d-flex flex-column mb-2 subs-section" th:if="${session.user}">
-                        <a class="btn btn-primary mb-2" href="#" data-toggle="modal" data-target="#uploadForm" role="button">
+                        <a class="btn btn-primary mb-2" href="#" data-toggle="modal" data-target="#uploadForm"
+                           role="button">
                             <i class="fas fa-plus"></i> Upload
                         </a>
                         <a class="btn btn-outline-dark mb-2" href="#" role="button">
@@ -197,6 +203,35 @@
         }
     });
 
+    $(function () {
+        $("input[class=like]").change(function () {
+            /*if (this.checked){
+                alert($(this).prop('id'));
+            }else alert("123")*/
+            var likeId = $(this).prop('id').substring($(this).prop('id').split("_", 2)[0].length + 1);
+            console.log(likeId);
+            $.ajax({
+                url: "/toggleLike?id=" + likeId,
+                success: function (data) {
+                    if (data === "FAIL") {
+                        window.location.href = "/login";
+                    }
+                }
+            })
+        });
+        $("input[class=fav]").change(function () {
+            var favId = $(this).prop('id').substring($(this).prop('id').split("_", 2)[0].length + 1);
+            console.log(favId);
+            $.ajax({
+                url: "/toggleFav?id=" + favId,
+                success: function (data) {
+                    if (data === "FAIL") {
+                        window.location.href = "/login";
+                    }
+                }
+            })
+        })
+    })
 
 
     function deletePost(p_id) {
@@ -213,6 +248,7 @@
                 });
         }
     }
+
     function uploadPost() {
         var u_id = /*[[${ session.user?.id }]]*/ null;
         console.log("上传时username" + u_id);

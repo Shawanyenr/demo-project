@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import java.io.File;
@@ -46,7 +47,7 @@ public class PostController {
     public PageInfo<Post> loadMine(@RequestParam(value = "start", defaultValue = "1") int start, @RequestParam(value = "size", defaultValue = "5") int size, @RequestParam(value = "u_id") Integer u_id) throws Exception {
         System.out.println(u_id + "请求第" + start + "页");
         PageHelper.startPage(start, size, "p_id desc");
-        List<Post> cs = postDaoService.findAllOfOneUser(null,u_id);
+        List<Post> cs = postDaoService.findAllOfOneUser(null, u_id);
         PageInfo<Post> page = new PageInfo<>(cs);
         System.out.println(page);
         if (start > page.getPages()) {
@@ -70,9 +71,9 @@ public class PostController {
     @Transactional
     @RequestMapping("/update_post_id")
     @ResponseBody
-    public String updatePostId(Integer p_id,String p_title) {
+    public String updatePostId(Integer p_id, String p_title) {
         System.out.println("updating: " + p_id + "set title = " + p_title);
-        Integer check = postDaoService.updatePostId(p_id,new Date(),p_title);
+        Integer check = postDaoService.updatePostId(p_id, new Date(), p_title);
         if (check == 1) {
             return "OK";
         } else
@@ -85,10 +86,10 @@ public class PostController {
         User user = (User) session.getAttribute("user");
         System.out.println(user);
         if (null == user) {
-            List<Post> posts = postDaoService.searchResult("%"+search_item+"%",null);
+            List<Post> posts = postDaoService.searchResult("%" + search_item + "%", null);
             model.addAttribute("posts", posts);
         } else {
-            List<Post> posts  = postDaoService.searchResult("%"+search_item+"%",user.getId());
+            List<Post> posts = postDaoService.searchResult("%" + search_item + "%", user.getId());
             model.addAttribute("posts", posts);
         }
         return "search_result";
@@ -98,7 +99,7 @@ public class PostController {
     @ResponseBody
     public PageInfo<Post> searchResult(@RequestParam(value = "start", defaultValue = "1") int start, @RequestParam(value = "size", defaultValue = "5") int size, @RequestParam(value = "search_item") String search_item) {
         PageHelper.startPage(start, size, "p_id desc");
-        List<Post> cs = postDaoService.searchResult("%" + search_item + "%",null);
+        List<Post> cs = postDaoService.searchResult("%" + search_item + "%", null);
         PageInfo<Post> page = new PageInfo<>(cs);
         System.out.println("searching: " + search_item);
         System.out.println(page);
@@ -140,5 +141,57 @@ public class PostController {
             msg = "success";
         }
         return msg;
+    }
+
+    @Transactional
+    @RequestMapping("/toggleLike")
+    @ResponseBody
+    public String toggleLike(@RequestParam("id") Integer pid, HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        System.out.println(user);
+        Integer check;
+        if (null == user || null == pid) {
+            return "FAIL";
+        } else {
+            System.out.println("user: " + user.getId() + " pid: " + pid);
+            check = postDaoService.checkLike(pid, user.getId());
+            System.out.println("check: "+ check);
+            if (null == check) {
+                postDaoService.addPostFlag(pid, user.getId(), 1, 0);
+
+            } else if (check == 0) {
+                postDaoService.addLike(pid, user.getId());
+            } else {
+                postDaoService.removeLike(pid, user.getId());
+
+            }
+        }
+        return "OK";
+    }
+
+    @Transactional
+    @RequestMapping("/toggleFav")
+    @ResponseBody
+    public String toggleFav(@RequestParam("id") Integer pid, HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        System.out.println(user);
+        Integer check;
+        if (null == user || null == pid) {
+            return "FAIL";
+        } else {
+            System.out.println("user: " + user.getId() + " pid: " + pid);
+            check = postDaoService.checkFav(pid, user.getId());
+            System.out.println("check: "+ check);
+            if (null == check) {
+                postDaoService.addPostFlag(pid, user.getId(), 0, 1);
+
+            } else if (check == 0) {
+                postDaoService.addFav(pid, user.getId());
+            } else {
+                postDaoService.removeFav(pid, user.getId());
+
+            }
+        }
+        return "OK";
     }
 }

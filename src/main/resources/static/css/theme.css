@@ -742,6 +742,6 @@ input[type=checkbox] + i {
     cursor: pointer;
 }
 .fav input[type=checkbox]:checked + i{
-    color: yellow;
+    color: #FFBF4A;
     cursor: pointer;
 }
