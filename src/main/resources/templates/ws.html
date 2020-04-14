@@ -21,15 +21,13 @@
 
         <div th:text="${one.name}"></div>
 
-        <button class="navbar-toggler" type="button">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+        <i class="fas fa-bars"></i>
     </div>
 </nav>
 <!--底栏-->
 <nav class="navbar fixed-bottom shadow-sm nav-m p-0" style="border-bottom: 1px solid #dbdbdb;">
     <div class="container d-flex flex-row align-items-center flex-nowrap pt-3 pb-3"
-         style="max-width: 992px;min-height:54px">
+         style="max-width: 992px;height:54px">
         <div class="form-group btn-block mb-0 mr-3">
             <textarea class="form-control btn-block" id="text" rows="1"></textarea>
         </div>
@@ -38,23 +36,11 @@
     </div>
 </nav>
 
-<!--userId:发送消息人的编号-->
-<!--<div th:text="${session.user.getUsername()}">默认用户id：xiaoyou001（后期可以根据业务逻辑替换）</div>
-<br/>
-<input id="text" type="text"/>
-<input placeholder="请输入接收人的用户id" id="sendUserId"/>
-<button onclick="send()">发送消息</button>
-<br/>-->
-
-<button onclick="closeWebSocket()">关闭WebSocket连接</button>
-<br/>
-<div id="message"></div>
+<div id="message" style="padding: 54px 0;height: 100vh; overflow: auto"></div>
 
 
 <!--jQuery-->
-<script type="text/javascript" th:src="@{/static/js/jquery-3.4.1.min.js}"
-        src="../static/js/jquery-3.4.1.min.js"></script>
-
+<script type="text/javascript" th:src="@{/static/js/jquery-3.4.1.min.js}"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
         integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
         crossorigin="anonymous"></script>
@@ -65,19 +51,7 @@
         crossorigin="anonymous"></script>
 <script type="text/javascript" th:inline="javascript" th:src="@{/static/js/customize.js}"></script>
 
-<script th:inline="javascript" type="text/javascript">
 
-    // console.log("fav_123_bgjhkdnvsh".substring(4));
-    var a = /*[[${session.user}]]*/ null;
-    console.log("user: " + /*[[${ session.user}]]*/ null);
-    $(function () {
-        function hidePreloader() {
-            $('.spinner-wrapper').fadeOut(500);
-        }
-
-        hidePreloader();
-    });
-</script>
 </body>
 
 <script th:inline="javascript" type="text/javascript">
@@ -87,6 +61,10 @@
     /*console.log(/!*[[${session.user}]]*!/);
     console.log(/!*[[${session.user.username}]]*!/);*/
     console.log(userId);
+    var sendUserId = /*[[${one.getUsername()}]]*/"";
+    console.log(sendUserId);
+    var userAvatar = /*[[${session.user.getAvatar()}]]*/"";
+    var sendUserAvatar = /*[[${one.getAvatar()}]]*/"";
     //判断当前浏览器是否支持WebSocket
     if ('WebSocket' in window) {
         /**
@@ -134,7 +112,13 @@
 
     //将消息显示在网页上
     function setMessageInnerHTML(sendMessage) {
-        document.getElementById('message').innerHTML += sendMessage + '<br/>';
+        // document.getElementById('message').innerHTML += sendMessage + '<br/>';
+        var sender = sendMessage.split(",", 2)[0];
+        var content = sendMessage.substring(sender.length+1);
+        if (sender === sendUserId) {
+            sendUserMessage(content);
+            document.getElementById('message').scrollTop = document.getElementById('message').scrollHeight;
+        }
     }
 
     //关闭WebSocket连接
@@ -150,16 +134,42 @@
             alert("发送信息不能为空！");
             return;
         } //获取发送人用户id
-        var sendUserId = /*[[${one.getUsername()}]]*/"";
+
         if (sendUserId === "") {
             alert("发送人用户id不能为空！");
             return;
         }
 
-        document.getElementById('message').innerHTML += ("我: " + message + '<br/>');
-        message = message + "," + sendUserId; //将要发送的信息和内容拼起来，以便于服务端知道消息要发给谁
+        myMessage(message);
+
+        document.getElementById('message').scrollTop = document.getElementById('message').scrollHeight;
+        message = sendUserId + "," + message; //将要发送的信息和内容拼起来，以便于服务端知道消息要发给谁
         websocket.send(message);
-        document.getElementById('text').value="";
+        document.getElementById('text').value = "";
+    }
+
+    function myMessage(message) {
+        document.getElementById('message').innerHTML +=
+            "<div class=\"d-flex flex-row justify-content-end btn-block\"> " +
+            "<div class=\"media\">\n" +
+            "  <div class=\"media-body\">\n" +
+            "    <p class=\"mb-0\">" + message + "</p>\n" +
+            "  </div>\n" +
+            "  <img src=\"" + userAvatar + "\" class=\"align-self-end post-avator ml-3\" alt=\"...\">\n" +
+            "</div>" +
+            "</div>";
+    }
+
+    function sendUserMessage(content) {
+        document.getElementById('message').innerHTML +=
+            "<div class=\"d-flex flex-row justify-content-start btn-block\"> " +
+            "<div class=\"media\">\n" +
+            "  <img src=\"" + sendUserAvatar + "\" class=\"align-self-end post-avator mr-3\" alt=\"...\">\n" +
+            "  <div class=\"media-body\">\n" +
+            "    <p class=\"mb-0\">" + content + "</p>\n" +
+            "  </div>\n" +
+            "</div>" +
+            "</div>";
     }
 </script>
 </html>

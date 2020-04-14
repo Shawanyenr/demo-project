@@ -282,18 +282,8 @@
                     <a href="#" class="m-list-item online-button" style="display: none"><i
                             class="fas fa-comment-alt"></i><span> Message</span></a>
 
-                    <a href="#" class="m-list-item"><i
-                            class="fas fa-info-circle"></i><span> About</span></a>
-
                     <a th:href="@{/logout.action}" class="m-list-item online-button" style="display: none"><i
                             class="fas fa-sign-out-alt"></i><span> Log out</span></a>
-
-                    <div class="theme-switch">
-                        <input type="checkbox" id="theme-switch" style="display: none"/>
-                        <label for="theme-switch" class="m-list-item" style="cursor: pointer">
-                            <i class="fas fa-adjust"></i><span style="font-weight: bold"> Dark mode</span>
-                        </label>
-                    </div>
 
                 </div>
             </div>
@@ -375,13 +365,25 @@
         </div>
     </div>
 
-
+    <!--图片modal-->
     <div class="modal fade" id="showImgModal" tabindex="-1" role="dialog" aria-labelledby="showImgModalLabel"
          aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
             <div class="modal-content">
                 <img id="modal-img" src="" alt="" style="width: 100%">
             </div>
+        </div>
+    </div>
+
+    <!-- 过渡动画 -->
+    <!--CSS Spinner-->
+    <div class="spinner-wrapper">
+        <div class="spinner">
+            <div class="rect1"></div>
+            <div class="rect2"></div>
+            <div class="rect3"></div>
+            <div class="rect4"></div>
+            <div class="rect5"></div>
         </div>
     </div>
 </header>

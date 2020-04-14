@@ -83,9 +83,11 @@ public class ProductWebSocket {
     public void onMessage(String message, Session session) {
         System.out.println("来自客户端的消息:" + message);
         //要发送人的用户uuid
-        String sendUserId = message.split(",")[1];
+        String sendUserId = message.split(",", 2)[0];
+        System.out.println("sendUserId length: " + sendUserId.length());
         //发送的信息
-        String sendMessage = message.split(",")[0];
+        String sendMessage = message.substring(sendUserId.length()+1);
+        System.out.println("sendMessage: "+sendMessage);
         //给指定的人发消息
         sendToUser(sendUserId, sendMessage);
 
@@ -100,11 +102,11 @@ public class ProductWebSocket {
 
         try {
             if (webSocketSet.get(sendUserId) != null) {
-                webSocketSet.get(sendUserId).sendMessage(userId + ": " + message);
+                webSocketSet.get(sendUserId).sendMessage(userId + "," + message);
             } else {
 
                 if (webSocketSet.get(userId) != null) {
-                    webSocketSet.get(userId).sendMessage(sendUserId + "已离线，未收到您的信息！");
+                    webSocketSet.get(userId).sendMessage("sysInfo," + sendUserId + "已离线，未收到您的信息！");
                 }
                 System.out.println("消息接受人:" + sendUserId + "已经离线！");
             }

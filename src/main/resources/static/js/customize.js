@@ -1,4 +1,4 @@
-const toggleSwitch = document.querySelector('.theme-switch input[type="checkbox"]');
+/*const toggleSwitch = document.querySelector('.theme-switch input[type="checkbox"]');
 const currentTheme = localStorage.getItem('theme');
 
 if (currentTheme) {
@@ -18,16 +18,36 @@ function switchTheme(e) {
         localStorage.setItem('theme', 'light');
     }
 }
-
 toggleSwitch.addEventListener('change', switchTheme, false);
 
+*/
 
+/*过渡动画*/
+$(function () {
+    function hidePreloader() {
+        $('.spinner-wrapper').fadeOut(500);
+    }
+    hidePreloader();
+});
+
+
+/*collapse*/
 $(document).on('click', ':not(#collapseExample)', function () {
     $("#collapseExample").collapse('hide');
 
 });
 
+/*图片modal*/
+$('#showImgModal').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget) // Button that triggered the modal
+    var recipient = button.data('whatever') // Extract info from data-* attributes
+    // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+    // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+    var modal = $(this)
+    $('#modal-img').attr("src", recipient);
+})
 
+/*返回顶部*/
 $(function () {
     //返回顶部===>出现与消失
     //当屏幕滚动，触生 scroll 事件

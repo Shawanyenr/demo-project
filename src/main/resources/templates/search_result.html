@@ -140,7 +140,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-4 d-none d-md-block">
+        <div class="col-lg-4 d-none d-lg-block">
             <div class="sidebar-item">
                 <div class="make-me-sticky">
                     <div class="d-flex flex-row align-items-center mb-3 user-section" th:if="${session.user}">
@@ -228,15 +228,6 @@
 
 <script th:inline="javascript" type="text/javascript">
 
-    /*页面过渡动画*/
-    $(document).ready(function () {
-        function hidePreloader() {
-            var preloader = $('.spinner-wrapper');
-            preloader.fadeOut(500);
-        }
-        hidePreloader();
-    });
-
     var a = /*[[${session.user}]]*/ null;
     console.log("user: " + /*[[${ session.user}]]*/ null);
 
@@ -254,11 +245,6 @@
             $("#uploadFormData").serialize(),
             function (data) {
                 if (data === "success") {
-                    /*document.getElementById("uploadFormData").reset();
-                    $('#choose-area').show();
-                    $("#preview").html("");
-                    $("#uploadTitle").removeClass("is-valid");
-                    $("#uploadTitle").hide();*/
                     clearUploadForm();
                     alert("success");
                 }
