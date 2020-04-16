@@ -1,5 +1,7 @@
 package com.example.demo;
 
+import com.example.demo.service.MessageDaoService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.websocket.*;
@@ -16,6 +18,9 @@ import java.util.concurrent.ConcurrentHashMap;
 @ServerEndpoint("/websocket/{userId}")
 @Component
 public class ProductWebSocket {
+
+    @Autowired
+    private MessageDaoService messageDaoService;
 
     //静态变量，用来记录当前在线连接数。应该把它设计成线程安全的。
     private static int onlineCount = 0;
