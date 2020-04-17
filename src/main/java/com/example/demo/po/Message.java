@@ -8,8 +8,8 @@ import java.util.Date;
 @Data
 public class Message {
     private Integer id;
-    private Integer sender;
-    private Integer receiver;
+    private String sender;
+    private String receiver;
     private String content;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm",timezone="GMT+8")
     private Date time;

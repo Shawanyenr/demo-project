@@ -25,18 +25,43 @@
     </div>
 </nav>
 <!--底栏-->
-<nav class="navbar fixed-bottom shadow nav-m p-0" style="border-bottom: 1px solid #dbdbdb;">
-    <div class="container d-flex flex-row align-items-center flex-nowrap pt-3 pb-3"
-         style="max-width: 992px;height:54px">
+<nav class="navbar fixed-bottom shadow nav-m pl-0 pr-0 pt-2 pb-2" style="border-bottom: 1px solid #dbdbdb;height:54px">
+    <div class="container d-flex flex-row align-items-center flex-nowrap"
+         style="max-width: 992px">
         <div class="form-group btn-block mb-0 mr-3">
-            <textarea class="form-control btn-block" id="text" rows="1"></textarea>
+            <textarea class="form-control btn-block" id="text" rows="1" style="height: 38px"></textarea>
         </div>
 
         <button class="btn btn-outline-secondary d-inline-block" onclick="send()">Send</button>
     </div>
 </nav>
 
-<div id="message" class="shadow container" style="padding: 54px 0;height: 100vh; overflow: auto; max-width: 992px">
+<div id="messageSection" class="shadow container pl-0 pr-0"
+     style="position:absolute;top:54px;bottom:54px; overflow: auto; max-width: 992px;left: 50%;transform: translateX(-50%)">
+    <div th:each="message : ${messageList}">
+        <div th:if="${message.getSender()==session.user.getUsername()}"
+             class="d-flex flex-row justify-content-end btn-block pt-2 pr-3 pb-2">
+            <div class="media">
+                <div class="media-body btn btn-success">
+                    <p th:text="${message.getContent()}" class="mb-0"></p>
+                </div>
+                <img th:src="@{${session.user.getAvatar()}}" class="align-self-end chat-avatar ml-3" alt="...">
+            </div>
+        </div>
+        <div th:if="${message.getSender()==one.getUsername()}"
+             class="d-flex flex-row justify-content-start btn-block pt-2 pl-3 pb-2">
+            <div class="media">
+                <img th:src="@{${one.getAvatar()}}" class="align-self-end chat-avatar mr-3" alt="...">
+                <div class="media-body btn btn-secondary">
+                    <p th:text="${message.getContent()}" class="mb-0"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="messageHistory" class="d-flex flex-row justify-content-center pb-2"><span class="badge badge-secondary">chat history</span>
+    </div>
+    <!--    </div>-->
+    <div id="message"></div>
 
 </div>
 
@@ -114,10 +139,10 @@
     function setMessageInnerHTML(sendMessage) {
         // document.getElementById('message').innerHTML += sendMessage + '<br/>';
         var sender = sendMessage.split(",", 2)[0];
-        var content = sendMessage.substring(sender.length+1);
+        var content = sendMessage.substring(sender.length + 1);
         if (sender === sendUserId) {
             sendUserMessage(content);
-            document.getElementById('message').scrollTop = document.getElementById('message').scrollHeight;
+            document.getElementById('messageSection').scrollTop = document.getElementById('messageSection').scrollHeight;
         }
     }
 
@@ -140,7 +165,7 @@
             return;
         }
         myMessage(message);
-        document.getElementById('message').scrollTop = document.getElementById('message').scrollHeight;
+        document.getElementById('messageSection').scrollTop = document.getElementById('messageSection').scrollHeight;
         message = sendUserId + "," + message; //将要发送的信息和内容拼起来，以便于服务端知道消息要发给谁
         websocket.send(message);
         document.getElementById('text').value = "";
@@ -148,27 +173,32 @@
 
     function myMessage(message) {
         document.getElementById('message').innerHTML +=
-            "<div class=\"d-flex flex-row justify-content-end btn-block\"> " +
+            "<div class=\"d-flex flex-row justify-content-end btn-block pt-2 pr-3 pb-2\"> " +
             "<div class=\"media\">\n" +
-            "  <div class=\"media-body\">\n" +
+            "  <div class=\"media-body btn btn-success\">\n" +
             "    <p class=\"mb-0\">" + message + "</p>\n" +
             "  </div>\n" +
-            "  <img src=\"" + userAvatar + "\" class=\"align-self-end post-avator ml-3\" alt=\"...\">\n" +
+            "  <img src=\"" + userAvatar + "\" class=\"align-self-end chat-avatar ml-3\" alt=\"...\">\n" +
             "</div>" +
             "</div>";
     }
 
     function sendUserMessage(content) {
         document.getElementById('message').innerHTML +=
-            "<div class=\"d-flex flex-row justify-content-start btn-block\"> " +
+            "<div class=\"d-flex flex-row justify-content-start btn-block pt-2 pl-3 pb-2\"> " +
             "<div class=\"media\">\n" +
-            "  <img src=\"" + sendUserAvatar + "\" class=\"align-self-end post-avator mr-3\" alt=\"...\">\n" +
-            "  <div class=\"media-body\">\n" +
+            "  <img src=\"" + sendUserAvatar + "\" class=\"align-self-end chat-avatar mr-3\" alt=\"...\">\n" +
+            "  <div class=\"media-body btn btn-secondary\">\n" +
             "    <p class=\"mb-0\">" + content + "</p>\n" +
             "  </div>\n" +
             "</div>" +
             "</div>";
     }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        document.getElementById('messageSection').scrollTop = document.getElementById('messageSection').scrollHeight;
+    })
+
 </script>
 </html>
 

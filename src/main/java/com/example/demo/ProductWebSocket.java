@@ -3,6 +3,7 @@ package com.example.demo;
 import com.example.demo.service.MessageDaoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 
 import javax.websocket.*;
 import javax.websocket.server.PathParam;
@@ -19,8 +20,12 @@ import java.util.concurrent.ConcurrentHashMap;
 @Component
 public class ProductWebSocket {
 
+    private static MessageDaoService messageDaoService;
+
     @Autowired
-    private MessageDaoService messageDaoService;
+    public void setMessageDaoService(MessageDaoService messageDaoService){
+        ProductWebSocket.messageDaoService=messageDaoService;
+    }
 
     //静态变量，用来记录当前在线连接数。应该把它设计成线程安全的。
     private static int onlineCount = 0;
@@ -93,6 +98,7 @@ public class ProductWebSocket {
         //发送的信息
         String sendMessage = message.substring(sendUserId.length()+1);
         System.out.println("sendMessage: "+sendMessage);
+        messageDaoService.addMessage(userId,sendUserId,sendMessage);
         //给指定的人发消息
         sendToUser(sendUserId, sendMessage);
 

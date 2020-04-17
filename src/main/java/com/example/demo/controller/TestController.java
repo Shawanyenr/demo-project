@@ -153,6 +153,7 @@ public class TestController {
         model.addAttribute("one", one);
         List<Message> messageList = messageDaoService.listMessage(user.getUsername(),one.getUsername(),one.getUsername(),user.getUsername());
         model.addAttribute("messageList", messageList);
+        System.out.println("chat history: \n" + messageList);
         return "ws";
     }
 

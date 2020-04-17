@@ -429,6 +429,13 @@ a:hover, a:focus {
     object-fit: cover;
 }
 
+.chat-avatar{
+    width: 39px;
+    height: 39px;
+    object-fit: cover;
+    border-radius: .25rem;
+}
+
 .post-user {
     font-weight: bold;
 }
