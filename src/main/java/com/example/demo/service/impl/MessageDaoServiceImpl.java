@@ -15,12 +15,12 @@ public class MessageDaoServiceImpl implements MessageDaoService {
     private MessageDao messageDao;
 
     @Override
-    public void addMessage(Integer sender, Integer receiver, String content) {
+    public void addMessage(String sender, String receiver, String content) {
         messageDao.addMessage(sender, receiver, content);
     }
 
     @Override
-    public List<Message> listMessage(Integer sender, Integer receiver, Integer sender1, Integer receiver1) {
+    public List<Message> listMessage(String sender, String receiver, String sender1, String receiver1) {
         return messageDao.listMessage(sender, receiver, sender1, receiver1);
     }
 }

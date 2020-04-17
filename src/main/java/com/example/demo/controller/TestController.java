@@ -2,8 +2,10 @@ package com.example.demo.controller;
 
 import com.example.demo.ProductWebSocket;
 import com.example.demo.dao.PostDao;
+import com.example.demo.po.Message;
 import com.example.demo.po.Post;
 import com.example.demo.po.User;
+import com.example.demo.service.MessageDaoService;
 import com.example.demo.service.PostDaoService;
 import com.example.demo.service.UserDaoService;
 import com.github.pagehelper.PageHelper;
@@ -25,6 +27,8 @@ public class TestController {
     @Autowired
     private UserDaoService userDaoService;
 
+    @Autowired
+    private MessageDaoService messageDaoService;
     /*@RequestMapping("/posts")
     @ResponseBody
     public PageInfo<Post> posts(@RequestParam(value = "start", defaultValue = "1") int start, @RequestParam(value = "size", defaultValue = "5") int size) throws Exception {
@@ -142,11 +146,13 @@ public class TestController {
         User user = (User) session.getAttribute("user");
         System.out.println(user);
         if (null == user || null == id){
-            return "error/404";
+            return "redirect:/login";
         }
         User one = userDaoService.findById(id);
         one.setPassword("");
         model.addAttribute("one", one);
+        List<Message> messageList = messageDaoService.listMessage(user.getUsername(),one.getUsername(),one.getUsername(),user.getUsername());
+        model.addAttribute("messageList", messageList);
         return "ws";
     }
 
