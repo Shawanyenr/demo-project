@@ -17,11 +17,12 @@
 <nav class="navbar fixed-top shadow-sm nav-m p-0" style="border-bottom: 1px solid #dbdbdb;">
     <div class="container d-flex flex-row align-items-center flex-nowrap"
          style="max-width: 992px;height:54px">
-        <a th:href="@{/index}" class="pr-3">Pic</a>
+        <a href="#" class="pl-2 pr-3 pt-2 pb-2" onClick="history.back(-1);"><i class="fas fa-angle-left"
+                                                                               style="font-size: 150%"></i></a>
 
         <div th:text="${one.name}"></div>
 
-        <i class="fas fa-bars"></i>
+        <a href="#" class="btn btn-outline-secondary"><i class="fas fa-bars"></i></a>
     </div>
 </nav>
 <!--底栏-->
@@ -40,20 +41,20 @@
      style="position:absolute;top:54px;bottom:54px; overflow: auto; max-width: 992px;left: 50%;transform: translateX(-50%)">
     <div th:each="message : ${messageList}">
         <div th:if="${message.getSender()==session.user.getUsername()}"
-             class="d-flex flex-row justify-content-end btn-block pt-2 pr-3 pb-2">
+             class="d-flex flex-row justify-content-end btn-block pt-2 pr-3 pb-2" style="padding-left: 69px">
             <div class="media">
-                <div class="media-body btn btn-success">
-                    <p th:text="${message.getContent()}" class="mb-0"></p>
+                <div class="media-body btn-success" style="padding: 6px 12px;border: 1px;border-radius: .25rem">
+                    <span th:text="${message.getContent()}" class="mb-0 text-wrap"></span>
                 </div>
                 <img th:src="@{${session.user.getAvatar()}}" class="align-self-end chat-avatar ml-3" alt="...">
             </div>
         </div>
         <div th:if="${message.getSender()==one.getUsername()}"
-             class="d-flex flex-row justify-content-start btn-block pt-2 pl-3 pb-2">
+             class="d-flex flex-row justify-content-start btn-block pt-2 pl-3 pb-2" style="padding-right: 69px">
             <div class="media">
                 <img th:src="@{${one.getAvatar()}}" class="align-self-end chat-avatar mr-3" alt="...">
-                <div class="media-body btn btn-secondary">
-                    <p th:text="${message.getContent()}" class="mb-0"></p>
+                <div class="media-body btn-secondary" style="padding: 6px 12px;border: 1px;border-radius: .25rem">
+                    <span th:text="${message.getContent()}" class="mb-0 text-wrap"></span>
                 </div>
             </div>
         </div>
@@ -65,6 +66,15 @@
 
 </div>
 
+<div class="spinner-wrapper">
+    <div class="spinner">
+        <div class="rect1"></div>
+        <div class="rect2"></div>
+        <div class="rect3"></div>
+        <div class="rect4"></div>
+        <div class="rect5"></div>
+    </div>
+</div>
 
 <!--jQuery-->
 <script type="text/javascript" th:src="@{/static/js/jquery-3.4.1.min.js}"></script>
@@ -122,6 +132,7 @@
     //接收到消息的回调方法
     websocket.onmessage = function (event) {
         setMessageInnerHTML(event.data);
+        console.log(event.data);
     }
 
     //连接关闭的回调方法
@@ -137,9 +148,13 @@
 
     //将消息显示在网页上
     function setMessageInnerHTML(sendMessage) {
+
+
         // document.getElementById('message').innerHTML += sendMessage + '<br/>';
-        var sender = sendMessage.split(",", 2)[0];
-        var content = sendMessage.substring(sender.length + 1);
+        /*var sender = sendMessage.split(",", 2)[0];
+        var content = sendMessage.substring(sender.length + 1);*/
+        var sender = JSON.parse(sendMessage).userId;
+        var content = JSON.parse(sendMessage).message;
         if (sender === sendUserId) {
             sendUserMessage(content);
             document.getElementById('messageSection').scrollTop = document.getElementById('messageSection').scrollHeight;
@@ -166,7 +181,7 @@
         }
         myMessage(message);
         document.getElementById('messageSection').scrollTop = document.getElementById('messageSection').scrollHeight;
-        message = sendUserId + "," + message; //将要发送的信息和内容拼起来，以便于服务端知道消息要发给谁
+        message = "{\"sendUserId\":\"" + sendUserId + "\",\"message\": \"" + message + "\"}"; //将要发送的信息和内容拼起来，以便于服务端知道消息要发给谁
         websocket.send(message);
         document.getElementById('text').value = "";
     }

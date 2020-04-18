@@ -171,4 +171,12 @@ public class TestController {
         return "发送成功！";
     }
 
+    /*@GetMapping("testMessage")
+    public void testM(String userId, String message) throws Exception {
+
+        new ProductWebSocket().sendToUser();
+    }*/
+
+
+
 }

@@ -1,14 +1,21 @@
 package com.example.demo;
 
 import com.example.demo.service.MessageDaoService;
+import com.example.demo.service.UserDaoService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.websocket.*;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -23,8 +30,15 @@ public class ProductWebSocket {
     private static MessageDaoService messageDaoService;
 
     @Autowired
-    public void setMessageDaoService(MessageDaoService messageDaoService){
-        ProductWebSocket.messageDaoService=messageDaoService;
+    public void setMessageDaoService(MessageDaoService messageDaoService) {
+        ProductWebSocket.messageDaoService = messageDaoService;
+    }
+
+    private static UserDaoService userDaoService;
+
+    @Autowired
+    public void setUserDaoService(UserDaoService userDaoService) {
+        ProductWebSocket.userDaoService = userDaoService;
     }
 
     //静态变量，用来记录当前在线连接数。应该把它设计成线程安全的。
@@ -90,15 +104,24 @@ public class ProductWebSocket {
      * @param session 可选的参数
      */
     @OnMessage
-    public void onMessage(String message, Session session) {
+    public void onMessage(String message, Session session) throws JsonProcessingException {
         System.out.println("来自客户端的消息:" + message);
-        //要发送人的用户uuid
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode rootNode = mapper.readTree(message);
+        String sendUserId = rootNode.path("sendUserId").asText();
+        String sendMessage = rootNode.path("message").asText();
+//        System.out.println(mapper.writeValueAsString(message));
+        /*String sendUserId = mapper.writeValueAsString(message);
+//        JsonNode messageNode = rootNode.path("sendUserId");
+        String sendMessage = mapper.writeValueAsString(message);*/
+        System.out.println("sendUserId: " + sendUserId + " sendMessage: " + sendMessage);
+        /*//要发送人的用户uuid
         String sendUserId = message.split(",", 2)[0];
         System.out.println("sendUserId length: " + sendUserId.length());
         //发送的信息
         String sendMessage = message.substring(sendUserId.length()+1);
-        System.out.println("sendMessage: "+sendMessage);
-        messageDaoService.addMessage(userId,sendUserId,sendMessage);
+        System.out.println("sendMessage: "+sendMessage);*/
+        messageDaoService.addMessage(userId, sendUserId, sendMessage);
         //给指定的人发消息
         sendToUser(sendUserId, sendMessage);
 
@@ -113,7 +136,14 @@ public class ProductWebSocket {
 
         try {
             if (webSocketSet.get(sendUserId) != null) {
-                webSocketSet.get(sendUserId).sendMessage(userId + "," + message);
+                Map<String, Object> map = new HashMap<>();
+                map.put("userId", userId);
+                map.put("userAvatar", userDaoService.findByUsername(userId).getAvatar());
+                map.put("message", message);
+                ObjectMapper mapper = new ObjectMapper();
+//                webSocketSet.get(sendUserId).sendMessage(userId + "," + message);
+                System.out.println(mapper.writeValueAsString(map));
+                webSocketSet.get(sendUserId).sendMessage(mapper.writeValueAsString(map));
             } else {
 
                 if (webSocketSet.get(userId) != null) {

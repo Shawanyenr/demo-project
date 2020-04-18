@@ -430,8 +430,8 @@ a:hover, a:focus {
 }
 
 .chat-avatar{
-    width: 39px;
-    height: 39px;
+    width: 37px;
+    height: 37px;
     object-fit: cover;
     border-radius: .25rem;
 }

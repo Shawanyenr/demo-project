@@ -20,13 +20,16 @@
         <div class="d-flex flex-row align-items-center mb-3 user-section" th:if="${one}">
             <img th:src="@{${one.getAvatar()}}" alt="..."
                  class="avatar-img">
-            <div class="ml-3" th:text="${one.getName()}">null</div>
+            <div class="ml-3 text-nowrap" th:text="${one.getName()}">null</div>
             <small class="ml-3 text-secondary" th:text="'@'+${one.getUsername()}">null</small>
-            <div id="subBtn" th:fragment="subBtn" th:if="${session.user}">
-                <button class="btn-success btn ml-3" th:if="${subState}" th:onclick="'toggleSub('+${one.getId()}+')'">Subscribed</button>
-                <button class="btn-primary btn ml-3" th:unless="${subState}" th:onclick="'toggleSub('+${one.getId()}+')'">Subscribe</button>
+            <div class="d-flex flex-wrap">
+                <div id="subBtn" th:fragment="subBtn" th:if="${session.user}">
+                    <button class="btn-success btn ml-3 mt-2" th:if="${subState}" th:onclick="'toggleSub('+${one.getId()}+')'">Subscribed</button>
+                    <button class="btn-primary btn ml-3 mt-2" th:unless="${subState}" th:onclick="'toggleSub('+${one.getId()}+')'">Subscribe</button>
+                </div>
+                <a class="btn btn-outline-dark ml-3 mt-2" th:if="${session.user}" th:href="@{/message(sub_id=${one.getId()})}" role="button">Message</a>
             </div>
-            <a class="btn btn-outline-dark ml-3" th:if="${session.user}" th:href="@{/message(sub_id=${one.getId()})}" role="button">Message</a>
+
         </div>
     </div>
     <div class="row  justify-content-center mr-0 ml-0">
@@ -37,14 +40,14 @@
 
         </ul>
     </div>
-    <div class="row ml-0 mr-0">
+    <div class="row">
         <div class="tab-content" id="pills-tabContent">
             <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
                 <div th:if="${posts}">
                     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 ml-0 mr-0">
                         <div class="col p-2" th:each="post : ${posts}">
                             <a th:href="@{'/posts/'+${post.getP_id()}}">
-                                <img th:src="@{${post.getImg_dir()}}" alt="" width="100%">
+                                <img th:src="@{${post.getImg_dir()}}" alt="" width="100%" height="300px" style="object-fit: cover">
                             </a>
                         </div>
                         <div class="col p-2"></div>

@@ -21,4 +21,6 @@ public interface UserDaoService {
     Integer checkSub(Integer own_id, Integer sub_id);
 
     User findById(Integer id);
+
+    User findByUsername(String username);
 }
