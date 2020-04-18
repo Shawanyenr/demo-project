@@ -137,20 +137,12 @@
     </div>
 </div>
 <div th:replace="include::nav_and_menu"></div>
-<!--jQuery-->
-<script type="text/javascript" th:src="@{/static/js/jquery-3.4.1.min.js}"
-        src="../static/js/jquery-3.4.1.min.js"></script>
-<script type="text/javascript" th:src="@{/static/js/infinite-scroll.pkgd.js}"
-        src="../static/js/infinite-scroll.pkgd.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-        crossorigin="anonymous"></script>
+
+<th:block th:replace="include :: genaralScript"></th:block>
 <script type="text/javascript" src="../static/js/jquery.validate.js"
         th:src="@{/static/js/jquery.validate.js}"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-        crossorigin="anonymous"></script>
 <script type="text/javascript" th:inline="javascript" th:src="@{/static/js/customize.js}"></script>
+<th:block th:replace="include :: notification"></th:block>
 <!--<script type="text/javascript">
     if (window.Notification) {
         console.log('浏览器支持Notification');
