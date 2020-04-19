@@ -16,4 +16,8 @@
     <select id="selectCommentById" parameterType="Integer" resultMap="userAndComment">
         select * from comment where id=#{id}
     </select>
+
+    <select id="selectChildCommentsById" parameterType="Integer" resultMap="userAndComment">
+        select * from comment where parentId=#{parentId}
+    </select>
 </mapper>

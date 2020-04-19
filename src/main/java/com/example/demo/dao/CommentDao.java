@@ -5,6 +5,8 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository("commentDao")
 @Mapper
 public interface CommentDao {
@@ -12,4 +14,6 @@ public interface CommentDao {
     Integer addComment(Integer pid, Integer uid, Integer parentId, String content);
 
     Comment selectCommentById(Integer id);
+
+    List<Comment> selectChildCommentsById(Integer parentId);
 }

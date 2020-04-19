@@ -21,10 +21,20 @@ public class TestComment {
     private CommentDao commentDao;
 
     @Test
-    public  void selectCommentById(){
+    public void selectCommentById(){
         Comment comment = commentDao.selectCommentById(2);
         System.out.println(comment);
     }
+
+    @Test
+    public void selectChildCommentsById(){
+        List<Comment> childCommentsById = commentDao.selectChildCommentsById(1);
+        for (Comment comment: childCommentsById) {
+            System.out.println(comment);
+        }
+//        System.out.println(childCommentsById);
+    }
+
     @Test
     public void findAll1() {
         List<Post> all = postDaoService.findAll(null);
