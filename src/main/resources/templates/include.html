@@ -443,7 +443,10 @@
                         var n = new Notification('@' + sender, {
                             body: content,
                             // tag: sender,
-                            icon: senderAvatar
+                            icon: senderAvatar,
+                            data: {
+                                url: self.location.origin+'/message/'+sender
+                            }
                         })
                     } else if (permission === 'denied') {
                         console.log('用户拒绝通知');
@@ -458,6 +461,12 @@
         function closeWebSocket() {
             websocket.close();
         }
+
+        self.addEventListener('notificationclick', e => {
+            e.notification.close();
+            // Get all the Window clients
+            e.waitUntil(clients.openWindow(window.location.href+"/message/"+sender));
+        });
     </script>
 </th:block>
 

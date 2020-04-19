@@ -54,6 +54,13 @@ public class UserDaoServiceImpl implements UserDaoService {
     }
 
     @Override
+    public User findByIdExPassword(Integer id) {
+        User user = userDao.findByIdExPassword(id);
+        user.setPassword("");
+        return user;
+    }
+
+    @Override
     public User findByUsername(String username) {
         return userDao.findByUsername(username);
     }

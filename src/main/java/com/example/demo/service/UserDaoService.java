@@ -22,5 +22,7 @@ public interface UserDaoService {
 
     User findById(Integer id);
 
+    User findByIdExPassword(Integer id);
+
     User findByUsername(String username);
 }

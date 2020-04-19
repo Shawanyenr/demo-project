@@ -23,4 +23,7 @@ spring:
 mybatis:
   type-aliases-package: com.example.demo.po
   mapper-locations: classpath:mapper/*Mapper.xml
+  configuration:
+    lazy-loading-enabled: true
+    aggressive-lazy-loading: false
 

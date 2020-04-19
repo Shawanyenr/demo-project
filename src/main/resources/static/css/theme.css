@@ -738,9 +738,6 @@ input:checked + .slider:before {
     padding-bottom: 20px;
 }
 
-.like-flag {
-    color: red !important;
-}
 input[type=checkbox] + i {
     cursor: pointer;
 }
