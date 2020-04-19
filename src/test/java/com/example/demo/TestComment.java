@@ -36,6 +36,15 @@ public class TestComment {
     }
 
     @Test
+    public void selectCommentsByPid(){
+        List<Comment> commentsByPid = commentDao.selectCommentsByPid(16);
+        for (Comment comment: commentsByPid) {
+            System.out.println(comment);
+        }
+        System.out.println(commentsByPid);
+    }
+
+    @Test
     public void findAll1() {
         List<Post> all = postDaoService.findAll(null);
         System.out.println(all);

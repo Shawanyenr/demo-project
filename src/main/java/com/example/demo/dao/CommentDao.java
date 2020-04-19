@@ -16,4 +16,6 @@ public interface CommentDao {
     Comment selectCommentById(Integer id);
 
     List<Comment> selectChildCommentsById(Integer parentId);
+
+    List<Comment> selectCommentsByPid(Integer pid);
 }
