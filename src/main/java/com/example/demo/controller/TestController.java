@@ -2,9 +2,11 @@ package com.example.demo.controller;
 
 import com.example.demo.ProductWebSocket;
 import com.example.demo.dao.PostDao;
+import com.example.demo.po.Comment;
 import com.example.demo.po.Message;
 import com.example.demo.po.Post;
 import com.example.demo.po.User;
+import com.example.demo.service.CommentDaoService;
 import com.example.demo.service.MessageDaoService;
 import com.example.demo.service.PostDaoService;
 import com.example.demo.service.UserDaoService;
@@ -29,6 +31,9 @@ public class TestController {
 
     @Autowired
     private MessageDaoService messageDaoService;
+
+    @Autowired
+    private CommentDaoService commentDaoService;
     /*@RequestMapping("/posts")
     @ResponseBody
     public PageInfo<Post> posts(@RequestParam(value = "start", defaultValue = "1") int start, @RequestParam(value = "size", defaultValue = "5") int size) throws Exception {
@@ -67,7 +72,9 @@ public class TestController {
                 model.addAttribute("post", post);
             }
         }
-
+        List<Comment> comments = commentDaoService.selectCommentsByPid(id);
+        model.addAttribute("comments", comments);
+        System.out.println("comments: \n" + comments);
         return "post_detail";
     }
 

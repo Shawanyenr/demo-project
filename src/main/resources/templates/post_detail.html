@@ -71,11 +71,52 @@
                         </div>
                     </div>
                 </div>
-                <div class="pl-3 pr-3 pb-3">
+                <div class="pl-3 pr-3 pb-2" style="border-bottom: 1px solid rgba(0, 0, 0, 0.125);">
                     <p class="card-text" style="font-size: 80%">
                         <span style="font-weight: bold" th:text="${post.u_username}">null&nbsp;&nbsp;</span>
                         <span th:href="@{'/posts/'+${post.getP_id()}}" th:text="${post.p_title}">null</span>
                     </p>
+                </div>
+                <div class="pl-3 pr-3 pb-3 comment-section">
+                    <div th:if="${comments}" th:each="comment : ${comments}">
+                        <div th:unless="${comment}" class="text-center">No comment yet</div>
+                        <div th:if="${comment}" class="media mt-2">
+                            <img th:src="@{${comment.user.getAvatar()}}" class="chat-avatar border-radius-50 mr-3" alt="...">
+                            <div class="media-body">
+                                <div>
+                                    <span th:text="${comment.user.getUsername()}" class="h5 mt-0">Media heading </span>
+                                    <small th:text="${#dates.format(comment.getTime(),'yyyy-MM-dd hh:mm')}" class="text-muted"></small>
+                                    <button type="button" class="btn btn-link small-m">Reply</button>
+                                </div>
+                                <div th:text="${comment.getContent()}"></div>
+<!--                                <div></div>-->
+                                <div th:if="${comment.getChildComments()}" th:each="childComment : ${comment.getChildComments()}" class="media mt-2">
+                                    <a class="mr-3" href="#">
+                                        <img th:src="@{${childComment.user.getAvatar()}}" class="chat-avatar border-radius-50" alt="...">
+                                    </a>
+                                    <div class="media-body">
+                                        <div>
+                                            <span th:text="${childComment.user.getUsername()}" class="h5 mt-0">Media heading </span>
+                                            <small th:text="${#dates.format(childComment.getTime(),'yyyy-MM-dd hh:mm')}" class="text-muted"></small>
+                                            <button type="button" class="btn btn-link small-m">Reply</button>
+                                        </div>
+                                        <div th:text="${childComment.getContent()}"></div>
+<!--                                        <div></div>-->
+                                    </div>
+                                </div>
+                                <!--<div class="media mt-3">
+                                    <a class="mr-3" href="#">
+                                        <img src="..." class="mr-3" alt="...">
+                                    </a>
+                                    <div class="media-body">
+                                        <h5 class="mt-0">Media heading</h5>
+                                        Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+                                    </div>
+                                </div>-->
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>

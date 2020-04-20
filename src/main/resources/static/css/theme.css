@@ -260,7 +260,7 @@
 }
 
 body {
-    font-family: "Helvetica Neue","Helvetica","Arial",sans-serif;
+    font-family: var(--font-family-sans-serif);
     letter-spacing: normal;
     background-color: #fafafa;
     color: #424242;
@@ -433,7 +433,14 @@ a:hover, a:focus {
     width: 37px;
     height: 37px;
     object-fit: cover;
+}
+
+.border-radius-025rem{
     border-radius: .25rem;
+}
+
+.border-radius-50{
+    border-radius: 50%;
 }
 
 .post-user {

@@ -46,13 +46,13 @@
                 <div class="media-body btn-success" style="padding: 6px 12px;border: 1px;border-radius: .25rem">
                     <span th:text="${message.getContent()}" class="mb-0 text-wrap"></span>
                 </div>
-                <img th:src="@{${session.user.getAvatar()}}" class="align-self-end chat-avatar ml-3" alt="...">
+                <img th:src="@{${session.user.getAvatar()}}" class="align-self-end chat-avatar border-radius-025rem ml-3" alt="...">
             </div>
         </div>
         <div th:if="${message.getSender()==one.getUsername()}"
              class="d-flex flex-row justify-content-start btn-block pt-2 pl-3 pb-2" style="padding-right: 69px">
             <div class="media">
-                <img th:src="@{${one.getAvatar()}}" class="align-self-end chat-avatar mr-3" alt="...">
+                <img th:src="@{${one.getAvatar()}}" class="align-self-end chat-avatar border-radius-025rem mr-3" alt="...">
                 <div class="media-body btn-secondary" style="padding: 6px 12px;border: 1px;border-radius: .25rem">
                     <span th:text="${message.getContent()}" class="mb-0 text-wrap"></span>
                 </div>
@@ -185,7 +185,7 @@
             "  <div class=\"media-body btn btn-success\">\n" +
             "    <p class=\"mb-0\">" + message + "</p>\n" +
             "  </div>\n" +
-            "  <img src=\"" + userAvatar + "\" class=\"align-self-end chat-avatar ml-3\" alt=\"...\">\n" +
+            "  <img src=\"" + userAvatar + "\" class=\"align-self-end chat-avatar border-radius-025rem ml-3\" alt=\"...\">\n" +
             "</div>" +
             "</div>";
     }
@@ -194,7 +194,7 @@
         document.getElementById('message').innerHTML +=
             "<div class=\"d-flex flex-row justify-content-start btn-block pt-2 pl-3 pb-2\"> " +
             "<div class=\"media\">\n" +
-            "  <img src=\"" + sendUserAvatar + "\" class=\"align-self-end chat-avatar mr-3\" alt=\"...\">\n" +
+            "  <img src=\"" + sendUserAvatar + "\" class=\"align-self-end chat-avatar border-radius-025rem mr-3\" alt=\"...\">\n" +
             "  <div class=\"media-body btn btn-secondary\">\n" +
             "    <p class=\"mb-0\">" + content + "</p>\n" +
             "  </div>\n" +

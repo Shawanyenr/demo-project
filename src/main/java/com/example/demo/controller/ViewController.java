@@ -20,7 +20,7 @@ public class ViewController {
         return "new_home";
     }
 
-    @RequestMapping("/login")
+    @RequestMapping({"/login","/",""})
     public String toLogin() {
         return "login";
     }

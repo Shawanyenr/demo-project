@@ -429,10 +429,11 @@
             closeWebSocket();
         };
 
+        var sender;
         //将消息显示在网页上
         function sendNotification(sendMessage) {
             // document.getElementById('message').innerHTML += sendMessage + '<br/>';
-            var sender = JSON.parse(sendMessage).userId;
+            sender = JSON.parse(sendMessage).userId;
             var content = JSON.parse(sendMessage).message;
             var senderAvatar = JSON.parse(sendMessage).userAvatar;
             if (window.Notification) {
