@@ -46,13 +46,15 @@
                 <div class="media-body btn-success" style="padding: 6px 12px;border: 1px;border-radius: .25rem">
                     <span th:text="${message.getContent()}" class="mb-0 text-wrap"></span>
                 </div>
-                <img th:src="@{${session.user.getAvatar()}}" class="align-self-end chat-avatar border-radius-025rem ml-3" alt="...">
+                <img th:src="@{${session.user.getAvatar()}}"
+                     class="align-self-end chat-avatar border-radius-025rem ml-3" alt="...">
             </div>
         </div>
         <div th:if="${message.getSender()==one.getUsername()}"
              class="d-flex flex-row justify-content-start btn-block pt-2 pl-3 pb-2" style="padding-right: 69px">
             <div class="media">
-                <img th:src="@{${one.getAvatar()}}" class="align-self-end chat-avatar border-radius-025rem mr-3" alt="...">
+                <img th:src="@{${one.getAvatar()}}" class="align-self-end chat-avatar border-radius-025rem mr-3"
+                     alt="...">
                 <div class="media-body btn-secondary" style="padding: 6px 12px;border: 1px;border-radius: .25rem">
                     <span th:text="${message.getContent()}" class="mb-0 text-wrap"></span>
                 </div>
@@ -145,11 +147,37 @@
         // document.getElementById('message').innerHTML += sendMessage + '<br/>';
         /*var sender = sendMessage.split(",", 2)[0];
         var content = sendMessage.substring(sender.length + 1);*/
-        var sender = JSON.parse(sendMessage).userId;
-        var content = JSON.parse(sendMessage).message;
+        const sender = JSON.parse(sendMessage).userId;
+        const content = JSON.parse(sendMessage).message;
+        const senderId = JSON.parse(sendMessage).id;
+        const senderAvatar = JSON.parse(sendMessage).userAvatar;
+        if (sendUserId !== sender) {
+
+        }
         if (sender === sendUserId) {
             sendUserMessage(content);
             document.getElementById('messageSection').scrollTop = document.getElementById('messageSection').scrollHeight;
+        }else {
+            Notification.requestPermission().then(function (permission) {
+                if (permission === 'granted') {
+                    console.log('用户允许通知');
+                    let n = new Notification('@' + sender, {
+                        body: content,
+                        // tag: sender,
+                        icon: senderAvatar
+                    });
+
+                    n.onclick = function (event) {
+                        event.preventDefault();
+                        n.close();
+                        window.location.href="/message/"+senderId;
+                        window.focus();
+                    }
+
+                } else if (permission === 'denied') {
+                    console.log('用户拒绝通知');
+                }
+            });
         }
     }
 

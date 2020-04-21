@@ -27,7 +27,7 @@
                     <button class="btn-success btn ml-3 mt-2" th:if="${subState}" th:onclick="'toggleSub('+${one.getId()}+')'">Subscribed</button>
                     <button class="btn-primary btn ml-3 mt-2" th:unless="${subState}" th:onclick="'toggleSub('+${one.getId()}+')'">Subscribe</button>
                 </div>
-                <a class="btn btn-outline-dark ml-3 mt-2" th:if="${session.user}" th:href="@{/message(sub_id=${one.getId()})}" role="button">Message</a>
+                <a class="btn btn-outline-dark ml-3 mt-2" th:if="${session.user}" th:href="@{'/message/'+${one.getId()}}" role="button">Message</a>
             </div>
 
         </div>

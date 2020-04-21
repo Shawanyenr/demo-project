@@ -140,6 +140,7 @@ public class ProductWebSocket {
                 map.put("userId", userId);
                 map.put("userAvatar", userDaoService.findByUsername(userId).getAvatar());
                 map.put("message", message);
+                map.put("id",userDaoService.findByUsername(userId).getId());
                 ObjectMapper mapper = new ObjectMapper();
 //                webSocketSet.get(sendUserId).sendMessage(userId + "," + message);
                 System.out.println(mapper.writeValueAsString(map));

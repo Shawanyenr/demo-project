@@ -148,8 +148,8 @@ public class TestController {
     }
 
 
-    @RequestMapping("/message")
-    public String ws(Model model, HttpSession session, @RequestParam(value = "sub_id") Integer id) {
+    @RequestMapping("/message/{id}")
+    public String ws(Model model, HttpSession session, @PathVariable Integer id) {
         User user = (User) session.getAttribute("user");
         System.out.println(user);
         if (null == user || null == id){

@@ -109,7 +109,21 @@
         crossorigin="anonymous"></script>
 
 <script th:inline="javascript" type="text/javascript">
+    let foo = 1;
+    function myFn() {
+        let foo = 2;
 
+        console.log(foo);
+        foo = 30;
+        console.log(foo);
+
+        foo = 101;
+
+        console.log(foo);
+    }
+
+    myFn();
+    console.log(foo);
 </script>
 
 </body>

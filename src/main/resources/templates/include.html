@@ -402,6 +402,18 @@
             var localPath = (window.location.host);
             console.log("ws://" + localPath + "/websocket/" + userId);
             websocket = new WebSocket("ws://" + localPath + "/websocket/" + userId);
+            if (window.Notification) {
+                console.log('正在推送通知');
+                Notification.requestPermission().then(function (permission) {
+                    if (permission === 'granted') {
+                        console.log('用户允许通知');
+                    } else if (permission === 'denied') {
+                        console.log('用户拒绝通知');
+                    }
+                });
+            } else {
+                console.log('浏览器不支持Notification');
+            }
         } else {
             alert('当前浏览器不支持websocket哦！')
         }
@@ -430,32 +442,55 @@
         };
 
         var sender;
+
         //将消息显示在网页上
         function sendNotification(sendMessage) {
             // document.getElementById('message').innerHTML += sendMessage + '<br/>';
             sender = JSON.parse(sendMessage).userId;
+            let senderId = JSON.parse(sendMessage).id;
             var content = JSON.parse(sendMessage).message;
             var senderAvatar = JSON.parse(sendMessage).userAvatar;
-            if (window.Notification) {
-                console.log('正在推送通知');
-                Notification.requestPermission().then(function (permission) {
-                    if (permission === 'granted') {
-                        console.log('用户允许通知');
-                        var n = new Notification('@' + sender, {
-                            body: content,
-                            // tag: sender,
-                            icon: senderAvatar,
-                            data: {
-                                url: self.location.origin+'/message/'+sender
-                            }
-                        })
-                    } else if (permission === 'denied') {
-                        console.log('用户拒绝通知');
+            Notification.requestPermission().then(function (permission) {
+                if (permission === 'granted') {
+                    console.log('用户允许通知');
+                    let n = new Notification('@' + sender, {
+                        body: content,
+                        // tag: sender,
+                        icon: senderAvatar
+                    });
+
+                    n.onclick = function (event) {
+                        event.preventDefault();
+                        n.close();
+                        window.location.href="/message/"+senderId;
+                        window.focus();
                     }
-                });
-            } else {
-                console.log('浏览器不支持Notification');
-            }
+
+                } else if (permission === 'denied') {
+                    console.log('用户拒绝通知');
+                }
+            });
+            /* if (window.Notification) {
+                 console.log('正在推送通知');
+                 Notification.requestPermission().then(function (permission) {
+                     if (permission === 'granted') {
+                         console.log('用户允许通知');
+                         var n = new Notification('@' + sender, {
+                             body: content,
+                             // tag: sender,
+                             icon: senderAvatar,
+                             data: {
+                                 url: self.location.origin+'/message/'+sender
+                             }
+                         })
+
+                     } else if (permission === 'denied') {
+                         console.log('用户拒绝通知');
+                     }
+                 });
+             } else {
+                 console.log('浏览器不支持Notification');
+             }*/
         }
 
         //关闭WebSocket连接
@@ -463,11 +498,15 @@
             websocket.close();
         }
 
-        self.addEventListener('notificationclick', e => {
+        /*self.addEventListener('notificationclick', e => {
             e.notification.close();
             // Get all the Window clients
             e.waitUntil(clients.openWindow(window.location.href+"/message/"+sender));
-        });
+        });*/
+        Notification.onclick = function (event) {
+            event.preventDefault(); // prevent the browser from focusing the Notification's tab
+            window.open('http://www.mozilla.org', '_blank');
+        }
     </script>
 </th:block>
 
