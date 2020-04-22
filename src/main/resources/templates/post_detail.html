@@ -45,7 +45,7 @@
                         </label>
                     </div>
                     <div class="p-2 bd-highlight"><a href="#comment-edit"><i class="far fa-comment-dots icon-size"></i></a></div>
-                    <div class="p-2 bd-highlight"><!--<a href="#"><i class="far fa-bookmark icon-size"></i></a>-->
+                    <div class="p-2 bd-highlight">
                         <label th:for="'fav_'+${post.p_id}" class="fav">
                             <input type="checkbox" class="fav" th:id="'fav_'+${post.p_id}"
                                    th:checked="${post.p_fav_flag==1}" style="display: none">
@@ -62,7 +62,6 @@
                              th:aria-labelledby="'dropdown'+${post.p_id}">
                             <a class="dropdown-item" th:href='@{${post.img_dir}}' download><i
                                     class="fas fa-download"></i> Download Image</a>
-                            <!--<a class="dropdown-item" href="#">Another action</a>-->
                             <div class="dropdown-divider"></div>
                             <div th:if="${session.user}">
                                 <a class="dropdown-item" href="#" th:if="${post.getU_id()==session.user.getId()}" th:onclick="'deletePost('+${post.p_id}+')'"><i class="fas fa-trash-alt"></i> Delete</a>
@@ -103,18 +102,8 @@
                                                 <a href="#comment-edit" class="btn btn-link small-m" th:attr="data-parentid=${comment.id},data-respondto=${childComment.user.username}" onclick="reply(this)">Reply</a>
                                             </div>
                                             <div th:text="${childComment.getContent()}" style="font-size: 16px"></div>
-                                            <!--                                        <div></div>-->
                                         </div>
                                     </div>
-                                    <!--<div class="media mt-3">
-                                        <a class="mr-3" href="#">
-                                            <img src="..." class="mr-3" alt="...">
-                                        </a>
-                                        <div class="media-body">
-                                            <h5 class="mt-0">Media heading</h5>
-                                            Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-                                        </div>
-                                    </div>-->
                                 </div>
                             </div>
                         </div>
@@ -124,17 +113,13 @@
                         <div class="form-group">
                             <input type="hidden" name="pid" th:value="${post.p_id}">
                             <input type="hidden" name="parentId" value="0">
-<!--                            <label for="exampleFormControlTextarea1">Example textarea</label>-->
-                            <textarea name="content" class="form-control bg-transparent mt-2 mb-2" style="color: inherit" placeholder="Leave your comment here." rows="3"></textarea>
+                            <textarea name="content" th:disabled="${session.user==null}" class="form-control bg-transparent mt-2 mb-2" style="color: inherit" th:placeholder="${session.user}==null?'Login to comment.':'Leave your comment here.'" rows="3"></textarea>
                             <div class="d-flex flex-row justify-content-end">
-                                <button type="button" class="btn btn-outline-warning mr-2" onclick="resetComment()">Reset</button>
-                                <button type="submit" class="btn btn-primary">Submit</button>
+                                <button type="button" class="btn btn-outline-warning mr-2" onclick="resetComment()" th:disabled="${session.user==null}">Reset</button>
+                                <button type="submit" class="btn btn-primary" th:disabled="${session.user==null}">Submit</button>
                             </div>
-
                         </div>
                     </form>
-
-
                 </div>
             </div>
         </div>
@@ -196,7 +181,7 @@
     </div>
 </div>
 <div th:replace="include::nav_and_menu"></div>
-<a href="javaScript:;" class="top"><i class="fas fa-arrow-up" style="font-size: 150%; "></i></a>
+<a href="javaScript:" class="top"><i class="fas fa-arrow-up" style="font-size: 150%; "></i></a>
 <th:block th:replace="include :: genaralScript"></th:block>
 <script type="text/javascript" src="../static/js/jquery.validate.js"
         th:src="@{/static/js/jquery.validate.js}"></script>
@@ -209,7 +194,7 @@
         let parentId = $(obj).data('parentid');
         let respondTo = $(obj).data('respondto');
         $("input[name=parentId]").val(parentId);
-        $("textarea[name=content]").prop('value',"@"+respondTo+" ").focus();
+        $("textarea[name=content]").prop('value',"@"+respondTo+" ");
 
     }
 
