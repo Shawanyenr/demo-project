@@ -78,7 +78,7 @@
                     </p>
                 </div>
                 <div class="pl-3 pr-3 pb-3 comment-section">
-                    <div id="commentSection">
+                    <div id="commentSection" th:fragment="commentSection">
                         <div th:if="${comments}" th:each="comment : ${comments}">
                             <div th:if="${comment}" class="media mt-2">
                                 <img th:src="@{${comment.user.avatar}}" class="chat-avatar border-radius-50 mr-3" alt="...">
@@ -124,7 +124,11 @@
                             <input type="hidden" name="parentId" value="0">
 <!--                            <label for="exampleFormControlTextarea1">Example textarea</label>-->
                             <textarea name="content" class="form-control bg-transparent" style="color: inherit" placeholder="Leave your comment here." rows="3"></textarea>
-                            <button type="button" class="btn btn-outline-warning" onclick="resetComment()">Reset</button><button type="button" class="btn btn-primary" onclick="submitF()">Submit</button>
+                            <div class="d-flex flex-row justify-content-end">
+                                <button type="button" class="btn btn-outline-warning" onclick="resetComment()">Reset</button>
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+
                         </div>
                     </form>
 
@@ -203,7 +207,7 @@
         let parentId = $(obj).data('parentid');
         let respondTo = $(obj).data('respondto');
         $("input[name=parentId]").val(parentId);
-        $("textarea[name=content]").prop('value',"@"+respondTo+" ");
+        $("textarea[name=content]").prop('value',"@"+respondTo+" ").focus();
 
     }
 
@@ -212,9 +216,41 @@
         $('#comment-edit')[0].reset();
     }
 
-    function submitF(){
-        console.log($('#comment-edit').serialize())
-    }
+    $("#comment-edit").validate({
+        rules: {
+            content: {
+                required: true
+            }
+        },
+        messages: {
+            content: "Comment can't be empty."
+        },
+        errorElement: "em",
+        errorPlacement: function (error, element) {
+            // Add the `invalid-feedback` class to the error element
+            error.addClass("invalid-feedback");
+            if (element.prop("type") === "checkbox") {
+                error.insertAfter(element.next("label"));
+            } else {
+                error.insertAfter(element);
+            }
+        },
+        highlight: function (element, errorClass, validClass) {
+            $(element).addClass("is-invalid").removeClass("is-valid");
+        },
+        unhighlight: function (element, errorClass, validClass) {
+            $(element).addClass("is-valid").removeClass("is-invalid");
+        },
+        submitHandler: function () {
+            console.log($('#comment-edit').serialize());
+            $('#commentSection').load(
+                '/addComment',
+                $('#comment-edit').serialize()),
+                function (responseTxt, statusTxt, xhr) {
+                    resetComment();
+                }
+        }
+    });
 
     $('#showImgModal').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget) // Button that triggered the modal
