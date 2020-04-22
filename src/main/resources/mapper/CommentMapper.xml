@@ -15,11 +15,11 @@
                      select="com.example.demo.dao.UserDao.findById"/>
     </resultMap>
     <select id="selectCommentById" parameterType="Integer" resultMap="userAndComment">
-        select * from comment where id=#{id}
+        select * from comment where id=#{id} order by time DESC
     </select>
 
     <select id="selectChildCommentsById" parameterType="Integer" resultMap="userAndComment">
-        select * from comment where parentId=#{parentId}
+        select * from comment where parentId=#{parentId} order by time DESC
     </select>
 
     <resultMap id="userAndComment1" type="Comment">
@@ -36,6 +36,6 @@
     </resultMap>
 
     <select id="selectCommentsByPid" parameterType="Integer" resultMap="userAndComment1">
-        select * from comment where pid=#{pid} and parentId = 0
+        select * from comment where pid=#{pid} and parentId = 0 order by time DESC
     </select>
 </mapper>

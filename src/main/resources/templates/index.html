@@ -49,7 +49,7 @@
                             <i class="fas fa-heart icon-size"></i>
                         </label>
                     </div>
-                    <div class="p-2 bd-highlight"><a href="#"><i class="far fa-comment-dots icon-size"></i></a></div>
+                    <div class="p-2 bd-highlight"><a th:href="@{'/posts/'+${post.getP_id()}}"><i class="far fa-comment-dots icon-size"></i></a></div>
                     <div class="p-2 bd-highlight"><!--<a href="#"><i class="far fa-bookmark icon-size"></i></a>-->
                         <label th:for="'fav_'+${post.p_id}" class="fav">
                             <input type="checkbox" class="fav" th:id="'fav_'+${post.p_id}"

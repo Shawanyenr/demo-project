@@ -14,7 +14,6 @@ public class Comment {
     private User user;
     private Integer parentId;
     private String content;
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm", timezone = "GMT+8")
     private Date time;
     private List<Comment> childComments;
 }
