@@ -10,6 +10,7 @@ import java.util.List;
 public class Comment {
     private Integer id;
     private Integer pid;
+    private Integer uid;
     private User user;
     private Integer parentId;
     private String content;

@@ -78,44 +78,56 @@
                     </p>
                 </div>
                 <div class="pl-3 pr-3 pb-3 comment-section">
-                    <div th:if="${comments}" th:each="comment : ${comments}">
-                        <div th:unless="${comment}" class="text-center">No comment yet</div>
-                        <div th:if="${comment}" class="media mt-2">
-                            <img th:src="@{${comment.user.getAvatar()}}" class="chat-avatar border-radius-50 mr-3" alt="...">
-                            <div class="media-body">
-                                <div>
-                                    <span th:text="${comment.user.getUsername()}" class="h5 mt-0">Media heading </span>
-                                    <small th:text="${#dates.format(comment.getTime(),'yyyy-MM-dd hh:mm')}" class="text-muted"></small>
-                                    <button type="button" class="btn btn-link small-m">Reply</button>
-                                </div>
-                                <div th:text="${comment.getContent()}"></div>
-<!--                                <div></div>-->
-                                <div th:if="${comment.getChildComments()}" th:each="childComment : ${comment.getChildComments()}" class="media mt-2">
-                                    <a class="mr-3" href="#">
-                                        <img th:src="@{${childComment.user.getAvatar()}}" class="chat-avatar border-radius-50" alt="...">
-                                    </a>
-                                    <div class="media-body">
-                                        <div>
-                                            <span th:text="${childComment.user.getUsername()}" class="h5 mt-0">Media heading </span>
-                                            <small th:text="${#dates.format(childComment.getTime(),'yyyy-MM-dd hh:mm')}" class="text-muted"></small>
-                                            <button type="button" class="btn btn-link small-m">Reply</button>
+                    <div id="commentSection">
+                        <div th:if="${comments}" th:each="comment : ${comments}">
+                            <div th:if="${comment}" class="media mt-2">
+                                <img th:src="@{${comment.user.avatar}}" class="chat-avatar border-radius-50 mr-3" alt="...">
+                                <div class="media-body">
+                                    <div>
+                                        <span th:text="${comment.user.username}" class="h5 mt-0">Media heading </span>
+                                        <small th:text="${#dates.format(comment.time,'yyyy-MM-dd hh:mm')}" class="text-muted"></small>
+                                        <a href="#comment-edit" class="btn btn-link small-m" th:attr="data-parentid=${comment.id},data-respondto=${comment.user.username}" onclick="reply(this)">Reply</a>
+                                    </div>
+                                    <div th:text="${comment.content}"></div>
+                                    <!--                                <div></div>-->
+                                    <div th:if="${comment.childComments}" th:each="childComment : ${comment.childComments}" class="media mt-2">
+                                        <a class="mr-3" href="#">
+                                            <img th:src="@{${childComment.user.getAvatar()}}" class="chat-avatar border-radius-50" alt="...">
+                                        </a>
+                                        <div class="media-body">
+                                            <div>
+                                                <span th:text="${childComment.user.getUsername()}" class="h5 mt-0">Media heading </span>
+                                                <small th:text="${#dates.format(childComment.getTime(),'yyyy-MM-dd hh:mm')}" class="text-muted"></small>
+                                                <a href="#comment-edit" class="btn btn-link small-m" th:attr="data-parentid=${comment.id},data-respondto=${childComment.user.username}" onclick="reply(this)">Reply</a>
+                                            </div>
+                                            <div th:text="${childComment.getContent()}"></div>
+                                            <!--                                        <div></div>-->
                                         </div>
-                                        <div th:text="${childComment.getContent()}"></div>
-<!--                                        <div></div>-->
                                     </div>
+                                    <!--<div class="media mt-3">
+                                        <a class="mr-3" href="#">
+                                            <img src="..." class="mr-3" alt="...">
+                                        </a>
+                                        <div class="media-body">
+                                            <h5 class="mt-0">Media heading</h5>
+                                            Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+                                        </div>
+                                    </div>-->
                                 </div>
-                                <!--<div class="media mt-3">
-                                    <a class="mr-3" href="#">
-                                        <img src="..." class="mr-3" alt="...">
-                                    </a>
-                                    <div class="media-body">
-                                        <h5 class="mt-0">Media heading</h5>
-                                        Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-                                    </div>
-                                </div>-->
                             </div>
                         </div>
                     </div>
+
+                    <form id="comment-edit">
+                        <div class="form-group">
+                            <input type="hidden" name="pid" th:value="${post.p_id}">
+                            <input type="hidden" name="parentId" value="0">
+<!--                            <label for="exampleFormControlTextarea1">Example textarea</label>-->
+                            <textarea name="content" class="form-control bg-transparent" style="color: inherit" placeholder="Leave your comment here." rows="3"></textarea>
+                            <button type="button" class="btn btn-outline-warning" onclick="resetComment()">Reset</button><button type="button" class="btn btn-primary" onclick="submitF()">Submit</button>
+                        </div>
+                    </form>
+
 
                 </div>
             </div>
@@ -184,73 +196,25 @@
         th:src="@{/static/js/jquery.validate.js}"></script>
 <script type="text/javascript" th:inline="javascript" th:src="@{/static/js/customize.js}"></script>
 <th:block th:replace="include :: notification"></th:block>
-<!--<script type="text/javascript">
-    if (window.Notification) {
-        console.log('浏览器支持Notification');
-        if (Notification.permission === 'granted') {
-            console.log('用户允许通知');
-        } else if (Notification.permission === 'denied') {
-            console.log('用户拒绝通知');
-        } else {
-            console.log('用户还没选择，去向用户申请权限吧');
-        }
 
-        Notification.requestPermission().then(function (permission) {
-            if (permission === 'granted') {
-                console.log('用户允许通知');
-                var n = new Notification('状态更新提醒', {
-                    body: '你的朋友圈有3条新状态，快去查看吧',
-                    /*tag: 'linxin',
-                    icon: 'http://blog.gdfengshuo.com/images/avatar.jpg',*/
-                    requireInteraction: true
-                })
+<script th:inline="javascript" type="text/javascript">
 
-            } else if (permission === 'denied') {
-                console.log('用户拒绝通知');
-            }
-        });
-    } else {
-        console.log('浏览器不支持Notification');
+    function reply(obj){
+        let parentId = $(obj).data('parentid');
+        let respondTo = $(obj).data('respondto');
+        $("input[name=parentId]").val(parentId);
+        $("textarea[name=content]").prop('value',"@"+respondTo+" ");
+
     }
 
+    function resetComment(){
+        $("input[name=parentId]").val('0');
+        $('#comment-edit')[0].reset();
+    }
 
-    var button = document.getElementById("button");
-    button.addEventListener('click', function () {
-        // 如果用户同意就创建一个通知
-        if (window.Notification && Notification.permission === "granted") {
-            console.log('正在推送通知');
-            /*for (var i = 0; i < 10; i++) {
-                // 感谢标记，我们应该只看到内容为 "Hi! 9" 的通知
-                var n = new Notification("Hi! " + i, {tag: 'soManyNotification'});
-            }*/
-            /*var n = new Notification("Hi!", {
-                body: '你的朋友圈有3条新状态，快去查看吧',
-                /!*tag: 'linxin',
-                icon: 'http://blog.gdfengshuo.com/images/avatar.jpg',*!/
-                requireInteraction: true
-            });*/
-            navigator.serviceWorker.getRegistration().then(function(reg) {
-                var options = {
-                    body: 'Here is a notification body!',
-                    icon: 'images/example.png',
-                    vibrate: [100, 50, 100],
-                    data: {
-                        dateOfArrival: Date.now(),
-                        primaryKey: 1
-                    },
-                    actions: [
-                        {action: 'explore', title: 'Explore this new world',
-                            icon: 'images/checkmark.png'},
-                        {action: 'close', title: 'Close notification',
-                            icon: 'images/xmark.png'},
-                    ]
-                };
-                reg.showNotification('Hello world!', options);
-            });
-        }
-    });
-</script>-->
-<script th:inline="javascript" type="text/javascript">
+    function submitF(){
+        console.log($('#comment-edit').serialize())
+    }
 
     $('#showImgModal').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget) // Button that triggered the modal

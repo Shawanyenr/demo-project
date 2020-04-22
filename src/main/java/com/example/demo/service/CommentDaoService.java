@@ -5,7 +5,7 @@ import com.example.demo.po.Comment;
 import java.util.List;
 
 public interface CommentDaoService {
-    Integer addComment(Integer pid, Integer uid, Integer parentId, String content);
+    Integer addComment(Comment comment);
 
     Comment selectCommentById(Integer id);
 

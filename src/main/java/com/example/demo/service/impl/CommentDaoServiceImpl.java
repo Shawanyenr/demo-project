@@ -13,8 +13,8 @@ public class CommentDaoServiceImpl implements CommentDaoService {
     @Autowired
     private CommentDao commentDao;
     @Override
-    public Integer addComment(Integer pid, Integer uid, Integer parentId, String content) {
-        return commentDao.addComment(pid, uid, parentId, content);
+    public Integer addComment(Comment comment) {
+        return commentDao.addComment(comment);
     }
 
     @Override

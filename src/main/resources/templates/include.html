@@ -470,27 +470,7 @@
                     console.log('用户拒绝通知');
                 }
             });
-            /* if (window.Notification) {
-                 console.log('正在推送通知');
-                 Notification.requestPermission().then(function (permission) {
-                     if (permission === 'granted') {
-                         console.log('用户允许通知');
-                         var n = new Notification('@' + sender, {
-                             body: content,
-                             // tag: sender,
-                             icon: senderAvatar,
-                             data: {
-                                 url: self.location.origin+'/message/'+sender
-                             }
-                         })
 
-                     } else if (permission === 'denied') {
-                         console.log('用户拒绝通知');
-                     }
-                 });
-             } else {
-                 console.log('浏览器不支持Notification');
-             }*/
         }
 
         //关闭WebSocket连接
@@ -498,15 +478,6 @@
             websocket.close();
         }
 
-        /*self.addEventListener('notificationclick', e => {
-            e.notification.close();
-            // Get all the Window clients
-            e.waitUntil(clients.openWindow(window.location.href+"/message/"+sender));
-        });*/
-        Notification.onclick = function (event) {
-            event.preventDefault(); // prevent the browser from focusing the Notification's tab
-            window.open('http://www.mozilla.org', '_blank');
-        }
     </script>
 </th:block>
 

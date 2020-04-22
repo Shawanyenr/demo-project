@@ -10,6 +10,7 @@
         <result property="parentId" column="parentId"/>
         <result property="content" column="content"/>
         <result property="time" column="time"/>
+        <result property="uid" column="uid"/>
         <association property="user" column="uid" javaType="User"
                      select="com.example.demo.dao.UserDao.findById"/>
     </resultMap>
@@ -27,6 +28,7 @@
         <result property="parentId" column="parentId"/>
         <result property="content" column="content"/>
         <result property="time" column="time"/>
+        <result property="uid" column="uid"/>
         <association property="user" column="uid" javaType="User"
                      select="com.example.demo.dao.UserDao.findById"/>
         <collection property="childComments" column="id" ofType="Comment"
@@ -34,6 +36,6 @@
     </resultMap>
 
     <select id="selectCommentsByPid" parameterType="Integer" resultMap="userAndComment1">
-        select * from comment where pid=#{pid}
+        select * from comment where pid=#{pid} and parentId = 0
     </select>
 </mapper>

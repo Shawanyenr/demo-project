@@ -11,7 +11,7 @@ import java.util.List;
 @Mapper
 public interface CommentDao {
     @Insert("insert into comment(pid, uid, parentId, content)values(#{pid},#{uid},#{parentId},#{content})")
-    Integer addComment(Integer pid, Integer uid, Integer parentId, String content);
+    Integer addComment(Comment comment);
 
     Comment selectCommentById(Integer id);
 
