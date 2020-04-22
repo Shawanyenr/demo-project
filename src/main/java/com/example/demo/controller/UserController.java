@@ -28,20 +28,20 @@ public class UserController {
     }
 
     @RequestMapping("/login.action")
-    public String findOne(User loginInfo, HttpSession s,RedirectAttributes attributes) {
+    public String findOne(User loginInfo, HttpSession s,Model model) {
         System.out.println("登录信息:\n" + loginInfo);
         User user = userDaoService.findOne(loginInfo);
         System.out.println(user);
         if (user == null) {
-            attributes.addFlashAttribute("msg", "Wrong username or password!");
+            model.addAttribute("msg", "Wrong username or password!");
         } else if (user.getUserState() == 0) {
-            attributes.addFlashAttribute("msg", "Account suspended!");
+            model.addAttribute("msg", "Account suspended!");
         } else {
             user.setPassword("");
             s.setAttribute("user", user);
-            return "redirect:/index";
+            model.addAttribute("success","Log in successfully.");
         }
-        return "redirect:/login";
+        return "login :: msg-section";
     }
 
     @Transactional

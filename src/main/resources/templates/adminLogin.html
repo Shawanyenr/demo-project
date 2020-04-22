@@ -34,9 +34,9 @@
     </div>
     <div class="card" style="max-width: 500px;width: 100%">
         <div class="modal-header">
-            <h5 class="modal-title" id="loginFormTitle">Log in</h5>
+            <h5 class="modal-title" id="loginFormTitle">Admin</h5>
         </div>
-        <form method="post" id="loginFormData" th:action="@{/login.action}">
+        <form method="post" id="loginFormData" th:action="@{/adminLogin.action}">
             <div class="modal-body">
                 <div class="form-group">
                     <label for="username">Username</label>
@@ -53,7 +53,6 @@
             </div>
         </form>
     </div>
-    <a class="nav-link" style="font-weight: lighter" th:href="@{/index}">Enter directly</a>
 
 </div>
 
@@ -121,7 +120,7 @@
             $(element).addClass("is-valid").removeClass("is-invalid");
         },
         submitHandler: function () {
-            $("#msg-section").load("/login.action",
+            $("#msg-section").load("/adminLogin.action",
                 $("#loginFormData").serialize(),
                 function (responseTxt, statusTxt, xhr) {
                     console.log(responseTxt + " " + statusTxt + " " + xhr);
@@ -152,7 +151,7 @@
         seconds = seconds - 1;
         if (seconds < 0) {
             // Chnage your redirection link here
-            window.location.href=/*[[@{/index}]]*/"";
+            window.location.href=/*[[@{/admin}]]*/"";
         } else {
             // Update remaining seconds
             document.getElementById("seconds").innerHTML = seconds;
