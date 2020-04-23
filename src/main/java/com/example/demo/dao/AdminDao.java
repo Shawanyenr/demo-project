@@ -13,6 +13,6 @@ import java.util.List;
 @Component
 @Mapper
 public interface AdminDao {
-    @Select("select * from user where username=#{username} and password=#{password}")
+    @Select("select * from admin where username=#{username} and password=#{password}")
     Admin findOne(Admin admin);
 }
