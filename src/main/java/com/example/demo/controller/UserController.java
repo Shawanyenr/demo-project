@@ -33,13 +33,13 @@ public class UserController {
         User user = userDaoService.findOne(loginInfo);
         System.out.println(user);
         if (user == null) {
-            model.addAttribute("msg", "Wrong username or password!");
+            model.addAttribute("msg", "用户名或密码错误!");
         } else if (user.getUserState() == 0) {
-            model.addAttribute("msg", "Account suspended!");
+            model.addAttribute("msg", "账户已被冻结!");
         } else {
             user.setPassword("");
             s.setAttribute("user", user);
-            model.addAttribute("success","Log in successfully.");
+            model.addAttribute("success","登录成功.");
         }
         return "login :: msg-section";
     }
@@ -51,15 +51,15 @@ public class UserController {
         Integer check = userDaoService.checkUsername(registerInfo.getUsername());
         System.out.println("重名个数: " + check);
         if (check != 0) {
-            model.addAttribute("msg", "Username is already taken!");
+            model.addAttribute("msg", "用户名已被占用!");
         } else {
             registerInfo.setAvatar("/user_avatar/default_user_avatar.jpg");
             Integer trySaveOne = userDaoService.saveUser(registerInfo);
             System.out.println("存储了" + trySaveOne + "个信息");
             if (trySaveOne == 1) {
-                model.addAttribute("success", "Registration success!");
+                model.addAttribute("success", "注册成功!");
             } else {
-                model.addAttribute("msg", "Registration failed!");
+                model.addAttribute("msg", "注册失败!");
             }
         }
         return "register::msg-section";

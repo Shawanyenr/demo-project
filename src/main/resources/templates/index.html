@@ -20,71 +20,74 @@
 <div class="container content-m">
     <div class="row">
         <div class="col-lg-8 col posts-m">
-            <div id="posts" class="card mb-3" th:if="${posts}" th:each="post : ${posts}">
-                <div class="card-header bg-transparent d-flex flex-row align-items-center pl-3 pr-3"
-                     style="position: relative">
-                    <div class="pr-3">
-                        <img th:src="@{${post.u_avatar}}" alt="..." class="rounded-circle post-avator">
-                    </div>
-                    <div class="d-flex flex-column">
-                        <a th:href="@{'/user/'+${post.getU_id()}}" class="stretched-link"
-                           style="font-size: 66% !important;font-weight: bold"
-                           th:text="${post.u_username}">null
-                        </a>
-                        <div class="text-muted" style="font-size: 55% !important;"
-                             th:text="${#dates.format(post.upload_time,'yyyy-MM-dd HH:mm')}">null
+            <th:block th:replace="include::genaralPosts">
+                <div id="posts" class="card mb-3" th:if="${posts}" th:each="post : ${posts}">
+                    <div class="card-header bg-transparent d-flex flex-row align-items-center pl-3 pr-3"
+                         style="position: relative">
+                        <div class="pr-3">
+                            <img th:src="@{${post.u_avatar}}" alt="..." class="rounded-circle post-avator">
                         </div>
-                    </div>
-                </div>
-                <a href="javascript:" data-toggle="modal" data-target="#showImgModal"
-                   th:data-whatever="${post.img_dir}">
-                    <img th:src="@{${post.img_dir}}" class="post-card-img" alt="...">
-                </a>
-
-                <div class="d-flex justify-content-around">
-                    <div class="p-2 bd-highlight">
-                        <label th:for="'like_'+${post.p_id}" class="like">
-                            <input type="checkbox" class="like" th:id="'like_'+${post.p_id}"
-                                   th:checked="${post.p_like_flag==1}" style="display: none">
-                            <i class="fas fa-heart icon-size"></i>
-                        </label>
-                    </div>
-                    <div class="p-2 bd-highlight"><a th:href="@{'/posts/'+${post.getP_id()}}"><i class="far fa-comment-dots icon-size"></i></a></div>
-                    <div class="p-2 bd-highlight"><!--<a href="#"><i class="far fa-bookmark icon-size"></i></a>-->
-                        <label th:for="'fav_'+${post.p_id}" class="fav">
-                            <input type="checkbox" class="fav" th:id="'fav_'+${post.p_id}"
-                                   th:checked="${post.p_fav_flag==1}" style="display: none">
-                            <i class="fas fa-bookmark icon-size"></i>
-                        </label>
-                    </div>
-                    <div class="p-2 bd-highlight dropdown">
-                        <a href="#" role="button" th:id="'dropdown'+${post.p_id}" data-toggle="dropdown"
-                           aria-haspopup="true"
-                           aria-expanded="false">
-                            <i class="fas fa-ellipsis-h"></i>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-left"
-                             th:aria-labelledby="'dropdown'+${post.p_id}">
-                            <a class="dropdown-item" th:href='@{${post.img_dir}}' download><i
-                                    class="fas fa-download"></i> Download Image</a>
-                            <!--<a class="dropdown-item" href="#">Another action</a>-->
-                            <div class="dropdown-divider"></div>
-                            <div th:if="${session.user}">
-                                <a class="dropdown-item" href="#" th:if="${post.getU_id()==session.user.getId()}"
-                                   th:onclick="'deletePost('+${post.p_id}+')'"><i class="fas fa-trash-alt"></i>
-                                    Delete</a>
+                        <div class="d-flex flex-column">
+                            <a th:href="@{'/user/'+${post.getU_id()}}" class="stretched-link"
+                               style="font-size: 66% !important;font-weight: bold"
+                               th:text="${post.u_username}">null
+                            </a>
+                            <div class="text-muted" style="font-size: 55% !important;"
+                                 th:text="${#dates.format(post.upload_time,'yyyy-MM-dd HH:mm')}">null
                             </div>
-                            <a class="dropdown-item" href="#"><i class="fas fa-exclamation-circle"></i> Report</a>
                         </div>
                     </div>
+                    <a href="javascript:" data-toggle="modal" data-target="#showImgModal"
+                       th:data-whatever="${post.img_dir}">
+                        <img th:src="@{${post.img_dir}}" class="post-card-img" alt="...">
+                    </a>
+
+                    <div class="d-flex justify-content-around">
+                        <div class="p-2 bd-highlight">
+                            <label th:for="'like_'+${post.p_id}" class="like">
+                                <input type="checkbox" class="like" th:id="'like_'+${post.p_id}"
+                                       th:checked="${post.p_like_flag==1}" style="display: none">
+                                <i class="fas fa-heart icon-size"></i>
+                            </label>
+                        </div>
+                        <div class="p-2 bd-highlight"><a th:href="@{'/posts/'+${post.getP_id()}}"><i class="far fa-comment-dots icon-size"></i></a></div>
+                        <div class="p-2 bd-highlight"><!--<a href="#"><i class="far fa-bookmark icon-size"></i></a>-->
+                            <label th:for="'fav_'+${post.p_id}" class="fav">
+                                <input type="checkbox" class="fav" th:id="'fav_'+${post.p_id}"
+                                       th:checked="${post.p_fav_flag==1}" style="display: none">
+                                <i class="fas fa-bookmark icon-size"></i>
+                            </label>
+                        </div>
+                        <div class="p-2 bd-highlight dropdown">
+                            <a href="#" role="button" th:id="'dropdown'+${post.p_id}" data-toggle="dropdown"
+                               aria-haspopup="true"
+                               aria-expanded="false">
+                                <i class="fas fa-ellipsis-h"></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-left"
+                                 th:aria-labelledby="'dropdown'+${post.p_id}">
+                                <a class="dropdown-item" th:href='@{${post.img_dir}}' download><i
+                                        class="fas fa-download"></i> 下载</a>
+                                <!--<a class="dropdown-item" href="#">Another action</a>-->
+                                <div class="dropdown-divider"></div>
+                                <div th:if="${session.user}">
+                                    <a class="dropdown-item" href="#" th:if="${post.getU_id()==session.user.getId()}"
+                                       th:onclick="'deletePost('+${post.p_id}+')'"><i class="fas fa-trash-alt"></i>
+                                        删除</a>
+                                </div>
+                                <a class="dropdown-item" href="#"><i class="fas fa-exclamation-circle"></i> 举报</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pl-3 pr-3 pb-3" style="position: relative">
+                        <p class="card-text" style="font-size: 80%">
+                            <span style="font-weight: bold" th:text="${post.u_username}">null&nbsp;&nbsp;</span>
+                            <a th:href="@{'/posts/'+${post.getP_id()}}" class="stretched-link" th:text="${post.p_title}">null</a>
+                        </p>
+                    </div>
                 </div>
-                <div class="pl-3 pr-3 pb-3" style="position: relative">
-                    <p class="card-text" style="font-size: 80%">
-                        <span style="font-weight: bold" th:text="${post.u_username}">null&nbsp;&nbsp;</span>
-                        <a th:href="@{'/posts/'+${post.getP_id()}}" class="stretched-link" th:text="${post.p_title}">null</a>
-                    </p>
-                </div>
-            </div>
+            </th:block>
+
         </div>
         <div class="col-lg-4 d-none d-lg-block">
             <div class="sidebar-item">
@@ -102,21 +105,21 @@
                         </a>
                     </div>
                     <div class="d-flex flex-column mb-2 subs-section" th:if="${session.user}">
-                        <a class="btn btn-outline-dark mb-2" th:href="@{/subscription}" role="button">Subscription</a>
-                        <a class="btn btn-primary mb-2" th:href="@{/index}" role="button">All posts</a>
+                        <a class="btn btn-outline-dark mb-2" th:href="@{/subscription}" role="button">订阅</a>
+                        <a class="btn btn-primary mb-2" th:href="@{/index}" role="button">全部</a>
                         <div class="dropdown-divider"></div>
                     </div>
                     <div class="d-flex flex-column mb-2 subs-section" th:if="${session.user}">
                         <a class="btn btn-primary mb-2" href="#" data-toggle="modal" data-target="#uploadForm"
                            role="button">
-                            <i class="fas fa-plus"></i> Upload
+                            <i class="fas fa-plus"></i> 上传
                         </a>
                         <a class="btn btn-outline-dark mb-2" href="#" role="button">
-                            <i class="fas fa-bell"></i><span> Notification</span>
+                            <i class="fas fa-bell"></i><span> 消息</span>
                             <span class="badge badge-pill badge-light">99+</span>
                         </a>
                         <a class="btn btn-outline-dark mb-2" href="#" role="button">
-                            <i class="fas fa-comment-alt"></i><span> Message</span></a>
+                            <i class="fas fa-comment-alt"></i><span> 信息</span></a>
                         <div class="dropdown-divider"></div>
                     </div>
                     <div class="card mb-2" th:unless="${session.user}">
@@ -125,18 +128,18 @@
                         </div>
                         <div class="modal-body">
                             <a class="btn btn-outline-primary text-primary mb-3" style="width: 100%" th:href="@{/login}"
-                               role="button">Log in</a>
+                               role="button">登录</a>
                             <a class="btn btn-outline-secondary text-secondary" style="width: 100%"
-                               th:href="@{/register}" role="button">Register</a>
+                               th:href="@{/register}" role="button">注册</a>
                         </div>
                     </div>
                     <div style="width: 100%">
                         <small>
-                            <a href="#" class="text-muted mr-1" style="font-weight: lighter">About</a>
-                            <a href="#" class="text-muted mr-1" style="font-weight: lighter">Help</a>
+                            <a href="#" class="text-muted mr-1" style="font-weight: lighter">关于</a>
+                            <a href="#" class="text-muted mr-1" style="font-weight: lighter">帮助</a>
                             <a href="#" class="text-muted mr-1" style="font-weight: lighter">API</a>
-                            <a href="#" class="text-muted mr-1" style="font-weight: lighter">Privacy</a>
-                            <a href="#" class="text-muted mr-1" style="font-weight: lighter">Terms</a>
+                            <a href="#" class="text-muted mr-1" style="font-weight: lighter">隐私</a>
+                            <a href="#" class="text-muted mr-1" style="font-weight: lighter">条款</a>
                         </small>
 
                         <!--<div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
@@ -185,7 +188,7 @@
     });
 
     function deletePost(p_id) {
-        if (confirm('Confirm to delete?')) {
+        if (confirm('确认删除?')) {
             $.post("/delete_post_id", {"p_id": p_id},
                 function (data) {
                     if (data === "OK") {

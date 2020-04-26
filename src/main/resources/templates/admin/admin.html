@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" media="all" href="../../static/bootstrap-4.4.1-dist/css/bootstrap.min.css"
+          th:href="@{/static/bootstrap-4.4.1-dist/css/bootstrap.min.css}"/>
+    <link href="https://cdn.bootcss.com/font-awesome/5.12.1/css/all.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../static/css/theme.css" th:href="@{/static/css/theme.css}"/>
+
+</head>
+
+<body>
+<div class="row">
+    <nav class="navbar fixed-top shadow-sm nav-m p-0" style="border-bottom: 1px solid #dbdbdb;">
+        <div class="container d-flex align-items-center flex-nowrap flex-row justify-content-between"
+             style="max-width: 992px;height:54px;">
+            <a th:href="@{/admin}" class="pr-3">管理员</a>
+            <div>
+                <span th:text="'@'+${session.admin.username}" class="mr-2"></span>
+                <a th:href="@{/adminLogout.action}">
+                    <i class="fas fa-sign-out-alt"></i><span> 登出</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+</div>
+
+<!--主内容-->
+<div class="container content-m">
+    <div class="row justify-content-between">
+        <form th:action="@{/search_reports}" method="post">
+            <div class="input-group input-group-sm" style="max-width: 200px;">
+                <input type="text" class="form-control" name="search_item">
+            </div>
+        </form>
+        <div>
+            <a th:href="@{/admin}" class="btn btn-primary" role="button">待处理</a>
+            <a th:href="@{/admin/archived}" class="btn btn-outline-primary" role="button">归档</a>
+        </div>
+    </div>
+    <div class="row">
+        <div id="reports-container" th:fragment="reports-container" class="btn-block">
+            <table class="table" style="color: inherit">
+                <thead>
+                <tr>
+                    <th scope="col">id</th>
+                    <th scope="col">举报人</th>
+                    <th scope="col">帖子主人</th>
+                    <th scope="col">帖子图片</th>
+                    <th scope="col">帖子内容</th>
+                    <th scope="col">举报时间</th>
+                    <th scope="col">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <th scope="row">1</th>
+                    <td>Mark</td>
+                    <td>Otto</td>
+                    <td>@mdo</td>
+                    <td>@mdo</td>
+                    <td>@mdo</td>
+                    <td>
+                        <a href="#" class="btn btn-outline-warning" role="button">处理</a>
+                        <a href="#" class="btn btn-outline-danger" role="button">忽略</a>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">2</th>
+                    <td>Jacob</td>
+                    <td>Thornton</td>
+                    <td>@fat</td>
+                    <td>@fat</td>
+                    <td>@fat</td>
+                    <td>@fat</td>
+                </tr>
+                <tr>
+                    <th scope="row">3</th>
+                    <td>Larry the Bird</td>
+                    <td>Thornton</td>
+                    <td>@twitter</td>
+                    <td>@twitter</td>
+                    <td>@twitter</td>
+                    <td>@twitter</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+    </div>
+    <div class="d-flex justify-content-center">
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                <li class="page-item">
+                    <a class="page-link bg-transparent" href="#">
+                        <span aria-hidden="true">&lt;</span>
+                    </a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link bg-transparent" href="#" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link bg-transparent" href="#" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link bg-transparent" href="#">
+                        <span aria-hidden="true">&gt;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
+
+<!--图片modal-->
+<div class="modal fade" id="showImgModal" tabindex="-1" role="dialog" aria-labelledby="showImgModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+        <div class="modal-content">
+            <img id="modal-img" src="" alt="" style="width: 100%">
+        </div>
+    </div>
+</div>
+
+<!-- 过渡动画 -->
+<!--CSS Spinner-->
+<div class="spinner-wrapper">
+    <div class="spinner">
+        <div class="rect1"></div>
+        <div class="rect2"></div>
+        <div class="rect3"></div>
+        <div class="rect4"></div>
+        <div class="rect5"></div>
+    </div>
+</div>
+
+<!-- 返回顶部 -->
+<a href="javaScript:;" class="top"><i class="fas fa-arrow-up" style="font-size: 150%; "></i></a>
+
+<th:block th:replace="include :: genaralScript"></th:block>
+<script type="text/javascript" src="../../static/js/jquery.validate.js"
+        th:src="@{/static/js/jquery.validate.js}"></script>
+
+<script th:inline="javascript" type="text/javascript">
+
+    /*过渡动画*/
+    $(function () {
+        function hidePreloader() {
+            $('.spinner-wrapper').fadeOut(500);
+        }
+
+        hidePreloader();
+    });
+
+
+    /*图片modal*/
+    $('#showImgModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget) // Button that triggered the modal
+        var recipient = button.data('whatever') // Extract info from data-* attributes
+        // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+        // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+        var modal = $(this)
+        $('#modal-img').attr("src", recipient);
+    })
+
+
+</script>
+
+</body>
+</html>

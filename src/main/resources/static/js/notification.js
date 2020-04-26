@@ -1,12 +1,5 @@
 var userId = /*[[${session.user.getUsername()}]]*/"";
 if ('WebSocket' in window) {
-    /**
-     * 手机端访问
-     * window.location.href  /192.168.31.78:12006/ws
-     * window.location.host  192.168.31.78:12006
-     * window.location.port  12006
-     */
-
     var localPath = (window.location.host);
     console.log(localPath);
     websocket = new WebSocket("ws://" + localPath + "/websocket/" + userId);
@@ -50,10 +43,6 @@ function sendNotification(sendMessage) {
     var senderAvatar = JSON.parse(sendMessage).userAvatar;
     if (window.Notification) {
         console.log('正在推送通知');
-        /*for (var i = 0; i < 10; i++) {
-            // 感谢标记，我们应该只看到内容为 "Hi! 9" 的通知
-            var n = new Notification("Hi! " + i, {tag: 'soManyNotification'});
-        }*/
         Notification.requestPermission().then(function (permission) {
             if (permission === 'granted') {
                 console.log('用户允许通知');
@@ -78,31 +67,3 @@ function closeWebSocket() {
     websocket.close();
 }
 
-/*
-if (window.Notification) {
-    console.log('浏览器支持Notification');
-    if (Notification.permission === 'granted') {
-        console.log('用户允许通知');
-    } else if (Notification.permission === 'denied') {
-        console.log('用户拒绝通知');
-    } else {
-        console.log('用户还没选择，去向用户申请权限吧');
-    }
-
-    Notification.requestPermission().then(function (permission) {
-        if (permission === 'granted') {
-            console.log('用户允许通知');
-            var n = new Notification('状态更新提醒', {
-                body: '你的朋友圈有3条新状态，快去查看吧',
-                /!*tag: 'linxin',
-                icon: 'http://blog.gdfengshuo.com/images/avatar.jpg',*!/
-                requireInteraction: true
-            })
-
-        } else if (permission === 'denied') {
-            console.log('用户拒绝通知');
-        }
-    });
-} else {
-    console.log('浏览器不支持Notification');
-}*/
