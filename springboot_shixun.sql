@@ -11,11 +11,31 @@
  Target Server Version : 80016
  File Encoding         : 65001
 
- Date: 19/04/2020 14:33:25
+ Date: 27/04/2020 02:25:59
 */
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
+
+-- ----------------------------
+-- Table structure for admin
+-- ----------------------------
+DROP TABLE IF EXISTS `admin`;
+CREATE TABLE `admin`  (
+  `id` int(16) NOT NULL AUTO_INCREMENT,
+  `name` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `username` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `password` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `avatar` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `email` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  UNIQUE INDEX `username_UNIQUE`(`username`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 23 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of admin
+-- ----------------------------
+INSERT INTO `admin` VALUES (22, 'Gerald', 'Gerald', '123456', NULL, NULL);
 
 -- ----------------------------
 -- Table structure for comment
@@ -23,22 +43,31 @@ SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS `comment`;
 CREATE TABLE `comment`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `parentId` int(11) NULL DEFAULT NULL,
+  `parentId` int(11) NULL DEFAULT 0,
   `uid` int(11) NOT NULL,
   `time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
   `content` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `pid` int(11) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 15 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of comment
 -- ----------------------------
-INSERT INTO `comment` VALUES (1, NULL, 1, '2020-04-19 12:10:43', '123', 16);
-INSERT INTO `comment` VALUES (2, 1, 5, '2020-04-19 12:11:35', '555', NULL);
-INSERT INTO `comment` VALUES (3, NULL, 5, '2020-04-19 12:12:03', '456', 19);
-INSERT INTO `comment` VALUES (4, 1, 1, '2020-04-19 12:14:15', '789', NULL);
-INSERT INTO `comment` VALUES (5, NULL, 5, '2020-04-19 14:28:07', 'abc', 16);
+INSERT INTO `comment` VALUES (1, 0, 1, '2020-04-19 12:10:43', '123', 16);
+INSERT INTO `comment` VALUES (2, 1, 5, '2020-04-19 12:11:35', '555', 16);
+INSERT INTO `comment` VALUES (3, 0, 5, '2020-04-19 12:12:03', '456', 19);
+INSERT INTO `comment` VALUES (4, 1, 1, '2020-04-19 12:14:15', '789', 16);
+INSERT INTO `comment` VALUES (5, 0, 5, '2020-04-19 14:28:07', 'abc', 16);
+INSERT INTO `comment` VALUES (6, 0, 5, '2020-04-22 21:48:57', '嘻嘻', 16);
+INSERT INTO `comment` VALUES (7, 0, 5, '2020-04-22 21:49:09', '嘻嘻', 16);
+INSERT INTO `comment` VALUES (8, 0, 5, '2020-04-22 21:54:12', 'haha', 16);
+INSERT INTO `comment` VALUES (9, 1, 5, '2020-04-22 21:54:26', '@m78 qwerty', 16);
+INSERT INTO `comment` VALUES (10, 0, 5, '2020-04-22 22:14:37', 'hhhhhhh', 37);
+INSERT INTO `comment` VALUES (11, 0, 5, '2020-04-22 22:20:02', 'asdfgyhu', 37);
+INSERT INTO `comment` VALUES (12, 11, 5, '2020-04-22 22:21:42', '@pipi bnytdmsrzm aenhstr', 37);
+INSERT INTO `comment` VALUES (13, 0, 6, '2020-04-22 23:24:27', '哇啊啊啊啊啊啊啊啊啊啊啊啊啊啊😁', 37);
+INSERT INTO `comment` VALUES (14, 11, 6, '2020-04-22 23:26:34', '@pipi 噢噢噢噢噢噢噢噢噢噢噢噢噢噢噢噢哦哦', 37);
 
 -- ----------------------------
 -- Table structure for message
@@ -51,7 +80,7 @@ CREATE TABLE `message`  (
   `content` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 71 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 98 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of message
@@ -127,6 +156,32 @@ INSERT INTO `message` VALUES (68, 'm78', 'pipi', '12346', '2020-04-18 22:39:44')
 INSERT INTO `message` VALUES (69, 'm78', 'pipi', 'asdf', '2020-04-18 22:46:52');
 INSERT INTO `message` VALUES (70, 'm78', 'pipi', 'sdtf', '2020-04-18 22:47:54');
 INSERT INTO `message` VALUES (71, 'm78', 'pipi', '热天荣誉感和', '2020-04-18 22:49:15');
+INSERT INTO `message` VALUES (72, 'pipi', 'm78', 'hey', '2020-04-19 14:57:25');
+INSERT INTO `message` VALUES (73, 'm78', 'pipi', 'Hi', '2020-04-19 14:57:44');
+INSERT INTO `message` VALUES (74, 'm78', 'pipi', 'See u around', '2020-04-19 14:58:03');
+INSERT INTO `message` VALUES (75, 'm78', 'pipi', 'sdfc', '2020-04-20 17:23:27');
+INSERT INTO `message` VALUES (76, '2016b11015', 'pipi', 'heyyy', '2020-04-20 17:51:47');
+INSERT INTO `message` VALUES (77, 'm78', 'pipi', '嗨', '2020-04-20 19:12:47');
+INSERT INTO `message` VALUES (78, 'm78', 'pipi', 'F', '2020-04-20 19:56:43');
+INSERT INTO `message` VALUES (79, '2016b11015', 'pipi', 'asdf', '2020-04-21 16:52:31');
+INSERT INTO `message` VALUES (80, '2016b11015', 'pipi', 'asder', '2020-04-21 16:53:48');
+INSERT INTO `message` VALUES (81, '2016b11015', 'pipi', 'asd', '2020-04-21 17:54:27');
+INSERT INTO `message` VALUES (82, '2016b11015', 'pipi', '456', '2020-04-21 18:05:57');
+INSERT INTO `message` VALUES (83, '2016b11015', 'pipi', 'aswe', '2020-04-21 18:15:03');
+INSERT INTO `message` VALUES (84, '2016b11015', 'pipi', '111', '2020-04-21 18:23:49');
+INSERT INTO `message` VALUES (85, '2016b11015', 'pipi', '阿斯顿法国红酒看来', '2020-04-21 18:32:12');
+INSERT INTO `message` VALUES (86, '2016b11015', 'pipi', '先吃饭v', '2020-04-21 18:32:50');
+INSERT INTO `message` VALUES (87, '2016b11015', 'pipi', 'asd', '2020-04-21 18:37:08');
+INSERT INTO `message` VALUES (88, '2016b11015', 'pipi', 'qwert', '2020-04-21 18:38:15');
+INSERT INTO `message` VALUES (89, '2016b11015', 'pipi', 'awsedrf', '2020-04-21 18:43:05');
+INSERT INTO `message` VALUES (90, '2016b11015', 'pipi', 'xdcfgvh', '2020-04-21 18:57:46');
+INSERT INTO `message` VALUES (91, '2016b11015', 'pipi', 'dfgyhj', '2020-04-21 18:57:56');
+INSERT INTO `message` VALUES (92, '2016b11015', 'pipi', 'asd', '2020-04-21 19:02:54');
+INSERT INTO `message` VALUES (93, 'pipi', '2016b11015', 'awsed', '2020-04-21 19:03:00');
+INSERT INTO `message` VALUES (94, 'pipi', '2016b11015', 'aew', '2020-04-21 19:04:41');
+INSERT INTO `message` VALUES (95, '2016b11015', 'pipi', 'sdf', '2020-04-21 19:07:30');
+INSERT INTO `message` VALUES (96, '2016b11015', 'pipi', 'asdfr', '2020-04-21 19:08:56');
+INSERT INTO `message` VALUES (97, 'pipi', '2016b11015', 'asdf', '2020-04-21 19:09:24');
 
 -- ----------------------------
 -- Table structure for post
@@ -142,7 +197,7 @@ CREATE TABLE `post`  (
   `p_like_count` int(32) NULL DEFAULT 0,
   `p_fav_count` int(32) NULL DEFAULT 0,
   PRIMARY KEY (`p_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 36 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 38 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of post
@@ -158,7 +213,6 @@ INSERT INTO `post` VALUES (28, 'Tom and Jerry', '/post_img/5f6c6ea559834531abd18
 INSERT INTO `post` VALUES (29, 'T', '/post_img/91306e3732e241f4b6461111530890fa_f6c5eec3f46a3f97b543e337c4edc543.gif', '2020-01-02 15:00:32', NULL, 7, 0, 0);
 INSERT INTO `post` VALUES (31, '嘻嘻嘻嘻嘻嘻嘻', '/post_img/bfb0912a08914bef8c1cfceeda478d36_006zyZZ2ly1g6t74koqutj30v60fzta5.jpg', '2020-01-21 12:49:11', NULL, 5, 0, 0);
 INSERT INTO `post` VALUES (32, '123456', '/post_img/7f442fbbf5d144ebb4914bba974b4fd4_cyberpunk2077_cdn_wallpaper.png', '2020-02-20 13:30:33', NULL, 5, 0, 0);
-INSERT INTO `post` VALUES (33, 'vjhvjk', '/post_img/2e1ab055917a4f75a429346d3c8a8b2e_Snipaste_2020-02-27_18-03-38.png', '2020-03-25 21:12:11', NULL, 5, 0, 0);
 INSERT INTO `post` VALUES (34, 'window.location.href', '/post_img/13ad86f2b3444a8f865f80ca436952bd_Snipaste_2020-03-15_16-34-10.png', '2020-03-26 03:57:53', NULL, 5, 0, 0);
 INSERT INTO `post` VALUES (35, 'Russell', '/post_img/78bf7c855bb84900b12b2520f3e352cd_photo_2020-02-22_16-03-32.jpg', '2020-04-01 05:41:31', NULL, 5, 0, 0);
 INSERT INTO `post` VALUES (36, '一个标题', '/post_img/94ac5d0c16ac4ebb9fd95d32c8503bb2_Snipaste_2020-02-22_15-04-10.png', '2020-04-01 10:54:02', NULL, 5, 0, 0);
@@ -174,7 +228,7 @@ CREATE TABLE `postflag`  (
   `p_fav_flag` int(1) NULL DEFAULT 0,
   `u_id` int(32) NOT NULL,
   PRIMARY KEY (`flag_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 20 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 28 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of postflag
@@ -183,6 +237,33 @@ INSERT INTO `postflag` VALUES (1, 16, 1, 1, 1);
 INSERT INTO `postflag` VALUES (2, 16, 1, 0, 7);
 INSERT INTO `postflag` VALUES (19, 32, 0, 1, 5);
 INSERT INTO `postflag` VALUES (20, 35, 1, 0, 5);
+INSERT INTO `postflag` VALUES (21, 34, 1, 0, 6);
+INSERT INTO `postflag` VALUES (22, 32, 1, 0, 6);
+INSERT INTO `postflag` VALUES (23, 31, 1, 0, 6);
+INSERT INTO `postflag` VALUES (24, 29, 0, 1, 6);
+INSERT INTO `postflag` VALUES (25, 25, 0, 1, 6);
+INSERT INTO `postflag` VALUES (26, 23, 0, 0, 6);
+INSERT INTO `postflag` VALUES (27, 36, 0, 0, 5);
+
+-- ----------------------------
+-- Table structure for reports
+-- ----------------------------
+DROP TABLE IF EXISTS `reports`;
+CREATE TABLE `reports`  (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `fromId` int(11) NOT NULL,
+  `ownerId` int(11) NOT NULL,
+  `pid` int(11) NOT NULL,
+  `time` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP(0),
+  `operation` int(8) NULL DEFAULT 0,
+  `operateTime` timestamp(0) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of reports
+-- ----------------------------
+INSERT INTO `reports` VALUES (1, 1, 7, 19, '2020-04-26 21:35:59', 0, NULL);
 
 -- ----------------------------
 -- Table structure for subscription
@@ -193,12 +274,14 @@ CREATE TABLE `subscription`  (
   `own_id` int(16) NULL DEFAULT NULL,
   `sub_id` int(16) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of subscription
 -- ----------------------------
-INSERT INTO `subscription` VALUES (2, 5, 7);
+INSERT INTO `subscription` VALUES (4, 6, 5);
+INSERT INTO `subscription` VALUES (5, 5, 7);
+INSERT INTO `subscription` VALUES (6, 5, 1);
 
 -- ----------------------------
 -- Table structure for user
@@ -214,7 +297,7 @@ CREATE TABLE `user`  (
   `email` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `username_UNIQUE`(`username`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 20 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 22 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of user
@@ -236,5 +319,6 @@ INSERT INTO `user` VALUES (17, 'fgvb', 'hjk', '123456', 1, '/user_avatar/default
 INSERT INTO `user` VALUES (18, 'pipi', 'GilesW', '123456', 0, '/user_avatar/default_user_avatar.jpg', NULL);
 INSERT INTO `user` VALUES (19, '222', '111', '33333', 1, NULL, NULL);
 INSERT INTO `user` VALUES (20, '大帅比', 'obi-wan', 'qqrery', 1, NULL, NULL);
+INSERT INTO `user` VALUES (21, 'GG', 'pipia', '123456', 1, '/user_avatar/default_user_avatar.jpg', NULL);
 
 SET FOREIGN_KEY_CHECKS = 1;
