@@ -21,7 +21,7 @@
             <a th:href="@{/admin}" class="pr-3">管理员</a>
             <div>
                 <span th:text="'@'+${session.admin.username}" class="mr-2"></span>
-                <a th:href="@{/adminLogout.action}">
+                <a th:href="@{/admin/logout.action}">
                     <i class="fas fa-sign-out-alt"></i><span> 登出</span>
                 </a>
             </div>
@@ -32,7 +32,7 @@
 <!--主内容-->
 <div class="container content-m">
     <div class="row justify-content-between">
-        <form th:action="@{/search_reports}" method="post">
+        <form th:action="@{/admin/s}" method="post">
             <div class="input-group input-group-sm" style="max-width: 200px;">
                 <input type="text" class="form-control" name="search_item">
             </div>
@@ -57,36 +57,19 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                    <td>@mdo</td>
-                    <td>@mdo</td>
+                <tr th:each="report : ${reportList.list}">
+                    <th th:text="${report.id}" scope="row">1</th>
+                    <td th:text="${report.fromUser.username}">Mark</td>
+                    <td th:text="${report.ownerUser.username}">Otto</td>
+                    <td><img th:src="@{${report.post.img_dir}}" alt="" class="chat-avatar"></td>
+                    <td th:text="${report.post.p_title}">@mdo</td>
+                    <td th:text="${#dates.format(report.time,'yyyy-MM-dd HH:mm')}">@mdo</td>
                     <td>
                         <a href="#" class="btn btn-outline-warning" role="button">处理</a>
                         <a href="#" class="btn btn-outline-danger" role="button">忽略</a>
                     </td>
                 </tr>
-                <tr>
-                    <th scope="row">2</th>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
-                    <td>@fat</td>
-                    <td>@fat</td>
-                    <td>@fat</td>
-                </tr>
-                <tr>
-                    <th scope="row">3</th>
-                    <td>Larry the Bird</td>
-                    <td>Thornton</td>
-                    <td>@twitter</td>
-                    <td>@twitter</td>
-                    <td>@twitter</td>
-                    <td>@twitter</td>
-                </tr>
+
                 </tbody>
             </table>
         </div>
@@ -97,22 +80,22 @@
         <nav aria-label="Page navigation example">
             <ul class="pagination">
                 <li class="page-item">
-                    <a class="page-link bg-transparent" href="#">
+                    <a class="page-link bg-transparent" th:href="@{/admin(start=1)}">
                         <span aria-hidden="true">&lt;</span>
                     </a>
                 </li>
                 <li class="page-item">
-                    <a class="page-link bg-transparent" href="#" aria-label="Previous">
+                    <a class="page-link bg-transparent" th:href="@{/admin(start=${reportList.pageNum}-1)}" aria-label="Previous">
                         <span aria-hidden="true">&laquo;</span>
                     </a>
                 </li>
                 <li class="page-item">
-                    <a class="page-link bg-transparent" href="#" aria-label="Next">
+                    <a class="page-link bg-transparent" th:href="@{/admin(start=${reportList.pageNum}+1)}" aria-label="Next">
                         <span aria-hidden="true">&raquo;</span>
                     </a>
                 </li>
                 <li class="page-item">
-                    <a class="page-link bg-transparent" href="#">
+                    <a class="page-link bg-transparent" th:href="@{/admin(start=${reportList.pages})}">
                         <span aria-hidden="true">&gt;</span>
                     </a>
                 </li>

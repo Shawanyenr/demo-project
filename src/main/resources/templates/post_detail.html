@@ -61,12 +61,15 @@
                         <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-left"
                              th:aria-labelledby="'dropdown'+${post.p_id}">
                             <a class="dropdown-item" th:href='@{${post.img_dir}}' download><i
-                                    class="fas fa-download"></i> Download Image</a>
+                                    class="fas fa-download"></i> 下载</a>
+                            <!--<a class="dropdown-item" href="#">Another action</a>-->
                             <div class="dropdown-divider"></div>
                             <div th:if="${session.user}">
-                                <a class="dropdown-item" href="#" th:if="${post.getU_id()==session.user.getId()}" th:onclick="'deletePost('+${post.p_id}+')'"><i class="fas fa-trash-alt"></i> Delete</a>
+                                <a class="dropdown-item" href="#" th:if="${post.getU_id()==session.user.getId()}"
+                                   th:onclick="'deletePost('+${post.p_id}+')'"><i class="fas fa-trash-alt"></i>
+                                    删除</a>
                             </div>
-                            <a class="dropdown-item" href="#"><i class="fas fa-exclamation-circle"></i> Report</a>
+                            <a class="dropdown-item" href="#"><i class="fas fa-exclamation-circle"></i> 举报</a>
                         </div>
                     </div>
                 </div>
@@ -257,7 +260,7 @@
                 function (data) {
                     if (data === "OK") {
                         alert("success");
-                        window.location.href="/home";
+                        window.location.href="/index";
                     } else {
                         alert("Fail");
                         window.location.reload();
