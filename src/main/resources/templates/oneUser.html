@@ -24,8 +24,8 @@
             <small class="ml-3 text-secondary" th:text="'@'+${one.getUsername()}">null</small>
             <div class="d-flex flex-wrap">
                 <div id="subBtn" th:fragment="subBtn" th:if="${session.user}">
-                    <button class="btn-success btn ml-3 mt-2" th:if="${subState}" th:onclick="'toggleSub('+${one.getId()}+')'">已订阅</button>
-                    <button class="btn-primary btn ml-3 mt-2" th:unless="${subState}" th:onclick="'toggleSub('+${one.getId()}+')'">订阅</button>
+                    <button class="btn-success btn ml-3 mt-2" th:if="${subState}" th:onclick="'toggleSub('+${one.getId()}+')'"><i class="fas fa-check"></i> 已订阅</button>
+                    <button class="btn-primary btn ml-3 mt-2" th:unless="${subState}" th:onclick="'toggleSub('+${one.getId()}+')'"><i class="fas fa-plus"></i> 订阅</button>
                 </div>
                 <a class="btn btn-outline-dark ml-3 mt-2" th:if="${session.user}" th:href="@{'/message/'+${one.getId()}}" role="button">发送消息</a>
             </div>

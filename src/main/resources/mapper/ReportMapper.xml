@@ -28,6 +28,7 @@
         select * from reports where operation != 0
     </select>
     <select id="listSearch" parameterType="String" resultMap="reportAndUser">
-        SELECT r.*,f.username f_username,o.username o_username,p.img_dir,p.p_title FROM `reports` r LEFT JOIN user f on r.fromId=f.id LEFT JOIN user o on r.ownerId=o.id LEFT JOIN post p on r.pid=p.p_id where CONCAT(r.id,f.username, o.username, p_title,r.time,pid) LIKE #{content}
+        SELECT r.*,f.username f_username,o.username o_username,p.img_dir,p.p_title FROM `reports` r LEFT JOIN user f on r.fromId=f.id LEFT JOIN user o on r.ownerId=o.id LEFT JOIN post p on r.pid=p.p_id
+        where CONCAT(r.id,f.username, o.username, p_title,r.time,pid) LIKE #{content}
     </select>
 </mapper>

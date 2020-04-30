@@ -151,55 +151,7 @@
         <div class="col-lg-4 d-none d-lg-block">
             <div class="sidebar-item">
                 <div class="make-me-sticky">
-                    <div class="d-flex flex-row align-items-center mb-3 user-section" th:if="${session.user}">
-                        <a th:href="@{/home}">
-                            <img th:src="@{${session.user.getAvatar()}}" alt="..."
-                                 class="avatar-img">
-                        </a>
-                        <a th:href="@{/home}">
-                            <div class="d-flex flex-column pl-3">
-                                <div th:text="${session.user.getName()}">null</div>
-                                <div class="text-secondary" th:text="'@'+${session.user.getUsername()}">null</div>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="d-flex flex-column mb-2 subs-section" th:if="${session.user}">
-                        <a class="btn btn-outline-dark mb-2" th:href="@{/subscription}" role="button">订阅</a>
-                        <a class="btn btn-primary mb-2" th:href="@{/index}" role="button">全部</a>
-                        <div class="dropdown-divider"></div>
-                    </div>
-                    <div class="d-flex flex-column mb-2 subs-section" th:if="${session.user}">
-                        <a class="btn btn-primary mb-2" href="#" data-toggle="modal" data-target="#uploadForm" role="button">
-                            <i class="fas fa-plus"></i> 上传
-                        </a>
-                        <a class="btn btn-outline-dark mb-2" href="#" role="button">
-                            <i class="fas fa-bell"></i><span> 消息</span>
-                            <span class="badge badge-pill badge-light">99+</span>
-                        </a>
-                        <a class="btn btn-outline-dark mb-2" href="#" role="button">
-                            <i class="fas fa-comment-alt"></i><span> 信息</span></a>
-                        <div class="dropdown-divider"></div>
-                    </div>
-                    <div class="card mb-2" th:unless="${session.user}">
-                        <div class="modal-header">
-                            <h5 class="modal-title">Pic.com</h5>
-                        </div>
-                        <div class="modal-body">
-                            <a class="btn btn-outline-primary text-primary mb-3" style="width: 100%" th:href="@{/login}"
-                               role="button">登录</a>
-                            <a class="btn btn-outline-secondary text-secondary" style="width: 100%"
-                               th:href="@{/register}" role="button">注册</a>
-                        </div>
-                    </div>
-                    <div style="width: 100%">
-                        <small>
-                            <a href="#" class="text-muted mr-1" style="font-weight: lighter">关于</a>
-                            <a href="#" class="text-muted mr-1" style="font-weight: lighter">帮助</a>
-                            <a href="#" class="text-muted mr-1" style="font-weight: lighter">API</a>
-                            <a href="#" class="text-muted mr-1" style="font-weight: lighter">隐私</a>
-                            <a href="#" class="text-muted mr-1" style="font-weight: lighter">条款</a>
-                        </small>
-                    </div>
+                    <div th:replace="include::genaralSideNav(3)"></div>
                 </div>
             </div>
         </div>
