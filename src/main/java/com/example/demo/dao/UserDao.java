@@ -1,12 +1,10 @@
 package com.example.demo.dao;
 
 import com.example.demo.po.User;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
 import java.util.List;
 
 @Component
@@ -41,4 +39,7 @@ public interface UserDao {
 
     @Select("select * from user where username = #{username}")
     User findByUsername(String username);
+
+    @Update("update user set frozeUntil=#{date} where id=#{id}")
+    void freezeAccount(Integer id, Date date);
 }

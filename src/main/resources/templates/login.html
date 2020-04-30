@@ -20,8 +20,9 @@
 <div style="display: flex;flex-direction: column; justify-content: center; align-items: center;min-height: 100vh;">
     <div id="msg-section" th:fragment="msg-section" style="width: 500px">
         <div class="alert alert-danger alert-dismissible fade show" role="alert" th:unless="${#strings.isEmpty(msg)}"
-             th:text="${msg}" style="width: 100%;">
-            null
+              style="width: 100%;">
+            <span th:text="${msg}">null</span>
+<!--            解冻时间：<span th:text="${frozeUntil}"></span>-->
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>

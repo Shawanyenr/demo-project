@@ -10,8 +10,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
 
-@SpringBootTest(classes = DemoApplication.class)
-public class MybatisTest {
+@SpringBootTest(classes = DemoApplication.class,webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+public class UserTest {
 
     @Autowired
     private UserDaoService userDaoService;
@@ -66,5 +66,10 @@ public class MybatisTest {
     @Test
     public void checkSub() {
         System.out.println(userDaoService.checkSub(5,7));
+    }
+
+    @Test
+    public void freezeAccount(){
+        userDaoService.freezeAccount(2,-1);
     }
 }

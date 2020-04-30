@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -34,8 +36,16 @@ public class UserController {
         System.out.println(user);
         if (user == null) {
             model.addAttribute("msg", "用户名或密码错误!");
-        } else if (user.getUserState() == 0) {
-            model.addAttribute("msg", "账户已被冻结!");
+        } else if (user.getFrozeUntil()!=null) {
+            if (!(user.getFrozeUntil().before(new Date()))){
+                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                model.addAttribute("msg", "账户已被冻结!\n解冻日期：" + formatter.format(user.getFrozeUntil()));
+//            model.addAttribute("frozeUntil", user.getFrozeUntil());
+            }else {
+                user.setPassword("");
+                s.setAttribute("user", user);
+                model.addAttribute("success","登录成功.");
+            }
         } else {
             user.setPassword("");
             s.setAttribute("user", user);

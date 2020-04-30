@@ -4,6 +4,7 @@ import com.example.demo.po.Admin;
 import com.example.demo.po.Report;
 import com.example.demo.service.AdminDaoService;
 import com.example.demo.service.ReportDaoService;
+import com.example.demo.service.UserDaoService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,8 @@ public class AdminController {
     private AdminDaoService adminDaoService;
     @Autowired
     private ReportDaoService reportDaoService;
+    @Autowired
+    private UserDaoService userDaoService;
 
     @RequestMapping("/login")
     public String adminLogin(){
@@ -52,7 +55,7 @@ public class AdminController {
         return "redirect:/admin/login";
     }
     @RequestMapping("")
-    public String admin(HttpSession session, @RequestParam(value = "start", defaultValue = "1") int start, @RequestParam(value = "size", defaultValue = "5") int size, Model model, RedirectAttributes attributes){
+    public String admin(HttpSession session, @RequestParam(value = "start", defaultValue = "1") int start, @RequestParam(value = "size", defaultValue = "5") int size, Model model, RedirectAttributes attributes, @RequestParam(value = "s", defaultValue = "") String content){
         Admin admin = (Admin) session.getAttribute("admin");
         System.out.println(admin);
         if (null == admin) {
@@ -95,5 +98,21 @@ public class AdminController {
         return "/admin/admin";
     }
 
+    @RequestMapping("/freeze")
+    public String freezeAccount(HttpSession session, @RequestParam(value = "id") Integer id, @RequestParam(value = "duration") Integer duration, Model model, RedirectAttributes attributes){
+        Admin admin = (Admin) session.getAttribute("admin");
+        System.out.println(admin);
+        if (null == admin) {
+            attributes.addFlashAttribute("msg","请先登录");
+            return "redirect:/admin/login";
+        }
+        if (id==null||duration==null){
+            model.addAttribute("error","操作失败，id或期限为空");
+        }else {
+            userDaoService.freezeAccount(id, duration);
+            model.addAttribute("success", "操作成功");
+        }
+        return "admin/admin :: message";
+    }
 
 }

@@ -10,7 +10,7 @@ import java.util.Date;
 import java.util.List;
 
 @SpringBootTest(classes = DemoApplication.class,webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class MybatisTestPost {
+public class PostTest {
 
     @Autowired
     private PostDaoService postDaoService;

@@ -3,6 +3,7 @@ package com.example.demo.service;
 import com.example.demo.po.User;
 import org.apache.ibatis.annotations.Delete;
 
+import java.util.Date;
 import java.util.List;
 
 public interface UserDaoService {
@@ -25,4 +26,7 @@ public interface UserDaoService {
     User findByIdExPassword(Integer id);
 
     User findByUsername(String username);
+
+    void freezeAccount(Integer id, Integer duration);
+
 }

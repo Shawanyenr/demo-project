@@ -6,6 +6,8 @@ import com.example.demo.service.UserDaoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -63,5 +65,18 @@ public class UserDaoServiceImpl implements UserDaoService {
     @Override
     public User findByUsername(String username) {
         return userDao.findByUsername(username);
+    }
+
+    @Override
+    public void freezeAccount(Integer id, Integer duration) {
+        if (duration==-1){
+            duration=36500;
+        }
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DATE, duration);
+
+        Date date = cal.getTime();
+        System.out.println(date);
+        userDao.freezeAccount(id,date);
     }
 }
