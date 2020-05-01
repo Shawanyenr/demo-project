@@ -17,7 +17,8 @@ public class ViewController {
     private PostDaoService postDaoService;
 
     @RequestMapping({"/login",""})
-    public String toLogin() {
+    public String toLogin(HttpSession session) {
+        session.removeAttribute("admin");
         return "login";
     }
 

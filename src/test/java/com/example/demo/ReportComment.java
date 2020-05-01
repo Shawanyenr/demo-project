@@ -21,7 +21,7 @@ public class ReportComment {
 
     @Test
     public void listReports(){
-        List<Report> listReports = reportDaoService.listReports(null,1);
+        List<Report> listReports = reportDaoService.listReports("",1);
         System.out.println(listReports);
     }
 

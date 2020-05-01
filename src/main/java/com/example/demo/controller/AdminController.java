@@ -30,7 +30,8 @@ public class AdminController {
     private UserDaoService userDaoService;
 
     @RequestMapping("/login")
-    public String adminLogin() {
+    public String adminLogin(HttpSession session) {
+        session.removeAttribute("user");
         return "/admin/adminLogin";
     }
 
@@ -69,6 +70,8 @@ public class AdminController {
         PageHelper.startPage(start, size, "time desc");
         PageInfo<Report> reportPage = new PageInfo<>(reportList);
         model.addAttribute("reportList", reportPage);
+        model.addAttribute("s", content);
+        model.addAttribute("a", archived);
         return "/admin/admin";
     }
     /*@RequestMapping("/archived")

@@ -81,7 +81,8 @@
                 </div>
                 <div class="pl-3 pr-3 pb-3 comment-section">
                     <div id="commentSection" th:fragment="commentSection">
-                        <div th:if="${comments}" th:each="comment : ${comments}">
+                        <p th:if="${#lists.isEmpty(comments)}" class="text-center">还没有人评论</p>
+                        <div th:if="${not #lists.isEmpty(comments)}" th:each="comment : ${comments}">
                             <div th:if="${comment}" class="media mt-2">
                                 <a th:href="@{'/user/'+${comment.uid}}">
                                     <img th:src="@{${comment.user.avatar}}" class="chat-avatar border-radius-50 mr-3" alt="...">

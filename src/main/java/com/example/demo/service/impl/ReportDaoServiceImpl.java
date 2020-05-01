@@ -28,7 +28,7 @@ public class ReportDaoServiceImpl implements ReportDaoService {
         if (content.equals("")){
             return reportDao.listReports(null, archived);
         }
-        return reportDao.listReports(content, archived);
+        return reportDao.listReports("%"+content+"%", archived);
     }
 
     @Override

@@ -12,7 +12,7 @@ public class Report {
     private Integer pid;
     private Integer operation;
     private Date time;
-    private Date operationTime;
+    private Date operateTime;
     private Post post;
     private User fromUser;
     private User ownerUser;

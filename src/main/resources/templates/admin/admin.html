@@ -32,14 +32,14 @@
 <!--主内容-->
 <div class="container content-m">
     <div class="row justify-content-between">
-        <form th:action="@{/admin/s}" method="post">
+        <form th:action="@{/admin(start=1,a=${a})}" method="post">
             <div class="input-group input-group-sm" style="max-width: 200px;">
-                <input type="text" class="form-control" name="search_item">
+                <input type="text" class="form-control" name="s" th:placeholder="${a}==0?'在待处理内搜索...':'在归档内搜索...'">
             </div>
         </form>
         <div>
-            <a th:href="@{/admin}" class="btn btn-primary" role="button">待处理</a>
-            <a th:href="@{/admin/archived}" class="btn btn-outline-primary" role="button">归档</a>
+            <a th:href="@{/admin(start=1,s=null,a=0)}" class="btn btn-outline-secondary" th:classappend="${s.equals('')&&a!=1}?'active'" role="button">待处理</a>
+            <a th:href="@{/admin(start=1,s=null,a=1)}" class="btn btn-outline-secondary" th:classappend="${s.equals('')&&a==1}?'active'" role="button">归档</a>
         </div>
     </div>
     <div class="row">
@@ -53,20 +53,30 @@
                     <th scope="col">帖子图片</th>
                     <th scope="col">帖子内容</th>
                     <th scope="col">举报时间</th>
+                    <th th:if="${a==1}" scope="col">处理时间</th>
                     <th scope="col">操作</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="report : ${reportList.list}">
+                <tr th:if="${not #lists.isEmpty(reportList.list)}" th:each="report : ${reportList.list}">
                     <th th:text="${report.id}" scope="row">1</th>
-                    <td th:text="${report.fromUser.username}">Mark</td>
-                    <td th:text="${report.ownerUser.username}">Otto</td>
-                    <td><img th:src="@{${report.post.img_dir}}" alt="" class="chat-avatar"></td>
-                    <td th:text="${report.post.p_title}">@mdo</td>
-                    <td th:text="${#dates.format(report.time,'yyyy-MM-dd HH:mm')}">@mdo</td>
+                    <td><a th:href="@{'/user/'+${report.fromId}}" th:text="${report.fromUser.username}" class="btn btn-link"></a></td>
+                    <td><a th:href="@{'/user/'+${report.ownerId}}" th:text="${report.ownerUser.username}" class="btn btn-link"></a></td>
                     <td>
+                        <a href="javascript:" data-toggle="modal" data-target="#showImgModal"
+                           th:data-whatever="${report.post.img_dir}">
+                            <img th:src="@{${report.post.img_dir}}" alt="" class="chat-avatar">
+                        </a>
+                    </td>
+                    <td><a th:href="@{'/posts/'+${report.pid}}" th:text="${report.post.p_title}" class="btn btn-link"></a></td>
+                    <td th:text="${#dates.format(report.time,'yyyy-MM-dd HH:mm')}">@mdo</td>
+                    <td th:if="${a==1}" th:text="${#dates.format(report.operateTime,'yyyy-MM-dd HH:mm')}">@mdo</td>
+                    <td th:unless="${a==1}">
                         <a href="#" class="btn btn-outline-warning" role="button">处理</a>
-                        <a href="#" class="btn btn-outline-danger" role="button">忽略</a>
+                        <a href="#" class="btn btn-outline-danger" role="button">删除</a>
+                    </td>
+                    <td th:if="${a==1}">
+                        <a href="#" class="btn btn-outline-success" role="button">修改</a>
                     </td>
                 </tr>
 
@@ -80,23 +90,23 @@
         <nav aria-label="Page navigation example">
             <ul class="pagination">
                 <li class="page-item">
-                    <a class="page-link bg-transparent" th:href="@{/admin(start=1)}">
-                        <span aria-hidden="true">&lt;</span>
+                    <a class="page-link bg-transparent" th:href="@{/admin(start=1,s=${s},a=${a})}">
+                        <span aria-hidden="true">首页</span>
                     </a>
                 </li>
                 <li class="page-item">
-                    <a class="page-link bg-transparent" th:href="@{/admin(start=${reportList.pageNum}-1)}" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
+                    <a class="page-link bg-transparent" th:href="@{/admin(start=${reportList.pageNum}-1,s=${s},a=${a})}" aria-label="Previous">
+                        <span aria-hidden="true">上一页</span>
                     </a>
                 </li>
                 <li class="page-item">
-                    <a class="page-link bg-transparent" th:href="@{/admin(start=${reportList.pageNum}+1)}" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
+                    <a class="page-link bg-transparent" th:href="@{/admin(start=${reportList.pageNum}+1,s=${s},a=${a})}" aria-label="Next">
+                        <span aria-hidden="true">下一页</span>
                     </a>
                 </li>
                 <li class="page-item">
-                    <a class="page-link bg-transparent" th:href="@{/admin(start=${reportList.pages})}">
-                        <span aria-hidden="true">&gt;</span>
+                    <a class="page-link bg-transparent" th:href="@{/admin(start=${reportList.pages},s=${s},a=${a})}">
+                        <span aria-hidden="true">末页</span>
                     </a>
                 </li>
             </ul>
