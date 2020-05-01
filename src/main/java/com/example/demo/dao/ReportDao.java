@@ -3,6 +3,7 @@ package com.example.demo.dao;
 import com.example.demo.po.Report;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -14,7 +15,7 @@ public interface ReportDao {
     @Update("update reports set operation=#{operation} where id=#{id}")
     void updateReport(Integer id, Integer operation);
 //    @Select("select * from reports where operation = 0")
-    List<Report> listReports();
+    List<Report> listReports(@RequestParam String content, @RequestParam Integer archived);
 //    @Select("select * from reports where operation != 0")
     List<Report> listArchived();
     List<Report> listSearch(String content);

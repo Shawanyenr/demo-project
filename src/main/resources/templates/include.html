@@ -206,12 +206,13 @@
         </a>
     </div>
     <div class="d-flex flex-column mb-2 subs-section" th:if="${session.user}">
-        <a class="btn btn-outline-dark mb-2" th:classappend="${n==0} ? 'active'" th:href="@{/subscription}" role="button">关注</a>
-        <a class="btn btn-outline-dark mb-2" th:classappend="${n==1} ? 'active'" th:href="@{/index}" role="button">全部</a>
+        <a class="btn btn-outline-dark mb-2" th:href="@{/subscription}" role="button">订阅</a>
+        <a class="btn btn-primary mb-2" th:href="@{/index}" role="button">全部</a>
         <div class="dropdown-divider"></div>
     </div>
     <div class="d-flex flex-column mb-2 subs-section" th:if="${session.user}">
-        <a class="btn btn-dark mb-2" href="#" data-toggle="modal" data-target="#uploadForm" role="button">
+        <a class="btn btn-primary mb-2" href="#" data-toggle="modal" data-target="#uploadForm"
+           role="button">
             <i class="fas fa-plus"></i> 上传
         </a>
         <a class="btn btn-outline-dark mb-2" href="#" role="button">
@@ -222,13 +223,24 @@
             <i class="fas fa-comment-alt"></i><span> 信息</span></a>
         <div class="dropdown-divider"></div>
     </div>
+    <div class="card mb-2" th:unless="${session.user}">
+        <div class="modal-header">
+            <h5 class="modal-title">Pic.com</h5>
+        </div>
+        <div class="modal-body">
+            <a class="btn btn-outline-primary text-primary mb-3" style="width: 100%" th:href="@{/login}"
+               role="button">登录</a>
+            <a class="btn btn-outline-secondary text-secondary" style="width: 100%"
+               th:href="@{/register}" role="button">注册</a>
+        </div>
+    </div>
     <div style="width: 100%">
         <small>
-            <a href="#" class="text-muted mr-1" style="font-weight: lighter">About</a>
-            <a href="#" class="text-muted mr-1" style="font-weight: lighter">Help</a>
+            <a href="#" class="text-muted mr-1" style="font-weight: lighter">关于</a>
+            <a href="#" class="text-muted mr-1" style="font-weight: lighter">帮助</a>
             <a href="#" class="text-muted mr-1" style="font-weight: lighter">API</a>
-            <a href="#" class="text-muted mr-1" style="font-weight: lighter">Privacy</a>
-            <a href="#" class="text-muted mr-1" style="font-weight: lighter">Terms</a>
+            <a href="#" class="text-muted mr-1" style="font-weight: lighter">隐私</a>
+            <a href="#" class="text-muted mr-1" style="font-weight: lighter">条款</a>
         </small>
     </div>
 </th:block>

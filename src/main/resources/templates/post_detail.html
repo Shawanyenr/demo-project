@@ -116,7 +116,7 @@
                         <div class="form-group">
                             <input type="hidden" name="pid" th:value="${post.p_id}">
                             <input type="hidden" name="parentId" value="0">
-                            <textarea name="content" th:disabled="${session.user==null}" class="form-control bg-transparent mt-2 mb-2" style="color: inherit" th:placeholder="${session.user}==null?'Login to comment.':'Leave your comment here.'" rows="3"></textarea>
+                            <textarea name="content" th:disabled="${session.user==null}" class="form-control bg-transparent mt-2 mb-2" style="color: inherit" th:placeholder="${session.user}==null?'登录以发表评论.':'在这里写评论.'" rows="3"></textarea>
                             <div class="d-flex flex-row justify-content-end">
                                 <button type="button" class="btn btn-outline-warning mr-2" onclick="resetComment()" th:disabled="${session.user==null}">Reset</button>
                                 <button type="submit" class="btn btn-primary" th:disabled="${session.user==null}">Submit</button>

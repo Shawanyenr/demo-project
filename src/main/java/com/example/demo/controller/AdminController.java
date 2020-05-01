@@ -9,6 +9,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,19 +31,19 @@ public class AdminController {
     private UserDaoService userDaoService;
 
     @RequestMapping("/login")
-    public String adminLogin(){
+    public String adminLogin() {
         return "/admin/adminLogin";
     }
 
     @RequestMapping("/login.action")
-    public String adminLoginInfo(Admin admin, Model model,HttpSession session){
+    public String adminLoginInfo(Admin admin, Model model, HttpSession session) {
         Admin admin1 = adminDaoService.findOne(admin);
-        if (admin1==null){
-            model.addAttribute("msg","用户名或密码错误!");
-        }else{
+        if (admin1 == null) {
+            model.addAttribute("msg", "用户名或密码错误!");
+        } else {
             admin1.setPassword("");
-            session.setAttribute("admin",admin1);
-            model.addAttribute("success","登录成功.");
+            session.setAttribute("admin", admin1);
+            model.addAttribute("success", "登录成功.");
         }
         return "admin/adminLogin :: msg-section";
     }
@@ -54,21 +55,24 @@ public class AdminController {
         // 重定向到登录页面的跳转方法
         return "redirect:/admin/login";
     }
-    @RequestMapping("")
-    public String admin(HttpSession session, @RequestParam(value = "start", defaultValue = "1") int start, @RequestParam(value = "size", defaultValue = "5") int size, Model model, RedirectAttributes attributes, @RequestParam(value = "s", defaultValue = "") String content){
+
+    @RequestMapping
+    public String admin(HttpSession session, @RequestParam(value = "page", defaultValue = "1") int start, @RequestParam(value = "limit", defaultValue = "5") int size, Model model, RedirectAttributes attributes, @RequestParam(value = "s", defaultValue = "") String content, @RequestParam(value = "a", defaultValue = "0") Integer archived) {
         Admin admin = (Admin) session.getAttribute("admin");
         System.out.println(admin);
         if (null == admin) {
-            attributes.addFlashAttribute("msg","请先登录");
+            attributes.addFlashAttribute("msg", "请先登录");
             return "redirect:/admin/login";
         }
-        List<Report> reportList = reportDaoService.listReports();
-        PageHelper.startPage(start,size,"time desc");
+        System.out.println("content: "+content+" archived: "+archived);
+        List<Report> reportList = reportDaoService.listReports(content, archived);
+        System.out.println(reportList);
+        PageHelper.startPage(start, size, "time desc");
         PageInfo<Report> reportPage = new PageInfo<>(reportList);
         model.addAttribute("reportList", reportPage);
         return "/admin/admin";
     }
-    @RequestMapping("/archived")
+    /*@RequestMapping("/archived")
     public String adminArchived(HttpSession session, @RequestParam(value = "start", defaultValue = "1") int start, @RequestParam(value = "size", defaultValue = "5") int size, Model model, RedirectAttributes attributes){
         Admin admin = (Admin) session.getAttribute("admin");
         System.out.println(admin);
@@ -96,19 +100,20 @@ public class AdminController {
         PageInfo<Report> reportPage = new PageInfo<>(reportList);
         model.addAttribute("reportList", reportPage);
         return "/admin/admin";
-    }
+    }*/
 
+    @Transactional
     @RequestMapping("/freeze")
-    public String freezeAccount(HttpSession session, @RequestParam(value = "id") Integer id, @RequestParam(value = "duration") Integer duration, Model model, RedirectAttributes attributes){
+    public String freezeAccount(HttpSession session, @RequestParam(value = "id") Integer id, @RequestParam(value = "duration") Integer duration, Model model, RedirectAttributes attributes) {
         Admin admin = (Admin) session.getAttribute("admin");
         System.out.println(admin);
         if (null == admin) {
-            attributes.addFlashAttribute("msg","请先登录");
+            attributes.addFlashAttribute("msg", "请先登录");
             return "redirect:/admin/login";
         }
-        if (id==null||duration==null){
-            model.addAttribute("error","操作失败，id或期限为空");
-        }else {
+        if (id == null || duration == null) {
+            model.addAttribute("error", "操作失败，id或期限为空");
+        } else {
             userDaoService.freezeAccount(id, duration);
             model.addAttribute("success", "操作成功");
         }

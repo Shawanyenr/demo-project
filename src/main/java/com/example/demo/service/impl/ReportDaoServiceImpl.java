@@ -24,8 +24,11 @@ public class ReportDaoServiceImpl implements ReportDaoService {
     }
 
     @Override
-    public List<Report> listReports() {
-        return reportDao.listReports();
+    public List<Report> listReports(String content, Integer archived) {
+        if (content.equals("")){
+            return reportDao.listReports(null, archived);
+        }
+        return reportDao.listReports(content, archived);
     }
 
     @Override
