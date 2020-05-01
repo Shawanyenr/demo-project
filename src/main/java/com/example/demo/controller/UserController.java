@@ -84,40 +84,6 @@ public class UserController {
     }
 
     @Transactional
-    @ResponseBody
-    @RequestMapping("/addSub")
-    public String addSub(HttpSession session, @RequestParam Integer sub_id) {
-        User user = (User) session.getAttribute("user");
-        String msg = "";
-        if (null == user || null == sub_id) {
-            msg = "error";
-        } else {
-            Integer check = userDaoService.addSubscription(user.getId(), sub_id);
-            if (check == 1) {
-                msg = "ok";
-            } else msg = "error";
-        }
-        return msg;
-    }
-
-    @Transactional
-    @ResponseBody
-    @RequestMapping("/rmSub")
-    public String rmSub(HttpSession session, @RequestParam Integer sub_id) {
-        User user = (User) session.getAttribute("user");
-        String msg = "";
-        if (null == user || null == sub_id) {
-            msg = "error";
-        } else {
-            Integer check = userDaoService.removeSubscription(user.getId(), sub_id);
-            if (check == 1) {
-                msg = "ok";
-            } else msg = "error";
-        }
-        return msg;
-    }
-
-    @Transactional
     @RequestMapping("/toggleSub")
     public String toggleSub(HttpSession session, @RequestParam Integer sub_id, Model model) {
         User user = (User) session.getAttribute("user");

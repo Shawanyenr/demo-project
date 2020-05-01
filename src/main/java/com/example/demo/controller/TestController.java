@@ -78,27 +78,6 @@ public class TestController {
         return "post_detail";
     }
 
-
-    @RequestMapping("/to_index")
-    public String index() {
-        return "test";
-    }
-
-    @RequestMapping("/tt")
-    public String tt() {
-        return "tt";
-    }
-
-    /*@RequestMapping("/test")
-    public String toTestPage() {
-        return "test";
-    }*/
-
-    @RequestMapping("/123")
-    public String to123() {
-        return "123";
-    }
-
     @RequestMapping("/index")
     public String toIndex(Model model, HttpSession session) {
         User user = (User) session.getAttribute("user");
@@ -147,7 +126,6 @@ public class TestController {
         return "oneUser";
     }
 
-
     @RequestMapping("/message/{id}")
     public String ws(Model model, HttpSession session, @PathVariable Integer id) {
         User user = (User) session.getAttribute("user");
@@ -165,25 +143,10 @@ public class TestController {
     }
 
 
-    @ResponseBody
-    @GetMapping("test")
-    public String test(String userId, String message) throws Exception {
-        if (userId == "" || userId == null) {
-            return "发送用户id不能为空";
-        }
-        if (message == "" || message == null) {
-            return "发送信息不能为空";
-        }
-        new ProductWebSocket().systemSendToUser(userId, message);
-        return "发送成功！";
-    }
-
     /*@GetMapping("testMessage")
     public void testM(String userId, String message) throws Exception {
 
         new ProductWebSocket().sendToUser();
     }*/
-
-
 
 }

@@ -28,7 +28,7 @@ public class PostController {
     @Autowired
     private PostDaoService postDaoService;
 
-    @RequestMapping("/loadMore")
+    /*@RequestMapping("/loadMore")
     @ResponseBody
     public PageInfo<Post> loadMore(@RequestParam(value = "start", defaultValue = "1") int start, @RequestParam(value = "size", defaultValue = "5") int size) throws Exception {
         System.out.println("请求第" + start + "页");
@@ -54,7 +54,7 @@ public class PostController {
             return null;
         }
         return page;
-    }
+    }*/
 
     @Transactional
     @RequestMapping("/delete_post_id")

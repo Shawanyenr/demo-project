@@ -15,20 +15,16 @@ import java.util.List;
 public class ViewController {
     @Autowired
     private PostDaoService postDaoService;
-    @RequestMapping("/new_home")
-    public String toNewHome() {
-        return "new_home";
-    }
 
-    @RequestMapping({"/login","/",""})
+    @RequestMapping({"/login",""})
     public String toLogin() {
         return "login";
     }
+
     @RequestMapping("/register")
     public String toRegister(Model model) {
         return "register";
     }
-
 
     @RequestMapping("/home")
     public String toHomePage(HttpSession session, Model model) {

@@ -18,14 +18,22 @@ public class MyWebAppConfigurer implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         String[] addPathPatterns = {
-                "/admin/**"
+                "/admin/**",
+                "/delete_post_id/**",
+                "/update_post_id/**",
+                "/uploadForm/**",
+                "/toggleSub/**",
+                "/subscription/**",
+                "/message/**"
         };
         String[] excludePathPatterns = {
                 "/admin/login",
                 "/admin/login.action",
-                /*"/login.action",
+                "/login.action",
                 "/register.action",
-                "/loadMore"*/
+                "/login",
+                "/register",
+
         };
         registry.addInterceptor(new LoginInterceptor()).addPathPatterns(addPathPatterns).excludePathPatterns(excludePathPatterns);
 //        registry.addInterceptor(new LoginInterceptor());

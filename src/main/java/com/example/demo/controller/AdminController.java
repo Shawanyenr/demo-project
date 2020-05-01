@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.ProductWebSocket;
 import com.example.demo.po.Admin;
 import com.example.demo.po.Report;
 import com.example.demo.service.AdminDaoService;
@@ -11,9 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
@@ -120,4 +119,17 @@ public class AdminController {
         return "admin/admin :: message";
     }
 
+
+    @ResponseBody
+    @GetMapping("/sendNotification")
+    public String test(String userId, String message) throws Exception {
+        if (userId == "" || userId == null) {
+            return "发送用户id不能为空";
+        }
+        if (message == "" || message == null) {
+            return "发送信息不能为空";
+        }
+        new ProductWebSocket().systemSendToUser(userId, message);
+        return "发送成功！";
+    }
 }
