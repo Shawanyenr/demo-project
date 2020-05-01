@@ -150,7 +150,7 @@
 </div>
 
 <!--option modal-->
-<div class="modal fade" id="optionModal" tabindex="-1" role="dialog" aria-labelledby="optionModalLabel"
+<!--<div class="modal fade" id="optionModal" tabindex="-1" role="dialog" aria-labelledby="optionModalLabel"
      aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
         <div class="modal-content">
@@ -180,11 +180,62 @@
                     <input class="form-check-input" type="radio" name="duration" id="inlineRadio6" value="option2">
                     <label class="form-check-label" for="inlineRadio6">永久（100年）</label>
                 </div>
-                <!--<div class="form-check form-check-inline">
+                &lt;!&ndash;<div class="form-check form-check-inline">
                     <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3" disabled>
                     <label class="form-check-label" for="inlineRadio3">3 (disabled)</label>
-                </div>-->
+                </div>&ndash;&gt;
             </form>
+        </div>
+    </div>
+</div>-->
+<div class="modal fade bd-example-modal-lg" id="optionModal" tabindex="-1" role="dialog" aria-labelledby="optionModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="optionModalLabel">处理</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form th:action="@{/admin/freeze}">
+                    <label>
+                        目标uid：
+                        <input type="text" name="id">
+                    </label>
+                    <div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="duration" id="inlineRadio1" value="option1">
+                            <label class="form-check-label" for="inlineRadio1">1天</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="duration" id="inlineRadio2" value="option2">
+                            <label class="form-check-label" for="inlineRadio2">3天</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="duration" id="inlineRadio3" value="option2">
+                            <label class="form-check-label" for="inlineRadio3">7天</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="duration" id="inlineRadio4" value="option2">
+                            <label class="form-check-label" for="inlineRadio4">15天</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="duration" id="inlineRadio5" value="option2">
+                            <label class="form-check-label" for="inlineRadio5">30天</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="duration" id="inlineRadio6" value="option2">
+                            <label class="form-check-label" for="inlineRadio6">永久（100年）</label>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
         </div>
     </div>
 </div>
