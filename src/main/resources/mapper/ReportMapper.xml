@@ -40,5 +40,6 @@
         <if test="archived==0">
             and r.operation = 0
         </if>
+        order by r.time
     </select>
 </mapper>

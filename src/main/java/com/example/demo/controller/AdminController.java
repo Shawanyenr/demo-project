@@ -67,7 +67,7 @@ public class AdminController {
         System.out.println("content: "+content+" archived: "+archived);
         List<Report> reportList = reportDaoService.listReports(content, archived);
         System.out.println(reportList);
-        PageHelper.startPage(start, size, "time desc");
+        PageHelper.startPage(start, size);
         PageInfo<Report> reportPage = new PageInfo<>(reportList);
         model.addAttribute("reportList", reportPage);
         model.addAttribute("s", content);
