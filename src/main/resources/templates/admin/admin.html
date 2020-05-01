@@ -31,6 +31,27 @@
 
 <!--主内容-->
 <div class="container content-m">
+    <div th:fragment="message">
+        <div class="text-center pb-3">
+            <div class="alert alert-danger alert-dismissible fade show d-inline-block" role="alert" th:unless="${#strings.isEmpty(error)}">
+                <span th:text="${error}">null</span>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="alert alert-success alert-dismissible fade show d-inline-block" role="alert" th:unless="${#strings.isEmpty(success)}">
+                <span th:text="${success}">null</span>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <!--<div class="alert alert-success" role="alert" th:unless="${#strings.isEmpty(success)}"
+                 style="width: 100%">
+                <div th:text="${success}"></div>
+                <span id="seconds">3</span> 秒后自动跳转.
+            </div>-->
+        </div>
+    </div>
     <div class="row justify-content-between">
         <form th:action="@{/admin(start=1,a=${a})}" method="post">
             <div class="input-group input-group-sm" style="max-width: 200px;">
@@ -72,7 +93,11 @@
                     <td th:text="${#dates.format(report.time,'yyyy-MM-dd HH:mm')}">@mdo</td>
                     <td th:if="${a==1}" th:text="${#dates.format(report.operateTime,'yyyy-MM-dd HH:mm')}">@mdo</td>
                     <td th:unless="${a==1}">
-                        <a href="#" class="btn btn-outline-warning" role="button">处理</a>
+                        <!--<a href="javascript:" data-toggle="modal" data-target="#showImgModal"
+                           th:data-whatever="${report.post.img_dir}">
+                            处理
+                        </a>-->
+                        <a th:data-ownerid="${report.ownerId}" href="javascript:" data-toggle="modal" data-target="#optionModal" class="btn btn-outline-warning" role="button">处理</a>
                         <a href="#" class="btn btn-outline-danger" role="button">删除</a>
                     </td>
                     <td th:if="${a==1}">
@@ -124,6 +149,46 @@
     </div>
 </div>
 
+<!--option modal-->
+<div class="modal fade" id="optionModal" tabindex="-1" role="dialog" aria-labelledby="optionModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+        <div class="modal-content">
+            <form th:action="@{/admin/freeze}">
+                <input type="text" name="id">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="duration" id="inlineRadio1" value="option1">
+                    <label class="form-check-label" for="inlineRadio1">1天</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="duration" id="inlineRadio2" value="option2">
+                    <label class="form-check-label" for="inlineRadio2">3天</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="duration" id="inlineRadio3" value="option2">
+                    <label class="form-check-label" for="inlineRadio3">7天</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="duration" id="inlineRadio4" value="option2">
+                    <label class="form-check-label" for="inlineRadio4">15天</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="duration" id="inlineRadio5" value="option2">
+                    <label class="form-check-label" for="inlineRadio5">30天</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="duration" id="inlineRadio6" value="option2">
+                    <label class="form-check-label" for="inlineRadio6">永久（100年）</label>
+                </div>
+                <!--<div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3" disabled>
+                    <label class="form-check-label" for="inlineRadio3">3 (disabled)</label>
+                </div>-->
+            </form>
+        </div>
+    </div>
+</div>
+
 <!-- 过渡动画 -->
 <!--CSS Spinner-->
 <div class="spinner-wrapper">
@@ -163,6 +228,15 @@
         // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
         var modal = $(this)
         $('#modal-img').attr("src", recipient);
+    })
+    /*option modal*/
+    $('#optionModal').on('show.bs.modal', function (event) {
+        let button = $(event.relatedTarget); // Button that triggered the modal
+        let recipient = button.data('ownerid'); // Extract info from data-* attributes
+        // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+        // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+        var modal = $(this)
+        $('input[name=id]').attr("value", recipient);
     })
 
 
