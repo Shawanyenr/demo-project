@@ -206,8 +206,8 @@
         </a>
     </div>
     <div class="d-flex flex-column mb-2 subs-section" th:if="${session.user}">
-        <a class="btn btn-outline-dark mb-2" th:href="@{/subscription}" role="button">订阅</a>
-        <a class="btn btn-primary mb-2" th:href="@{/index}" role="button">全部</a>
+        <a class="btn btn-outline-dark mb-2" th:classappend="${n==0}?'active'" th:href="@{/subscription}" role="button">订阅</a>
+        <a class="btn btn-outline-dark mb-2" th:classappend="${n==1}?'active'" th:href="@{/index}" role="button">全部</a>
         <div class="dropdown-divider"></div>
     </div>
     <div class="d-flex flex-column mb-2 subs-section" th:if="${session.user}">
