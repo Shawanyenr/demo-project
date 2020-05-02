@@ -4,6 +4,7 @@ import com.example.demo.ProductWebSocket;
 import com.example.demo.po.Admin;
 import com.example.demo.po.Report;
 import com.example.demo.service.AdminDaoService;
+import com.example.demo.service.PostDaoService;
 import com.example.demo.service.ReportDaoService;
 import com.example.demo.service.UserDaoService;
 import com.github.pagehelper.PageHelper;
@@ -28,6 +29,8 @@ public class AdminController {
     private ReportDaoService reportDaoService;
     @Autowired
     private UserDaoService userDaoService;
+    @Autowired
+    private PostDaoService postDaoService;
 
     @RequestMapping("/login")
     public String adminLogin(HttpSession session) {
@@ -58,13 +61,13 @@ public class AdminController {
 
     @RequestMapping
     public String admin(HttpSession session, @RequestParam(value = "page", defaultValue = "1") int start, @RequestParam(value = "limit", defaultValue = "5") int size, Model model, RedirectAttributes attributes, @RequestParam(value = "s", defaultValue = "") String content, @RequestParam(value = "a", defaultValue = "0") Integer archived) {
-        Admin admin = (Admin) session.getAttribute("admin");
+        /*Admin admin = (Admin) session.getAttribute("admin");
         System.out.println(admin);
         if (null == admin) {
             attributes.addFlashAttribute("msg", "请先登录");
             return "redirect:/admin/login";
-        }
-        System.out.println("content: "+content+" archived: "+archived);
+        }*/
+        System.out.println("content: " + content + " archived: " + archived);
         List<Report> reportList = reportDaoService.listReports(content, archived);
         System.out.println(reportList);
         PageHelper.startPage(start, size);
@@ -104,32 +107,39 @@ public class AdminController {
         return "/admin/admin";
     }*/
 
+
     @Transactional
-    @RequestMapping("/freeze")
-    public String freezeAccount(HttpSession session, @RequestParam(value = "id") Integer id, @RequestParam(value = "duration") Integer duration, Model model, RedirectAttributes attributes) {
-        Admin admin = (Admin) session.getAttribute("admin");
-        System.out.println(admin);
-        if (null == admin) {
-            attributes.addFlashAttribute("msg", "请先登录");
-            return "redirect:/admin/login";
-        }
-        if (id == null || duration == null) {
-            model.addAttribute("error", "操作失败，id或期限为空");
+    @RequestMapping("/freeze/{uid}/{pid}/{duration}")
+    @ResponseBody
+    public String freezeAccount(@PathVariable Integer uid, @PathVariable Integer pid, @PathVariable Integer duration) {
+        System.out.println("/admin/freeze uid=" + uid + " pid=" + pid + " duration=" + duration);
+        Integer integer = null;
+        if (uid == null || duration == null) {
+            return "操作失败，id或期限为空";
+        } else if (duration == 0) {
+            integer = reportDaoService.deleteReport(pid);
+            userDaoService.freezeAccount(uid, duration);
+            System.out.println("integer=" + integer);
         } else {
-            userDaoService.freezeAccount(id, duration);
-            model.addAttribute("success", "操作成功");
+            userDaoService.freezeAccount(uid, duration);
+            reportDaoService.updateReport(uid, duration);
+            integer = postDaoService.deletePostId(pid);
+            System.out.println("integer=" + integer);
         }
-        return "admin/admin :: message";
+        if (integer >= 1) {
+            return "ok";
+        }
+        return "操作失败";
     }
 
 
     @ResponseBody
     @GetMapping("/sendNotification")
     public String test(String userId, String message) throws Exception {
-        if (userId == "" || userId == null) {
+        if (userId.equals("")) {
             return "发送用户id不能为空";
         }
-        if (message == "" || message == null) {
+        if (message.equals("")) {
             return "发送信息不能为空";
         }
         new ProductWebSocket().systemSendToUser(userId, message);

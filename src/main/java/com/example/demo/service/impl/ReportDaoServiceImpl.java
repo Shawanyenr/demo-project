@@ -6,7 +6,10 @@ import com.example.demo.service.ReportDaoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+
 @Service
 public class ReportDaoServiceImpl implements ReportDaoService {
 
@@ -20,15 +23,17 @@ public class ReportDaoServiceImpl implements ReportDaoService {
 
     @Override
     public void updateReport(Integer id, Integer operation) {
-        reportDao.updateReport(id, operation);
+        Calendar cal = Calendar.getInstance();
+        Date date = cal.getTime();
+        reportDao.updateReport(id, operation, date);
     }
 
     @Override
     public List<Report> listReports(String content, Integer archived) {
-        if (content.equals("")){
+        if (content.equals("")) {
             return reportDao.listReports(null, archived);
         }
-        return reportDao.listReports("%"+content+"%", archived);
+        return reportDao.listReports("%" + content + "%", archived);
     }
 
     @Override
@@ -42,7 +47,7 @@ public class ReportDaoServiceImpl implements ReportDaoService {
     }
 
     @Override
-    public void deleteReport(Integer id) {
-        reportDao.deleteReport(id);
+    public Integer deleteReport(Integer id) {
+        return reportDao.deleteReport(id);
     }
 }

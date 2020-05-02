@@ -31,27 +31,7 @@
 
 <!--主内容-->
 <div class="container content-m">
-    <div th:fragment="message">
-        <div class="text-center pb-3">
-            <div class="alert alert-danger alert-dismissible fade show d-inline-block" role="alert" th:unless="${#strings.isEmpty(error)}">
-                <span th:text="${error}">null</span>
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="alert alert-success alert-dismissible fade show d-inline-block" role="alert" th:unless="${#strings.isEmpty(success)}">
-                <span th:text="${success}">null</span>
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <!--<div class="alert alert-success" role="alert" th:unless="${#strings.isEmpty(success)}"
-                 style="width: 100%">
-                <div th:text="${success}"></div>
-                <span id="seconds">3</span> 秒后自动跳转.
-            </div>-->
-        </div>
-    </div>
+
     <div class="row justify-content-between">
         <form th:action="@{/admin(start=1,a=${a})}" method="post">
             <div class="input-group input-group-sm" style="max-width: 200px;">
@@ -59,8 +39,10 @@
             </div>
         </form>
         <div>
-            <a th:href="@{/admin(start=1,s=null,a=0)}" class="btn btn-outline-secondary" th:classappend="${s.equals('')&&a!=1}?'active'" role="button">待处理</a>
-            <a th:href="@{/admin(start=1,s=null,a=1)}" class="btn btn-outline-secondary" th:classappend="${s.equals('')&&a==1}?'active'" role="button">归档</a>
+            <a th:href="@{/admin(start=1,s=null,a=0)}" class="btn btn-outline-secondary"
+               th:classappend="${s.equals('')&&a!=1}?'active'" role="button">待处理</a>
+            <a th:href="@{/admin(start=1,s=null,a=1)}" class="btn btn-outline-secondary"
+               th:classappend="${s.equals('')&&a==1}?'active'" role="button">归档</a>
         </div>
     </div>
     <div class="row">
@@ -70,38 +52,43 @@
                 <tr>
                     <th scope="col">id</th>
                     <th scope="col">举报人</th>
-                    <th scope="col">帖子主人</th>
-                    <th scope="col">帖子图片</th>
-                    <th scope="col">帖子内容</th>
+                    <th scope="col">发帖人</th>
+                    <th scope="col">图片</th>
+                    <th scope="col">内容</th>
                     <th scope="col">举报时间</th>
                     <th th:if="${a==1}" scope="col">处理时间</th>
+                    <th th:if="${a==1}" scope="col">处理结果</th>
                     <th scope="col">操作</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:if="${not #lists.isEmpty(reportList.list)}" th:each="report : ${reportList.list}">
                     <th th:text="${report.id}" scope="row">1</th>
-                    <td><a th:href="@{'/user/'+${report.fromId}}" th:text="${report.fromUser.username}" class="btn btn-link"></a></td>
-                    <td><a th:href="@{'/user/'+${report.ownerId}}" th:text="${report.ownerUser.username}" class="btn btn-link"></a></td>
+                    <td><a th:href="@{'/user/'+${report.fromId}}" th:text="${report.fromUser.username}"
+                           class="btn btn-link"></a></td>
+                    <td><a th:href="@{'/user/'+${report.ownerId}}" th:text="${report.ownerUser.username}"
+                           class="btn btn-link"></a></td>
                     <td>
                         <a href="javascript:" data-toggle="modal" data-target="#showImgModal"
                            th:data-whatever="${report.post.img_dir}">
                             <img th:src="@{${report.post.img_dir}}" alt="" class="chat-avatar">
                         </a>
                     </td>
-                    <td><a th:href="@{'/posts/'+${report.pid}}" th:text="${report.post.p_title}" class="btn btn-link"></a></td>
+                    <td><a th:href="@{'/posts/'+${report.pid}}" th:text="${report.post.p_title}"
+                           class="btn btn-link"></a></td>
                     <td th:text="${#dates.format(report.time,'yyyy-MM-dd HH:mm')}">@mdo</td>
                     <td th:if="${a==1}" th:text="${#dates.format(report.operateTime,'yyyy-MM-dd HH:mm')}">@mdo</td>
                     <td th:unless="${a==1}">
-                        <!--<a href="javascript:" data-toggle="modal" data-target="#showImgModal"
-                           th:data-whatever="${report.post.img_dir}">
-                            处理
-                        </a>-->
-                        <a th:data-ownerid="${report.ownerId}" href="javascript:" data-toggle="modal" data-target="#optionModal" class="btn btn-outline-warning" role="button">处理</a>
+                        <a th:attr="data-ownerid=${report.ownerId},data-title='处理',data-unfreeze=false,data-pid=${report.pid}"
+                           href="javascript:" data-toggle="modal"
+                           data-target="#optionModal" class="btn btn-outline-warning" role="button">处理</a>
                         <a href="#" class="btn btn-outline-danger" role="button">删除</a>
                     </td>
+                    <td th:if="${a==1}" th:text="|${report.operation}天|"></td>
                     <td th:if="${a==1}">
-                        <a href="#" class="btn btn-outline-success" role="button">修改</a>
+                        <a th:attr="data-ownerid=${report.ownerId},data-title='修改',data-unfreeze=true,data-pid=${report.pid}"
+                           href="javascript:" data-toggle="modal"
+                           data-target="#optionModal" class="btn btn-outline-success text-nowrap" role="button">修改</a>
                     </td>
                 </tr>
 
@@ -120,12 +107,14 @@
                     </a>
                 </li>
                 <li class="page-item">
-                    <a class="page-link bg-transparent" th:href="@{/admin(start=${reportList.pageNum}-1,s=${s},a=${a})}" aria-label="Previous">
+                    <a class="page-link bg-transparent" th:href="@{/admin(start=${reportList.pageNum}-1,s=${s},a=${a})}"
+                       aria-label="Previous">
                         <span aria-hidden="true">上一页</span>
                     </a>
                 </li>
                 <li class="page-item">
-                    <a class="page-link bg-transparent" th:href="@{/admin(start=${reportList.pageNum}+1,s=${s},a=${a})}" aria-label="Next">
+                    <a class="page-link bg-transparent" th:href="@{/admin(start=${reportList.pageNum}+1,s=${s},a=${a})}"
+                       aria-label="Next">
                         <span aria-hidden="true">下一页</span>
                     </a>
                 </li>
@@ -149,47 +138,9 @@
     </div>
 </div>
 
-<!--option modal-->
-<!--<div class="modal fade" id="optionModal" tabindex="-1" role="dialog" aria-labelledby="optionModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
-        <div class="modal-content">
-            <form th:action="@{/admin/freeze}">
-                <input type="text" name="id">
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="duration" id="inlineRadio1" value="option1">
-                    <label class="form-check-label" for="inlineRadio1">1天</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="duration" id="inlineRadio2" value="option2">
-                    <label class="form-check-label" for="inlineRadio2">3天</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="duration" id="inlineRadio3" value="option2">
-                    <label class="form-check-label" for="inlineRadio3">7天</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="duration" id="inlineRadio4" value="option2">
-                    <label class="form-check-label" for="inlineRadio4">15天</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="duration" id="inlineRadio5" value="option2">
-                    <label class="form-check-label" for="inlineRadio5">30天</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="duration" id="inlineRadio6" value="option2">
-                    <label class="form-check-label" for="inlineRadio6">永久（100年）</label>
-                </div>
-                &lt;!&ndash;<div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3" disabled>
-                    <label class="form-check-label" for="inlineRadio3">3 (disabled)</label>
-                </div>&ndash;&gt;
-            </form>
-        </div>
-    </div>
-</div>-->
-<div class="modal fade bd-example-modal-lg" id="optionModal" tabindex="-1" role="dialog" aria-labelledby="optionModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+<div class="modal fade bd-example-modal" id="optionModal" tabindex="-1" role="dialog"
+     aria-labelledby="optionModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="optionModalLabel">处理</h5>
@@ -197,84 +148,57 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                <form th:action="@{/admin/freeze}">
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label>
-                                目标uid：
-                                <input type="text" class="form-control" name="id">
-                            </label>
-                            <!--<label for="username">用户名</label>
-                            <input type="text" class="form-control" id="username" name="username">-->
-                        </div>
-                        <div class="form-group">
-                            <!--<label for="password">密码</label>
-                            <input type="password" class="form-control" id="password" name="password">-->
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input form-control" type="radio" name="duration" id="inlineRadio1" value="1">
-                                <label class="form-check-label" for="inlineRadio1">1天</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input form-control" type="radio" name="duration" id="inlineRadio2" value="3">
-                                <label class="form-check-label" for="inlineRadio2">3天</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input form-control" type="radio" name="duration" id="inlineRadio3" value="7">
-                                <label class="form-check-label" for="inlineRadio3">7天</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input form-control" type="radio" name="duration" id="inlineRadio4" value="15">
-                                <label class="form-check-label" for="inlineRadio4">15天</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input form-control" type="radio" name="duration" id="inlineRadio5" value="30">
-                                <label class="form-check-label" for="inlineRadio5">30天</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input form-control" type="radio" name="duration" id="inlineRadio6" value="36525">
-                                <label class="form-check-label" for="inlineRadio6">永久（100年）</label>
-                            </div>
-                        </div>
-
+            <form id="options">
+                <div class="modal-body">
+                    <input type="hidden" name="pid">
+                    <div class="form-inline form-group">
+                        <label>
+                            目标uid：
+                            <input type="text" class="form-control" name="id" readonly>
+                        </label>
                     </div>
-                    <!--<label>
-                        目标uid：
-                        <input type="text" name="id">
-                    </label>
-                    <div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="duration" id="inlineRadio1" value="1">
-                            <label class="form-check-label" for="inlineRadio1">1天</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="duration" id="inlineRadio2" value="3">
-                            <label class="form-check-label" for="inlineRadio2">3天</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="duration" id="inlineRadio3" value="7">
-                            <label class="form-check-label" for="inlineRadio3">7天</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="duration" id="inlineRadio4" value="15">
-                            <label class="form-check-label" for="inlineRadio4">15天</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="duration" id="inlineRadio5" value="30">
-                            <label class="form-check-label" for="inlineRadio5">30天</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="duration" id="inlineRadio6" value="36525">
-                            <label class="form-check-label" for="inlineRadio6">永久（100年）</label>
-                        </div>
-                    </div>-->
-
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
+                    <p>期限（从当前时间开始计算）：</p>
+                    <div class="custom-control custom-radio custom-control-inline" style="display: none" id="unfreeze">
+                        <input type="radio" id="customRadioInline" name="duration"
+                               class="custom-control-input" value="0">
+                        <label class="custom-control-label" for="customRadioInline">解冻</label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" id="customRadioInline1" name="duration"
+                               class="custom-control-input" value="1" checked>
+                        <label class="custom-control-label" for="customRadioInline1">1天</label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" id="customRadioInline3" name="duration"
+                               class="custom-control-input" value="3">
+                        <label class="custom-control-label" for="customRadioInline3">3天</label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" id="customRadioInline4" name="duration"
+                               class="custom-control-input" value="7">
+                        <label class="custom-control-label" for="customRadioInline4">7天</label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" id="customRadioInline5" name="duration"
+                               class="custom-control-input" value="15">
+                        <label class="custom-control-label" for="customRadioInline5">15天</label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" id="customRadioInline6" name="duration"
+                               class="custom-control-input" value="30">
+                        <label class="custom-control-label" for="customRadioInline6">30天</label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" id="customRadioInline7" name="duration"
+                               class="custom-control-input" value="36525">
+                        <label class="custom-control-label" for="customRadioInline7">永久（100年）</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" onclick="submitFreeze()">确认</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
@@ -312,24 +236,52 @@
 
     /*图片modal*/
     $('#showImgModal').on('show.bs.modal', function (event) {
-        var button = $(event.relatedTarget) // Button that triggered the modal
-        var recipient = button.data('whatever') // Extract info from data-* attributes
+        let button = $(event.relatedTarget); // Button that triggered the modal
+        let whatever = button.data('whatever'); // Extract info from data-* attributes
         // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
         // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
         var modal = $(this)
-        $('#modal-img').attr("src", recipient);
+        $('#modal-img').attr("src", whatever);
     })
     /*option modal*/
     $('#optionModal').on('show.bs.modal', function (event) {
         let button = $(event.relatedTarget); // Button that triggered the modal
-        let recipient = button.data('ownerid'); // Extract info from data-* attributes
+        let ownerid = button.data('ownerid'); // Extract info from data-* attributes
+        let title = button.data('title');
+        let unfreeze = button.data('unfreeze');
+        let pid = button.data('pid');
         // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
         // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
         var modal = $(this)
-        $('input[name=id]').attr("value", recipient);
+        $('input[name=id]').attr("value", ownerid);
+        $('#optionModalLabel').text(title);
+        if (unfreeze === true) {
+            $('#unfreeze').show();
+        }
+        $('input[name=pid]').val(pid);
     })
 
-
+    function submitFreeze() {
+        if (confirm('确认操作？')) {
+            let params = "/" + $('input[name=id]').val() + "/" + $('input[name=pid]').val() + "/" + $('input[name=duration]:checked').val();
+            let url = "/admin/freeze" + params;
+            alert(url);
+            $.post({
+                url: url,
+                /*contentType: 'application/json;charset=UTF-8',
+                dataType: 'json',*/
+                success: function (data) {
+                    alert(data);
+                    if (data === "ok") {
+                        alert("操作成功");
+                        window.location.reload();
+                    } else {
+                        alert(data);
+                    }
+                }
+            });
+        }
+    }
 </script>
 
 </body>
