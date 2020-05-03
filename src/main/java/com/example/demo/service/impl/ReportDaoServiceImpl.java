@@ -6,8 +6,6 @@ import com.example.demo.service.ReportDaoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -35,17 +33,7 @@ public class ReportDaoServiceImpl implements ReportDaoService {
     }
 
     @Override
-    public List<Report> listArchived() {
-        return reportDao.listArchived();
-    }
-
-    @Override
-    public List<Report> listSearch(String content) {
-        return reportDao.listSearch(content);
-    }
-
-    @Override
-    public Integer deleteReport(Integer id) {
-        return reportDao.deleteReport(id);
+    public Integer deleteReport(Integer pid) {
+        return reportDao.deleteReport(pid);
     }
 }

@@ -29,20 +29,8 @@ public class ReportTest {
     }
 
     @Test
-    public void listArchived(){
-        List<Report> listArchived = reportDaoService.listArchived();
-        System.out.println(listArchived);
-    }
-
-    @Test
-    public void listSearch(){
-        List<Report> listSearch = reportDaoService.listSearch("%2020%");
-        System.out.println(listSearch);
-    }
-
-    @Test
     public void updateReports(){
-        reportDaoService.updateReport(19,1);
+        reportDaoService.updateReport(19,3);
     }
 
 

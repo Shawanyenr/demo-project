@@ -15,9 +15,5 @@ public interface ReportDaoService {
 
     List<Report> listReports(String content, Integer archived);
 
-    List<Report> listArchived();
-
-    List<Report> listSearch(String content);
-
-    Integer deleteReport(Integer id);
+    Integer deleteReport(Integer pid);
 }

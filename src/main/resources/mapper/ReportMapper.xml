@@ -24,7 +24,7 @@
         r.fromId=f.id LEFT JOIN post p on r.pid=p.p_id left join user o on o.id=p.u_id
         where r.archived = #{archived}
         <if test="content!=null">
-            AND CONCAT(r.id,f.username, o.username, p_title,r.time,pid) LIKE #{content}
+            AND CONCAT(r.id, f.username, o.username, p_title, r.time, pid, operateTime) LIKE #{content}
         </if>
         order by r.time
     </select>

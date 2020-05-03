@@ -13,7 +13,7 @@ public interface ReportDao {
     @Insert("insert into reports(fromId,pid)values(#{fromId},#{pid})")
     void addReport(Report report);
 
-    @Update("update reports set duration=#{duration} where pid=#{pid}")
+    @Update("update reports set duration=#{duration}, archived=1 where pid=#{pid}")
     void updateReport(Integer pid, Integer duration);
 
     List<Report> listReports(@RequestParam String content, @RequestParam Integer archived);
@@ -21,14 +21,7 @@ public interface ReportDao {
     //    @Select("select * from reports where operation != 0")
     List<Report> listArchived();
 
-    List<Report> listSearch(String content);
+    @Delete("delete from reports where pid=#{pid}")
+    Integer deleteReport(Integer pid);
 
-    @Delete("delete from reports where pid=#{id}")
-    Integer deleteReport(Integer id);
-/*
-    @Update("update reports set ")
-    void freeze(Integer ownerId, Integer duration);*/
-
-    /*@Delete("delete from report where fromId=#{fromId} and pid=#{pid}")
-    void  deleteReportByFromId(Integer fromId, Integer pid);*/
 }

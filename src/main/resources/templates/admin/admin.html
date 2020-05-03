@@ -66,7 +66,7 @@
                     <th th:text="${report.id}" scope="row">1</th>
                     <td><a th:href="@{'/user/'+${report.fromId}}" th:text="${report.fromUser.username}"
                            class="btn btn-link"></a></td>
-                    <td><a th:href="@{'/user/'+${report.ownerId}}" th:text="${report.ownerUser.username}"
+                    <td><a th:href="@{'/user/'+${report.post.user.username}}" th:text="${report.post.user.username}"
                            class="btn btn-link"></a></td>
                     <td>
                         <a href="javascript:" data-toggle="modal" data-target="#showImgModal"
@@ -79,14 +79,14 @@
                     <td th:text="${#dates.format(report.time,'yyyy-MM-dd HH:mm')}">@mdo</td>
                     <td th:if="${a==1}" th:text="${#dates.format(report.operateTime,'yyyy-MM-dd HH:mm')}">@mdo</td>
                     <td th:unless="${a==1}">
-                        <a th:attr="data-ownerid=${report.ownerId},data-title='处理',data-unfreeze=false,data-pid=${report.pid}"
+                        <a th:attr="data-ownerid=${report.post.user.id},data-title='处理',data-unfreeze=false,data-pid=${report.pid}"
                            href="javascript:" data-toggle="modal"
                            data-target="#optionModal" class="btn btn-outline-warning" role="button">处理</a>
                         <a href="#" class="btn btn-outline-danger" role="button">删除</a>
                     </td>
-                    <td th:if="${a==1}" th:text="|${report.operation}天|"></td>
+                    <td th:if="${a==1}" th:text="|${report.duration}天|"></td>
                     <td th:if="${a==1}">
-                        <a th:attr="data-ownerid=${report.ownerId},data-title='修改',data-unfreeze=true,data-pid=${report.pid}"
+                        <a th:attr="data-ownerid=${report.post.user.id},data-title='修改',data-unfreeze=true,data-pid=${report.pid}"
                            href="javascript:" data-toggle="modal"
                            data-target="#optionModal" class="btn btn-outline-success text-nowrap" role="button">修改</a>
                     </td>

@@ -61,12 +61,6 @@ public class AdminController {
 
     @RequestMapping
     public String admin(HttpSession session, @RequestParam(value = "page", defaultValue = "1") int start, @RequestParam(value = "limit", defaultValue = "5") int size, Model model, RedirectAttributes attributes, @RequestParam(value = "s", defaultValue = "") String content, @RequestParam(value = "a", defaultValue = "0") Integer archived) {
-        /*Admin admin = (Admin) session.getAttribute("admin");
-        System.out.println(admin);
-        if (null == admin) {
-            attributes.addFlashAttribute("msg", "请先登录");
-            return "redirect:/admin/login";
-        }*/
         System.out.println("content: " + content + " archived: " + archived);
         List<Report> reportList = reportDaoService.listReports(content, archived);
         System.out.println(reportList);
@@ -77,36 +71,6 @@ public class AdminController {
         model.addAttribute("a", archived);
         return "/admin/admin";
     }
-    /*@RequestMapping("/archived")
-    public String adminArchived(HttpSession session, @RequestParam(value = "start", defaultValue = "1") int start, @RequestParam(value = "size", defaultValue = "5") int size, Model model, RedirectAttributes attributes){
-        Admin admin = (Admin) session.getAttribute("admin");
-        System.out.println(admin);
-        if (null == admin) {
-            attributes.addFlashAttribute("msg","请先登录");
-            return "redirect:/admin/login";
-        }
-        List<Report> reportList = reportDaoService.listArchived();
-        PageHelper.startPage(start,size,"time desc");
-        PageInfo<Report> reportPage = new PageInfo<>(reportList);
-        model.addAttribute("reportList", reportPage);
-        return "/admin/admin";
-    }
-
-    @RequestMapping("/s")
-    public String adminSearch(HttpSession session, @RequestParam(value = "start", defaultValue = "1") int start, @RequestParam(value = "size", defaultValue = "5") int size, Model model, RedirectAttributes attributes, @RequestParam(value = "search_item", defaultValue = "") String content){
-        Admin admin = (Admin) session.getAttribute("admin");
-        System.out.println(admin);
-        if (null == admin) {
-            attributes.addFlashAttribute("msg","请先登录");
-            return "redirect:/admin/login";
-        }
-        List<Report> reportList = reportDaoService.listSearch("%"+content+"%");
-        PageHelper.startPage(start,size,"time desc");
-        PageInfo<Report> reportPage = new PageInfo<>(reportList);
-        model.addAttribute("reportList", reportPage);
-        return "/admin/admin";
-    }*/
-
 
     @Transactional
     @RequestMapping("/freeze/{uid}/{pid}/{duration}")
@@ -120,7 +84,7 @@ public class AdminController {
             userDaoService.freezeAccount(uid, 0);
             postDaoService.setPublicityByPid(pid,1);
         } else {
-            reportDaoService.updateReport(uid, duration);
+            reportDaoService.updateReport(pid, duration);
             userDaoService.freezeAccount(uid, duration);
             postDaoService.setPublicityByPid(pid,0);
         }
