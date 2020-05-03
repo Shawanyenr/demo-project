@@ -9,7 +9,6 @@ import java.util.Date;
 import java.util.List;
 
 @Component
-@Mapper
 public interface ReportDao {
     @Insert("insert into reports(fromId,ownerId,pid)values(#{fromId},#{ownerId},#{pid})")
     void addReport(Report report);

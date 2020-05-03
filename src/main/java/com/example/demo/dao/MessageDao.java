@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-@Mapper
 public interface MessageDao {
     @Insert("insert into Message (sender,receiver,content)values(#{sender},#{receiver},#{content})")
     void addMessage(String sender, String receiver, String content);

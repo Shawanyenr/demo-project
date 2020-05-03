@@ -8,7 +8,6 @@ import java.util.Date;
 import java.util.List;
 
 @Component
-@Mapper
 public interface PostDao {
 
     List<Post> findAll(Integer u_id);

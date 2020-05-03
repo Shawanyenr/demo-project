@@ -113,23 +113,18 @@ public class AdminController {
     @ResponseBody
     public String freezeAccount(@PathVariable Integer uid, @PathVariable Integer pid, @PathVariable Integer duration) {
         System.out.println("/admin/freeze uid=" + uid + " pid=" + pid + " duration=" + duration);
-        Integer integer = null;
         if (uid == null || duration == null) {
             return "操作失败，id或期限为空";
         } else if (duration == 0) {
-            integer = reportDaoService.deleteReport(pid);
-            userDaoService.freezeAccount(uid, duration);
-            System.out.println("integer=" + integer);
+            reportDaoService.deleteReport(pid);
+            userDaoService.freezeAccount(uid, 0);
+            postDaoService.setPublicityByPid(pid,1);
         } else {
-            userDaoService.freezeAccount(uid, duration);
             reportDaoService.updateReport(uid, duration);
-            integer = postDaoService.deletePostId(pid);
-            System.out.println("integer=" + integer);
+            userDaoService.freezeAccount(uid, duration);
+            postDaoService.setPublicityByPid(pid,0);
         }
-        if (integer >= 1) {
-            return "ok";
-        }
-        return "操作失败";
+        return "ok";
     }
 
 

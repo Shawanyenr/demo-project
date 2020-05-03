@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-@Mapper
 public interface AdminDao {
     @Select("select * from admin where username=#{username} and password=#{password}")
     Admin findOne(Admin admin);
