@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 
 public interface ReportDaoService {
-    void addReport(Report report);
+    void addReport(Integer fromId, Integer pid);
 
     void updateReport(Integer pid, Integer duration);
 

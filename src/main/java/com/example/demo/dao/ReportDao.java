@@ -11,7 +11,7 @@ import java.util.List;
 @Component
 public interface ReportDao {
     @Insert("insert into reports(fromId,pid)values(#{fromId},#{pid})")
-    void addReport(Report report);
+    void addReport(Integer fromId, Integer pid);
 
     @Update("update reports set duration=#{duration}, archived=1 where pid=#{pid}")
     void updateReport(Integer pid, Integer duration);

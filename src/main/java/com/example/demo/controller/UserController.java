@@ -1,11 +1,13 @@
 package com.example.demo.controller;
 
 import com.example.demo.po.User;
+import com.example.demo.service.ReportDaoService;
 import com.example.demo.service.UserDaoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -21,6 +23,8 @@ public class UserController {
 
     @Autowired
     private UserDaoService userDaoService;
+    @Autowired
+    private ReportDaoService reportDaoService;
 
     @RequestMapping("/findAll")
     @ResponseBody
@@ -111,5 +115,15 @@ public class UserController {
 
     }
 
+    @ResponseBody
+    @RequestMapping("/report/{pid}")
+    public String addReport(@PathVariable Integer pid,HttpSession session){
+        User user = (User) session.getAttribute("user");
+        if (pid==null||user==null){
+            return "error";
+        }
+        reportDaoService.addReport(user.getId(),pid);
+        return "ok";
+    }
 
 }

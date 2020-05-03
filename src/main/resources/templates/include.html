@@ -179,7 +179,7 @@
                            th:onclick="'deletePost('+${post.p_id}+')'"><i class="fas fa-trash-alt"></i>
                             删除</a>
                     </div>
-                    <a class="dropdown-item" th:if="${session.user}" href="#"><i class="fas fa-exclamation-circle"></i> 举报</a>
+                    <a class="dropdown-item" th:if="${session.user}" href="#" th:onclick="'sendReport('+${post.p_id}+')'"><i class="fas fa-exclamation-circle"></i> 举报</a>
                 </div>
             </div>
         </div>

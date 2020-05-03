@@ -15,8 +15,8 @@ public class ReportDaoServiceImpl implements ReportDaoService {
     private ReportDao reportDao;
 
     @Override
-    public void addReport(Report report) {
-        reportDao.addReport(report);
+    public void addReport(Integer fromId, Integer pid) {
+        reportDao.addReport(fromId, pid);
     }
 
     @Override
