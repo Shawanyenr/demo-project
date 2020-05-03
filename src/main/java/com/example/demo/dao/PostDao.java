@@ -60,4 +60,7 @@ public interface PostDao {
 
     @Select("select * from post where p_id=#{id}")
     Post findById(Integer id);
+
+    @Update("update post set publicity=#{publicity} where p_id=#{pid}")
+    void setPublicityByPid(Integer pid, Integer publicity);
 }

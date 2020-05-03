@@ -11,7 +11,7 @@
  Target Server Version : 80016
  File Encoding         : 65001
 
- Date: 01/05/2020 22:05:23
+ Date: 03/05/2020 20:40:16
 */
 
 SET NAMES utf8mb4;
@@ -49,7 +49,7 @@ CREATE TABLE `comment`  (
   `content` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `pid` int(11) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 17 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 17 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of comment
@@ -82,7 +82,7 @@ CREATE TABLE `message`  (
   `content` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 101 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 101 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of message
@@ -201,26 +201,27 @@ CREATE TABLE `post`  (
   `u_id` int(32) NOT NULL,
   `p_like_count` int(32) NULL DEFAULT 0,
   `p_fav_count` int(32) NULL DEFAULT 0,
+  `publicity` int(2) NULL DEFAULT 1,
   PRIMARY KEY (`p_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 38 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of post
 -- ----------------------------
-INSERT INTO `post` VALUES (16, '一个游艇', '/post_img/f123b17ba2d64435aa1c54b717e2eb86_3a51c6a9dd358fbaddfb3d682d781cb7e35cb91e.jpg@518w_1e_1c.jpg', '2020-03-28 17:03:54', '2020-03-28 09:03:54', 1, 0, 0);
-INSERT INTO `post` VALUES (19, '哈哈哈哈哈哈哈哈哈哈哈哈哈哈', '/post_img/5db12fefad7845f2968737cf6d948523_aBoMd5Vb_700w_0.jpg', '2020-01-02 06:17:58', NULL, 7, 0, 0);
-INSERT INTO `post` VALUES (20, 'Confused cat', '/post_img/fa84d21e5af54481a9f207037450e074_aaxqZMoR_700w_0.jpg', '2020-01-02 06:19:33', NULL, 7, 0, 0);
-INSERT INTO `post` VALUES (21, 'hahahahahahhahahahahahhaa', '/post_img/1494ea8b8ddd4c2c97982ec496f637ab_8d05631fly1g5rcgw5yyfj20u00u0n67.jpg', '2020-01-02 06:25:36', NULL, 7, 0, 0);
-INSERT INTO `post` VALUES (23, 'Henry Cavill', '/post_img/c6d2980de9eb4a11aa3a9bce98650ab5_a1R0BYP_460swp.webp', '2020-01-02 07:56:37', NULL, 1, 0, 0);
-INSERT INTO `post` VALUES (24, '哈哈哈哈哈哈哈哈哈哈哈哈哈哈', '/post_img/f2e2b93c1db5463390ef040ab55712cf_3a51c6a9dd358fbaddfb3d682d781cb7e35cb91e.jpg@518w_1e_1c.jpg', '2020-01-02 08:00:25', NULL, 1, 0, 0);
-INSERT INTO `post` VALUES (25, '嘻嘻嘻嘻嘻嘻嘻嘻', '/post_img/8178b17b8a274254b889aca05f60f850_3a51c6a9dd358fbaddfb3d682d781cb7e35cb91e.jpg@518w_1e_1c.jpg', '2020-01-02 08:02:23', NULL, 1, 0, 0);
-INSERT INTO `post` VALUES (28, 'Tom and Jerry', '/post_img/5f6c6ea559834531abd18937f68c468a_bf6af91490b38885fd8bdf9d000399b0.gif', '2020-01-02 14:47:35', NULL, 7, 0, 0);
-INSERT INTO `post` VALUES (29, 'T', '/post_img/91306e3732e241f4b6461111530890fa_f6c5eec3f46a3f97b543e337c4edc543.gif', '2020-01-02 15:00:32', NULL, 7, 0, 0);
-INSERT INTO `post` VALUES (31, '嘻嘻嘻嘻嘻嘻嘻', '/post_img/bfb0912a08914bef8c1cfceeda478d36_006zyZZ2ly1g6t74koqutj30v60fzta5.jpg', '2020-01-21 12:49:11', NULL, 5, 0, 0);
-INSERT INTO `post` VALUES (32, '123456', '/post_img/7f442fbbf5d144ebb4914bba974b4fd4_cyberpunk2077_cdn_wallpaper.png', '2020-02-20 13:30:33', NULL, 5, 0, 0);
-INSERT INTO `post` VALUES (34, 'window.location.href', '/post_img/13ad86f2b3444a8f865f80ca436952bd_Snipaste_2020-03-15_16-34-10.png', '2020-03-26 03:57:53', NULL, 5, 0, 0);
-INSERT INTO `post` VALUES (35, 'Russell', '/post_img/78bf7c855bb84900b12b2520f3e352cd_photo_2020-02-22_16-03-32.jpg', '2020-04-01 05:41:31', NULL, 5, 0, 0);
-INSERT INTO `post` VALUES (36, '一个标题', '/post_img/94ac5d0c16ac4ebb9fd95d32c8503bb2_Snipaste_2020-02-22_15-04-10.png', '2020-04-01 10:54:02', NULL, 5, 0, 0);
+INSERT INTO `post` VALUES (16, '一个游艇', '/post_img/f123b17ba2d64435aa1c54b717e2eb86_3a51c6a9dd358fbaddfb3d682d781cb7e35cb91e.jpg@518w_1e_1c.jpg', '2020-03-28 17:03:54', '2020-03-28 09:03:54', 1, 0, 0, 1);
+INSERT INTO `post` VALUES (19, '哈哈哈哈哈哈哈哈哈哈哈哈哈哈', '/post_img/5db12fefad7845f2968737cf6d948523_aBoMd5Vb_700w_0.jpg', '2020-01-02 06:17:58', NULL, 7, 0, 0, 1);
+INSERT INTO `post` VALUES (20, 'Confused cat', '/post_img/fa84d21e5af54481a9f207037450e074_aaxqZMoR_700w_0.jpg', '2020-01-02 06:19:33', NULL, 7, 0, 0, 1);
+INSERT INTO `post` VALUES (21, 'hahahahahahhahahahahahhaa', '/post_img/1494ea8b8ddd4c2c97982ec496f637ab_8d05631fly1g5rcgw5yyfj20u00u0n67.jpg', '2020-01-02 06:25:36', NULL, 7, 0, 0, 1);
+INSERT INTO `post` VALUES (23, 'Henry Cavill', '/post_img/c6d2980de9eb4a11aa3a9bce98650ab5_a1R0BYP_460swp.webp', '2020-01-02 07:56:37', NULL, 1, 0, 0, 1);
+INSERT INTO `post` VALUES (24, '哈哈哈哈哈哈哈哈哈哈哈哈哈哈', '/post_img/f2e2b93c1db5463390ef040ab55712cf_3a51c6a9dd358fbaddfb3d682d781cb7e35cb91e.jpg@518w_1e_1c.jpg', '2020-01-02 08:00:25', NULL, 1, 0, 0, 1);
+INSERT INTO `post` VALUES (25, '嘻嘻嘻嘻嘻嘻嘻嘻', '/post_img/8178b17b8a274254b889aca05f60f850_3a51c6a9dd358fbaddfb3d682d781cb7e35cb91e.jpg@518w_1e_1c.jpg', '2020-01-02 08:02:23', NULL, 1, 0, 0, 1);
+INSERT INTO `post` VALUES (28, 'Tom and Jerry', '/post_img/5f6c6ea559834531abd18937f68c468a_bf6af91490b38885fd8bdf9d000399b0.gif', '2020-01-02 14:47:35', NULL, 7, 0, 0, 1);
+INSERT INTO `post` VALUES (29, 'T', '/post_img/91306e3732e241f4b6461111530890fa_f6c5eec3f46a3f97b543e337c4edc543.gif', '2020-01-02 15:00:32', NULL, 7, 0, 0, 1);
+INSERT INTO `post` VALUES (31, '嘻嘻嘻嘻嘻嘻嘻', '/post_img/bfb0912a08914bef8c1cfceeda478d36_006zyZZ2ly1g6t74koqutj30v60fzta5.jpg', '2020-01-21 12:49:11', NULL, 5, 0, 0, 1);
+INSERT INTO `post` VALUES (32, '123456', '/post_img/7f442fbbf5d144ebb4914bba974b4fd4_cyberpunk2077_cdn_wallpaper.png', '2020-02-20 13:30:33', NULL, 5, 0, 0, 1);
+INSERT INTO `post` VALUES (34, 'window.location.href', '/post_img/13ad86f2b3444a8f865f80ca436952bd_Snipaste_2020-03-15_16-34-10.png', '2020-03-26 03:57:53', NULL, 5, 0, 0, 1);
+INSERT INTO `post` VALUES (35, 'Russell', '/post_img/78bf7c855bb84900b12b2520f3e352cd_photo_2020-02-22_16-03-32.jpg', '2020-04-01 05:41:31', NULL, 5, 0, 0, 1);
+INSERT INTO `post` VALUES (36, '一个标题', '/post_img/94ac5d0c16ac4ebb9fd95d32c8503bb2_Snipaste_2020-02-22_15-04-10.png', '2020-04-01 10:54:02', NULL, 5, 0, 0, 1);
 
 -- ----------------------------
 -- Table structure for postflag
@@ -265,7 +266,7 @@ CREATE TABLE `reports`  (
   `operateTime` timestamp(0) NULL DEFAULT NULL,
   `detail` int(11) NULL DEFAULT 0,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of reports

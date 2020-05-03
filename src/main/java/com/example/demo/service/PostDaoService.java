@@ -42,4 +42,5 @@ public interface PostDaoService {
 
     void addPostFlag(Integer p_id, Integer u_id, Integer like, Integer fav);
 
+    void setPublicityByPid(Integer pid, Integer publicity);
 }

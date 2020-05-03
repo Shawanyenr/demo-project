@@ -103,4 +103,9 @@ public class PostDaoServiceImpl implements PostDaoService {
     public void addPostFlag(Integer p_id, Integer u_id, Integer like, Integer fav) {
         postDao.addPostFlag(p_id, u_id, like, fav);
     }
+
+    @Override
+    public void setPublicityByPid(Integer pid, Integer publicity) {
+        postDao.setPublicityByPid(pid, publicity);
+    }
 }
