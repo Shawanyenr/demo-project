@@ -11,7 +11,7 @@ import java.util.List;
 public interface ReportDaoService {
     void addReport(Report report);
 
-    void updateReport(Integer id, Integer operation);
+    void updateReport(Integer pid, Integer duration);
 
     List<Report> listReports(String content, Integer archived);
 

@@ -22,10 +22,8 @@ public class ReportDaoServiceImpl implements ReportDaoService {
     }
 
     @Override
-    public void updateReport(Integer id, Integer operation) {
-        Calendar cal = Calendar.getInstance();
-        Date date = cal.getTime();
-        reportDao.updateReport(id, operation, date);
+    public void updateReport(Integer pid, Integer duration) {
+        reportDao.updateReport(pid, duration);
     }
 
     @Override

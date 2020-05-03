@@ -10,13 +10,12 @@ import java.util.List;
 
 @Component
 public interface ReportDao {
-    @Insert("insert into reports(fromId,ownerId,pid)values(#{fromId},#{ownerId},#{pid})")
+    @Insert("insert into reports(fromId,pid)values(#{fromId},#{pid})")
     void addReport(Report report);
 
-    @Update("update reports set operation=#{operation}, operateTime=#{operateTime} where ownerId=#{ownerId}")
-    void updateReport(Integer ownerId, Integer operation, Date operateTime);
+    @Update("update reports set duration=#{duration} where pid=#{pid}")
+    void updateReport(Integer pid, Integer duration);
 
-    //    @Select("select * from reports where operation = 0")
     List<Report> listReports(@RequestParam String content, @RequestParam Integer archived);
 
     //    @Select("select * from reports where operation != 0")

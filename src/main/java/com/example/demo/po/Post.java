@@ -22,5 +22,6 @@ public class Post {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm",timezone="GMT+8")
     private Date p_last_edit_time;
     private Integer publicity;
+    private User user;
 
 }

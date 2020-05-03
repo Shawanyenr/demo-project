@@ -8,12 +8,11 @@ import java.util.Date;
 public class Report {
     private Integer id;
     private Integer fromId;
-    private Integer ownerId;
     private Integer pid;
-    private Integer operation;
+    private Integer duration;
     private Date time;
     private Date operateTime;
+    private Integer archived;
     private Post post;
     private User fromUser;
-    private User ownerUser;
 }

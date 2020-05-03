@@ -9,36 +9,22 @@
         <id property="id" column="id"/>
         <result property="time" column="time"/>
         <result property="fromId" column="fromId"/>
-        <result property="ownerId" column="ownerId"/>
         <result property="pid" column="pid"/>
-        <result property="operation" column="operation"/>
-        <result property="operationTime" column="operationTime"/>
+        <result property="duration" column="duration"/>
+        <result property="operateTime" column="operateTime"/>
+        <result property="archived" column="archived"/>
         <association property="fromUser" column="fromId" javaType="User"
-                     select="com.example.demo.dao.UserDao.findById"/>
-        <association property="ownerUser" column="ownerId" javaType="User"
                      select="com.example.demo.dao.UserDao.findById"/>
         <association property="post" column="pid" javaType="Post"
                      select="com.example.demo.dao.PostDao.findById"/>
-
     </resultMap>
-    <!--<select id="listReports" resultMap="reportAndUser">
-        select * from reports where operation = 0
-    </select>
-    <select id="listArchived" resultMap="reportAndUser">
-        select * from reports where operation != 0
-    </select>-->
+
     <select id="listReports" resultMap="reportAndUser">
-        SELECT r.*,f.username f_username,o.username o_username,p.img_dir,p.p_title FROM `reports` r LEFT JOIN user f on
-        r.fromId=f.id LEFT JOIN user o on r.ownerId=o.id LEFT JOIN post p on r.pid=p.p_id
-        where 1=1
+        SELECT r.*,f.username f_username,o.username o_username FROM `reports` r LEFT JOIN user f on
+        r.fromId=f.id LEFT JOIN post p on r.pid=p.p_id left join user o on o.id=p.u_id
+        where r.archived = #{archived}
         <if test="content!=null">
             AND CONCAT(r.id,f.username, o.username, p_title,r.time,pid) LIKE #{content}
-        </if>
-        <if test="archived!=0">
-            and r.operation != 0
-        </if>
-        <if test="archived==0">
-            and r.operation = 0
         </if>
         order by r.time
     </select>

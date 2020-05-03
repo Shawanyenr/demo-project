@@ -14,15 +14,18 @@ import java.util.Date;
 import java.util.List;
 
 @SpringBootTest(classes = DemoApplication.class,webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class ReportComment {
+public class ReportTest {
 
     @Autowired
     private ReportDaoService reportDaoService;
 
     @Test
     public void listReports(){
-        List<Report> listReports = reportDaoService.listReports("",1);
-        System.out.println(listReports);
+        List<Report> listReports = reportDaoService.listReports("pipi",1);
+        for (Report report : listReports) {
+            System.out.println(report);
+        }
+        System.out.println(listReports.size());
     }
 
     @Test
@@ -35,6 +38,11 @@ public class ReportComment {
     public void listSearch(){
         List<Report> listSearch = reportDaoService.listSearch("%2020%");
         System.out.println(listSearch);
+    }
+
+    @Test
+    public void updateReports(){
+        reportDaoService.updateReport(19,1);
     }
 
 

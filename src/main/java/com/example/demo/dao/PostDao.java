@@ -57,7 +57,6 @@ public interface PostDao {
     @Insert("insert into postflag (p_id,u_id,p_like_flag,p_fav_flag) values(#{p_id},#{u_id},#{like},#{fav})")
     void addPostFlag(Integer p_id, Integer u_id, Integer like, Integer fav);
 
-    @Select("select * from post where p_id=#{id}")
     Post findById(Integer id);
 
     @Update("update post set publicity=#{publicity} where p_id=#{pid}")

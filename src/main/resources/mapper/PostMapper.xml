@@ -113,4 +113,18 @@
         order by post.p_id desc
     </select>
 
+    <resultMap id="postAndUser" type="Post">
+        <id property="p_id" column="p_id"/>
+        <result property="u_id" column="u_id"/>
+        <result property="p_title" column="p_title"/>
+        <result property="img_dir" column="img_dir"/>
+        <result property="upload_time" column="upload_time"/>
+        <result property="publicity" column="publicity"/>
+        <association property="user" column="u_id" javaType="User"
+                     select="com.example.demo.dao.UserDao.findById"/>
+    </resultMap>
+    <select id="findById" parameterType="Integer" resultMap="postAndUser">
+        select * from post where p_id=#{id}
+    </select>
+
 </mapper>
