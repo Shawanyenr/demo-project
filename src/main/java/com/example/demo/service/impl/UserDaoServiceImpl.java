@@ -79,4 +79,19 @@ public class UserDaoServiceImpl implements UserDaoService {
         System.out.println(date);
         userDao.freezeAccount(id,date);
     }
+
+    @Override
+    public Integer checkBlock(Integer uid, Integer bid) {
+        return userDao.checkBlock(uid, bid);
+    }
+
+    @Override
+    public Integer removeBlock(Integer uid, Integer bid) {
+        return userDao.removeBlock(uid, bid);
+    }
+
+    @Override
+    public Integer addBlock(Integer uid, Integer bid) {
+        return userDao.addBlock(uid, bid);
+    }
 }

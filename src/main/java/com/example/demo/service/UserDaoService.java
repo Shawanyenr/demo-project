@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.po.User;
 import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Insert;
 
 import java.util.Date;
 import java.util.List;
@@ -28,5 +29,11 @@ public interface UserDaoService {
     User findByUsername(String username);
 
     void freezeAccount(Integer id, Integer duration);
+
+    Integer checkBlock(Integer uid, Integer bid);
+
+    Integer removeBlock(Integer uid, Integer bid);
+
+    Integer addBlock(Integer uid, Integer bid);
 
 }

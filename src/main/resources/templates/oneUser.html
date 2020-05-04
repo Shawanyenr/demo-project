@@ -28,6 +28,10 @@
                     <button class="btn-primary btn ml-3 mt-2" th:unless="${subState}" th:onclick="'toggleSub('+${one.getId()}+')'"><i class="fas fa-plus"></i> 订阅</button>
                 </div>
                 <a class="btn btn-outline-dark ml-3 mt-2" th:if="${session.user}" th:href="@{'/message/'+${one.getId()}}" role="button">发送消息</a>
+                <div id="blockBtn" th:fragment="blockBtn" th:if="${session.user}">
+                    <button class="btn-danger btn ml-3 mt-2" th:if="${blocked}" th:onclick="'toggleBlock('+${one.getId()}+')'"><i class="fas fa-check"></i> 已拉黑</button>
+                    <button class="btn-outline-danger btn ml-3 mt-2" th:unless="${blocked}" th:onclick="'toggleBlock('+${one.getId()}+')'"><i class="fas fa-ban"></i> 拉黑用户</button>
+                </div>
             </div>
 
         </div>
@@ -43,15 +47,18 @@
     <div class="row">
         <div class="tab-content btn-block" id="pills-tabContent">
             <div class="tab-pane btn-block fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-                <div th:if="${posts}">
+                <div th:if="${not #lists.isEmpty(posts)}">
                     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 ml-0 mr-0">
-                        <div class="col p-2" th:each="post : ${posts}">
-                            <a th:href="@{'/posts/'+${post.getP_id()}}">
-                                <img th:src="@{${post.getImg_dir()}}" alt="" width="100%" height="300px" style="object-fit: cover">
-                            </a>
+                        <div th:each="post : ${posts}" th:if="${post.publicity==1}">
+                            <div class="col flex-grow-1 p-2">
+                                <a th:href="@{'/posts/'+${post.getP_id()}}">
+                                    <img th:src="@{${post.getImg_dir()}}" alt="" width="100%" height="300px"
+                                         style="object-fit: cover">
+                                </a>
+                            </div>
+                            <div class="col flex-grow-1 p-2"></div>
+                            <div class="col flex-grow-1 p-2"></div>
                         </div>
-                        <div class="col p-2"></div>
-                        <div class="col p-2"></div>
                     </div>
                 </div>
             </div>
@@ -85,6 +92,9 @@
 
     function toggleSub(sub_id){
         $("#subBtn").load("/toggleSub?sub_id="+sub_id);
+    }
+    function toggleBlock(sub_id){
+        $("#blockBtn").load("/toggleBlock?blockId="+sub_id);
     }
 
 

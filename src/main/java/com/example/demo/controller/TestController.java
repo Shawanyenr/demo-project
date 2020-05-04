@@ -70,6 +70,7 @@ public class TestController {
             } else {
                 System.out.println(post);
                 model.addAttribute("post", post);
+                model.addAttribute("blocked", userDaoService.checkBlock(post.getU_id(),user.getId()));
             }
         }
         List<Comment> comments = commentDaoService.selectCommentsByPid(id);
@@ -114,14 +115,17 @@ public class TestController {
         if (null == user) {
             List<Post> allOfOneUser = postDaoService.findAllOfOneUser(null, id);
             model.addAttribute("posts", allOfOneUser);
+            System.out.println("allOfOneUser: " + allOfOneUser);
             model.addAttribute("one", one);
         } else {
             if (user.getId()==id) return "redirect:/home";
             Integer checkSub = userDaoService.checkSub(user.getId(),id);
             List<Post> posts  = postDaoService.findAllOfOneUser(user.getId(),id);
+            Integer checkBlock = userDaoService.checkBlock(user.getId(), id);
             model.addAttribute("posts", posts);
             model.addAttribute("one", one);
             model.addAttribute("subState", checkSub);
+            model.addAttribute("blocked", checkBlock);
         }
         return "oneUser";
     }

@@ -101,7 +101,6 @@ public class UserController {
             } else {
                 state = userDaoService.addSubscription(user.getId(), sub_id);
             }
-
         }
         if (state >= 1) {
             check = userDaoService.checkSub(user.getId(), sub_id);
@@ -109,9 +108,35 @@ public class UserController {
             model.addAttribute("one", one);
             return "oneUser::subBtn";
         } else return "error/404";
-
     }
 
+    @Transactional
+    @RequestMapping("/toggleBlock")
+    public String toggleBlock(HttpSession session, @RequestParam(value = "blockId",defaultValue = "") Integer blockId, Model model){
+        User user = (User) session.getAttribute("user");
+        User one = userDaoService.findById(blockId);
+        Integer checkBlock;
+        Integer state;
+        if (null == user || null == blockId) {
+            return "error/404";
+        } else {
+            System.out.println(user.getId() + " toggleBlock " + blockId);
+            checkBlock = userDaoService.checkBlock(user.getId(), blockId);
+            if (checkBlock == 1){
+                state = userDaoService.removeBlock(user.getId(),blockId);
+            }else {
+                state = userDaoService.addBlock(user.getId(),blockId);
+            }
+        }
+        if (state>=1){
+            checkBlock=userDaoService.checkBlock(user.getId(),blockId);
+            model.addAttribute("blocked", checkBlock);
+            model.addAttribute("one", one);
+            return "oneUser::blockBtn";
+        }else return "error/404";
+    }
+
+    @Transactional
     @ResponseBody
     @PostMapping("/report")
     public String addReport(@RequestParam(value = "pid", defaultValue = "") Integer pid, HttpSession session) {

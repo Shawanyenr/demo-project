@@ -14,11 +14,9 @@
 </head>
 <body>
 <div class="container content-m">
-    <!--    <button id="button">say hi!</button>-->
-
     <div class="row">
         <div class="col-lg-8 col posts-m">
-            <div class="card mb-3" th:if="${post}">
+            <div class="card mb-3" th:if="${post.publicity==1||session.admin!=null}">
                 <div class="card-header bg-transparent d-flex flex-row align-items-center pl-3 pr-3" style="position: relative">
                     <div class="pr-3">
                         <img th:src="@{${post.u_avatar}}" alt="..." class="rounded-circle post-avator">
@@ -117,14 +115,17 @@
                         <div class="form-group">
                             <input type="hidden" name="pid" th:value="${post.p_id}">
                             <input type="hidden" name="parentId" value="0">
-                            <textarea name="content" th:disabled="${session.user==null}" class="form-control bg-transparent mt-2 mb-2" style="color: inherit" th:placeholder="${session.user}==null?'登录以发表评论.':'在这里写评论.'" rows="3"></textarea>
+                            <textarea name="content" th:disabled="${session.user==null || blocked==1}" class="form-control bg-transparent mt-2 mb-2" style="color: inherit" th:placeholder="${session.user}==null?'登录以发表评论.':'在这里写评论.'" th:text="${blocked}?'根据博主设置，您已被禁止评论'" rows="3"></textarea>
                             <div class="d-flex flex-row justify-content-end">
-                                <button type="button" class="btn btn-outline-warning mr-2" onclick="resetComment()" th:disabled="${session.user==null}">Reset</button>
-                                <button type="submit" class="btn btn-primary" th:disabled="${session.user==null}">Submit</button>
+                                <button type="button" class="btn btn-outline-warning mr-2" onclick="resetComment()" th:disabled="${session.user==null || blocked==1}">重置</button>
+                                <button type="submit" class="btn btn-primary" th:disabled="${session.user==null || blocked==1}">提交</button>
                             </div>
                         </div>
                     </form>
                 </div>
+            </div>
+            <div class="alert alert-warning" th:unless="${post.publicity==1||session.admin!=null}" role="alert">
+                该帖子禁止访问
             </div>
         </div>
         <div class="col-lg-4 d-none d-lg-block">

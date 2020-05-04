@@ -30,6 +30,15 @@ public interface UserDao {
     @Select("select count(*) from subscription where own_id=#{own_id} and sub_id=#{sub_id}")
     Integer checkSub(Integer own_id, Integer sub_id);
 
+    @Select("select count(*) from blocklist where uid=#{uid} and bid=#{bid}")
+    Integer checkBlock(Integer uid, Integer bid);
+
+    @Delete("delete from blocklist where uid=#{uid} and bid=#{bid}")
+    Integer removeBlock(Integer uid, Integer bid);
+
+    @Insert("insert into blocklist(uid,bid)values(#{uid},#{bid})")
+    Integer addBlock(Integer uid, Integer bid);
+
     @Select("select * from user where id = #{id}")
     User findById(Integer id);
 
