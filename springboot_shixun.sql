@@ -11,7 +11,7 @@
  Target Server Version : 80016
  File Encoding         : 65001
 
- Date: 03/05/2020 20:40:16
+ Date: 04/05/2020 22:54:15
 */
 
 SET NAMES utf8mb4;
@@ -36,6 +36,23 @@ CREATE TABLE `admin`  (
 -- Records of admin
 -- ----------------------------
 INSERT INTO `admin` VALUES (22, 'Gerald', 'Gerald', '123456', NULL, NULL);
+
+-- ----------------------------
+-- Table structure for blocklist
+-- ----------------------------
+DROP TABLE IF EXISTS `blocklist`;
+CREATE TABLE `blocklist`  (
+  `id` int(20) NOT NULL AUTO_INCREMENT,
+  `uid` int(20) NOT NULL,
+  `bid` int(20) NOT NULL,
+  `time` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP(0),
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of blocklist
+-- ----------------------------
+INSERT INTO `blocklist` VALUES (4, 5, 7, '2020-05-04 22:16:11');
 
 -- ----------------------------
 -- Table structure for comment
@@ -82,7 +99,7 @@ CREATE TABLE `message`  (
   `content` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 101 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 103 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of message
@@ -187,6 +204,8 @@ INSERT INTO `message` VALUES (97, 'pipi', '2016b11015', 'asdf', '2020-04-21 19:0
 INSERT INTO `message` VALUES (98, 'pipi', 'GilesWi', 'jdtjux', '2020-05-01 17:06:18');
 INSERT INTO `message` VALUES (99, 'GilesWi', 'pipi', 'aeg', '2020-05-01 17:07:43');
 INSERT INTO `message` VALUES (100, 'pipi', 'GilesWi', 'bds', '2020-05-01 17:08:18');
+INSERT INTO `message` VALUES (101, 'm78', 'pipi', '132165', '2020-05-04 15:02:55');
+INSERT INTO `message` VALUES (102, 'm78', 'pipi', '📼', '2020-05-04 15:03:24');
 
 -- ----------------------------
 -- Table structure for post
@@ -208,20 +227,17 @@ CREATE TABLE `post`  (
 -- ----------------------------
 -- Records of post
 -- ----------------------------
-INSERT INTO `post` VALUES (16, '一个游艇', '/post_img/f123b17ba2d64435aa1c54b717e2eb86_3a51c6a9dd358fbaddfb3d682d781cb7e35cb91e.jpg@518w_1e_1c.jpg', '2020-03-28 17:03:54', '2020-03-28 09:03:54', 1, 0, 0, 1);
 INSERT INTO `post` VALUES (19, '哈哈哈哈哈哈哈哈哈哈哈哈哈哈', '/post_img/5db12fefad7845f2968737cf6d948523_aBoMd5Vb_700w_0.jpg', '2020-01-02 06:17:58', NULL, 7, 0, 0, 1);
 INSERT INTO `post` VALUES (20, 'Confused cat', '/post_img/fa84d21e5af54481a9f207037450e074_aaxqZMoR_700w_0.jpg', '2020-01-02 06:19:33', NULL, 7, 0, 0, 1);
 INSERT INTO `post` VALUES (21, 'hahahahahahhahahahahahhaa', '/post_img/1494ea8b8ddd4c2c97982ec496f637ab_8d05631fly1g5rcgw5yyfj20u00u0n67.jpg', '2020-01-02 06:25:36', NULL, 7, 0, 0, 1);
 INSERT INTO `post` VALUES (23, 'Henry Cavill', '/post_img/c6d2980de9eb4a11aa3a9bce98650ab5_a1R0BYP_460swp.webp', '2020-01-02 07:56:37', NULL, 1, 0, 0, 1);
-INSERT INTO `post` VALUES (24, '哈哈哈哈哈哈哈哈哈哈哈哈哈哈', '/post_img/f2e2b93c1db5463390ef040ab55712cf_3a51c6a9dd358fbaddfb3d682d781cb7e35cb91e.jpg@518w_1e_1c.jpg', '2020-01-02 08:00:25', NULL, 1, 0, 0, 1);
-INSERT INTO `post` VALUES (25, '嘻嘻嘻嘻嘻嘻嘻嘻', '/post_img/8178b17b8a274254b889aca05f60f850_3a51c6a9dd358fbaddfb3d682d781cb7e35cb91e.jpg@518w_1e_1c.jpg', '2020-01-02 08:02:23', NULL, 1, 0, 0, 1);
 INSERT INTO `post` VALUES (28, 'Tom and Jerry', '/post_img/5f6c6ea559834531abd18937f68c468a_bf6af91490b38885fd8bdf9d000399b0.gif', '2020-01-02 14:47:35', NULL, 7, 0, 0, 1);
 INSERT INTO `post` VALUES (29, 'T', '/post_img/91306e3732e241f4b6461111530890fa_f6c5eec3f46a3f97b543e337c4edc543.gif', '2020-01-02 15:00:32', NULL, 7, 0, 0, 1);
 INSERT INTO `post` VALUES (31, '嘻嘻嘻嘻嘻嘻嘻', '/post_img/bfb0912a08914bef8c1cfceeda478d36_006zyZZ2ly1g6t74koqutj30v60fzta5.jpg', '2020-01-21 12:49:11', NULL, 5, 0, 0, 1);
 INSERT INTO `post` VALUES (32, '123456', '/post_img/7f442fbbf5d144ebb4914bba974b4fd4_cyberpunk2077_cdn_wallpaper.png', '2020-02-20 13:30:33', NULL, 5, 0, 0, 1);
-INSERT INTO `post` VALUES (34, 'window.location.href', '/post_img/13ad86f2b3444a8f865f80ca436952bd_Snipaste_2020-03-15_16-34-10.png', '2020-03-26 03:57:53', NULL, 5, 0, 0, 1);
+INSERT INTO `post` VALUES (34, 'window.location.href', '/post_img/13ad86f2b3444a8f865f80ca436952bd_Snipaste_2020-03-15_16-34-10.png', '2020-05-03 22:44:18', NULL, 5, 0, 0, 1);
 INSERT INTO `post` VALUES (35, 'Russell', '/post_img/78bf7c855bb84900b12b2520f3e352cd_photo_2020-02-22_16-03-32.jpg', '2020-04-01 05:41:31', NULL, 5, 0, 0, 1);
-INSERT INTO `post` VALUES (36, '一个标题', '/post_img/94ac5d0c16ac4ebb9fd95d32c8503bb2_Snipaste_2020-02-22_15-04-10.png', '2020-04-01 10:54:02', NULL, 5, 0, 0, 1);
+INSERT INTO `post` VALUES (36, '一个标题', '/post_img/94ac5d0c16ac4ebb9fd95d32c8503bb2_Snipaste_2020-02-22_15-04-10.png', '2020-05-04 19:19:41', NULL, 5, 0, 0, 1);
 
 -- ----------------------------
 -- Table structure for postflag
@@ -234,7 +250,7 @@ CREATE TABLE `postflag`  (
   `p_fav_flag` int(1) NULL DEFAULT 0,
   `u_id` int(32) NOT NULL,
   PRIMARY KEY (`flag_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 29 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 31 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of postflag
@@ -251,6 +267,8 @@ INSERT INTO `postflag` VALUES (25, 25, 0, 1, 6);
 INSERT INTO `postflag` VALUES (26, 23, 0, 0, 6);
 INSERT INTO `postflag` VALUES (27, 36, 1, 1, 5);
 INSERT INTO `postflag` VALUES (28, 20, 1, 0, 5);
+INSERT INTO `postflag` VALUES (29, 34, 1, 0, 5);
+INSERT INTO `postflag` VALUES (30, 28, 0, 1, 5);
 
 -- ----------------------------
 -- Table structure for reports
@@ -259,20 +277,18 @@ DROP TABLE IF EXISTS `reports`;
 CREATE TABLE `reports`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `fromId` int(11) NOT NULL,
-  `ownerId` int(11) NOT NULL,
   `pid` int(11) NOT NULL,
   `time` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP(0),
-  `operation` int(8) NULL DEFAULT 0,
-  `operateTime` timestamp(0) NULL DEFAULT NULL,
-  `detail` int(11) NULL DEFAULT 0,
+  `duration` int(8) NULL DEFAULT 0,
+  `operateTime` timestamp(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0),
+  `archived` int(2) NULL DEFAULT 0,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of reports
 -- ----------------------------
-INSERT INTO `reports` VALUES (1, 1, 7, 19, '2020-04-26 21:35:59', 0, NULL, 0);
-INSERT INTO `reports` VALUES (2, 1, 5, 34, '2020-04-30 19:43:19', 1, '2020-04-30 19:50:50', 0);
+INSERT INTO `reports` VALUES (1, 1, 19, '2020-04-26 21:35:59', 3, '2020-05-03 22:39:11', 1);
 
 -- ----------------------------
 -- Table structure for subscription
@@ -283,14 +299,14 @@ CREATE TABLE `subscription`  (
   `own_id` int(16) NULL DEFAULT NULL,
   `sub_id` int(16) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of subscription
 -- ----------------------------
 INSERT INTO `subscription` VALUES (4, 6, 5);
 INSERT INTO `subscription` VALUES (6, 5, 1);
-INSERT INTO `subscription` VALUES (8, 5, 7);
+INSERT INTO `subscription` VALUES (10, 5, 7);
 
 -- ----------------------------
 -- Table structure for user
@@ -315,7 +331,7 @@ CREATE TABLE `user`  (
 INSERT INTO `user` VALUES (1, '嘻嘻', 'm78', '123456', 1, '/user_avatar/default_user_avatar.jpg', NULL, NULL);
 INSERT INTO `user` VALUES (2, '哈哈', '626', '123456', 1, '/user_avatar/default_user_avatar.jpg', NULL, '2120-04-06 11:52:12');
 INSERT INTO `user` VALUES (4, '吼吼', 'm19', '123456', 1, '/user_avatar/default_user_avatar.jpg', NULL, NULL);
-INSERT INTO `user` VALUES (5, '吼吼', 'pipi', '123456', 1, '/user_avatar/default_user_avatar.jpg', NULL, NULL);
+INSERT INTO `user` VALUES (5, '吼吼', 'pipi', '123456', 1, '/user_avatar/default_user_avatar.jpg', NULL, '2020-05-04 19:19:41');
 INSERT INTO `user` VALUES (6, 'chenheng', '2016b11015', '123456', 1, '/user_avatar/default_user_avatar.jpg', NULL, NULL);
 INSERT INTO `user` VALUES (7, 'pipi', 'GilesWi', '123456', 1, '/user_avatar/default_user_avatar.jpg', NULL, NULL);
 INSERT INTO `user` VALUES (8, '嘻嘻', '1143468921@qq.com', '123456', 1, '/user_avatar/default_user_avatar.jpg', NULL, NULL);
