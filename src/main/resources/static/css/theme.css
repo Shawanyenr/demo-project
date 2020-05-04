@@ -757,3 +757,7 @@ input[type=checkbox] + i {
     color: #FFBF4A;
     cursor: pointer;
 }
+
+#reports-container .btn-link{
+    padding: 0 !important;
+}

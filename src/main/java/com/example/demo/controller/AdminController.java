@@ -91,6 +91,19 @@ public class AdminController {
         return "ok";
     }
 
+    @ResponseBody
+    @PostMapping("/deleteReport")
+    public String deleteReport(@RequestParam(value = "pid", defaultValue = "") Integer pid){
+        if (pid==null){
+            return "删除失败";
+        }
+        Integer deleteReport = reportDaoService.deleteReport(pid);
+        if (deleteReport>0){
+            return "ok";
+        }else {
+            return "删除失败，请刷新重试";
+        }
+    }
 
     @ResponseBody
     @GetMapping("/sendNotification")

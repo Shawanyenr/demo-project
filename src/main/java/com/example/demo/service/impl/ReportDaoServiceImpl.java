@@ -41,4 +41,9 @@ public class ReportDaoServiceImpl implements ReportDaoService {
     public Integer countReportByPid(Integer pid) {
         return reportDao.countReportByPid(pid);
     }
+
+    @Override
+    public Integer countReportByPidAndFromId(Integer pid, Integer fromId) {
+        return reportDao.countReportByPidAndFromId(pid, fromId);
+    }
 }

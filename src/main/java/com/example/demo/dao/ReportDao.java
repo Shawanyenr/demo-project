@@ -24,4 +24,6 @@ public interface ReportDao {
     @Select("select count(*) from reports where pid=#{pid}")
     Integer countReportByPid(Integer pid);
 
+    @Select("select count(*) from reports where pid=#{pid} and fromId=#{fromId}")
+    Integer countReportByPidAndFromId(Integer pid, Integer fromId);
 }

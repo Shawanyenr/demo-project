@@ -19,4 +19,6 @@ public interface ReportDaoService {
 
     Integer countReportByPid(Integer pid);
 
+    Integer countReportByPidAndFromId(Integer pid, Integer fromId);
+
 }

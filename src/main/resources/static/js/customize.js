@@ -95,4 +95,24 @@ $(function () {
             }
         })
     })
-})
+});
+
+function sendReport(pid) {
+    if (confirm("确认举报pid: "+pid+"?")){
+        $.post({
+            url: "/report",
+            data: {pid: pid},
+            success: function (data) {
+                if (data==="ok"){
+                    alert("举报成功");
+                }else{
+                    alert(data);
+                }
+
+            },
+            error: function () {
+                alert("举报失败");
+            }
+        })
+    }
+}

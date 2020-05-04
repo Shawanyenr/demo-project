@@ -17,7 +17,7 @@
 <div class="row">
     <nav class="navbar fixed-top shadow-sm nav-m p-0" style="border-bottom: 1px solid #dbdbdb;">
         <div class="container d-flex align-items-center flex-nowrap flex-row justify-content-between"
-             style="max-width: 992px;height:54px;">
+             style="height:54px;">
             <a th:href="@{/admin}" class="pr-3">管理员</a>
             <div>
                 <span th:text="'@'+${session.admin.username}" class="mr-2"></span>
@@ -30,9 +30,9 @@
 </div>
 
 <!--主内容-->
-<div class="container content-m">
+<div class="container" style="margin-top: 140px">
 
-    <div class="row justify-content-between">
+    <div class="btn-block d-flex flex-row justify-content-between">
         <form th:action="@{/admin(start=1,a=${a})}" method="post">
             <div class="input-group input-group-sm" style="max-width: 200px;">
                 <input type="text" class="form-control" name="s" th:placeholder="${a}==0?'在待处理内搜索...':'在归档内搜索...'">
@@ -45,7 +45,7 @@
                th:classappend="${s.equals('')&&a==1}?'active'" role="button">归档</a>
         </div>
     </div>
-    <div class="row">
+    <div class="btn-block">
         <div id="reports-container" th:fragment="reports-container" class="btn-block">
             <table class="table" style="color: inherit">
                 <thead>
@@ -66,7 +66,7 @@
                     <th th:text="${report.id}" scope="row">1</th>
                     <td><a th:href="@{'/user/'+${report.fromId}}" th:text="${report.fromUser.username}"
                            class="btn btn-link"></a></td>
-                    <td><a th:href="@{'/user/'+${report.post.user.username}}" th:text="${report.post.user.username}"
+                    <td><a th:href="@{'/user/'+${report.post.user.id}}" th:text="${report.post.user.username}"
                            class="btn btn-link"></a></td>
                     <td>
                         <a href="javascript:" data-toggle="modal" data-target="#showImgModal"
@@ -82,7 +82,8 @@
                         <a th:attr="data-ownerid=${report.post.user.id},data-title='处理',data-unfreeze=false,data-pid=${report.pid}"
                            href="javascript:" data-toggle="modal"
                            data-target="#optionModal" class="btn btn-outline-warning" role="button">处理</a>
-                        <a href="#" class="btn btn-outline-danger" role="button">删除</a>
+                        <a href="#" class="btn btn-outline-danger" th:onclick="'deleteReport('+${report.pid} +')'"
+                           role="button">删除</a>
                     </td>
                     <td th:if="${a==1}" th:text="|${report.duration}天|"></td>
                     <td th:if="${a==1}">
@@ -280,6 +281,26 @@
                     }
                 }
             });
+        }
+    }
+
+    function deleteReport(pid) {
+        if (confirm("确认删除该举报？\n该操作会删除所有针对改帖子的所有举报")) {
+            $.post({
+                url: /*[[@{/admin/deleteReport}]]*/"",
+                data: {pid: pid},
+                success: function (data) {
+                    if (data === "ok") {
+                        alert("删除成功");
+                        window.location.reload();
+                    } else {
+                        alert(data);
+                    }
+                },
+                error: function () {
+                    alert("删除失败")
+                }
+            })
         }
     }
 </script>
