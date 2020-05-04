@@ -34,26 +34,26 @@ public class UserController {
     }
 
     @RequestMapping("/login.action")
-    public String findOne(User loginInfo, HttpSession s,Model model) {
+    public String findOne(User loginInfo, HttpSession s, Model model) {
         System.out.println("登录信息:\n" + loginInfo);
         User user = userDaoService.findOne(loginInfo);
         System.out.println(user);
         if (user == null) {
             model.addAttribute("msg", "用户名或密码错误!");
-        } else if (user.getFrozeUntil()!=null) {
-            if (!(user.getFrozeUntil().before(new Date()))){
+        } else if (user.getFrozeUntil() != null) {
+            if (!(user.getFrozeUntil().before(new Date()))) {
                 SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 model.addAttribute("msg", "账户已被冻结!\n解冻日期：" + formatter.format(user.getFrozeUntil()));
 //            model.addAttribute("frozeUntil", user.getFrozeUntil());
-            }else {
+            } else {
                 user.setPassword("");
                 s.setAttribute("user", user);
-                model.addAttribute("success","登录成功.");
+                model.addAttribute("success", "登录成功.");
             }
         } else {
             user.setPassword("");
             s.setAttribute("user", user);
-            model.addAttribute("success","登录成功.");
+            model.addAttribute("success", "登录成功.");
         }
         return "login :: msg-section";
     }
@@ -100,29 +100,33 @@ public class UserController {
             System.out.println(user.getId() + " toggleSubing " + sub_id);
             check = userDaoService.checkSub(user.getId(), sub_id);
             if (check == 1) {
-                state= userDaoService.removeSubscription(user.getId(),sub_id);
+                state = userDaoService.removeSubscription(user.getId(), sub_id);
             } else {
-                state = userDaoService.addSubscription(user.getId(),sub_id);
+                state = userDaoService.addSubscription(user.getId(), sub_id);
             }
 
         }
-        if (state>=1){
+        if (state >= 1) {
             check = userDaoService.checkSub(user.getId(), sub_id);
-            model.addAttribute("subState",check);
+            model.addAttribute("subState", check);
             model.addAttribute("one", one);
             return "oneUser::subBtn";
-        }else return "error/404";
+        } else return "error/404";
 
     }
 
     @ResponseBody
     @RequestMapping("/report/{pid}")
-    public String addReport(@PathVariable Integer pid,HttpSession session){
+    public String addReport(@PathVariable Integer pid, HttpSession session) {
         User user = (User) session.getAttribute("user");
-        if (pid==null||user==null){
+        if (pid == null || user == null) {
             return "error";
         }
-        reportDaoService.addReport(user.getId(),pid);
+        Integer countReportByPid = reportDaoService.countReportByPid(pid);
+        if (countReportByPid != 0) {
+            return "ok";
+        }
+        reportDaoService.addReport(user.getId(), pid);
         return "ok";
     }
 

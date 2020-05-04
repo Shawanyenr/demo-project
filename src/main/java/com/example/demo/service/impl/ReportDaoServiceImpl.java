@@ -36,4 +36,9 @@ public class ReportDaoServiceImpl implements ReportDaoService {
     public Integer deleteReport(Integer pid) {
         return reportDao.deleteReport(pid);
     }
+
+    @Override
+    public Integer countReportByPid(Integer pid) {
+        return reportDao.countReportByPid(pid);
+    }
 }

@@ -18,10 +18,10 @@ public interface ReportDao {
 
     List<Report> listReports(@RequestParam String content, @RequestParam Integer archived);
 
-    //    @Select("select * from reports where operation != 0")
-    List<Report> listArchived();
-
     @Delete("delete from reports where pid=#{pid}")
     Integer deleteReport(Integer pid);
+
+    @Select("select count(*) from reports where pid=#{pid}")
+    Integer countReportByPid(Integer pid);
 
 }
