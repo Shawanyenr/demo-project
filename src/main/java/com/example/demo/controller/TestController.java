@@ -143,6 +143,7 @@ public class TestController {
         List<Message> messageList = messageDaoService.listMessage(user.getUsername(),one.getUsername(),one.getUsername(),user.getUsername());
         model.addAttribute("messageList", messageList);
         System.out.println("chat history: \n" + messageList);
+        model.addAttribute("blocked", userDaoService.checkBlock(id,user.getId()));
         return "ws";
     }
 

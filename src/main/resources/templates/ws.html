@@ -30,10 +30,10 @@
     <div class="container d-flex flex-row align-items-center flex-nowrap"
          style="max-width: 992px">
         <div class="form-group btn-block mb-0 mr-3">
-            <textarea class="form-control btn-block" id="text" rows="1" style="height: 38px"></textarea>
+            <textarea th:disabled="${blocked==1}" th:placeholder="${blocked==1}?'根据对方设置，您无法向对方发送消息'" class="form-control btn-block" id="text" rows="1" style="height: 38px"></textarea>
         </div>
 
-        <button class="btn btn-outline-secondary d-inline-block text-nowrap" onclick="send()">发送</button>
+        <button class="btn btn-outline-secondary d-inline-block text-nowrap" th:disabled="${blocked==1}" onclick="send()">发送</button>
     </div>
 </nav>
 
