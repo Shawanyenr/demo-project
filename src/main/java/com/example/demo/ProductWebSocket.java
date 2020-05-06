@@ -152,7 +152,7 @@ public class ProductWebSocket {
      * @param message
      */
     public void systemSendToUser(String sendUserId, String message) {
-
+        System.out.println("sendUserId: "+ sendUserId+", message: "+message);
         try {
             if (webSocketSet.get(sendUserId) != null) {
                 Map<String, Object> map = new HashMap<>();

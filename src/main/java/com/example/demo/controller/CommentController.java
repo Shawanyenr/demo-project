@@ -32,7 +32,7 @@ private PostDaoService postDaoService;
         commentDaoService.addComment(comment);
         notificationDaoService.addNotification(postDaoService.onePost(comment.getPid(),null).getU_id(),comment.getContent(),comment.getPid(),user.getId());
         new ProductWebSocket().systemSendToUser(postDaoService.onePost(comment.getPid(),null).getU_username(), comment.getContent());
-        if (comment.getParentId()!=null){
+        if (comment.getParentId()!=0){
             notificationDaoService.addNotification(postDaoService.onePost(commentDaoService.selectCommentById(comment.getParentId()).getUid(),null).getU_id(),comment.getContent(),comment.getPid(),user.getId());
             new ProductWebSocket().systemSendToUser(postDaoService.onePost(commentDaoService.selectCommentById(comment.getParentId()).getUid(),null).getU_username(), comment.getContent());
         }
