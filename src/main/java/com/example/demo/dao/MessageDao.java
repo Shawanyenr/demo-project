@@ -22,6 +22,6 @@ public interface MessageDao {
     @Select("select count(*) from message where receiver=#{username} and checked=0")
     Integer allUnread(String username);
 
-    @Update("update message set read=1 where sender=#{uUsername} and receiver=#{username}")
+    @Update("update message set checked=1 where sender=#{uUsername} and receiver=#{username}")
     void setReadByUid(String username, String uUsername);
 }
