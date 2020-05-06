@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
+import java.util.Comparator;
 import java.util.List;
 
 @RequestMapping("/user")
@@ -24,6 +25,7 @@ public class MessageController {
     public String messagePage(HttpSession session, Model model){
         User user = (User) session.getAttribute("user");
         List<User> userList = messageDaoService.chatListUser(user.getUsername());
+
         model.addAttribute("userList", userList);
         return "message";
     }

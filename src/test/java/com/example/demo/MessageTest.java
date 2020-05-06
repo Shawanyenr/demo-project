@@ -23,7 +23,7 @@ public class MessageTest {
     @Test
     public void chatListUser(){
         List<User> listUsers = messageDaoService.chatListUser("pipi");
-        listUsers.sort(new Comparator<User>() {
+        /*listUsers.sort(new Comparator<User>() {
             @Override
             public int compare(User o1, User o2) {
                 Integer diff = o1.getLastMessage().getId() - o2.getLastMessage().getId();
@@ -34,7 +34,7 @@ public class MessageTest {
                 }
                 return 0;
             }
-        });
+        });*/
         for (User user : listUsers) {
             System.out.println(user);
         }
