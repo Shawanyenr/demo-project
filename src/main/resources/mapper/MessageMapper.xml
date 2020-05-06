@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.demo.dao.MessageDao">
+
+    <select id="chatListUser" resultType="User">
+        select * from user where username in(
+        SELECT receiver users from message WHERE sender=#{username}
+        UNION
+        SELECT sender users FROM message WHERE receiver=#{username})
+    </select>
+</mapper>

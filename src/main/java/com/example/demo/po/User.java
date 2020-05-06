@@ -15,5 +15,4 @@ public class User {
     private Integer userState;
     private String avatar;
     private Date frozeUntil;
-
 }
