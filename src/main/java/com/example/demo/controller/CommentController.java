@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.ProductWebSocket;
 import com.example.demo.dao.CommentDao;
 import com.example.demo.po.Comment;
 import com.example.demo.po.User;
@@ -30,7 +31,11 @@ private PostDaoService postDaoService;
         comment.setUid(user.getId());
         commentDaoService.addComment(comment);
         notificationDaoService.addNotification(postDaoService.onePost(comment.getPid(),null).getU_id(),comment.getContent(),comment.getPid(),user.getId());
-
+        new ProductWebSocket().systemSendToUser(postDaoService.onePost(comment.getPid(),null).getU_username(), comment.getContent());
+        if (comment.getParentId()!=null){
+            notificationDaoService.addNotification(postDaoService.onePost(commentDaoService.selectCommentById(comment.getParentId()).getUid(),null).getU_id(),comment.getContent(),comment.getPid(),user.getId());
+            new ProductWebSocket().systemSendToUser(postDaoService.onePost(commentDaoService.selectCommentById(comment.getParentId()).getUid(),null).getU_username(), comment.getContent());
+        }
         return "redirect:/loadComment/"+comment.getPid();
     }
 

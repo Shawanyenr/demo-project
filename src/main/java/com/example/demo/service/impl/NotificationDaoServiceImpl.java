@@ -39,4 +39,9 @@ public class NotificationDaoServiceImpl implements NotificationDaoService {
     public void emptyUnchecked(Integer uid) {
         notificationDao.emptyUnchecked(uid);
     }
+
+    @Override
+    public Integer allUnchecked(Integer uid) {
+        return notificationDao.allUnchecked(uid);
+    }
 }

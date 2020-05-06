@@ -63,9 +63,8 @@ public class TestController {
             } else {
                 System.out.println(post);
                 model.addAttribute("post", post);
+                model.addAttribute("allUnchecked", notificationDaoService.allUnchecked(user.getId()));
 
-                model.addAttribute("uncheckedNotify", notificationDaoService.notifyNum(user.getId()));
-                model.addAttribute("likeUncheckedNum", likeNotificationDaoService.likeNotifyNum(user.getId()));
             }
         } else {
             Post post = postDaoService.onePost(id, user.getId());
@@ -94,9 +93,8 @@ public class TestController {
         } else {
             List<Post> posts  = postDaoService.findAll(user.getId());/*.findAll(user.getId());*/
             model.addAttribute("posts", posts);
+            model.addAttribute("allUnchecked", notificationDaoService.allUnchecked(user.getId()));
 
-            model.addAttribute("uncheckedNotify", notificationDaoService.notifyNum(user.getId()));
-            model.addAttribute("likeUncheckedNum", likeNotificationDaoService.likeNotifyNum(user.getId()));
         }
         return "index";
     }
@@ -110,9 +108,8 @@ public class TestController {
         } else {
             List<Post> posts  = postDaoService.mySubs(user.getId(),user.getId());
             model.addAttribute("posts", posts);
+            model.addAttribute("allUnchecked", notificationDaoService.allUnchecked(user.getId()));
 
-            model.addAttribute("uncheckedNotify", notificationDaoService.notifyNum(user.getId()));
-            model.addAttribute("likeUncheckedNum", likeNotificationDaoService.likeNotifyNum(user.getId()));
         }
         return "subscription";
     }

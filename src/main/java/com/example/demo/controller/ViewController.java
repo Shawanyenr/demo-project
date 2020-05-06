@@ -50,8 +50,7 @@ public class ViewController {
             model.addAttribute("likes", likes);
             model.addAttribute("favs", favs);
 
-            model.addAttribute("uncheckedNotify", notificationDaoService.notifyNum(user.getId()));
-            model.addAttribute("likeUncheckedNum", likeNotificationDaoService.likeNotifyNum(user.getId()));
+            model.addAttribute("allUnchecked", notificationDaoService.allUnchecked(user.getId()));
         }
         return "home";
     }

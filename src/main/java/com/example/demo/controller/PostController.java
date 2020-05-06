@@ -98,9 +98,8 @@ public class PostController {
         } else {
             List<Post> posts = postDaoService.searchResult("%" + search_item + "%", user.getId());
             model.addAttribute("posts", posts);
+            model.addAttribute("allUnchecked", notificationDaoService.allUnchecked(user.getId()));
 
-            model.addAttribute("uncheckedNotify", notificationDaoService.notifyNum(user.getId()));
-            model.addAttribute("likeUncheckedNum", likeNotificationDaoService.likeNotifyNum(user.getId()));
         }
         return "search_result";
     }

@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.po.Notification;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.Date;
@@ -16,5 +17,7 @@ public interface NotificationDaoService {
     Date lastNotifyTime(Integer uid);
 
     void emptyUnchecked(Integer uid);
+
+    Integer allUnchecked(Integer uid);
 
 }

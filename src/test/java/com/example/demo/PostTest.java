@@ -61,6 +61,11 @@ public class PostTest {
         System.out.println(postDaoService.checkLike(49,5));
     }
 
+    @Test
+    public void onePost() {
+        System.out.println(postDaoService.onePost(19,null));
+    }
+
 
 
 }
