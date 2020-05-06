@@ -22,19 +22,7 @@ public class MessageTest {
 
     @Test
     public void chatListUser(){
-        List<User> listUsers = messageDaoService.chatListUser("pipi");
-        /*listUsers.sort(new Comparator<User>() {
-            @Override
-            public int compare(User o1, User o2) {
-                Integer diff = o1.getLastMessage().getId() - o2.getLastMessage().getId();
-                if (diff > 0) {
-                    return -1;
-                } else if (diff < 0) {
-                    return 1;
-                }
-                return 0;
-            }
-        });*/
+        List<User> listUsers = messageDaoService.chatListUser("m78");
         for (User user : listUsers) {
             System.out.println(user);
         }

@@ -761,3 +761,18 @@ input[type=checkbox] + i {
 #reports-container .btn-link{
     padding: 0 !important;
 }
+
+.message-list{
+    height: 80px;
+    padding: 15px;
+}
+
+.text-o-ellipsis{
+    text-overflow:ellipsis;
+}
+
+.message-list-avatar{
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+}

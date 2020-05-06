@@ -20,13 +20,24 @@
         <a href="#" class="pl-2 pr-3 pt-2 pb-2" onClick="history.back(-1);"><i class="fas fa-angle-left"
                                                                                style="font-size: 150%"></i></a>
         <div>消息</div>
-        <div> </div>
+        <div></div>
     </div>
 </nav>
 
 
 <div class="container content-m">
-    <div class="message-list d-flex flex-row align-items-center"></div>
+    <div class="message-list d-flex flex-row align-items-center border">喜爱</div>
+    <div class="message-list d-flex flex-row align-items-center border">评论</div>
+    <div th:each="ulist : ${userList}">
+        <a th:href="@{'/message/'+${ulist.getId()}}" class="message-list d-flex flex-row align-items-center border">
+            <img th:src="${ulist.avatar}" alt="" class="message-list-avatar mr-3">
+            <div class="d-flex flex-column justify-content-start flex-grow-1 mr-3">
+                <span th:text="${ulist.username}"></span>
+                <span th:text="${ulist.lastMessage.content}" class="text-nowrap overflow-hidden text-o-ellipsis"></span>
+            </div>
+            <div th:text="${#dates.format(ulist.lastMessage.time,'yyyy-MM-dd HH:mm:ss')}" class="text-muted font-weight-lighter"></div>
+        </a>
+    </div>
 </div>
 
 
