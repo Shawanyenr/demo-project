@@ -28,4 +28,12 @@ public class MessageController {
         model.addAttribute("userList", userList);
         return "message";
     }
+
+    @RequestMapping("/reloadMessage")
+    public String reloadMessage(HttpSession session, Model model){
+        User user = (User) session.getAttribute("user");
+        List<User> userList = messageDaoService.chatListUser(user.getUsername());
+        model.addAttribute("userList", userList);
+        return "message :: messageList";
+    }
 }
