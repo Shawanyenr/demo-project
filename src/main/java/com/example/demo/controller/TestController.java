@@ -75,7 +75,7 @@ public class TestController {
                 model.addAttribute("blocked", userDaoService.checkBlock(post.getU_id(),user.getId()));
 
                 model.addAttribute("allUnchecked", notificationDaoService.allUnchecked(user.getId()));
-                System.out.println("allUnchecked: "+notificationDaoService.allUnchecked(user.getId()));
+                model.addAttribute("allUnreadMessage", messageDaoService.allUnread(user.getUsername()));
             }
         }
         List<Comment> comments = commentDaoService.selectCommentsByPid(id);
@@ -95,6 +95,7 @@ public class TestController {
             List<Post> posts  = postDaoService.findAll(user.getId());/*.findAll(user.getId());*/
             model.addAttribute("posts", posts);
             model.addAttribute("allUnchecked", notificationDaoService.allUnchecked(user.getId()));
+            model.addAttribute("allUnreadMessage", messageDaoService.allUnread(user.getUsername()));
 
         }
         return "index";
@@ -110,6 +111,7 @@ public class TestController {
             List<Post> posts  = postDaoService.mySubs(user.getId(),user.getId());
             model.addAttribute("posts", posts);
             model.addAttribute("allUnchecked", notificationDaoService.allUnchecked(user.getId()));
+            model.addAttribute("allUnreadMessage", messageDaoService.allUnread(user.getUsername()));
 
         }
         return "subscription";
@@ -135,6 +137,7 @@ public class TestController {
             model.addAttribute("one", one);
             model.addAttribute("subState", checkSub);
             model.addAttribute("blocked", checkBlock);
+            model.addAttribute("allUnreadMessage", messageDaoService.allUnread(user.getUsername()));
         }
         return "oneUser";
     }

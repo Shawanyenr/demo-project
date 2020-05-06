@@ -88,7 +88,7 @@ public class MessageController {
     public String reloadUnchecked(HttpSession session, Model model){
         User user = (User) session.getAttribute("user");
         model.addAttribute("allUnchecked", notificationDaoService.allUnchecked(user.getId()));
-
+        model.addAttribute("allUnreadMessage", messageDaoService.allUnread(user.getUsername()));
         return "include :: notificationSection";
     }
 }

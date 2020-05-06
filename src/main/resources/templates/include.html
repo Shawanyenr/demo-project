@@ -224,10 +224,14 @@
         <div id="notificationSection" th:fragment="notificationSection" class="d-flex flex-column">
             <a class="btn btn-outline-dark mb-2" th:href="@{/user/message}" role="button">
                 <i class="fas fa-bell"></i><span> 消息</span>
-                <span class="badge badge-pill badge-light"th:unless="${allUnchecked==0}" th:text="${allUnchecked}">99+</span>
+                <span class="badge badge-pill badge-light" th:unless="${allUnchecked==0}"
+                      th:text="${allUnchecked}">99+</span>
             </a>
             <a class="btn btn-outline-dark mb-2" th:href="@{/user/message}" role="button">
-                <i class="fas fa-comment-alt"></i><span> 信息</span></a>
+                <i class="fas fa-comment-alt"></i><span> 信息</span>
+                <span class="badge badge-pill badge-light" th:unless="${allUnreadMessage==0}"
+                      th:text="${allUnreadMessage}">99+</span>
+            </a>
         </div>
 
         <div class="dropdown-divider"></div>
@@ -322,17 +326,17 @@
             Notification.requestPermission().then(function (permission) {
                 if (permission === 'granted') {
                     console.log('用户允许通知');
-                    if (sender === "system"){
-                        let n = new Notification("@"+sender+" 评论了你",{
+                    if (sender === "system") {
+                        let n = new Notification("@" + sender + " 评论了你", {
                             body: content
                         });
 
                         n.onclick = function (event) {
                             event.preventDefault();
                             n.close();
-                            window.location.href=/*[[@{/user/message}]]*/"";
+                            window.location.href =/*[[@{/user/message}]]*/"";
                         }
-                    }else{
+                    } else {
                         let n = new Notification('@' + sender, {
                             body: content,
                             // tag: sender,
@@ -342,7 +346,7 @@
                         n.onclick = function (event) {
                             event.preventDefault();
                             n.close();
-                            window.location.href="/message/"+senderId;
+                            window.location.href = "/message/" + senderId;
                             window.focus();
                         }
                     }

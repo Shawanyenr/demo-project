@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.po.Post;
 import com.example.demo.po.User;
 import com.example.demo.service.LikeNotificationDaoService;
+import com.example.demo.service.MessageDaoService;
 import com.example.demo.service.NotificationDaoService;
 import com.example.demo.service.PostDaoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,8 @@ public class ViewController {
     private PostDaoService postDaoService;
     @Autowired
     private NotificationDaoService notificationDaoService;
-
+    @Autowired
+    private MessageDaoService messageDaoService;
     @Autowired
     private LikeNotificationDaoService likeNotificationDaoService;
     @RequestMapping({"/login",""})
@@ -51,6 +53,7 @@ public class ViewController {
             model.addAttribute("favs", favs);
 
             model.addAttribute("allUnchecked", notificationDaoService.allUnchecked(user.getId()));
+            model.addAttribute("allUnreadMessage", messageDaoService.allUnread(user.getUsername()));
         }
         return "home";
     }

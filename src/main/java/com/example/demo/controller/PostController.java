@@ -4,6 +4,7 @@ import com.example.demo.ProductWebSocket;
 import com.example.demo.po.Post;
 import com.example.demo.po.User;
 import com.example.demo.service.LikeNotificationDaoService;
+import com.example.demo.service.MessageDaoService;
 import com.example.demo.service.NotificationDaoService;
 import com.example.demo.service.PostDaoService;
 import com.github.pagehelper.PageHelper;
@@ -35,6 +36,8 @@ public class PostController {
 
     @Autowired
     private LikeNotificationDaoService likeNotificationDaoService;
+    @Autowired
+    private MessageDaoService messageDaoService;
     /*@RequestMapping("/loadMore")
     @ResponseBody
     public PageInfo<Post> loadMore(@RequestParam(value = "start", defaultValue = "1") int start, @RequestParam(value = "size", defaultValue = "5") int size) throws Exception {
@@ -99,6 +102,7 @@ public class PostController {
             List<Post> posts = postDaoService.searchResult("%" + search_item + "%", user.getId());
             model.addAttribute("posts", posts);
             model.addAttribute("allUnchecked", notificationDaoService.allUnchecked(user.getId()));
+            model.addAttribute("allUnreadMessage", messageDaoService.allUnread(user.getUsername()));
 
         }
         return "search_result";
