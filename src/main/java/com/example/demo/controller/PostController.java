@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.ProductWebSocket;
 import com.example.demo.po.Post;
 import com.example.demo.po.User;
 import com.example.demo.service.PostDaoService;
@@ -161,6 +162,8 @@ public class PostController {
 
             } else if (check == 0) {
                 postDaoService.addLike(pid, user.getId());
+                new ProductWebSocket().systemSendToUser(postDaoService.onePost(pid,null).getU_username(), "@"+user.getUsername()+"给你的帖子点了赞");
+
             } else {
                 postDaoService.removeLike(pid, user.getId());
 
@@ -187,6 +190,7 @@ public class PostController {
 
             } else if (check == 0) {
                 postDaoService.addFav(pid, user.getId());
+
             } else {
                 postDaoService.removeFav(pid, user.getId());
 

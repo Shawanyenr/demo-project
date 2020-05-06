@@ -318,19 +318,30 @@
             Notification.requestPermission().then(function (permission) {
                 if (permission === 'granted') {
                     console.log('用户允许通知');
-                    let n = new Notification('@' + sender, {
-                        body: content,
-                        // tag: sender,
-                        icon: senderAvatar
-                    });
+                    if (sender === "system"){
+                        let n = new Notification("系统通知",{
+                            body: content
+                        });
 
-                    n.onclick = function (event) {
-                        event.preventDefault();
-                        n.close();
-                        window.location.href = "/message/" + senderId;
-                        window.focus();
+                        n.onclick = function (event) {
+                            event.preventDefault();
+                            n.close();
+                            window.location.href=/*[[@{/user/message}]]*/"";
+                        }
+                    }else{
+                        let n = new Notification('@' + sender, {
+                            body: content,
+                            // tag: sender,
+                            icon: senderAvatar
+                        });
+
+                        n.onclick = function (event) {
+                            event.preventDefault();
+                            n.close();
+                            window.location.href="/message/"+senderId;
+                            window.focus();
+                        }
                     }
-
                 } else if (permission === 'denied') {
                     console.log('用户拒绝通知');
                 }

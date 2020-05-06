@@ -155,7 +155,13 @@ public class ProductWebSocket {
 
         try {
             if (webSocketSet.get(sendUserId) != null) {
-                webSocketSet.get(sendUserId).sendMessage("系统给我发来消息，消息内容为--->>" + message);
+                Map<String, Object> map = new HashMap<>();
+                map.put("userId", "system");
+                map.put("message", message);
+                map.put("userAvatar", "");
+                map.put("id", "");
+                ObjectMapper mapper = new ObjectMapper();
+                webSocketSet.get(sendUserId).sendMessage(mapper.writeValueAsString(map));
             } else {
                 System.out.println("消息接受人:" + sendUserId + "已经离线！");
             }

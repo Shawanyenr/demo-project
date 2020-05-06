@@ -19,7 +19,7 @@
          style="max-width: 992px;height:54px">
         <a href="#" class="pl-2 pr-3 pt-2 pb-2" onClick="history.back(-1);"><i class="fas fa-angle-left"
                                                                                style="font-size: 150%"></i></a>
-        <div>消息</div>
+        <div>评论</div>
         <div></div>
     </div>
 </nav>
@@ -27,21 +27,14 @@
 
 <div class="container content-m">
     <div id="message-list" th:fragment="messageList">
-        <a th:href="@{/user/message/like}" class="message-list d-flex flex-row align-items-center justify-content-between border">
-            <div class="d-flex flex-row align-items-center"><i class="fas fa-heart message-list-avatar mr-3" style="color: red;font-size: 50px"></i><span class="mr-3">喜爱</span></div>
-        </a>
-        <a th:href="@{/user/message/comment}" class="message-list d-flex flex-row align-items-center justify-content-between border">
-            <div class="d-flex flex-row align-items-center"><i class="far fa-comment-dots message-list-avatar mr-3" style="font-size: 50px"></i><span class="mr-3">评论</span><span th:text="${uncheckedNotify!=0}?${uncheckedNotify}" class="badge badge-pill badge-danger">99+</span></div>
-            <span th:text="${#dates.format(lastNotifyDate,'yyyy-MM-dd HH:mm:ss')}" class="text-muted font-weight-lighter"></span>
-        </a>
-        <div th:each="ulist : ${userList}">
-            <a th:href="@{'/message/'+${ulist.getId()}}" class="message-list d-flex flex-row align-items-center border">
-                <img th:src="${ulist.avatar}" alt="" class="message-list-avatar border-radius-50 mr-3">
+        <div th:each="cno : ${commentNotiList}">
+            <a th:href="@{'/posts/'+${cno.pid}}" class="message-list d-flex flex-row align-items-center justify-content-between border">
+                <img th:src="${cno.user.avatar}" alt="" class="message-list-avatar border-radius-50 mr-3">
                 <div class="d-flex flex-column justify-content-start flex-grow-1 mr-3">
-                    <span th:text="${ulist.username}" th:classappend="${ulist.lastMessage.checked==1}?'text-muted font-weight-lighter'"></span>
-                    <span th:text="${ulist.lastMessage.unreadNumById==0}?${ulist.username}+': '+${ulist.lastMessage.content}:'['+${ulist.lastMessage.unreadNumById}+' 未读] '+${ulist.username}+': '+${ulist.lastMessage.content}" class="text-nowrap overflow-hidden text-o-ellipsis text-muted font-weight-lighter"></span>
+                    <span th:text="${cno.user.username}" th:classappend="${cno.isread==1}?'text-muted'"></span>
+                    <span th:text="${cno.content}" class="text-nowrap overflow-hidden text-o-ellipsis text-muted font-weight-lighter"></span>
                 </div>
-                <div th:text="${#dates.format(ulist.lastMessage.time,'yyyy-MM-dd HH:mm:ss')}" class="text-muted font-weight-lighter"></div>
+                <div th:text="${#dates.format(cno.time,'yyyy-MM-dd HH:mm:ss')}" class="text-muted font-weight-lighter"></div>
             </a>
         </div>
     </div>
