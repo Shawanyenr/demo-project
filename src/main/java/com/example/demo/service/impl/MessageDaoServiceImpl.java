@@ -45,4 +45,14 @@ public class MessageDaoServiceImpl implements MessageDaoService {
     public Message lastMessage(String one, String another) {
         return messageDao.lastMessage(one, another);
     }
+
+    @Override
+    public Integer allUnread(String username) {
+        return messageDao.allUnread(username);
+    }
+
+    @Override
+    public void setReadByUid(String username, String uUsername) {
+        messageDao.setReadByUid(username, uUsername);
+    }
 }

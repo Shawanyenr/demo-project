@@ -6,7 +6,9 @@
 <mapper namespace="com.example.demo.dao.MessageDao">
 
     <select id="lastMessage" resultType="Message">
-        select * FROM message where time = (SELECT max(time) from message where (sender=#{one} and receiver=#{another}) or (sender=#{another} and receiver=#{one}))
+        select *,
+        (SELECT count(*) from message WHERE sender=#{another} and receiver=#{one} and checked=0) unreadNumByid
+         FROM message where time = (SELECT max(time) from message where (sender=#{one} and receiver=#{another}) or (sender=#{another} and receiver=#{one}))
     </select>
 
     <resultMap id="userAndLastMessage" type="User">
@@ -19,7 +21,9 @@
     </resultMap>
 
     <select id="chatListUser" resultMap="userAndLastMessage">
-        select *,(SELECT username from user WHERE username=#{username}) uname from user where username in(
+        select *,
+        (SELECT username from user WHERE username=#{username}) uname
+        from user where username in(
         SELECT receiver users from message WHERE sender=#{username}
         UNION
         SELECT sender users FROM message WHERE receiver=#{username})

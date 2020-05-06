@@ -11,7 +11,7 @@
  Target Server Version : 80016
  File Encoding         : 65001
 
- Date: 06/05/2020 11:55:09
+ Date: 06/05/2020 16:25:34
 */
 
 SET NAMES utf8mb4;
@@ -98,114 +98,134 @@ CREATE TABLE `message`  (
   `receiver` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `content` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
+  `checked` int(2) NULL DEFAULT 0,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 103 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of message
 -- ----------------------------
-INSERT INTO `message` VALUES (1, 'pipi', 'm78', '123', '2020-04-17 21:23:53');
-INSERT INTO `message` VALUES (2, 'pipi', 'm78', '12', '2020-04-17 21:33:37');
-INSERT INTO `message` VALUES (3, 'pipi', 'm78', '123erdswe', '2020-04-17 21:33:56');
-INSERT INTO `message` VALUES (4, 'm78', 'pipi', '123', '2020-04-17 21:40:01');
-INSERT INTO `message` VALUES (5, 'pipi', 'm78', 'qasdv', '2020-04-17 21:40:19');
-INSERT INTO `message` VALUES (6, 'pipi', 'm78', 'asvsd,nsbz', '2020-04-17 21:40:24');
-INSERT INTO `message` VALUES (7, 'pipi', 'm78', 'd', '2020-04-17 21:43:52');
-INSERT INTO `message` VALUES (8, 'pipi', 'm78', 'd', '2020-04-17 21:43:53');
-INSERT INTO `message` VALUES (9, 'pipi', 'm78', 'd', '2020-04-17 21:43:54');
-INSERT INTO `message` VALUES (10, 'pipi', 'm78', 'd', '2020-04-17 21:43:55');
-INSERT INTO `message` VALUES (11, 'pipi', 'm78', 'd', '2020-04-17 21:43:56');
-INSERT INTO `message` VALUES (12, 'm78', 'pipi', 'd', '2020-04-17 21:44:00');
-INSERT INTO `message` VALUES (13, 'm78', 'pipi', 'd', '2020-04-17 21:44:01');
-INSERT INTO `message` VALUES (14, 'm78', 'pipi', 'd', '2020-04-17 21:44:02');
-INSERT INTO `message` VALUES (15, 'm78', 'pipi', 'd', '2020-04-17 21:44:03');
-INSERT INTO `message` VALUES (16, 'm78', 'pipi', 'd', '2020-04-17 21:44:04');
-INSERT INTO `message` VALUES (17, 'm78', 'pipi', 'd', '2020-04-17 21:44:05');
-INSERT INTO `message` VALUES (18, 'm78', 'pipi', 'd', '2020-04-17 21:44:06');
-INSERT INTO `message` VALUES (19, 'm78', 'pipi', 'd', '2020-04-17 21:44:07');
-INSERT INTO `message` VALUES (20, 'm78', 'pipi', 'd', '2020-04-17 21:44:08');
-INSERT INTO `message` VALUES (21, 'm78', 'pipi', 'd', '2020-04-17 21:44:11');
-INSERT INTO `message` VALUES (22, 'pipi', 'm78', 'd', '2020-04-17 21:44:20');
-INSERT INTO `message` VALUES (23, 'pipi', 'm78', 'd', '2020-04-17 21:44:22');
-INSERT INTO `message` VALUES (24, 'pipi', 'm78', 'd', '2020-04-17 21:47:10');
-INSERT INTO `message` VALUES (25, 'pipi', 'm78', 'd', '2020-04-17 21:47:12');
-INSERT INTO `message` VALUES (26, 'pipi', 'm78', 'savW', '2020-04-17 21:47:51');
-INSERT INTO `message` VALUES (27, 'pipi', 'm78', '国标舞HRH是', '2020-04-17 21:47:56');
-INSERT INTO `message` VALUES (28, 'pipi', 'm78', '阿萨伟大的特色让对方光和热', '2020-04-17 21:48:04');
-INSERT INTO `message` VALUES (29, 'pipi', 'm78', 'bSRBerazdb', '2020-04-17 21:49:35');
-INSERT INTO `message` VALUES (30, 'pipi', 'm78', 'bheabfzdsbera', '2020-04-17 21:49:46');
-INSERT INTO `message` VALUES (31, 'm78', 'pipi', 'afVAWVDVW', '2020-04-17 21:57:24');
-INSERT INTO `message` VALUES (32, 'm78', 'pipi', 'szdsfghj', '2020-04-17 23:06:56');
-INSERT INTO `message` VALUES (33, 'pipi', 'm78', '123', '2020-04-17 23:09:17');
-INSERT INTO `message` VALUES (34, 'pipi', 'm78', 'gdfg', '2020-04-17 23:17:01');
-INSERT INTO `message` VALUES (35, 'm78', 'pipi', 'dntjrd', '2020-04-17 23:17:05');
-INSERT INTO `message` VALUES (36, 'pipi', 'm78', 'drtfhtdg', '2020-04-17 23:17:13');
-INSERT INTO `message` VALUES (37, 'm78', 'pipi', 'rhfdtgrtsgd', '2020-04-17 23:17:16');
-INSERT INTO `message` VALUES (38, 'm78', 'pipi', 'zsdfghj', '2020-04-17 23:21:58');
-INSERT INTO `message` VALUES (39, 'm78', 'pipi', 'qewaresrdtf', '2020-04-17 23:24:10');
-INSERT INTO `message` VALUES (40, 'pipi', 'm78', 'sdfgth', '2020-04-18 12:36:30');
-INSERT INTO `message` VALUES (41, 'pipi', 'm78', 'adsfdgfhcx wetrswrab 4H  GR3AW', '2020-04-18 12:56:36');
-INSERT INTO `message` VALUES (42, 'pipi', 'm78', '123', '2020-04-18 16:02:38');
-INSERT INTO `message` VALUES (43, 'pipi', 'm78', '123', '2020-04-18 16:07:02');
-INSERT INTO `message` VALUES (44, 'pipi', 'm78', 'asd', '2020-04-18 16:12:47');
-INSERT INTO `message` VALUES (45, 'm78', 'pipi', 'csVbnrydrtsersd', '2020-04-18 16:12:57');
-INSERT INTO `message` VALUES (46, 'pipi', 'm78', 'adsf', '2020-04-18 17:02:12');
-INSERT INTO `message` VALUES (47, 'm78', 'pipi', 'adsfdgr,nebrstbhfd', '2020-04-18 17:02:16');
-INSERT INTO `message` VALUES (48, 'm78', 'pipi', '123', '2020-04-18 17:46:14');
-INSERT INTO `message` VALUES (49, 'm78', 'pipi', '23而', '2020-04-18 17:46:40');
-INSERT INTO `message` VALUES (50, 'pipi', 'm78', 'sc', '2020-04-18 20:18:28');
-INSERT INTO `message` VALUES (51, 'm78', 'pipi', 'as', '2020-04-18 20:24:39');
-INSERT INTO `message` VALUES (52, 'm78', 'pipi', '干啥呢', '2020-04-18 20:25:00');
-INSERT INTO `message` VALUES (53, 'm78', 'pipi', '阿斯顿', '2020-04-18 20:39:31');
-INSERT INTO `message` VALUES (54, 'm78', 'pipi', '123', '2020-04-18 20:44:10');
-INSERT INTO `message` VALUES (55, 'm78', 'pipi', '的风格和', '2020-04-18 20:44:52');
-INSERT INTO `message` VALUES (56, 'm78', 'pipi', '现场v吧', '2020-04-18 20:45:01');
-INSERT INTO `message` VALUES (57, 'pipi', 'm78', '的风格', '2020-04-18 20:45:41');
-INSERT INTO `message` VALUES (58, 'pipi', 'm78', '的风格v不会', '2020-04-18 20:45:57');
-INSERT INTO `message` VALUES (59, 'pipi', 'm78', '123', '2020-04-18 22:11:00');
-INSERT INTO `message` VALUES (60, 'm78', 'pipi', 'jnhkl', '2020-04-18 22:11:28');
-INSERT INTO `message` VALUES (61, 'm78', 'pipi', '546', '2020-04-18 22:11:37');
-INSERT INTO `message` VALUES (62, 'm78', 'pipi', 'vhgj', '2020-04-18 22:15:49');
-INSERT INTO `message` VALUES (63, 'm78', 'pipi', 'cy  ul v', '2020-04-18 22:16:01');
-INSERT INTO `message` VALUES (64, 'm78', 'pipi', 'iukj', '2020-04-18 22:17:57');
-INSERT INTO `message` VALUES (65, 'm78', 'pipi', 'yulvh', '2020-04-18 22:18:13');
-INSERT INTO `message` VALUES (66, 'm78', 'pipi', '45632', '2020-04-18 22:30:20');
-INSERT INTO `message` VALUES (67, 'm78', 'pipi', 'jhkl', '2020-04-18 22:38:35');
-INSERT INTO `message` VALUES (68, 'm78', 'pipi', '12346', '2020-04-18 22:39:44');
-INSERT INTO `message` VALUES (69, 'm78', 'pipi', 'asdf', '2020-04-18 22:46:52');
-INSERT INTO `message` VALUES (70, 'm78', 'pipi', 'sdtf', '2020-04-18 22:47:54');
-INSERT INTO `message` VALUES (71, 'm78', 'pipi', '热天荣誉感和', '2020-04-18 22:49:15');
-INSERT INTO `message` VALUES (72, 'pipi', 'm78', 'hey', '2020-04-19 14:57:25');
-INSERT INTO `message` VALUES (73, 'm78', 'pipi', 'Hi', '2020-04-19 14:57:44');
-INSERT INTO `message` VALUES (74, 'm78', 'pipi', 'See u around', '2020-04-19 14:58:03');
-INSERT INTO `message` VALUES (75, 'm78', 'pipi', 'sdfc', '2020-04-20 17:23:27');
-INSERT INTO `message` VALUES (76, '2016b11015', 'pipi', 'heyyy', '2020-04-20 17:51:47');
-INSERT INTO `message` VALUES (77, 'm78', 'pipi', '嗨', '2020-04-20 19:12:47');
-INSERT INTO `message` VALUES (78, 'm78', 'pipi', 'F', '2020-04-20 19:56:43');
-INSERT INTO `message` VALUES (79, '2016b11015', 'pipi', 'asdf', '2020-04-21 16:52:31');
-INSERT INTO `message` VALUES (80, '2016b11015', 'pipi', 'asder', '2020-04-21 16:53:48');
-INSERT INTO `message` VALUES (81, '2016b11015', 'pipi', 'asd', '2020-04-21 17:54:27');
-INSERT INTO `message` VALUES (82, '2016b11015', 'pipi', '456', '2020-04-21 18:05:57');
-INSERT INTO `message` VALUES (83, '2016b11015', 'pipi', 'aswe', '2020-04-21 18:15:03');
-INSERT INTO `message` VALUES (84, '2016b11015', 'pipi', '111', '2020-04-21 18:23:49');
-INSERT INTO `message` VALUES (85, '2016b11015', 'pipi', '阿斯顿法国红酒看来', '2020-04-21 18:32:12');
-INSERT INTO `message` VALUES (86, '2016b11015', 'pipi', '先吃饭v', '2020-04-21 18:32:50');
-INSERT INTO `message` VALUES (87, '2016b11015', 'pipi', 'asd', '2020-04-21 18:37:08');
-INSERT INTO `message` VALUES (88, '2016b11015', 'pipi', 'qwert', '2020-04-21 18:38:15');
-INSERT INTO `message` VALUES (89, '2016b11015', 'pipi', 'awsedrf', '2020-04-21 18:43:05');
-INSERT INTO `message` VALUES (90, '2016b11015', 'pipi', 'xdcfgvh', '2020-04-21 18:57:46');
-INSERT INTO `message` VALUES (91, '2016b11015', 'pipi', 'dfgyhj', '2020-04-21 18:57:56');
-INSERT INTO `message` VALUES (92, '2016b11015', 'pipi', 'asd', '2020-04-21 19:02:54');
-INSERT INTO `message` VALUES (93, 'pipi', '2016b11015', 'awsed', '2020-04-21 19:03:00');
-INSERT INTO `message` VALUES (94, 'pipi', '2016b11015', 'aew', '2020-04-21 19:04:41');
-INSERT INTO `message` VALUES (95, '2016b11015', 'pipi', 'sdf', '2020-04-21 19:07:30');
-INSERT INTO `message` VALUES (96, '2016b11015', 'pipi', 'asdfr', '2020-04-21 19:08:56');
-INSERT INTO `message` VALUES (97, 'pipi', '2016b11015', 'asdf', '2020-04-21 19:09:24');
-INSERT INTO `message` VALUES (98, 'pipi', 'GilesWi', 'jdtjux', '2020-05-01 17:06:18');
-INSERT INTO `message` VALUES (99, 'GilesWi', 'pipi', 'aeg', '2020-05-01 17:07:43');
-INSERT INTO `message` VALUES (100, 'pipi', 'GilesWi', 'bds', '2020-05-01 17:08:18');
-INSERT INTO `message` VALUES (101, 'm78', 'pipi', '132165', '2020-05-04 15:02:55');
-INSERT INTO `message` VALUES (102, 'm78', 'pipi', '📼', '2020-05-04 15:03:24');
+INSERT INTO `message` VALUES (1, 'pipi', 'm78', '123', '2020-04-17 21:23:53', 1);
+INSERT INTO `message` VALUES (2, 'pipi', 'm78', '12', '2020-04-17 21:33:37', 1);
+INSERT INTO `message` VALUES (3, 'pipi', 'm78', '123erdswe', '2020-04-17 21:33:56', 1);
+INSERT INTO `message` VALUES (4, 'm78', 'pipi', '123', '2020-04-17 21:40:01', 1);
+INSERT INTO `message` VALUES (5, 'pipi', 'm78', 'qasdv', '2020-04-17 21:40:19', 1);
+INSERT INTO `message` VALUES (6, 'pipi', 'm78', 'asvsd,nsbz', '2020-04-17 21:40:24', 1);
+INSERT INTO `message` VALUES (7, 'pipi', 'm78', 'd', '2020-04-17 21:43:52', 1);
+INSERT INTO `message` VALUES (8, 'pipi', 'm78', 'd', '2020-04-17 21:43:53', 1);
+INSERT INTO `message` VALUES (9, 'pipi', 'm78', 'd', '2020-04-17 21:43:54', 1);
+INSERT INTO `message` VALUES (10, 'pipi', 'm78', 'd', '2020-04-17 21:43:55', 1);
+INSERT INTO `message` VALUES (11, 'pipi', 'm78', 'd', '2020-04-17 21:43:56', 1);
+INSERT INTO `message` VALUES (12, 'm78', 'pipi', 'd', '2020-04-17 21:44:00', 1);
+INSERT INTO `message` VALUES (13, 'm78', 'pipi', 'd', '2020-04-17 21:44:01', 1);
+INSERT INTO `message` VALUES (14, 'm78', 'pipi', 'd', '2020-04-17 21:44:02', 1);
+INSERT INTO `message` VALUES (15, 'm78', 'pipi', 'd', '2020-04-17 21:44:03', 1);
+INSERT INTO `message` VALUES (16, 'm78', 'pipi', 'd', '2020-04-17 21:44:04', 1);
+INSERT INTO `message` VALUES (17, 'm78', 'pipi', 'd', '2020-04-17 21:44:05', 1);
+INSERT INTO `message` VALUES (18, 'm78', 'pipi', 'd', '2020-04-17 21:44:06', 1);
+INSERT INTO `message` VALUES (19, 'm78', 'pipi', 'd', '2020-04-17 21:44:07', 1);
+INSERT INTO `message` VALUES (20, 'm78', 'pipi', 'd', '2020-04-17 21:44:08', 1);
+INSERT INTO `message` VALUES (21, 'm78', 'pipi', 'd', '2020-04-17 21:44:11', 1);
+INSERT INTO `message` VALUES (22, 'pipi', 'm78', 'd', '2020-04-17 21:44:20', 1);
+INSERT INTO `message` VALUES (23, 'pipi', 'm78', 'd', '2020-04-17 21:44:22', 1);
+INSERT INTO `message` VALUES (24, 'pipi', 'm78', 'd', '2020-04-17 21:47:10', 1);
+INSERT INTO `message` VALUES (25, 'pipi', 'm78', 'd', '2020-04-17 21:47:12', 1);
+INSERT INTO `message` VALUES (26, 'pipi', 'm78', 'savW', '2020-04-17 21:47:51', 1);
+INSERT INTO `message` VALUES (27, 'pipi', 'm78', '国标舞HRH是', '2020-04-17 21:47:56', 1);
+INSERT INTO `message` VALUES (28, 'pipi', 'm78', '阿萨伟大的特色让对方光和热', '2020-04-17 21:48:04', 1);
+INSERT INTO `message` VALUES (29, 'pipi', 'm78', 'bSRBerazdb', '2020-04-17 21:49:35', 1);
+INSERT INTO `message` VALUES (30, 'pipi', 'm78', 'bheabfzdsbera', '2020-04-17 21:49:46', 1);
+INSERT INTO `message` VALUES (31, 'm78', 'pipi', 'afVAWVDVW', '2020-04-17 21:57:24', 1);
+INSERT INTO `message` VALUES (32, 'm78', 'pipi', 'szdsfghj', '2020-04-17 23:06:56', 1);
+INSERT INTO `message` VALUES (33, 'pipi', 'm78', '123', '2020-04-17 23:09:17', 1);
+INSERT INTO `message` VALUES (34, 'pipi', 'm78', 'gdfg', '2020-04-17 23:17:01', 1);
+INSERT INTO `message` VALUES (35, 'm78', 'pipi', 'dntjrd', '2020-04-17 23:17:05', 1);
+INSERT INTO `message` VALUES (36, 'pipi', 'm78', 'drtfhtdg', '2020-04-17 23:17:13', 1);
+INSERT INTO `message` VALUES (37, 'm78', 'pipi', 'rhfdtgrtsgd', '2020-04-17 23:17:16', 1);
+INSERT INTO `message` VALUES (38, 'm78', 'pipi', 'zsdfghj', '2020-04-17 23:21:58', 1);
+INSERT INTO `message` VALUES (39, 'm78', 'pipi', 'qewaresrdtf', '2020-04-17 23:24:10', 1);
+INSERT INTO `message` VALUES (40, 'pipi', 'm78', 'sdfgth', '2020-04-18 12:36:30', 1);
+INSERT INTO `message` VALUES (41, 'pipi', 'm78', 'adsfdgfhcx wetrswrab 4H  GR3AW', '2020-04-18 12:56:36', 1);
+INSERT INTO `message` VALUES (42, 'pipi', 'm78', '123', '2020-04-18 16:02:38', 1);
+INSERT INTO `message` VALUES (43, 'pipi', 'm78', '123', '2020-04-18 16:07:02', 1);
+INSERT INTO `message` VALUES (44, 'pipi', 'm78', 'asd', '2020-04-18 16:12:47', 1);
+INSERT INTO `message` VALUES (45, 'm78', 'pipi', 'csVbnrydrtsersd', '2020-04-18 16:12:57', 1);
+INSERT INTO `message` VALUES (46, 'pipi', 'm78', 'adsf', '2020-04-18 17:02:12', 1);
+INSERT INTO `message` VALUES (47, 'm78', 'pipi', 'adsfdgr,nebrstbhfd', '2020-04-18 17:02:16', 1);
+INSERT INTO `message` VALUES (48, 'm78', 'pipi', '123', '2020-04-18 17:46:14', 1);
+INSERT INTO `message` VALUES (49, 'm78', 'pipi', '23而', '2020-04-18 17:46:40', 1);
+INSERT INTO `message` VALUES (50, 'pipi', 'm78', 'sc', '2020-04-18 20:18:28', 1);
+INSERT INTO `message` VALUES (51, 'm78', 'pipi', 'as', '2020-04-18 20:24:39', 1);
+INSERT INTO `message` VALUES (52, 'm78', 'pipi', '干啥呢', '2020-04-18 20:25:00', 1);
+INSERT INTO `message` VALUES (53, 'm78', 'pipi', '阿斯顿', '2020-04-18 20:39:31', 1);
+INSERT INTO `message` VALUES (54, 'm78', 'pipi', '123', '2020-04-18 20:44:10', 1);
+INSERT INTO `message` VALUES (55, 'm78', 'pipi', '的风格和', '2020-04-18 20:44:52', 1);
+INSERT INTO `message` VALUES (56, 'm78', 'pipi', '现场v吧', '2020-04-18 20:45:01', 1);
+INSERT INTO `message` VALUES (57, 'pipi', 'm78', '的风格', '2020-04-18 20:45:41', 1);
+INSERT INTO `message` VALUES (58, 'pipi', 'm78', '的风格v不会', '2020-04-18 20:45:57', 1);
+INSERT INTO `message` VALUES (59, 'pipi', 'm78', '123', '2020-04-18 22:11:00', 1);
+INSERT INTO `message` VALUES (60, 'm78', 'pipi', 'jnhkl', '2020-04-18 22:11:28', 1);
+INSERT INTO `message` VALUES (61, 'm78', 'pipi', '546', '2020-04-18 22:11:37', 1);
+INSERT INTO `message` VALUES (62, 'm78', 'pipi', 'vhgj', '2020-04-18 22:15:49', 1);
+INSERT INTO `message` VALUES (63, 'm78', 'pipi', 'cy  ul v', '2020-04-18 22:16:01', 1);
+INSERT INTO `message` VALUES (64, 'm78', 'pipi', 'iukj', '2020-04-18 22:17:57', 1);
+INSERT INTO `message` VALUES (65, 'm78', 'pipi', 'yulvh', '2020-04-18 22:18:13', 1);
+INSERT INTO `message` VALUES (66, 'm78', 'pipi', '45632', '2020-04-18 22:30:20', 1);
+INSERT INTO `message` VALUES (67, 'm78', 'pipi', 'jhkl', '2020-04-18 22:38:35', 1);
+INSERT INTO `message` VALUES (68, 'm78', 'pipi', '12346', '2020-04-18 22:39:44', 1);
+INSERT INTO `message` VALUES (69, 'm78', 'pipi', 'asdf', '2020-04-18 22:46:52', 1);
+INSERT INTO `message` VALUES (70, 'm78', 'pipi', 'sdtf', '2020-04-18 22:47:54', 1);
+INSERT INTO `message` VALUES (71, 'm78', 'pipi', '热天荣誉感和', '2020-04-18 22:49:15', 1);
+INSERT INTO `message` VALUES (72, 'pipi', 'm78', 'hey', '2020-04-19 14:57:25', 1);
+INSERT INTO `message` VALUES (73, 'm78', 'pipi', 'Hi', '2020-04-19 14:57:44', 1);
+INSERT INTO `message` VALUES (74, 'm78', 'pipi', 'See u around', '2020-04-19 14:58:03', 1);
+INSERT INTO `message` VALUES (75, 'm78', 'pipi', 'sdfc', '2020-04-20 17:23:27', 1);
+INSERT INTO `message` VALUES (76, '2016b11015', 'pipi', 'heyyy', '2020-04-20 17:51:47', 1);
+INSERT INTO `message` VALUES (77, 'm78', 'pipi', '嗨', '2020-04-20 19:12:47', 1);
+INSERT INTO `message` VALUES (78, 'm78', 'pipi', 'F', '2020-04-20 19:56:43', 1);
+INSERT INTO `message` VALUES (79, '2016b11015', 'pipi', 'asdf', '2020-04-21 16:52:31', 1);
+INSERT INTO `message` VALUES (80, '2016b11015', 'pipi', 'asder', '2020-04-21 16:53:48', 1);
+INSERT INTO `message` VALUES (81, '2016b11015', 'pipi', 'asd', '2020-04-21 17:54:27', 1);
+INSERT INTO `message` VALUES (82, '2016b11015', 'pipi', '456', '2020-04-21 18:05:57', 1);
+INSERT INTO `message` VALUES (83, '2016b11015', 'pipi', 'aswe', '2020-04-21 18:15:03', 1);
+INSERT INTO `message` VALUES (84, '2016b11015', 'pipi', '111', '2020-04-21 18:23:49', 1);
+INSERT INTO `message` VALUES (85, '2016b11015', 'pipi', '阿斯顿法国红酒看来', '2020-04-21 18:32:12', 1);
+INSERT INTO `message` VALUES (86, '2016b11015', 'pipi', '先吃饭v', '2020-04-21 18:32:50', 1);
+INSERT INTO `message` VALUES (87, '2016b11015', 'pipi', 'asd', '2020-04-21 18:37:08', 1);
+INSERT INTO `message` VALUES (88, '2016b11015', 'pipi', 'qwert', '2020-04-21 18:38:15', 1);
+INSERT INTO `message` VALUES (89, '2016b11015', 'pipi', 'awsedrf', '2020-04-21 18:43:05', 1);
+INSERT INTO `message` VALUES (90, '2016b11015', 'pipi', 'xdcfgvh', '2020-04-21 18:57:46', 1);
+INSERT INTO `message` VALUES (91, '2016b11015', 'pipi', 'dfgyhj', '2020-04-21 18:57:56', 1);
+INSERT INTO `message` VALUES (92, '2016b11015', 'pipi', 'asd', '2020-04-21 19:02:54', 1);
+INSERT INTO `message` VALUES (93, 'pipi', '2016b11015', 'awsed', '2020-04-21 19:03:00', 1);
+INSERT INTO `message` VALUES (94, 'pipi', '2016b11015', 'aew', '2020-04-21 19:04:41', 1);
+INSERT INTO `message` VALUES (95, '2016b11015', 'pipi', 'sdf', '2020-04-21 19:07:30', 1);
+INSERT INTO `message` VALUES (96, '2016b11015', 'pipi', 'asdfr', '2020-04-21 19:08:56', 1);
+INSERT INTO `message` VALUES (97, 'pipi', '2016b11015', 'asdf', '2020-04-21 19:09:24', 1);
+INSERT INTO `message` VALUES (98, 'pipi', 'GilesWi', 'jdtjux', '2020-05-01 17:06:18', 1);
+INSERT INTO `message` VALUES (99, 'GilesWi', 'pipi', 'aeg', '2020-05-01 17:07:43', 1);
+INSERT INTO `message` VALUES (100, 'pipi', 'GilesWi', 'bds', '2020-05-01 17:08:18', 1);
+INSERT INTO `message` VALUES (101, 'm78', 'pipi', '132165', '2020-05-04 15:02:55', 1);
+INSERT INTO `message` VALUES (102, 'm78', 'pipi', '📼', '2020-05-04 15:03:24', 1);
+INSERT INTO `message` VALUES (103, 'm78', 'pipi', '123', '2020-05-06 12:51:15', 0);
+INSERT INTO `message` VALUES (104, '2016b11015', 'pipi', 'hahahahaha', '2020-05-06 14:10:13', 1);
+
+-- ----------------------------
+-- Table structure for notification
+-- ----------------------------
+DROP TABLE IF EXISTS `notification`;
+CREATE TABLE `notification`  (
+  `id` int(20) NOT NULL AUTO_INCREMENT,
+  `uid` int(20) NOT NULL,
+  `time` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP(0),
+  `read` int(2) NULL DEFAULT 0,
+  `content` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of notification
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for post

@@ -3,6 +3,7 @@ package com.example.demo.service;
 import com.example.demo.po.Message;
 import com.example.demo.po.User;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 
@@ -14,5 +15,9 @@ public interface MessageDaoService {
     List<User> chatListUser(String username);
 
     Message lastMessage(String one, String another);
+
+    Integer allUnread(String username);
+
+    void setReadByUid(String username, String uUsername);
 
 }

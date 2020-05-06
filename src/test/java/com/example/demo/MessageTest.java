@@ -22,7 +22,7 @@ public class MessageTest {
 
     @Test
     public void chatListUser(){
-        List<User> listUsers = messageDaoService.chatListUser("m78");
+        List<User> listUsers = messageDaoService.chatListUser("pipi");
         for (User user : listUsers) {
             System.out.println(user);
         }
@@ -31,7 +31,7 @@ public class MessageTest {
 
     @Test
     public void lastMessage(){
-        Message message = messageDaoService.lastMessage("pipi", "2016b11015");
+        Message message = messageDaoService.lastMessage("pipi", "m78");
         System.out.println(message);
     }
 

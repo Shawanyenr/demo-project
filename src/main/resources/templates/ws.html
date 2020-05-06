@@ -121,12 +121,16 @@
     websocket.onopen = function () {
         // setMessageInnerHTML("WebSocket连接成功");
         console.log("WebSocket连接成功");
+        //把收到消息的对象的所有聊天记录设置为已读
+        setRead();
     }
 
     //接收到消息的回调方法
     websocket.onmessage = function (event) {
         setMessageInnerHTML(event.data);
         console.log(event.data);
+        //把收到消息的对象的所有聊天记录设置为已读
+        setRead();
     }
 
     //连接关闭的回调方法
@@ -232,7 +236,22 @@
 
     document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('messageSection').scrollTop = document.getElementById('messageSection').scrollHeight;
-    })
+    });
+
+    function setRead() {
+        $.ajax({
+            url: /*[[@{/message/setRead}]]*/"",
+            data: {uid: /*[[${one.username}]]*/""},
+            success: function (data) {
+                if (data==="ok"){
+                    console.log("设置已读成功");
+                }else {
+                    console.log(data);
+                }
+
+            }
+        });
+    }
 
 </script>
 </html>

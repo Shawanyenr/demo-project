@@ -18,5 +18,4 @@ public class User{
     private String avatar;
     private Date frozeUntil;
     private Message lastMessage;
-
 }

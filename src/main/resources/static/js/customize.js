@@ -108,7 +108,6 @@ function sendReport(pid) {
                 }else{
                     alert(data);
                 }
-
             },
             error: function () {
                 alert("举报失败");

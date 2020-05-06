@@ -110,17 +110,7 @@ public class ProductWebSocket {
         JsonNode rootNode = mapper.readTree(message);
         String sendUserId = rootNode.path("sendUserId").asText();
         String sendMessage = rootNode.path("message").asText();
-//        System.out.println(mapper.writeValueAsString(message));
-        /*String sendUserId = mapper.writeValueAsString(message);
-//        JsonNode messageNode = rootNode.path("sendUserId");
-        String sendMessage = mapper.writeValueAsString(message);*/
         System.out.println("sendUserId: " + sendUserId + " sendMessage: " + sendMessage);
-        /*//要发送人的用户uuid
-        String sendUserId = message.split(",", 2)[0];
-        System.out.println("sendUserId length: " + sendUserId.length());
-        //发送的信息
-        String sendMessage = message.substring(sendUserId.length()+1);
-        System.out.println("sendMessage: "+sendMessage);*/
         messageDaoService.addMessage(userId, sendUserId, sendMessage);
         //给指定的人发消息
         sendToUser(sendUserId, sendMessage);
@@ -142,7 +132,6 @@ public class ProductWebSocket {
                 map.put("message", message);
                 map.put("id",userDaoService.findByUsername(userId).getId());
                 ObjectMapper mapper = new ObjectMapper();
-//                webSocketSet.get(sendUserId).sendMessage(userId + "," + message);
                 System.out.println(mapper.writeValueAsString(map));
                 webSocketSet.get(sendUserId).sendMessage(mapper.writeValueAsString(map));
             } else {
