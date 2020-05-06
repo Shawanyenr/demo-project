@@ -19,4 +19,6 @@ public interface MessageDao {
     List<Message> listMessage(String sender, String receiver, String sender1, String receiver1);
 
     List<User> chatListUser(@Param("username") String username);
+
+    Message lastMessage(@Param("one") String one, @Param("another") String another);
 }

@@ -12,4 +12,7 @@ public interface MessageDaoService {
     List<Message> listMessage(String sender, String receiver, String sender1, String receiver1);
 
     List<User> chatListUser(String username);
+
+    Message lastMessage(String one, String another);
+
 }

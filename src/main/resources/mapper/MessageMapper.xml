@@ -5,8 +5,21 @@
 
 <mapper namespace="com.example.demo.dao.MessageDao">
 
-    <select id="chatListUser" resultType="User">
-        select * from user where username in(
+    <select id="lastMessage" resultType="Message">
+        select * FROM message where time = (SELECT max(time) from message where (sender=#{one} and receiver=#{another}) or (sender=#{another} and receiver=#{one}))
+    </select>
+
+    <resultMap id="userAndLastMessage" type="User">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="username" column="username"/>
+        <result property="avatar" column="avatar"/>
+        <association property="lastMessage" column="{one=uname,another=username}" javaType="Message"
+                     select="lastMessage"/>
+    </resultMap>
+
+    <select id="chatListUser" resultMap="userAndLastMessage">
+        select *,(SELECT username from user WHERE username=#{username}) uname from user where username in(
         SELECT receiver users from message WHERE sender=#{username}
         UNION
         SELECT sender users FROM message WHERE receiver=#{username})

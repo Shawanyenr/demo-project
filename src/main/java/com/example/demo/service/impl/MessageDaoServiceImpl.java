@@ -29,4 +29,9 @@ public class MessageDaoServiceImpl implements MessageDaoService {
     public List<User> chatListUser(String username) {
         return messageDao.chatListUser(username);
     }
+
+    @Override
+    public Message lastMessage(String one, String another) {
+        return messageDao.lastMessage(one, another);
+    }
 }
