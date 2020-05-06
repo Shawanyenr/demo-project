@@ -29,7 +29,7 @@ private PostDaoService postDaoService;
         User user = (User) session.getAttribute("user");
         comment.setUid(user.getId());
         commentDaoService.addComment(comment);
-        notificationDaoService.addNotification(postDaoService.onePost(comment.getPid(),null).getU_id(),);
+        notificationDaoService.addNotification(postDaoService.onePost(comment.getPid(),null).getU_id(),comment.getContent(),comment.getPid(),user.getId());
 
         return "redirect:/loadComment/"+comment.getPid();
     }
