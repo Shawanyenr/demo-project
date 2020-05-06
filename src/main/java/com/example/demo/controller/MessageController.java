@@ -4,6 +4,7 @@ import com.example.demo.dao.NotificationDao;
 import com.example.demo.po.Comment;
 import com.example.demo.po.User;
 import com.example.demo.service.CommentDaoService;
+import com.example.demo.service.LikeNotificationDaoService;
 import com.example.demo.service.MessageDaoService;
 import com.example.demo.service.NotificationDaoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,9 @@ public class MessageController {
     @Autowired
     private NotificationDaoService notificationDaoService;
 
+    @Autowired
+    private LikeNotificationDaoService likeNotificationDaoService;
+
     @RequestMapping("/message")
     public String messagePage(HttpSession session, Model model){
         User user = (User) session.getAttribute("user");
@@ -36,6 +40,8 @@ public class MessageController {
         model.addAttribute("userList", userList);
         model.addAttribute("uncheckedNotify", notificationDaoService.notifyNum(user.getId()));
         model.addAttribute("lastNotifyDate", notificationDaoService.lastNotifyTime(user.getId()));
+        model.addAttribute("likeUncheckedNum", likeNotificationDaoService.likeNotifyNum(user.getId()));
+        model.addAttribute("likeLastDate", likeNotificationDaoService.lastLikeNotifyTime(user.getId()));
         return "message";
     }
 
@@ -46,6 +52,8 @@ public class MessageController {
         model.addAttribute("userList", userList);
         model.addAttribute("uncheckedNotify", notificationDaoService.notifyNum(user.getId()));
         model.addAttribute("lastNotifyDate", notificationDaoService.lastNotifyTime(user.getId()));
+        model.addAttribute("likeUncheckedNum", likeNotificationDaoService.likeNotifyNum(user.getId()));
+        model.addAttribute("likeLastDate", likeNotificationDaoService.lastLikeNotifyTime(user.getId()));
         return "message :: messageList";
     }
 
@@ -66,5 +74,13 @@ public class MessageController {
         model.addAttribute("commentNotiList", notificationDaoService.listNotification(user.getId()));
         notificationDaoService.emptyUnchecked(user.getId());
         return "commentNotify";
+    }
+
+    @RequestMapping("/message/like")
+    public String likeNotify(HttpSession session, Model model){
+        User user = (User) session.getAttribute("user");
+        model.addAttribute("likeNotifyList", likeNotificationDaoService.listLikeNotification(user.getId()));
+        likeNotificationDaoService.emptyLikeUnchecked(user.getId());
+        return "likeNotify";
     }
 }

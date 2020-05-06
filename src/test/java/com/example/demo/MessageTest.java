@@ -1,9 +1,7 @@
 package com.example.demo;
 
-import com.example.demo.po.Message;
-import com.example.demo.po.Notification;
-import com.example.demo.po.Report;
-import com.example.demo.po.User;
+import com.example.demo.po.*;
+import com.example.demo.service.LikeNotificationDaoService;
 import com.example.demo.service.MessageDaoService;
 import com.example.demo.service.NotificationDaoService;
 import com.example.demo.service.ReportDaoService;
@@ -24,6 +22,9 @@ public class MessageTest {
 
     @Autowired
     private NotificationDaoService notificationDaoService;
+
+    @Autowired
+    private LikeNotificationDaoService likeNotificationDaoService;
 
     @Test
     public void chatListUser(){
@@ -49,6 +50,11 @@ public class MessageTest {
     @Test
     public void listNotification(){
         List<Notification> nlist = notificationDaoService.listNotification(5);
+        System.out.println(nlist);
+    }
+    @Test
+    public void likeNo(){
+        List<LikeNotify> nlist = likeNotificationDaoService.listLikeNotification(1);
         System.out.println(nlist);
     }
 

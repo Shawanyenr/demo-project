@@ -27,11 +27,13 @@
 
 <div class="container content-m">
     <div id="message-list" th:fragment="messageList">
+        <h5 class="text-center" th:if="${#lists.isEmpty(commentNotiList)}">还没有人评论</h5>
+
         <div th:each="cno : ${commentNotiList}">
             <a th:href="@{'/posts/'+${cno.pid}}" class="message-list d-flex flex-row align-items-center justify-content-between border">
                 <img th:src="${cno.user.avatar}" alt="" class="message-list-avatar border-radius-50 mr-3">
                 <div class="d-flex flex-column justify-content-start flex-grow-1 mr-3">
-                    <span th:text="${cno.user.username}" th:classappend="${cno.isread==1}?'text-muted'"></span>
+                    <span th:text="${cno.user.username}" th:classappend="${cno.isread==1}?'text-muted font-weight-lighter'"></span>
                     <span th:text="${cno.content}" class="text-nowrap overflow-hidden text-o-ellipsis text-muted font-weight-lighter"></span>
                 </div>
                 <div th:text="${#dates.format(cno.time,'yyyy-MM-dd HH:mm:ss')}" class="text-muted font-weight-lighter"></div>

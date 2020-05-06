@@ -3,24 +3,20 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.example.demo.dao.NotificationDao">
-    <select id="notifyNum" parameterType="Integer" resultType="Integer">
-        select count(*) from commentnote where isread=0 and uid=#{uid}
-    </select>
+<mapper namespace="com.example.demo.dao.LikeNotifyDao">
 
-    <resultMap id="NotificationAndUser" type="Notification">
+    <resultMap id="LikeNotiAndUser" type="LikeNotify">
         <id property="id" column="id"/>
         <result property="uid" column="uid"/>
         <result property="isread" column="isread"/>
         <result property="time" column="time"/>
-        <result property="content" column="content"/>
         <result property="pid" column="pid"/>
         <result property="fromid" column="fromid"/>
         <association property="user" column="fromid" javaType="User"
                      select="com.example.demo.dao.UserDao.findById"/>
     </resultMap>
 
-    <select id="listNotification" parameterType="Integer" resultMap="NotificationAndUser">
-        select * from commentnote where uid=#{uid} order by time desc
+    <select id="listLikeNotification" parameterType="Integer" resultMap="LikeNotiAndUser">
+        select * from likenotify where uid=#{uid} order by time desc
     </select>
 </mapper>
