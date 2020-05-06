@@ -11,7 +11,7 @@
  Target Server Version : 80016
  File Encoding         : 65001
 
- Date: 06/05/2020 16:25:34
+ Date: 06/05/2020 16:37:25
 */
 
 SET NAMES utf8mb4;
@@ -207,8 +207,9 @@ INSERT INTO `message` VALUES (99, 'GilesWi', 'pipi', 'aeg', '2020-05-01 17:07:43
 INSERT INTO `message` VALUES (100, 'pipi', 'GilesWi', 'bds', '2020-05-01 17:08:18', 1);
 INSERT INTO `message` VALUES (101, 'm78', 'pipi', '132165', '2020-05-04 15:02:55', 1);
 INSERT INTO `message` VALUES (102, 'm78', 'pipi', '📼', '2020-05-04 15:03:24', 1);
-INSERT INTO `message` VALUES (103, 'm78', 'pipi', '123', '2020-05-06 12:51:15', 0);
+INSERT INTO `message` VALUES (103, 'm78', 'pipi', '123', '2020-05-06 12:51:15', 1);
 INSERT INTO `message` VALUES (104, '2016b11015', 'pipi', 'hahahahaha', '2020-05-06 14:10:13', 1);
+INSERT INTO `message` VALUES (105, 'm78', 'pipi', '😂', '2020-05-06 16:36:44', 0);
 
 -- ----------------------------
 -- Table structure for notification
