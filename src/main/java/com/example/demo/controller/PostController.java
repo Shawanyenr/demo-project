@@ -3,6 +3,8 @@ package com.example.demo.controller;
 import com.example.demo.ProductWebSocket;
 import com.example.demo.po.Post;
 import com.example.demo.po.User;
+import com.example.demo.service.LikeNotificationDaoService;
+import com.example.demo.service.NotificationDaoService;
 import com.example.demo.service.PostDaoService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -28,7 +30,11 @@ import java.util.UUID;
 public class PostController {
     @Autowired
     private PostDaoService postDaoService;
+    @Autowired
+    private NotificationDaoService notificationDaoService;
 
+    @Autowired
+    private LikeNotificationDaoService likeNotificationDaoService;
     /*@RequestMapping("/loadMore")
     @ResponseBody
     public PageInfo<Post> loadMore(@RequestParam(value = "start", defaultValue = "1") int start, @RequestParam(value = "size", defaultValue = "5") int size) throws Exception {
@@ -92,6 +98,9 @@ public class PostController {
         } else {
             List<Post> posts = postDaoService.searchResult("%" + search_item + "%", user.getId());
             model.addAttribute("posts", posts);
+
+            model.addAttribute("uncheckedNotify", notificationDaoService.notifyNum(user.getId()));
+            model.addAttribute("likeUncheckedNum", likeNotificationDaoService.likeNotifyNum(user.getId()));
         }
         return "search_result";
     }
@@ -159,7 +168,7 @@ public class PostController {
             System.out.println("check: "+ check);
             if (null == check) {
                 postDaoService.addPostFlag(pid, user.getId(), 1, 0);
-
+                likeNotificationDaoService.addLikeNotification(postDaoService.onePost(pid,null).getU_id(),pid,user.getId());
             } else if (check == 0) {
                 postDaoService.addLike(pid, user.getId());
                 new ProductWebSocket().systemSendToUser(postDaoService.onePost(pid,null).getU_username(), "@"+user.getUsername()+"给你的帖子点了赞");

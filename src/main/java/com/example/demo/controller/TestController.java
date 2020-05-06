@@ -6,10 +6,7 @@ import com.example.demo.po.Comment;
 import com.example.demo.po.Message;
 import com.example.demo.po.Post;
 import com.example.demo.po.User;
-import com.example.demo.service.CommentDaoService;
-import com.example.demo.service.MessageDaoService;
-import com.example.demo.service.PostDaoService;
-import com.example.demo.service.UserDaoService;
+import com.example.demo.service.*;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +31,11 @@ public class TestController {
 
     @Autowired
     private CommentDaoService commentDaoService;
+    @Autowired
+    private NotificationDaoService notificationDaoService;
+
+    @Autowired
+    private LikeNotificationDaoService likeNotificationDaoService;
     /*@RequestMapping("/posts")
     @ResponseBody
     public PageInfo<Post> posts(@RequestParam(value = "start", defaultValue = "1") int start, @RequestParam(value = "size", defaultValue = "5") int size) throws Exception {
@@ -61,6 +63,9 @@ public class TestController {
             } else {
                 System.out.println(post);
                 model.addAttribute("post", post);
+
+                model.addAttribute("uncheckedNotify", notificationDaoService.notifyNum(user.getId()));
+                model.addAttribute("likeUncheckedNum", likeNotificationDaoService.likeNotifyNum(user.getId()));
             }
         } else {
             Post post = postDaoService.onePost(id, user.getId());
@@ -89,6 +94,9 @@ public class TestController {
         } else {
             List<Post> posts  = postDaoService.findAll(user.getId());/*.findAll(user.getId());*/
             model.addAttribute("posts", posts);
+
+            model.addAttribute("uncheckedNotify", notificationDaoService.notifyNum(user.getId()));
+            model.addAttribute("likeUncheckedNum", likeNotificationDaoService.likeNotifyNum(user.getId()));
         }
         return "index";
     }
@@ -102,6 +110,9 @@ public class TestController {
         } else {
             List<Post> posts  = postDaoService.mySubs(user.getId(),user.getId());
             model.addAttribute("posts", posts);
+
+            model.addAttribute("uncheckedNotify", notificationDaoService.notifyNum(user.getId()));
+            model.addAttribute("likeUncheckedNum", likeNotificationDaoService.likeNotifyNum(user.getId()));
         }
         return "subscription";
     }

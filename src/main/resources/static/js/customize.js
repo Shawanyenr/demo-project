@@ -115,3 +115,9 @@ function sendReport(pid) {
         })
     }
 }
+
+/*
+document.addEventListener('DOMContentLoaded', evt => {
+    $('#notificationSection').load(/!*[[@{/user/reloadUnchecked}]]*!/"");
+})
+*/

@@ -83,4 +83,12 @@ public class MessageController {
         likeNotificationDaoService.emptyLikeUnchecked(user.getId());
         return "likeNotify";
     }
+
+    @RequestMapping("/reloadUnchecked")
+    public String reloadUnchecked(HttpSession session, Model model){
+        User user = (User) session.getAttribute("user");
+        model.addAttribute("uncheckedNotify", notificationDaoService.notifyNum(user.getId()));
+        model.addAttribute("likeUncheckedNum", likeNotificationDaoService.likeNotifyNum(user.getId()));
+        return "include :: notificationSection";
+    }
 }

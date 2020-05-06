@@ -4,6 +4,8 @@ import com.example.demo.dao.CommentDao;
 import com.example.demo.po.Comment;
 import com.example.demo.po.User;
 import com.example.demo.service.CommentDaoService;
+import com.example.demo.service.NotificationDaoService;
+import com.example.demo.service.PostDaoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,12 +20,17 @@ public class CommentController {
 
     @Autowired
     private CommentDaoService commentDaoService;
-
+@Autowired
+private NotificationDaoService notificationDaoService;
+@Autowired
+private PostDaoService postDaoService;
     @RequestMapping("/addComment")
     public String addComment(Comment comment, HttpSession session){
         User user = (User) session.getAttribute("user");
         comment.setUid(user.getId());
         commentDaoService.addComment(comment);
+        notificationDaoService.addNotification(postDaoService.onePost(comment.getPid(),null).getU_id(),);
+
         return "redirect:/loadComment/"+comment.getPid();
     }
 

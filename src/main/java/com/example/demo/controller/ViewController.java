@@ -2,6 +2,8 @@ package com.example.demo.controller;
 
 import com.example.demo.po.Post;
 import com.example.demo.po.User;
+import com.example.demo.service.LikeNotificationDaoService;
+import com.example.demo.service.NotificationDaoService;
 import com.example.demo.service.PostDaoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,7 +17,11 @@ import java.util.List;
 public class ViewController {
     @Autowired
     private PostDaoService postDaoService;
+    @Autowired
+    private NotificationDaoService notificationDaoService;
 
+    @Autowired
+    private LikeNotificationDaoService likeNotificationDaoService;
     @RequestMapping({"/login",""})
     public String toLogin(HttpSession session) {
         session.removeAttribute("admin");
@@ -43,6 +49,9 @@ public class ViewController {
             model.addAttribute("posts", posts);
             model.addAttribute("likes", likes);
             model.addAttribute("favs", favs);
+
+            model.addAttribute("uncheckedNotify", notificationDaoService.notifyNum(user.getId()));
+            model.addAttribute("likeUncheckedNum", likeNotificationDaoService.likeNotifyNum(user.getId()));
         }
         return "home";
     }

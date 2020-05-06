@@ -221,12 +221,15 @@
            role="button">
             <i class="fas fa-plus"></i> 上传
         </a>
-        <a class="btn btn-outline-dark mb-2" th:href="@{/user/message}" role="button">
-            <i class="fas fa-bell"></i><span> 消息</span>
-            <span class="badge badge-pill badge-light">99+</span>
-        </a>
-        <a class="btn btn-outline-dark mb-2" th:href="@{/user/message}" role="button">
-            <i class="fas fa-comment-alt"></i><span> 信息</span></a>
+        <div id="notificationSection" th:fragment="notificationSection" class="d-flex flex-column">
+            <a class="btn btn-outline-dark mb-2" th:href="@{/user/message}" role="button">
+                <i class="fas fa-bell"></i><span> 消息</span>
+                <span class="badge badge-pill badge-light"th:unless="${uncheckedNotify+likeUncheckedNum==0}" th:text="${uncheckedNotify}+${likeUncheckedNum}">99+</span>
+            </a>
+            <a class="btn btn-outline-dark mb-2" th:href="@{/user/message}" role="button">
+                <i class="fas fa-comment-alt"></i><span> 信息</span></a>
+        </div>
+
         <div class="dropdown-divider"></div>
     </div>
     <div class="card mb-2" th:unless="${session.user}">
@@ -295,6 +298,7 @@
         //接收到消息的回调方法
         websocket.onmessage = function (event) {
             sendNotification(event.data);
+            $('#notificationSection').load(/*[[@{/user/reloadUnchecked}]]*/"");
         };
         //连接关闭的回调方法
         websocket.onclose = function () {
