@@ -11,7 +11,7 @@
  Target Server Version : 80016
  File Encoding         : 65001
 
- Date: 05/05/2020 10:19:24
+ Date: 06/05/2020 11:55:09
 */
 
 SET NAMES utf8mb4;
@@ -47,7 +47,7 @@ CREATE TABLE `blocklist`  (
   `bid` int(20) NOT NULL,
   `time` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP(0),
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of blocklist
