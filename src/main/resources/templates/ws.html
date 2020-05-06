@@ -22,7 +22,7 @@
 
         <div th:text="${one.name}"></div>
 
-        <a href="#" class="btn btn-outline-secondary"><i class="fas fa-bars"></i></a>
+        <a th:href="@{'/user/'+${one.getId()}}" class="btn btn-outline-secondary"><i class="fas fa-bars"></i></a>
     </div>
 </nav>
 <!--底栏-->

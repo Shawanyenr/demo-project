@@ -45,6 +45,7 @@
         <div class="tab-content btn-block" id="pills-tabContent">
             <div class="tab-pane btn-block fade show active" id="pills-home" role="tabpanel"
                  aria-labelledby="pills-home-tab">
+                <h5 class="text-center" th:if="${#lists.isEmpty(posts)}">还没有发布任何帖子</h5>
                 <div th:if="${not #lists.isEmpty(posts)}">
                     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 d-flex ml-0 mr-0">
                         <div th:each="post : ${posts}" th:if="${post.publicity==1}">
@@ -61,7 +62,8 @@
                 </div>
             </div>
             <div class="tab-pane btn-block fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-                <div th:if="${likes}">
+                <h5 class="text-center" th:if="${#lists.isEmpty(likes)}">还没有点赞任何帖子</h5>
+                <div th:if="${not #lists.isEmpty(likes)}">
                     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 d-flex ml-0 mr-0">
                         <div class="col flex-grow-1 p-2" th:each="like : ${likes}">
                             <a th:href="@{'/posts/'+${like.getP_id()}}">
@@ -75,7 +77,8 @@
                 </div>
             </div>
             <div class="tab-pane btn-block fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
-                <div th:if="${favs}">
+                <h5 class="text-center" th:if="${#lists.isEmpty(favs)}">还没有收藏任何帖子</h5>
+                <div th:if="${not #lists.isEmpty(favs)}">
                     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 d-flex ml-0 mr-0">
                         <div class="col flex-grow-1 p-2" th:each="fav : ${favs}">
                             <a th:href="@{'/posts/'+${fav.getP_id()}}">
