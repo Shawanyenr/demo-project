@@ -63,8 +63,6 @@ public class TestController {
             } else {
                 System.out.println(post);
                 model.addAttribute("post", post);
-                model.addAttribute("allUnchecked", notificationDaoService.allUnchecked(user.getId()));
-
             }
         } else {
             Post post = postDaoService.onePost(id, user.getId());
@@ -75,6 +73,9 @@ public class TestController {
                 System.out.println(post);
                 model.addAttribute("post", post);
                 model.addAttribute("blocked", userDaoService.checkBlock(post.getU_id(),user.getId()));
+
+                model.addAttribute("allUnchecked", notificationDaoService.allUnchecked(user.getId()));
+                System.out.println("allUnchecked: "+notificationDaoService.allUnchecked(user.getId()));
             }
         }
         List<Comment> comments = commentDaoService.selectCommentsByPid(id);
