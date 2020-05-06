@@ -34,7 +34,7 @@
                 <img th:src="${ulist.avatar}" alt="" class="message-list-avatar mr-3">
                 <div class="d-flex flex-column justify-content-start flex-grow-1 mr-3">
                     <span th:text="${ulist.username}"></span>
-                    <span th:text="${ulist.lastMessage.unreadNumById==0}?${ulist.lastMessage.content}:'['+${ulist.lastMessage.unreadNumById}+' 未读] '+${ulist.lastMessage.content}" class="text-nowrap overflow-hidden text-o-ellipsis"></span>
+                    <span th:text="${ulist.lastMessage.unreadNumById==0}?${ulist.username}+': '+${ulist.lastMessage.content}:'['+${ulist.lastMessage.unreadNumById}+' 未读] '+${ulist.username}+': '+${ulist.lastMessage.content}" class="text-nowrap overflow-hidden text-o-ellipsis"></span>
                 </div>
                 <div th:text="${#dates.format(ulist.lastMessage.time,'yyyy-MM-dd HH:mm:ss')}" class="text-muted font-weight-lighter"></div>
             </a>
