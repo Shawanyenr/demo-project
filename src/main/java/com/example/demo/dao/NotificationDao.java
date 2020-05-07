@@ -29,6 +29,6 @@ public interface NotificationDao {
     @Update("update commentnote set isread=1 where uid=#{uid}")
     void emptyUnchecked(Integer uid);
 
-    @Select("select count(*) from (select id from notification where uid=#{uid} union all select id from likenotify where uid=#{uid}) temp")
+    @Select("select count(*) from (select id from commentnote where uid=#{uid} and isread=0 union all select id from likenotify where uid=#{uid} and isread=0) temp")
     Integer allUnchecked(@Param("uid") Integer uid);
 }

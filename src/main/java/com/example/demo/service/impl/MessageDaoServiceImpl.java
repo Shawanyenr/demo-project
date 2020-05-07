@@ -55,4 +55,9 @@ public class MessageDaoServiceImpl implements MessageDaoService {
     public void setReadByUid(String username, String uUsername) {
         messageDao.setReadByUid(username, uUsername);
     }
+
+    @Override
+    public Integer allUnreadNote(Integer uid, String username) {
+        return messageDao.allUnreadNote(uid, username);
+    }
 }

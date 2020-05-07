@@ -84,13 +84,6 @@
     var a = /*[[${session.user}]]*/ null;
     console.log("user: " + /*[[${ session.user}]]*/ null);
 
-    $(function () {
-        if (a != null) {
-            $(".online-button").show();
-            $(".offline-button").hide();
-        }
-    });
-
     function toggleSub(sub_id){
         $("#subBtn").load("/toggleSub?sub_id="+sub_id);
     }

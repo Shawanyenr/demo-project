@@ -5,24 +5,27 @@
     <div class="collapse fixed-bottom" id="collapseExample">
         <div class="container" style="max-width: 612px;padding: 0 !important;">
             <div class="card card-body post-card">
-                <div class="list-group">
-                    <a th:href="@{/home}" class="m-list-item online-button" style="display: none">
+                <div class="list-group" id="flexMenu" th:fragment="flexMenu">
+                    <a th:href="@{/home}" th:if="${session.user}" class="m-list-item">
                         <i class="fas fa-home"></i>
                         <span th:text="${session.user?.name}"></span></a>
-                    <a th:href="@{/login}" class="m-list-item offline-button">
+                    <a th:href="@{/login}" th:unless="${session.user}" class="m-list-item">
                         <i class="fas fa-sign-in-alt"></i>
                         <span> 登录</span></a>
-                    <a th:href="@{/register}" class="m-list-item offline-button">
+                    <a th:href="@{/register}" th:unless="${session.user}" class="m-list-item">
                         <i class="fas fa-hat-wizard"></i>
                         <span> 注册</span></a>
-                    <a href="#" class="m-list-item online-button"
+                    <a href="#" th:if="${session.user}" class="m-list-item"
                        style="display: none" data-toggle="modal"
                        data-target="#uploadForm"><i class="fas fa-plus"></i> upload</a>
-                    <a href="#" class="m-list-item online-button" style="display: none"><i
-                            class="fas fa-bell"></i><span> 消息</span></a>
-                    <a href="#" class="m-list-item online-button" style="display: none"><i
-                            class="fas fa-comment-alt"></i><span> 信息</span></a>
-                    <a th:href="@{/logout.action}" class="m-list-item online-button" style="display: none"><i
+                    <a th:href="@{/user/message}" th:if="${session.user}" class="m-list-item"><i
+                            class="fas fa-bell"></i><span> 消息</span><span class="badge badge-pill badge-light" th:unless="${allUnchecked==0}"
+                                                                          th:text="${allUnchecked}">99+</span></a>
+                    <a th:href="@{/user/message}" th:if="${session.user}" class="m-list-item"><i
+                            class="fas fa-comment-alt"></i><span> 信息</span>
+                        <span class="badge badge-pill badge-light" th:unless="${allUnreadMessage==0}"
+                              th:text="${allUnreadMessage}">99+</span></a>
+                    <a th:href="@{/logout.action}" th:if="${session.user}" class="m-list-item"><i
                             class="fas fa-sign-out-alt"></i><span> 登出</span></a>
                 </div>
             </div>
@@ -44,10 +47,13 @@
                 <a class="pl-3" data-toggle="collapse" href="#collapseExample" role="button"
                    aria-expanded="false" aria-controls="collapseExample" style="text-decoration: none;">
                     <i class="fas fa-user-circle" style="font-size: 22px!important;"></i>
+                    <span class="badge badge-pill badge-light" id="red-dot" style="display: none"></span></a>
                 </a>
             </div>
         </nav>
     </div>
+
+
 
     <!--上传框-->
     <div class="modal fade" id="uploadForm" data-backdrop="static" tabindex="-1" role="dialog"
@@ -303,6 +309,7 @@
         websocket.onmessage = function (event) {
             sendNotification(event.data);
             $('#notificationSection').load(/*[[@{/user/reloadUnchecked}]]*/"");
+            $('#flexMenu').load(/*[[@{/user/reloadUncheckedMenu}]]*/"");
         };
         //连接关闭的回调方法
         websocket.onclose = function () {
@@ -327,7 +334,7 @@
                 if (permission === 'granted') {
                     console.log('用户允许通知');
                     if (sender === "system") {
-                        let n = new Notification("@" + sender + " 评论了你", {
+                        let n = new Notification("通知", {
                             body: content
                         });
 

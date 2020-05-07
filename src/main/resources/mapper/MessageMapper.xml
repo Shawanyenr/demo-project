@@ -28,4 +28,13 @@
         UNION
         SELECT sender users FROM message WHERE receiver=#{username})
     </select>
+
+    <select id="allUnreadNote" resultType="Integer">
+        select count(id) from
+        (select id from message where receiver = #{username} and checked=0
+        union all
+        select id from commentnote where uid = #{uid} and isread=0
+        union all
+        select id from likenotify where uid = #{uid} and isread=0) temp
+    </select>
 </mapper>

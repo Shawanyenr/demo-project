@@ -24,4 +24,6 @@ public interface MessageDao {
 
     @Update("update message set checked=1 where sender=#{uUsername} and receiver=#{username}")
     void setReadByUid(String username, String uUsername);
+
+    Integer allUnreadNote(@Param("uid") Integer uid, @Param("username")String username);
 }

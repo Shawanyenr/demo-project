@@ -20,4 +20,6 @@ public interface MessageDaoService {
 
     void setReadByUid(String username, String uUsername);
 
+    Integer allUnreadNote(Integer uid, String username);
+
 }

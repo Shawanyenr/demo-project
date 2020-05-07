@@ -91,4 +91,20 @@ public class MessageController {
         model.addAttribute("allUnreadMessage", messageDaoService.allUnread(user.getUsername()));
         return "include :: notificationSection";
     }
+
+    @RequestMapping("/reloadUncheckedMenu")
+    public String reloadUncheckedMenu(HttpSession session, Model model){
+        User user = (User) session.getAttribute("user");
+        model.addAttribute("allUnchecked", notificationDaoService.allUnchecked(user.getId()));
+        model.addAttribute("allUnreadMessage", messageDaoService.allUnread(user.getUsername()));
+        return "include :: flexMenu";
+    }
+
+    @RequestMapping("/reddot")
+    public String reddot(HttpSession session, Model model){
+        User user = (User) session.getAttribute("user");
+        model.addAttribute("allUnchecked", notificationDaoService.allUnchecked(user.getId()));
+        model.addAttribute("allUnreadMessage", messageDaoService.allUnread(user.getUsername()));
+        return "include :: reddot";
+    }
 }

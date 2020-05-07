@@ -96,7 +96,6 @@ public class TestController {
             model.addAttribute("posts", posts);
             model.addAttribute("allUnchecked", notificationDaoService.allUnchecked(user.getId()));
             model.addAttribute("allUnreadMessage", messageDaoService.allUnread(user.getUsername()));
-
         }
         return "index";
     }

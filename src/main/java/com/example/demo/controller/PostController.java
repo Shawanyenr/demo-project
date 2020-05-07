@@ -169,16 +169,20 @@ public class PostController {
             System.out.println("user: " + user.getId() + " pid: " + pid);
             check = postDaoService.checkLike(pid, user.getId());
             System.out.println("check: "+ check);
+            User postOwner=userDaoService.findById(postDaoService.onePost(pid,null).getU_id());
             if (null == check) {
                 postDaoService.addPostFlag(pid, user.getId(), 1, 0);
-                likeNotificationDaoService.addLikeNotification(postDaoService.onePost(pid,null).getU_id(),pid,user.getId());
+                if (postOwner.getId()!=user.getId()){
+                    likeNotificationDaoService.addLikeNotification(postDaoService.onePost(pid,null).getU_id(),pid,user.getId());
+                }
             } else if (check == 0) {
                 postDaoService.addLike(pid, user.getId());
-                new ProductWebSocket().systemSendToUser(postDaoService.onePost(pid,null).getU_username(), "@"+user.getUsername()+"给你的帖子点了赞");
-
+                if (user.getId()!=postOwner.getId()){
+                    likeNotificationDaoService.addLikeNotification(postOwner.getId(),pid,user.getId());
+                    new ProductWebSocket().systemSendToUser(postOwner.getUsername(), "@"+user.getUsername()+"给你的帖子点了赞");
+                }
             } else {
                 postDaoService.removeLike(pid, user.getId());
-
             }
         }
         return "OK";

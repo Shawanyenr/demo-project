@@ -134,13 +134,6 @@
     var a = /*[[${session.user}]]*/ null;
     console.log("user: " + /*[[${ session.user}]]*/ null);
 
-    $(function () {
-        if (a != null) {
-            $(".online-button").show();
-            $(".offline-button").hide();
-        }
-    });
-
     function uploadPost() {
         var u_id = /*[[${ session.user?.id }]]*/ null;
         console.log("上传时username" + u_id);

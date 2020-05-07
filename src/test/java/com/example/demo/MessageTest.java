@@ -58,4 +58,14 @@ public class MessageTest {
         System.out.println(nlist);
     }
 
+    @Test
+    public void allUnreadNote(){
+        System.out.println(messageDaoService.allUnreadNote(1,"m78"));
+    }
+
+    @Test
+    public void allUnchecked(){
+        System.out.println(notificationDaoService.allUnchecked(5));
+    }
+
 }
