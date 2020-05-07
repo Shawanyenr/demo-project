@@ -11,7 +11,7 @@
  Target Server Version : 80016
  File Encoding         : 65001
 
- Date: 07/05/2020 00:35:50
+ Date: 07/05/2020 13:35:48
 */
 
 SET NAMES utf8mb4;
@@ -66,7 +66,7 @@ CREATE TABLE `comment`  (
   `content` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `pid` int(11) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 17 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 23 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of comment
@@ -156,7 +156,7 @@ CREATE TABLE `message`  (
   `time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
   `checked` int(2) NULL DEFAULT 0,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 103 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 116 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of message
@@ -337,7 +337,7 @@ CREATE TABLE `postflag`  (
   `p_fav_flag` int(1) NULL DEFAULT 0,
   `u_id` int(32) NOT NULL,
   PRIMARY KEY (`flag_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 31 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 37 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of postflag
@@ -424,7 +424,7 @@ CREATE TABLE `user`  (
 INSERT INTO `user` VALUES (1, '嘻嘻', 'm78', '123456', 1, '/user_avatar/default_user_avatar.jpg', NULL, NULL);
 INSERT INTO `user` VALUES (2, '哈哈', '626', '123456', 1, '/user_avatar/default_user_avatar.jpg', NULL, '2120-04-06 11:52:12');
 INSERT INTO `user` VALUES (4, '吼吼', 'm19', '123456', 1, '/user_avatar/default_user_avatar.jpg', NULL, NULL);
-INSERT INTO `user` VALUES (5, '吼吼', 'pipi', '123456', 1, '/user_avatar/default_user_avatar.jpg', NULL, '2020-05-04 19:19:41');
+INSERT INTO `user` VALUES (5, '吼吼', 'pipi', '123456', 1, '/user_avatar/9a6d515983e240f1a0e8aa5178aa130b_Snipaste_2020-04-11_20-43-42.png', NULL, '2020-05-04 19:19:41');
 INSERT INTO `user` VALUES (6, 'chenheng', '2016b11015', '123456', 1, '/user_avatar/default_user_avatar.jpg', NULL, NULL);
 INSERT INTO `user` VALUES (7, 'pipi', 'GilesWi', '123456', 1, '/user_avatar/default_user_avatar.jpg', NULL, NULL);
 INSERT INTO `user` VALUES (8, '嘻嘻', '1143468921@qq.com', '123456', 1, '/user_avatar/default_user_avatar.jpg', NULL, NULL);
@@ -439,5 +439,6 @@ INSERT INTO `user` VALUES (18, 'pipi', 'GilesW', '123456', 0, '/user_avatar/defa
 INSERT INTO `user` VALUES (19, '222', '111', '33333', 1, NULL, NULL, NULL);
 INSERT INTO `user` VALUES (20, '大帅比', 'obi-wan', 'qqrery', 1, NULL, NULL, NULL);
 INSERT INTO `user` VALUES (21, 'GG', 'pipia', '123456', 1, '/user_avatar/default_user_avatar.jpg', NULL, NULL);
+INSERT INTO `user` VALUES (22, '我是你爹', 'm5mr', '123456', 1, '/user_avatar/default_user_avatar.jpg', NULL, NULL);
 
 SET FOREIGN_KEY_CHECKS = 1;

@@ -8,12 +8,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
+import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @Controller
 public class UserController {
@@ -174,5 +178,23 @@ public class UserController {
 //        if (user.equals(user1)) return "ok";
         userDaoService.updateProfile(user1);
         return "ok";
+    }
+
+
+    @Transactional
+    @RequestMapping(value = "/newAvatar", method = RequestMethod.POST)
+    @ResponseBody
+    public String newAvatar(MultipartFile upload, Model m) throws IOException {
+
+        String filename = upload.getOriginalFilename();
+        String uuid = UUID.randomUUID().toString().replace("-", "");
+        filename = uuid + "_" + filename;
+        String path = "D:\\00webappresources\\user_upload\\user_avatar" + File.separator + filename;
+        File destFile = new File(path);
+        destFile.getParentFile().mkdirs();
+        upload.transferTo(destFile);
+        m.addAttribute("filename", "/user_avatar/" + filename);
+        System.out.println(filename + "保存在" + destFile);
+        return "/user_avatar/" + filename;
     }
 }

@@ -44,15 +44,20 @@
                 </div>
                 <div class="form-group">
                     <label for="regusername">用户名</label>
-                    <input type="text" class="form-control" id="regusername" name="username"/>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">@</div>
+                        </div>
+                        <input type="text" class="form-control" id="regusername" name="username" autocomplete="false"/>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label for="regpassword">密码</label>
-                    <input type="password" class="form-control" id="regpassword" name="password"/>
+                    <input type="password" class="form-control" id="regpassword" name="password" autocomplete="false"/>
                 </div>
                 <div class="form-group">
                     <label for="confirm_password">确认密码</label>
-                    <input type="password" class="form-control" id="confirm_password" name="confirm_password"/>
+                    <input type="password" class="form-control" id="confirm_password" name="confirm_password" autocomplete="false"/>
                 </div>
                 <div class="form-group">
                     <div class="form-check">
@@ -101,6 +106,7 @@
         function hidePreloader() {
             $('.spinner-wrapper').delay(2000).fadeOut(500);
         }
+
         hidePreloader();
     });
 
@@ -156,18 +162,19 @@
             $(element).addClass("is-valid").removeClass("is-invalid");
         },
         submitHandler: function () {
-            $("#msg-section").load("/register.action", $("#signupForm").serialize(),function (responseTxt, statusTxt, xhr) {
+            $("#msg-section").load("/register.action", $("#signupForm").serialize(), function (responseTxt, statusTxt, xhr) {
                 console.log(responseTxt + " " + statusTxt + " " + xhr);
                 countdown()
             });
         }
     });
     let seconds = 4;
+
     function countdown() {
         seconds = seconds - 1;
         if (seconds < 0) {
             // Chnage your redirection link here
-            window.location.href=/*[[@{/index}]]*/"";
+            window.location.href =/*[[@{/login}]]*/"";
         } else {
             // Update remaining seconds
             document.getElementById("seconds").innerHTML = seconds;
