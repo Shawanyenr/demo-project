@@ -163,15 +163,15 @@
             Notification.requestPermission().then(function (permission) {
                 if (permission === 'granted') {
                     console.log('用户允许通知');
-                    if (sender === "system"){
-                        let n = new Notification("系统通知",{
+                    if (sender === "system") {
+                        let n = new Notification("系统通知", {
                             body: content
                         });
 
                         n.onclick = function (event) {
                             event.preventDefault();
                             n.close();
-                            window.location.href=/*[[@{/user/message}]]*/"";
+                            window.location.href =/*[[@{/user/message}]]*/"";
                         }
                     }else{
                         let n = new Notification('@' + sender, {
