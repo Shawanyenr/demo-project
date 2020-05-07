@@ -19,11 +19,13 @@
                        style="display: none" data-toggle="modal"
                        data-target="#uploadForm"><i class="fas fa-plus"></i> upload</a>
                     <a th:href="@{/user/message}" th:if="${session.user}" class="m-list-item"><i
-                            class="fas fa-bell"></i><span> 消息</span><span class="badge badge-pill badge-light" th:unless="${allUnchecked==0}"
-                                                                          th:text="${allUnchecked}">99+</span></a>
+                            class="fas fa-bell"></i><span> 消息</span>
+                        <span class="badge badge-pill badge-danger"
+                              th:unless="${allUnchecked==0}"
+                              th:text="${allUnchecked}">99+</span></a>
                     <a th:href="@{/user/message}" th:if="${session.user}" class="m-list-item"><i
                             class="fas fa-comment-alt"></i><span> 信息</span>
-                        <span class="badge badge-pill badge-light" th:unless="${allUnreadMessage==0}"
+                        <span class="badge badge-pill badge-danger" th:unless="${allUnreadMessage==0}"
                               th:text="${allUnreadMessage}">99+</span></a>
                     <a th:href="@{/logout.action}" th:if="${session.user}" class="m-list-item"><i
                             class="fas fa-sign-out-alt"></i><span> 登出</span></a>
@@ -44,15 +46,16 @@
                     </div>
                 </form>
 
-                <a class="pl-3" data-toggle="collapse" href="#collapseExample" role="button"
+                <a class="pl-3 d-flex flex-row align-items-center" data-toggle="collapse" href="#collapseExample" role="button"
                    aria-expanded="false" aria-controls="collapseExample" style="text-decoration: none;">
-                    <i class="fas fa-user-circle" style="font-size: 22px!important;"></i>
-                    <span class="badge badge-pill badge-light" id="red-dot" style="display: none"></span></a>
+                    <i class="fas fa-user-circle mr-1" style="font-size: 22px!important;"></i>
+                    <div id="red-dot" th:fragment="reddot">
+                        <span style="font-size: 30px;color: red" th:unless="${reddot==0||reddot==null}">·</span>
+                    </div>
                 </a>
             </div>
         </nav>
     </div>
-
 
 
     <!--上传框-->
@@ -230,12 +233,12 @@
         <div id="notificationSection" th:fragment="notificationSection" class="d-flex flex-column">
             <a class="btn btn-outline-dark mb-2" th:href="@{/user/message}" role="button">
                 <i class="fas fa-bell"></i><span> 消息</span>
-                <span class="badge badge-pill badge-light" th:unless="${allUnchecked==0}"
+                <span class="badge badge-pill badge-danger" th:unless="${allUnchecked==0}"
                       th:text="${allUnchecked}">99+</span>
             </a>
             <a class="btn btn-outline-dark mb-2" th:href="@{/user/message}" role="button">
                 <i class="fas fa-comment-alt"></i><span> 信息</span>
-                <span class="badge badge-pill badge-light" th:unless="${allUnreadMessage==0}"
+                <span class="badge badge-pill badge-danger" th:unless="${allUnreadMessage==0}"
                       th:text="${allUnreadMessage}">99+</span>
             </a>
         </div>
@@ -275,6 +278,7 @@
 
 <th:block th:fragment="notification">
     <script type="text/javascript" th:inline="javascript" th:if="${session.user}">
+
         var userId = /*[[${session.user.getUsername()}]]*/"";
         if ('WebSocket' in window) {
             var localPath = (window.location.host);
@@ -310,6 +314,7 @@
             sendNotification(event.data);
             $('#notificationSection').load(/*[[@{/user/reloadUnchecked}]]*/"");
             $('#flexMenu').load(/*[[@{/user/reloadUncheckedMenu}]]*/"");
+            $('#red-dot').load(/*[[@{/user/reddot}]]*/"");
         };
         //连接关闭的回调方法
         websocket.onclose = function () {

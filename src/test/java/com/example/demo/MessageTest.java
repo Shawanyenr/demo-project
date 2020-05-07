@@ -60,7 +60,7 @@ public class MessageTest {
 
     @Test
     public void allUnreadNote(){
-        System.out.println(messageDaoService.allUnreadNote(1,"m78"));
+        System.out.println(messageDaoService.allUnreadNote(5,"pipi"));
     }
 
     @Test

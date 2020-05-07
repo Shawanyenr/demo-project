@@ -54,6 +54,7 @@ public class ViewController {
 
             model.addAttribute("allUnchecked", notificationDaoService.allUnchecked(user.getId()));
             model.addAttribute("allUnreadMessage", messageDaoService.allUnread(user.getUsername()));
+            model.addAttribute("reddot", messageDaoService.allUnreadNote(user.getId(),user.getUsername()));
         }
         return "home";
     }

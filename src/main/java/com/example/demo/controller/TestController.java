@@ -76,6 +76,7 @@ public class TestController {
 
                 model.addAttribute("allUnchecked", notificationDaoService.allUnchecked(user.getId()));
                 model.addAttribute("allUnreadMessage", messageDaoService.allUnread(user.getUsername()));
+                model.addAttribute("reddot", messageDaoService.allUnreadNote(user.getId(),user.getUsername()));
             }
         }
         List<Comment> comments = commentDaoService.selectCommentsByPid(id);
@@ -96,6 +97,7 @@ public class TestController {
             model.addAttribute("posts", posts);
             model.addAttribute("allUnchecked", notificationDaoService.allUnchecked(user.getId()));
             model.addAttribute("allUnreadMessage", messageDaoService.allUnread(user.getUsername()));
+            model.addAttribute("reddot", messageDaoService.allUnreadNote(user.getId(),user.getUsername()));
         }
         return "index";
     }
@@ -111,6 +113,7 @@ public class TestController {
             model.addAttribute("posts", posts);
             model.addAttribute("allUnchecked", notificationDaoService.allUnchecked(user.getId()));
             model.addAttribute("allUnreadMessage", messageDaoService.allUnread(user.getUsername()));
+            model.addAttribute("reddot", messageDaoService.allUnreadNote(user.getId(),user.getUsername()));
 
         }
         return "subscription";
@@ -137,6 +140,7 @@ public class TestController {
             model.addAttribute("subState", checkSub);
             model.addAttribute("blocked", checkBlock);
             model.addAttribute("allUnreadMessage", messageDaoService.allUnread(user.getUsername()));
+            model.addAttribute("reddot", messageDaoService.allUnreadNote(user.getId(),user.getUsername()));
         }
         return "oneUser";
     }

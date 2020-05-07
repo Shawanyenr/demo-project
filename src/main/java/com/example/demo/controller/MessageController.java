@@ -103,8 +103,9 @@ public class MessageController {
     @RequestMapping("/reddot")
     public String reddot(HttpSession session, Model model){
         User user = (User) session.getAttribute("user");
-        model.addAttribute("allUnchecked", notificationDaoService.allUnchecked(user.getId()));
-        model.addAttribute("allUnreadMessage", messageDaoService.allUnread(user.getUsername()));
+        Integer allUnreadNote = messageDaoService.allUnreadNote(user.getId(),user.getUsername());
+        System.out.println("allUnreadNote="+allUnreadNote);
+        model.addAttribute("reddot", allUnreadNote);
         return "include :: reddot";
     }
 }
