@@ -6,11 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>WebSocket SpringBootDemo</title>
-
-    <link rel="stylesheet" type="text/css" media="all" href="../static/bootstrap-4.4.1-dist/css/bootstrap.min.css"
-          th:href="@{/static/bootstrap-4.4.1-dist/css/bootstrap.min.css}"/>
-    <link href="https://cdn.bootcss.com/font-awesome/5.12.1/css/all.css" rel="stylesheet">
-    <link rel="stylesheet" href="../static/css/theme.css" th:href="@{/static/css/theme.css}"/>
+    <th:block th:replace="include::genaralCss">
+        <link rel="stylesheet" type="text/css" media="all"
+              href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"/>
+        <link href="https://cdn.bootcss.com/font-awesome/5.12.1/css/all.css" rel="stylesheet">
+        <link rel="stylesheet" href="../static/css/theme.css" th:href="@{/static/css/theme.css}"/>
+    </th:block>
 </head>
 <body>
 <!--顶栏-->
@@ -39,7 +40,7 @@
             <a th:href="@{'/message/'+${ulist.getId()}}" class="message-list d-flex flex-row align-items-center border">
                 <img th:src="${ulist.avatar}" alt="" class="message-list-avatar border-radius-50 mr-3">
                 <div class="d-flex flex-column justify-content-start flex-grow-1 mr-3">
-                    <span th:text="${ulist.username}" th:classappend="${ulist.lastMessage.checked==1}?'text-muted font-weight-lighter'"></span>
+                    <span th:text="${ulist.username}"></span>
                     <span th:text="${ulist.lastMessage.unreadNumById==0}?${ulist.username}+': '+${ulist.lastMessage.content}:'['+${ulist.lastMessage.unreadNumById}+' 未读] '+${ulist.username}+': '+${ulist.lastMessage.content}" class="text-nowrap overflow-hidden text-o-ellipsis text-muted font-weight-lighter"></span>
                 </div>
                 <div th:text="${#dates.format(ulist.lastMessage.time,'yyyy-MM-dd HH:mm:ss')}" class="text-muted font-weight-lighter"></div>

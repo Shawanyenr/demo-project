@@ -6,10 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-    <link rel="stylesheet" type="text/css" media="all" href="../static/bootstrap-4.4.1-dist/css/bootstrap.min.css"
-          th:href="@{/static/bootstrap-4.4.1-dist/css/bootstrap.min.css}"/>
-    <link href="https://cdn.bootcss.com/font-awesome/5.12.1/css/all.css" rel="stylesheet">
-    <link rel="stylesheet" href="../static/css/theme.css" th:href="@{/static/css/theme.css}"/>
+    <th:block th:replace="include::genaralCss">
+        <link rel="stylesheet" type="text/css" media="all"
+              href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"/>
+        <link href="https://cdn.bootcss.com/font-awesome/5.12.1/css/all.css" rel="stylesheet">
+        <link rel="stylesheet" href="../static/css/theme.css" th:href="@{/static/css/theme.css}"/>
+    </th:block>
 
 </head>
 
@@ -168,19 +170,8 @@
         th:src="@{/static/js/jquery.validate.js}"></script>
 <script type="text/javascript" th:inline="javascript" th:src="@{/static/js/customize.js}"></script>
 <th:block th:replace="include :: notification"></th:block>
-
+<th:block th:replace="include :: genaralUpload"></th:block>
 <script th:inline="javascript" type="text/javascript">
-
-    // console.log("fav_123_bgjhkdnvsh".substring(4));
-    var a = /*[[${session.user}]]*/ null;
-    console.log("user: " + /*[[${ session.user}]]*/ null);
-
-    $(function () {
-        if (a != null) {
-            $(".online-button").show();
-            $(".offline-button").hide();
-        }
-    });
 
     function deletePost(p_id) {
         if (confirm('Confirm to delete?')) {
@@ -264,7 +255,6 @@
         let formData = new FormData();
         let fileList = $("#profileInfo #choose_new_avatar")[0].files;
         formData.append("upload", fileList[0]);
-        alert(fileList[0].name);
         $.ajax({
             type: "POST",
             enctype: 'multipart/form-data',

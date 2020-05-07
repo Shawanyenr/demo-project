@@ -6,11 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>WebSocket SpringBootDemo</title>
-
-    <link rel="stylesheet" type="text/css" media="all" href="../static/bootstrap-4.4.1-dist/css/bootstrap.min.css"
-          th:href="@{/static/bootstrap-4.4.1-dist/css/bootstrap.min.css}"/>
-    <link href="https://cdn.bootcss.com/font-awesome/5.12.1/css/all.css" rel="stylesheet">
-    <link rel="stylesheet" href="../static/css/theme.css" th:href="@{/static/css/theme.css}"/>
+    <th:block th:replace="include::genaralCss">
+        <link rel="stylesheet" type="text/css" media="all"
+              href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"/>
+        <link href="https://cdn.bootcss.com/font-awesome/5.12.1/css/all.css" rel="stylesheet">
+        <link rel="stylesheet" href="../static/css/theme.css" th:href="@{/static/css/theme.css}"/>
+    </th:block>
 </head>
 <body>
 <!--顶栏-->
@@ -147,10 +148,6 @@
     //将消息显示在网页上
     function setMessageInnerHTML(sendMessage) {
 
-
-        // document.getElementById('message').innerHTML += sendMessage + '<br/>';
-        /*var sender = sendMessage.split(",", 2)[0];
-        var content = sendMessage.substring(sender.length + 1);*/
         const sender = JSON.parse(sendMessage).userId;
         const content = JSON.parse(sendMessage).message;
         const senderId = JSON.parse(sendMessage).id;
