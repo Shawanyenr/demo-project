@@ -156,4 +156,23 @@ public class UserController {
         return "ok";
     }
 
+    @ResponseBody
+    @GetMapping("/getUserInfo")
+    public String getUserInfo(@RequestParam(value = "id", defaultValue = "") Integer id, HttpSession session){
+        User user = (User) session.getAttribute("user");
+        if (id==null||user==null) return "error";
+        User user1 = userDaoService.findById(id);
+        return user1.getPassword();
+    }
+
+    @ResponseBody
+    @RequestMapping("/updateProfile")
+    public String updateProfile(User user1, HttpSession session){
+        System.out.println("updateProfile: "+user1);
+        User user = (User) session.getAttribute("user");
+        if (user==null||user1==null) return "error";
+//        if (user.equals(user1)) return "ok";
+        userDaoService.updateProfile(user1);
+        return "ok";
+    }
 }

@@ -36,4 +36,6 @@ public interface UserDaoService {
 
     Integer addBlock(Integer uid, Integer bid);
 
+    void updateProfile(User user);
+
 }

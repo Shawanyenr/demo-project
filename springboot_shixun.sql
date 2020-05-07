@@ -11,7 +11,7 @@
  Target Server Version : 80016
  File Encoding         : 65001
 
- Date: 06/05/2020 16:37:25
+ Date: 07/05/2020 00:35:50
 */
 
 SET NAMES utf8mb4;
@@ -30,7 +30,7 @@ CREATE TABLE `admin`  (
   `email` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `username_UNIQUE`(`username`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 23 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 22 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of admin
@@ -87,6 +87,62 @@ INSERT INTO `comment` VALUES (13, 0, 6, '2020-04-22 23:24:27', '哇啊啊啊啊�
 INSERT INTO `comment` VALUES (14, 11, 6, '2020-04-22 23:26:34', '@pipi 噢噢噢噢噢噢噢噢噢噢噢噢噢噢噢噢哦哦', 37);
 INSERT INTO `comment` VALUES (15, 0, 5, '2020-04-30 15:26:24', '的想法v救护车v发', 36);
 INSERT INTO `comment` VALUES (16, 15, 5, '2020-04-30 15:26:31', '@pipi 甲方提供i尽快', 36);
+INSERT INTO `comment` VALUES (17, 0, 1, '2020-05-06 23:57:50', 'haerhae', 34);
+INSERT INTO `comment` VALUES (18, 0, 1, '2020-05-07 00:00:32', 'vwev', 36);
+INSERT INTO `comment` VALUES (19, 0, 1, '2020-05-07 00:03:29', 'cs', 36);
+INSERT INTO `comment` VALUES (20, 0, 1, '2020-05-07 00:10:55', 'hhh', 36);
+INSERT INTO `comment` VALUES (21, 0, 1, '2020-05-07 00:31:33', 'bwbearbneh', 35);
+INSERT INTO `comment` VALUES (22, 0, 1, '2020-05-07 00:34:04', '嘿嘿', 36);
+
+-- ----------------------------
+-- Table structure for commentnote
+-- ----------------------------
+DROP TABLE IF EXISTS `commentnote`;
+CREATE TABLE `commentnote`  (
+  `id` int(20) NOT NULL AUTO_INCREMENT,
+  `uid` int(20) NOT NULL,
+  `isread` int(1) UNSIGNED NULL DEFAULT 0,
+  `time` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP(0),
+  `content` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `pid` int(20) NULL DEFAULT NULL,
+  `fromid` int(20) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of commentnote
+-- ----------------------------
+INSERT INTO `commentnote` VALUES (1, 5, 1, '2020-05-06 20:43:21', '测试', 19, 1);
+INSERT INTO `commentnote` VALUES (2, 5, 1, '2020-05-06 23:57:50', 'haerhae', 34, 1);
+INSERT INTO `commentnote` VALUES (3, 5, 1, '2020-05-07 00:03:29', 'cs', 36, 1);
+INSERT INTO `commentnote` VALUES (4, 5, 1, '2020-05-07 00:10:55', 'hhh', 36, 1);
+INSERT INTO `commentnote` VALUES (5, 5, 1, '2020-05-07 00:31:33', 'bwbearbneh', 35, 1);
+INSERT INTO `commentnote` VALUES (6, 5, 1, '2020-05-07 00:34:04', '嘿嘿', 36, 1);
+
+-- ----------------------------
+-- Table structure for likenotify
+-- ----------------------------
+DROP TABLE IF EXISTS `likenotify`;
+CREATE TABLE `likenotify`  (
+  `id` int(20) NOT NULL AUTO_INCREMENT,
+  `fromid` int(20) NOT NULL,
+  `pid` int(20) NULL DEFAULT NULL,
+  `isread` int(2) NULL DEFAULT 0,
+  `time` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP(0),
+  `uid` int(20) NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of likenotify
+-- ----------------------------
+INSERT INTO `likenotify` VALUES (1, 5, 19, 1, '2020-05-06 22:08:02', 1);
+INSERT INTO `likenotify` VALUES (2, 1, 36, 1, '2020-05-06 23:49:53', 5);
+INSERT INTO `likenotify` VALUES (3, 1, 35, 1, '2020-05-06 23:50:25', 5);
+INSERT INTO `likenotify` VALUES (4, 1, 32, 1, '2020-05-06 23:52:54', 5);
+INSERT INTO `likenotify` VALUES (5, 1, 34, 1, '2020-05-06 23:56:20', 5);
+INSERT INTO `likenotify` VALUES (6, 1, 31, 1, '2020-05-07 00:11:09', 5);
+INSERT INTO `likenotify` VALUES (7, 5, 23, 0, '2020-05-07 00:14:00', 1);
 
 -- ----------------------------
 -- Table structure for message
@@ -209,7 +265,17 @@ INSERT INTO `message` VALUES (101, 'm78', 'pipi', '132165', '2020-05-04 15:02:55
 INSERT INTO `message` VALUES (102, 'm78', 'pipi', '📼', '2020-05-04 15:03:24', 1);
 INSERT INTO `message` VALUES (103, 'm78', 'pipi', '123', '2020-05-06 12:51:15', 1);
 INSERT INTO `message` VALUES (104, '2016b11015', 'pipi', 'hahahahaha', '2020-05-06 14:10:13', 1);
-INSERT INTO `message` VALUES (105, 'm78', 'pipi', '😂', '2020-05-06 16:36:44', 0);
+INSERT INTO `message` VALUES (105, 'm78', 'pipi', '😂', '2020-05-06 16:36:44', 1);
+INSERT INTO `message` VALUES (106, 'm78', 'pipi', 'Hi~ o(*￣▽￣*)ブ', '2020-05-06 16:50:38', 1);
+INSERT INTO `message` VALUES (107, 'pipi', 'm78', 'bfiuwLE', '2020-05-06 16:55:01', 1);
+INSERT INTO `message` VALUES (108, 'pipi', 'm78', 'VSVF', '2020-05-06 16:55:10', 1);
+INSERT INTO `message` VALUES (109, 'pipi', 'm78', 'VGWAERG', '2020-05-06 16:55:34', 1);
+INSERT INTO `message` VALUES (110, 'pipi', 'm78', 'BERBR', '2020-05-06 16:55:43', 1);
+INSERT INTO `message` VALUES (111, 'm78', 'pipi', 'asd', '2020-05-06 23:36:56', 0);
+INSERT INTO `message` VALUES (112, 'm78', 'pipi', '123', '2020-05-07 00:10:44', 0);
+INSERT INTO `message` VALUES (113, 'm78', 'pipi', 'gaergrh', '2020-05-07 00:29:47', 0);
+INSERT INTO `message` VALUES (114, 'm78', 'pipi', 'hwthbwe4', '2020-05-07 00:30:04', 0);
+INSERT INTO `message` VALUES (115, 'm78', 'pipi', 'ndznydmrt', '2020-05-07 00:31:19', 0);
 
 -- ----------------------------
 -- Table structure for notification
@@ -290,6 +356,12 @@ INSERT INTO `postflag` VALUES (27, 36, 1, 1, 5);
 INSERT INTO `postflag` VALUES (28, 20, 1, 0, 5);
 INSERT INTO `postflag` VALUES (29, 34, 1, 0, 5);
 INSERT INTO `postflag` VALUES (30, 28, 0, 1, 5);
+INSERT INTO `postflag` VALUES (31, 36, 1, 0, 1);
+INSERT INTO `postflag` VALUES (32, 35, 1, 0, 1);
+INSERT INTO `postflag` VALUES (33, 32, 1, 0, 1);
+INSERT INTO `postflag` VALUES (34, 34, 1, 0, 1);
+INSERT INTO `postflag` VALUES (35, 31, 1, 0, 1);
+INSERT INTO `postflag` VALUES (36, 23, 1, 0, 5);
 
 -- ----------------------------
 -- Table structure for reports

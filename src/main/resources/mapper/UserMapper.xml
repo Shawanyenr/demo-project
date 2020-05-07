@@ -7,4 +7,20 @@
     <select id="findAll" resultType="User">
         select * from user
     </select>
+
+    <update id="updateProfile" parameterType="com.example.demo.po.User">
+        update user
+        <trim prefix="set" suffixOverrides=",">
+            <if test="name!=null and name!=''">
+                name=#{name},
+            </if>
+            <if test="avatar!=null and avatar!=''">
+                avatar=#{avatar},
+            </if>
+            <if test="password!=null and password!=''">
+                password=#{password},
+            </if>
+        </trim>
+        where id=#{id}
+    </update>
 </mapper>

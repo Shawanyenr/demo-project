@@ -72,4 +72,19 @@ public class UserTest {
     public void freezeAccount(){
         userDaoService.freezeAccount(2,-1);
     }
+
+    @Test
+    public void updateProfile(){
+        User user = new User();
+        user.setId(5);
+        user.setName("嘿嘿");
+        user.setPassword("123456");
+        userDaoService.updateProfile(user);
+        System.out.println(userDaoService.findById(5));
+    }
+
+    @Test
+    public void oneUser(){
+        System.out.println(userDaoService.findById(5));
+    }
 }

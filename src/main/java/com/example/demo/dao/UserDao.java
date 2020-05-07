@@ -50,4 +50,6 @@ public interface UserDao {
 
     @Update("update user set frozeUntil=#{date} where id=#{id}")
     void freezeAccount(Integer id, Date date);
+
+    void updateProfile(User user);
 }

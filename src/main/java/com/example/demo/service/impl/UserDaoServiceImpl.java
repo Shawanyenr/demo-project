@@ -94,4 +94,9 @@ public class UserDaoServiceImpl implements UserDaoService {
     public Integer addBlock(Integer uid, Integer bid) {
         return userDao.addBlock(uid, bid);
     }
+
+    @Override
+    public void updateProfile(User user) {
+        userDao.updateProfile(user);
+    }
 }
