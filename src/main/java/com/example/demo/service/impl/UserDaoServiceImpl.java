@@ -99,4 +99,9 @@ public class UserDaoServiceImpl implements UserDaoService {
     public void updateProfile(User user) {
         userDao.updateProfile(user);
     }
+
+    @Override
+    public List<User> USER_LIST(String keyWord) {
+        return userDao.USER_LIST("%" + keyWord + "%");
+    }
 }

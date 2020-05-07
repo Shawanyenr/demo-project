@@ -19,7 +19,19 @@
 <div class="container content-m">
     <div class="row">
         <div class="col-lg-8 col posts-m">
+            <div class="card card-body d-flex flex-row overflow-hidden mb-3">
+                <div th:if="${#lists.isEmpty(userList)}">没有搜索到任何用户</div>
+                <div th:each="keyUser : ${userList}">
+                    <a th:href="@{'/user/'+${keyUser.id}}" class="d-flex flex-column justify-content-center d-block" style="height: 100px; width: 70px">
+                        <img th:src="@{${keyUser.avatar}}" class="message-list-avatar border-radius-50" alt="">
+                        <span th:text="${keyUser.name}" class="small-m font-weight-lighter"></span>
+                        <span th:text="'@'+${keyUser.username}" class="small-m font-weight-lighter"></span>
+                    </a>
+                </div>
+            </div>
+            <div class="card card-body" th:if="${#lists.isEmpty(posts)}">没有搜索到任何帖子</div>
             <th:block th:replace="include::genaralPosts">
+
                 <div id="posts" class="card mb-3" th:if="${posts}" th:each="post : ${posts}">
                     <div class="card-header bg-transparent d-flex flex-row align-items-center pl-3 pr-3"
                          style="position: relative">

@@ -52,4 +52,7 @@ public interface UserDao {
     void freezeAccount(Integer id, Date date);
 
     void updateProfile(User user);
+
+    @Select("select * from user where CONCAT(name, username) like #{keyword}")
+    List<User> USER_LIST(String keyWord);
 }

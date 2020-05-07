@@ -11,7 +11,7 @@
  Target Server Version : 80016
  File Encoding         : 65001
 
- Date: 07/05/2020 13:35:48
+ Date: 07/05/2020 17:14:12
 */
 
 SET NAMES utf8mb4;
@@ -288,7 +288,7 @@ CREATE TABLE `notification`  (
   `read` int(2) NULL DEFAULT 0,
   `content` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of notification
@@ -325,6 +325,7 @@ INSERT INTO `post` VALUES (32, '123456', '/post_img/7f442fbbf5d144ebb4914bba974b
 INSERT INTO `post` VALUES (34, 'window.location.href', '/post_img/13ad86f2b3444a8f865f80ca436952bd_Snipaste_2020-03-15_16-34-10.png', '2020-05-03 22:44:18', NULL, 5, 0, 0, 1);
 INSERT INTO `post` VALUES (35, 'Russell', '/post_img/78bf7c855bb84900b12b2520f3e352cd_photo_2020-02-22_16-03-32.jpg', '2020-04-01 05:41:31', NULL, 5, 0, 0, 1);
 INSERT INTO `post` VALUES (36, '一个标题', '/post_img/94ac5d0c16ac4ebb9fd95d32c8503bb2_Snipaste_2020-02-22_15-04-10.png', '2020-05-04 19:19:41', NULL, 5, 0, 0, 1);
+INSERT INTO `post` VALUES (38, '什么鬼啊', '/post_img/969b6c4542f34685b62d491a78863ba5_aVlqArQB_700w_0.jpg', '2020-05-07 17:12:03', NULL, 22, 0, 0, 1);
 
 -- ----------------------------
 -- Table structure for postflag
@@ -436,9 +437,7 @@ INSERT INTO `user` VALUES (15, 'pipi', 'sdfg', '123456', 1, '/user_avatar/defaul
 INSERT INTO `user` VALUES (16, 'pipi', 'sdfgh', '123456', 1, '/user_avatar/default_user_avatar.jpg', NULL, NULL);
 INSERT INTO `user` VALUES (17, 'fgvb', 'hjk', '123456', 1, '/user_avatar/default_user_avatar.jpg', NULL, NULL);
 INSERT INTO `user` VALUES (18, 'pipi', 'GilesW', '123456', 0, '/user_avatar/default_user_avatar.jpg', NULL, NULL);
-INSERT INTO `user` VALUES (19, '222', '111', '33333', 1, NULL, NULL, NULL);
-INSERT INTO `user` VALUES (20, '大帅比', 'obi-wan', 'qqrery', 1, NULL, NULL, NULL);
 INSERT INTO `user` VALUES (21, 'GG', 'pipia', '123456', 1, '/user_avatar/default_user_avatar.jpg', NULL, NULL);
-INSERT INTO `user` VALUES (22, '我是你爹', 'm5mr', '123456', 1, '/user_avatar/default_user_avatar.jpg', NULL, NULL);
+INSERT INTO `user` VALUES (22, '我是你爹', 'm5mr', '123456', 1, '/user_avatar/bea7bc949625459b86f7da1702e3e2dd_006NqWcJgy1g5ptsjll9tj302s02s3ya.jpg', NULL, NULL);
 
 SET FOREIGN_KEY_CHECKS = 1;

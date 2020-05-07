@@ -38,4 +38,6 @@ public interface UserDaoService {
 
     void updateProfile(User user);
 
+    List<User> USER_LIST(String keyWord);
+
 }
