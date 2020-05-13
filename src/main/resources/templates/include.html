@@ -46,7 +46,8 @@
                     </div>
                 </form>
 
-                <a class="pl-3 d-flex flex-row align-items-center" data-toggle="collapse" href="#collapseExample" role="button"
+                <a class="pl-3 d-flex flex-row align-items-center" data-toggle="collapse" href="#collapseExample"
+                   role="button"
                    aria-expanded="false" aria-controls="collapseExample" style="text-decoration: none;">
                     <i class="fas fa-user-circle mr-1" style="font-size: 22px!important;"></i>
                     <div id="red-dot" th:fragment="reddot">
@@ -191,8 +192,10 @@
                                th:onclick="'deletePost('+${post.p_id}+')'"><i class="fas fa-trash-alt"></i>
                                 删除</a>
                         </div>
-                        <a class="dropdown-item" th:if="${session.user}" href="#"
-                           th:onclick="'sendReport('+${post.p_id}+')'"><i class="fas fa-exclamation-circle"></i> 举报</a>
+                        <div th:if="${session.user}">
+                            <a class="dropdown-item" th:if="${post.getU_id()!=session.user.getId()}" href="#"
+                               th:onclick="'sendReport('+${post.p_id}+')'"><i class="fas fa-exclamation-circle"></i> 举报</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -268,7 +271,8 @@
 </th:block>
 
 <th:block th:fragment="genaralCss">
-    <link rel="stylesheet" type="text/css" media="all" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" media="all"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"/>
     <link href="https://cdn.bootcss.com/font-awesome/5.12.1/css/all.css" rel="stylesheet">
     <link rel="stylesheet" href="../static/css/theme.css" th:href="@{/static/css/theme.css}"/>
 </th:block>

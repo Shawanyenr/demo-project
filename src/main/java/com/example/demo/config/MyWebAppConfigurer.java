@@ -24,7 +24,8 @@ public class MyWebAppConfigurer implements WebMvcConfigurer {
                 "/uploadForm/**",
                 "/toggleSub/**",
                 "/subscription/**",
-                "/message/**"
+                "/message/**",
+                "/user/**"
         };
         String[] excludePathPatterns = {
                 "/admin/login",

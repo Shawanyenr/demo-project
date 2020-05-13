@@ -286,7 +286,7 @@
     }
 
     function deleteReport(pid) {
-        if (confirm("确认删除该举报？\n该操作会删除所有针对改帖子的所有举报")) {
+        if (confirm("确认删除该举报？")) {
             $.post({
                 url: /*[[@{/admin/deleteReport}]]*/"",
                 data: {pid: pid},
