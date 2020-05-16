@@ -1,7 +1,5 @@
 package com.example.demo.controller;
 
-import com.example.demo.ProductWebSocket;
-import com.example.demo.dao.PostDao;
 import com.example.demo.po.Comment;
 import com.example.demo.po.Message;
 import com.example.demo.po.Post;
@@ -15,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -90,11 +89,11 @@ public class TestController {
         User user = (User) session.getAttribute("user");
         System.out.println(user);
         if (null == user) {
-            List<Post> posts = postDaoService.findAll(null);
-            model.addAttribute("posts", posts);
+//            List<Post> posts = postDaoService.findAll(null);
+//            model.addAttribute("posts", posts);
         } else {
-            List<Post> posts  = postDaoService.findAll(user.getId());/*.findAll(user.getId());*/
-            model.addAttribute("posts", posts);
+//            List<Post> posts  = postDaoService.findAll(user.getId());/*.findAll(user.getId());*/
+//            model.addAttribute("posts", posts);
             model.addAttribute("allUnchecked", notificationDaoService.allUnchecked(user.getId()));
             model.addAttribute("allUnreadMessage", messageDaoService.allUnread(user.getUsername()));
             model.addAttribute("reddot", messageDaoService.allUnreadNote(user.getId(),user.getUsername()));
@@ -106,16 +105,11 @@ public class TestController {
     public String toSubs(Model model, HttpSession session) {
         User user = (User) session.getAttribute("user");
         System.out.println(user);
-        if (null == user) {
-            return "login";
-        } else {
-            List<Post> posts  = postDaoService.mySubs(user.getId(),user.getId());
-            model.addAttribute("posts", posts);
+
+
             model.addAttribute("allUnchecked", notificationDaoService.allUnchecked(user.getId()));
             model.addAttribute("allUnreadMessage", messageDaoService.allUnread(user.getUsername()));
             model.addAttribute("reddot", messageDaoService.allUnreadNote(user.getId(),user.getUsername()));
-
-        }
         return "subscription";
     }
 
@@ -168,5 +162,38 @@ public class TestController {
 
         new ProductWebSocket().sendToUser();
     }*/
+
+    @RequestMapping("/infinite")
+    public String infinite(){
+        return "infinite";
+    }
+
+    @RequestMapping("/posts")
+    public String loadMore(@RequestParam(value = "start", defaultValue = "1") int start, @RequestParam(value = "size", defaultValue = "5") int size, Model model, HttpSession session) throws Exception {
+        User user = (User) session.getAttribute("user");
+        Integer uid = null;
+        if (user!=null) uid=user.getId();
+        System.out.println("请求第" + start + "页");
+        PageHelper.startPage(start, size);
+        List<Post> cs = postDaoService.findAll(uid);
+        PageInfo<Post> pageInfo = new PageInfo<>(cs);
+        List<Post> data = new ArrayList<>(pageInfo.getList());
+//        System.out.println(data);
+        model.addAttribute("posts",data);
+        return "include::genaralPosts";
+    }
+
+    @RequestMapping("/posts/subs")
+    public String subPosts(@RequestParam(value = "start", defaultValue = "1") int start, @RequestParam(value = "size", defaultValue = "5") int size, Model model, HttpSession session) throws Exception {
+        User user = (User) session.getAttribute("user");
+        if (user==null) return null;
+        PageHelper.startPage(start, size);
+        List<Post> cs = postDaoService.mySubs(user.getId(),user.getId());
+        PageInfo<Post> pageInfo = new PageInfo<>(cs);
+        List<Post> data = new ArrayList<>(pageInfo.getList());
+        model.addAttribute("posts",data);
+        return "include::genaralPosts";
+    }
+
 
 }

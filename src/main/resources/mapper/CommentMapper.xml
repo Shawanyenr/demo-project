@@ -18,11 +18,9 @@
         <association property="user" column="uid" javaType="User"
                      select="com.example.demo.dao.UserDao.findById"/>
     </resultMap>
-
     <select id="selectChildCommentsById" parameterType="Integer" resultMap="userAndComment">
         select * from comment where parentId=#{parentId} order by time DESC
     </select>
-
     <resultMap id="userAndComment1" type="Comment">
         <id property="id" column="id"/>
         <result property="pid" column="pid"/>
@@ -35,7 +33,6 @@
         <collection property="childComments" column="id" ofType="Comment"
                     select="com.example.demo.dao.CommentDao.selectChildCommentsById"/>
     </resultMap>
-
     <select id="selectCommentsByPid" parameterType="Integer" resultMap="userAndComment1">
         select * from comment where pid=#{pid} and parentId = 0 order by time DESC
     </select>

@@ -749,13 +749,17 @@ input:checked + .slider:before {
 input[type=checkbox] + i {
     cursor: pointer;
 }
+.like{
+    cursor: pointer;
+}
 .like input[type=checkbox]:checked + i{
     color: red;
+}
+.fav{
     cursor: pointer;
 }
 .fav input[type=checkbox]:checked + i{
     color: #FFBF4A;
-    cursor: pointer;
 }
 
 #reports-container .btn-link{

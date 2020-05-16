@@ -131,6 +131,9 @@
 <script type="text/javascript" th:inline="javascript" th:src="@{/static/js/customize.js}"></script>
 <th:block th:replace="include :: notification"></th:block>
 <th:block th:replace="include :: genaralUpload"></th:block>
+<th:block th:replace="include :: likeAndFav"></th:block>
+<script type="text/javascript" th:src="@{/static/js/infinite-scroll.pkgd.js}"
+        src="../static/js/infinite-scroll.pkgd.js"></script>
 <script th:inline="javascript" type="text/javascript">
     function deletePost(p_id) {
         if (confirm('Confirm to delete?')) {
@@ -146,6 +149,20 @@
                 });
         }
     }
+
+    var $container = $('#loading').infiniteScroll({
+        path: function () {
+            return 'http://'+window.location.host+'/posts/s?start=' + this.pageIndex;
+        },
+        responseType: 'text',
+        status: '.scroll-status',
+        history: false,
+    });
+    $container.on('load.infiniteScroll', function (response, status, xhr) {
+        $('#loading').append(status);
+    });
+    // load initial page
+    $container.infiniteScroll('loadNextPage');
 </script>
 
 </body>

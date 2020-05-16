@@ -13,6 +13,7 @@
         <link rel="stylesheet" href="../static/css/theme.css" th:href="@{/static/css/theme.css}"/>
     </th:block>
 
+
 </head>
 
 <body>
@@ -21,13 +22,16 @@
 <!--主内容-->
 <div class="container content-m">
     <div class="row">
-        <div class="col-lg-8 col posts-m" id="loading">
+        <div class="col-lg-8 col posts-m">
+            <div id="loadingPosts" class=""></div>
+            <div id="c123">
 
+            </div>
         </div>
         <div class="col-lg-4 d-none d-lg-block">
             <div class="sidebar-item">
                 <div class="make-me-sticky">
-                    <div th:replace="include::genaralSideNav(0)"></div>
+                    <div th:replace="include::genaralSideNav(1)"></div>
                 </div>
             </div>
         </div>
@@ -50,19 +54,36 @@
 <script type="text/javascript" th:src="@{/static/js/infinite-scroll.pkgd.js}"
         src="../static/js/infinite-scroll.pkgd.js"></script>
 <script th:inline="javascript" type="text/javascript">
-    var $container = $('#loading').infiniteScroll({
+    function deletePost(p_id) {
+        if (confirm('确认删除?')) {
+            $.post("/delete_post_id", {"p_id": p_id},
+                function (data) {
+                    if (data === "OK") {
+                        alert("success");
+                        window.location.reload();
+                    } else {
+                        alert("Fail");
+                        window.location.reload();
+                    }
+                });
+        }
+    }
+
+    var $container = $('#c123').infiniteScroll({
         path: function () {
-            return 'http://'+window.location.host+'/posts/subs?start=' + this.pageIndex;
+            return 'http://localhost:8080/loadMore?start=' + this.pageIndex;
         },
+        // load response as flat text
         responseType: 'text',
         status: '.scroll-status',
         history: false,
     });
     $container.on('load.infiniteScroll', function (response, status, xhr) {
-        $('#loading').append(status);
+        $('#c123').append(status);
     });
     // load initial page
     $container.infiniteScroll('loadNextPage');
+
 </script>
 
 </body>

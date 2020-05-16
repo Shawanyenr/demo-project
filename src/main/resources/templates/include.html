@@ -158,27 +158,27 @@
                 <img th:src="@{${post.img_dir}}" class="post-card-img" alt="...">
             </a>
 
-            <div class="d-flex justify-content-around">
-                <div class="p-2 bd-highlight">
-                    <label th:for="'like_'+${post.p_id}" class="like">
+            <div class="d-flex flex-row">
+                <div class="p-2 flex-fill bd-highlight">
+                    <label th:for="'like_'+${post.p_id}" class="like btn-block text-center">
                         <input type="checkbox" class="like" th:id="'like_'+${post.p_id}"
-                               th:checked="${post.p_like_flag==1}" style="display: none">
+                               th:checked="${post.p_like_flag==1}" style="display: none" th:attr="data-pid=${post.p_id}" onclick="toggleLike(this)">
                         <i class="fas fa-heart icon-size"></i>
                     </label>
                 </div>
-                <div class="p-2 bd-highlight"><a th:href="@{'/posts/'+${post.getP_id()}}"><i
+                <div class="p-2 flex-fill bd-highlight"><a th:href="@{'/posts/'+${post.getP_id()}}" class="btn-block text-center"><i
                         class="far fa-comment-dots icon-size"></i></a></div>
-                <div class="p-2 bd-highlight"><!--<a href="#"><i class="far fa-bookmark icon-size"></i></a>-->
-                    <label th:for="'fav_'+${post.p_id}" class="fav">
+                <div class="p-2 flex-fill bd-highlight"><!--<a href="#"><i class="far fa-bookmark icon-size"></i></a>-->
+                    <label th:for="'fav_'+${post.p_id}" class="fav btn-block text-center">
                         <input type="checkbox" class="fav" th:id="'fav_'+${post.p_id}"
-                               th:checked="${post.p_fav_flag==1}" style="display: none">
+                               th:checked="${post.p_fav_flag==1}" style="display: none" th:attr="data-pid=${post.p_id}" onclick="toggleFav(this)">
                         <i class="fas fa-bookmark icon-size"></i>
                     </label>
                 </div>
-                <div class="p-2 bd-highlight dropdown">
+                <div class="p-2 flex-fill bd-highlight dropdown">
                     <a href="#" role="button" th:id="'dropdown'+${post.p_id}" data-toggle="dropdown"
                        aria-haspopup="true"
-                       aria-expanded="false">
+                       aria-expanded="false" class="btn-block text-center">
                         <i class="fas fa-ellipsis-h"></i>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-left"
@@ -403,7 +403,7 @@
 
         function clearUploadForm() {
             document.getElementById("uploadFormData").reset();
-            $('#choose-area').show()
+            $('#choose-area').show();
             $("#preview").html("");
             $("#uploadTitle").removeClass("is-valid");
             $("#formTitle").hide();
@@ -416,7 +416,7 @@
                 }
             },
             messages: {
-                p_title: "Please enter a title"
+                p_title: "请输入标题"
             },
             errorElement: "em",
             errorPlacement: function (error, element) {
@@ -455,31 +455,26 @@
             }
         });
 
-        var box = document.getElementById('drop_area'); //拖拽区域
+        var box = document.getElementById('drop_area');
         box.addEventListener("drop", function (e) {
-            e.preventDefault(); //取消默认浏览器拖拽效果
-            var fileList = e.dataTransfer.files; //获取文件对象
-            //检测是否是拖拽文件到页面的操作
+            e.preventDefault();
+            var fileList = e.dataTransfer.files;
             if (fileList.length === 0) {
                 return false;
             }
-            //检测文件是不是图片
             if (fileList[0].type.indexOf('image') === -1) {
                 alert("您拖的不是图片！");
                 return false;
             }
-            //拖拉图片到浏览器，可以实现预览功能
             var img = window.webkitURL.createObjectURL(fileList[0]);
-            var filename = fileList[0].name; //图片名称
+            var filename = fileList[0].name;
             var filesize = Math.floor((fileList[0].size) / 1024);
-            // alert(filesize);
             if (filesize >= 20480) {
                 alert("图片过大")
                 return false;
             }
             var formData = new FormData();
             var formTitle = document.getElementById("formTitle");
-
             formData.append("upload", fileList[0]);
             $.ajax({
                 type: "POST",
@@ -495,7 +490,6 @@
                     $('#choose-area').hide();
                     formTitle.style.display = "";
                     filename = data;
-                    console.log("上传图片filename" + filename);
                     $("#img_dir").val(filename);
                     $("#u_id").val(/*[[${ session.user?.id }]]*/ null);
                 },
@@ -537,6 +531,118 @@
                 }
             })
         })
+    </script>
+</th:block>
+
+<th:block th:fragment="posts">
+<!--    <div th:text="${posts}"></div>-->
+    <div class="card mb-3" th:if="${not #lists.isEmpty(posts)}" th:each="post : ${posts}">
+        <div class="card-header bg-transparent d-flex flex-row align-items-center pl-3 pr-3"
+             style="position: relative">
+            <div class="pr-3">
+                <img th:src="@{${post.u_avatar}}" alt="..." class="rounded-circle post-avator">
+            </div>
+            <div class="d-flex flex-column">
+                <a th:href="@{'/user/'+${post.getU_id()}}" class="stretched-link"
+                   style="font-size: 66% !important;font-weight: bold"
+                   th:text="${post.u_username}">null
+                </a>
+                <div class="text-muted" style="font-size: 55% !important;"
+                     th:text="${#dates.format(post.upload_time,'yyyy-MM-dd HH:mm')}">null
+                </div>
+            </div>
+        </div>
+        <a href="javascript:" data-toggle="modal" data-target="#showImgModal"
+           th:data-whatever="${post.img_dir}">
+            <img th:src="@{${post.img_dir}}" class="post-card-img" alt="...">
+        </a>
+
+        <div class="d-flex flex-row">
+            <div class="p-2 flex-fill bd-highlight">
+                <label th:for="'like_'+${post.p_id}" class="like btn-block text-center">
+                    <input type="checkbox" th:id="'like_'+${post.p_id}"
+                           th:checked="${post.p_like_flag==1}" style="display: none" th:attr="data-pid=${post.p_id}" onclick="toggleLike(this)">
+                    <i class="fas fa-heart icon-size"></i>
+                </label>
+            </div>
+            <div class="p-2 flex-fill bd-highlight"><a th:href="@{'/posts/'+${post.getP_id()}}" class="btn-block text-center"><i
+                    class="far fa-comment-dots icon-size"></i></a></div>
+            <div class="p-2 flex-fill bd-highlight"><!--<a href="#"><i class="far fa-bookmark icon-size"></i></a>-->
+                <label th:for="'fav_'+${post.p_id}" class="fav btn-block text-center">
+                    <input type="checkbox" th:id="'fav_'+${post.p_id}"
+                           th:checked="${post.p_fav_flag==1}" style="display: none" th:attr="data-pid=${post.p_id}" onclick="toggleFav(this)">
+                    <i class="fas fa-bookmark icon-size"></i>
+                </label>
+            </div>
+            <div class="p-2 flex-fill bd-highlight dropdown">
+                <a href="#" role="button" th:id="'dropdown'+${post.p_id}" data-toggle="dropdown"
+                   aria-haspopup="true"
+                   aria-expanded="false" class="btn-block text-center">
+                    <i class="fas fa-ellipsis-h"></i>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-left"
+                     th:aria-labelledby="'dropdown'+${post.p_id}">
+                    <a class="dropdown-item" th:href='@{${post.img_dir}}' download><i
+                            class="fas fa-download"></i> 下载</a>
+                    <!--<a class="dropdown-item" href="#">Another action</a>-->
+                    <div class="dropdown-divider"></div>
+                    <div th:if="${session.user}">
+                        <a class="dropdown-item" href="#" th:if="${post.getU_id()==session.user.getId()}"
+                           th:onclick="'deletePost('+${post.p_id}+')'"><i class="fas fa-trash-alt"></i>
+                            删除</a>
+                    </div>
+                    <div th:if="${session.user}">
+                        <a class="dropdown-item" th:if="${post.getU_id()!=session.user.getId()}" href="#"
+                           th:onclick="'sendReport('+${post.p_id}+')'"><i class="fas fa-exclamation-circle"></i> 举报</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="pl-3 pr-3 pb-3" style="position: relative">
+            <p class="card-text" style="font-size: 80%">
+                <span style="font-weight: bold" th:text="${post.u_username}">null&nbsp;&nbsp;</span>
+                <a th:href="@{'/posts/'+${post.getP_id()}}" class="stretched-link"
+                   th:text="${post.p_title}">null</a>
+            </p>
+        </div>
+    </div>
+</th:block>
+<th:block th:fragment="likeAndFav">
+    <script th:inline="javascript" type="text/javascript">
+        function toggleLike(obj){
+            let user = /*[[${session.user}]]*/"";
+            if (user==null){
+                window.location.href=/*[[@{/login}]]*/"";
+            }
+            let pid = $(obj).data('pid');
+            console.log("toggle like "+ pid);
+            $.ajax({
+                url: /*[[@{/toggleLike}]]*/"",
+                data: {id: pid},
+                success: function (data) {
+                    if (data === "FAIL") {
+                        window.location.href = "/login";
+                    }
+                }
+            })
+        }
+        function toggleFav(obj){
+            let user = /*[[${session.user}]]*/"";
+            if (user==null){
+                window.location.href=/*[[@{/login}]]*/"";
+            }
+            let pid = $(obj).data('pid');
+            console.log("toggle fav "+ pid);
+            $.ajax({
+                url: /*[[@{/toggleFav}]]*/"",
+                data: {id: pid},
+                success: function (data) {
+                    if (data === "FAIL") {
+                        window.location.href = "/login";
+                    }
+                }
+            })
+        }
     </script>
 </th:block>
 </html>
