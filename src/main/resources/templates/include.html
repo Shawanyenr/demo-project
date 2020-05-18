@@ -52,7 +52,7 @@
                    role="button"
                    aria-expanded="false" aria-controls="collapseExample" style="text-decoration: none;">
                     <i class="fas fa-user-circle mr-1" style="font-size: 22px!important;"></i>
-                    <div id="red-dot" th:fragment="reddot">
+                    <div id="reddot" th:fragment="reddot">
                         <span style="font-size: 30px;color: red" th:unless="${reddot==0||reddot==null}">·</span>
                     </div>
                 </a>
@@ -323,10 +323,10 @@
         };
         //接收到消息的回调方法
         websocket.onmessage = function (event) {
-            sendNotification(event.data);
             $('#notificationSection').load(/*[[@{/user/reloadUnchecked}]]*/"");
             $('#flexMenu').load(/*[[@{/user/reloadUncheckedMenu}]]*/"");
-            $('#red-dot').load(/*[[@{/user/reddot}]]*/"");
+            $('#reddot').load(/*[[@{/user/reddot}]]*/"");
+            sendNotification(event.data);
         };
         //连接关闭的回调方法
         websocket.onclose = function () {
