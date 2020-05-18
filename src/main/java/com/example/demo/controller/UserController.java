@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.ProductWebSocket;
 import com.example.demo.po.User;
 import com.example.demo.service.ReportDaoService;
 import com.example.demo.service.UserDaoService;
@@ -131,6 +132,7 @@ public class UserController {
             }else {
                 state = userDaoService.addBlock(user.getId(),blockId);
             }
+            new ProductWebSocket().systemSendToUser(userDaoService.findById(blockId).getUsername(),"ub");
         }
         if (state>=1){
             checkBlock=userDaoService.checkBlock(user.getId(),blockId);
@@ -187,5 +189,11 @@ public class UserController {
         m.addAttribute("filename", "/user_avatar/" + filename);
         System.out.println(filename + "保存在" + destFile);
         return "/user_avatar/" + filename;
+    }
+
+    @RequestMapping("/user/suspended")
+    public String suspended(HttpSession session){
+        session.invalidate();
+        return "login";
     }
 }

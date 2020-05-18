@@ -18,7 +18,7 @@
 <nav class="navbar fixed-top shadow-sm nav-m p-0" style="border-bottom: 1px solid #dbdbdb;">
     <div class="container d-flex flex-row align-items-center flex-nowrap"
          style="max-width: 992px;height:54px">
-        <a href="#" class="pl-2 pr-3 pt-2 pb-2" onClick="history.back(-1);"><i class="fas fa-angle-left"
+        <a  th:href="@{/user/message}" class="pl-2 pr-3 pt-2 pb-2"><i class="fas fa-angle-left"
                                                                                style="font-size: 150%"></i></a>
 
         <div th:text="${one.name}"></div>
@@ -29,12 +29,15 @@
 <!--底栏-->
 <nav class="navbar fixed-bottom shadow nav-m pl-0 pr-0 pt-2 pb-2" style="border-bottom: 1px solid #dbdbdb;height:54px">
     <div class="container d-flex flex-row align-items-center flex-nowrap"
-         style="max-width: 992px">
+         style="max-width: 992px" id="message-sec" th:fragment="message-sec">
         <div class="form-group btn-block mb-0 mr-3">
-            <textarea th:disabled="${blocked==1}" th:placeholder="${blocked==1}?'根据对方设置，您无法向对方发送消息'" class="form-control btn-block" id="text" rows="1" style="height: 38px"></textarea>
+            <textarea th:disabled="${blocked==1}" th:placeholder="${blocked==1}?'根据对方设置，您无法向对方发送消息'"
+                      class="form-control btn-block" id="text" rows="1" style="height: 38px"></textarea>
         </div>
 
-        <button class="btn btn-outline-secondary d-inline-block text-nowrap" th:disabled="${blocked==1}" onclick="send()">发送</button>
+        <button class="btn btn-outline-secondary d-inline-block text-nowrap" th:disabled="${blocked==1}"
+                onclick="send()">发送
+        </button>
     </div>
 </nav>
 
@@ -130,6 +133,7 @@
     window.onbeforeunload = function () {
         closeWebSocket();
     }
+
     function setMessageInnerHTML(sendMessage) {
 
         const sender = JSON.parse(sendMessage).userId;
@@ -140,7 +144,23 @@
         if (sender === sendUserId) {
             sendUserMessage(content);
             document.getElementById('messageSection').scrollTop = document.getElementById('messageSection').scrollHeight;
-        }else {
+        } else if (sender === "sys") {
+            if (content === "ub"){
+                window.location.href="/message/"+/*[[${one.id}]]*/"";
+            }else if (content==="sb"){
+                window.location.href=/*[[@{/user/suspended}]]*/"";
+            }else {
+                let n = new Notification("系统通知", {
+                    body: content
+                });
+                n.onclick = function (event) {
+                    event.preventDefault();
+                    n.close();
+                    window.location.href =/*[[@{/user/message}]]*/"";
+                }
+            }
+
+        } else {
             Notification.requestPermission().then(function (permission) {
                 if (permission === 'granted') {
                     console.log('用户允许通知');
@@ -154,22 +174,19 @@
                             n.close();
                             window.location.href =/*[[@{/user/message}]]*/"";
                         }
-                    }else{
+                    } else {
                         let n = new Notification('@' + sender, {
                             body: content,
                             // tag: sender,
                             icon: senderAvatar
                         });
-
                         n.onclick = function (event) {
                             event.preventDefault();
                             n.close();
-                            window.location.href="/message/"+senderId;
+                            window.location.href = "/message/" + senderId;
                             window.focus();
                         }
                     }
-
-
                 } else if (permission === 'denied') {
                     console.log('用户拒绝通知');
                 }
@@ -235,9 +252,9 @@
             url: /*[[@{/user/message/setRead}]]*/"",
             data: {uid: /*[[${one.username}]]*/""},
             success: function (data) {
-                if (data==="ok"){
+                if (data === "ok") {
                     console.log("设置已读成功");
-                }else {
+                } else {
                     console.log(data);
                 }
 

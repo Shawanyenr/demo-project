@@ -20,7 +20,7 @@
 
 <!--主内容-->
 <div style="display: flex;flex-direction: column; justify-content: center; align-items: center;min-height: 100vh;">
-    <div id="msg-section" th:fragment="msg-section" style="width: 500px">
+    <div id="msg-section" th:fragment="msg-section" style="max-width: 500px;width: 100%">
         <div class="alert alert-danger alert-dismissible fade show" role="alert" th:unless="${#strings.isEmpty(msg)}"
               style="width: 100%;">
             <span th:text="${msg}">null</span>
@@ -134,27 +134,12 @@
     });
 
     let seconds = 4;
-    // let foo;
 
-    /*function updateSecs() {
-        document.getElementById("seconds").innerHTML = seconds;
-        seconds--;
-        if (seconds < 0) {
-            clearInterval(foo);
-            window.location.href=/!*[[@{/index}]]*!/"";
-        }
-    }
-
-    function countdownTimer() {
-        foo = setInterval(function () {
-            updateSecs()
-        }, 1000);
-    }*/
     function countdown() {
         seconds = seconds - 1;
         if (seconds < 0) {
-            // Chnage your redirection link here
-            window.location.href=/*[[@{/index}]]*/"";
+            // Change your redirection link here
+            window.location.href=/*[[@{/subscription}]]*/"";
         } else {
             // Update remaining seconds
             document.getElementById("seconds").innerHTML = seconds;

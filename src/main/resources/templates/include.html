@@ -6,6 +6,8 @@
         <div class="container" style="max-width: 612px;padding: 0 !important;">
             <div class="card card-body post-card">
                 <div class="list-group" id="flexMenu" th:fragment="flexMenu">
+                    <a th:href="@{/index}" th:if="${session.user}" class="m-list-item"><span>首页</span></a>
+                    <a th:href="@{/subscription}" th:if="${session.user}" class="m-list-item"><span>订阅</span></a>
                     <a th:href="@{/home}" th:if="${session.user}" class="m-list-item">
                         <i class="fas fa-home"></i>
                         <span th:text="${session.user?.name}"></span></a>
@@ -16,8 +18,8 @@
                         <i class="fas fa-hat-wizard"></i>
                         <span> 注册</span></a>
                     <a href="#" th:if="${session.user}" class="m-list-item"
-                       style="display: none" data-toggle="modal"
-                       data-target="#uploadForm"><i class="fas fa-plus"></i> upload</a>
+                       data-toggle="modal"
+                       data-target="#uploadForm"><i class="fas fa-plus"></i> 上传</a>
                     <a th:href="@{/user/message}" th:if="${session.user}" class="m-list-item"><i
                             class="fas fa-bell"></i><span> 消息</span>
                         <span class="badge badge-pill badge-danger"
@@ -162,16 +164,19 @@
                 <div class="p-2 flex-fill bd-highlight">
                     <label th:for="'like_'+${post.p_id}" class="like btn-block text-center">
                         <input type="checkbox" class="like" th:id="'like_'+${post.p_id}"
-                               th:checked="${post.p_like_flag==1}" style="display: none" th:attr="data-pid=${post.p_id}" onclick="toggleLike(this)">
+                               th:checked="${post.p_like_flag==1}" style="display: none" th:attr="data-pid=${post.p_id}"
+                               onclick="toggleLike(this)">
                         <i class="fas fa-heart icon-size"></i>
                     </label>
                 </div>
-                <div class="p-2 flex-fill bd-highlight"><a th:href="@{'/posts/'+${post.getP_id()}}" class="btn-block text-center"><i
+                <div class="p-2 flex-fill bd-highlight"><a th:href="@{'/posts/'+${post.getP_id()}}"
+                                                           class="btn-block text-center"><i
                         class="far fa-comment-dots icon-size"></i></a></div>
                 <div class="p-2 flex-fill bd-highlight"><!--<a href="#"><i class="far fa-bookmark icon-size"></i></a>-->
                     <label th:for="'fav_'+${post.p_id}" class="fav btn-block text-center">
                         <input type="checkbox" class="fav" th:id="'fav_'+${post.p_id}"
-                               th:checked="${post.p_fav_flag==1}" style="display: none" th:attr="data-pid=${post.p_id}" onclick="toggleFav(this)">
+                               th:checked="${post.p_fav_flag==1}" style="display: none" th:attr="data-pid=${post.p_id}"
+                               onclick="toggleFav(this)">
                         <i class="fas fa-bookmark icon-size"></i>
                     </label>
                 </div>
@@ -345,15 +350,21 @@
             Notification.requestPermission().then(function (permission) {
                 if (permission === 'granted') {
                     console.log('用户允许通知');
-                    if (sender === "system") {
-                        let n = new Notification("系统通知", {
-                            body: content
-                        });
+                    if (sender === "sys") {
+                        if (content === "ub") {
 
-                        n.onclick = function (event) {
-                            event.preventDefault();
-                            n.close();
-                            window.location.href =/*[[@{/user/message}]]*/"";
+                        } else if (content === "sb") {
+                            window.location.href =/*[[@{/user/suspended}]]*/"";
+                        } else {
+                            let n = new Notification("系统通知", {
+                                body: content
+                            });
+
+                            n.onclick = function (event) {
+                                event.preventDefault();
+                                n.close();
+                                window.location.href =/*[[@{/user/message}]]*/"";
+                            }
                         }
                     } else {
                         let n = new Notification('@' + sender, {
@@ -535,7 +546,7 @@
 </th:block>
 
 <th:block th:fragment="posts">
-<!--    <div th:text="${posts}"></div>-->
+    <!--    <div th:text="${posts}"></div>-->
     <div class="card mb-3" th:if="${not #lists.isEmpty(posts)}" th:each="post : ${posts}">
         <div class="card-header bg-transparent d-flex flex-row align-items-center pl-3 pr-3"
              style="position: relative">
@@ -561,16 +572,19 @@
             <div class="p-2 flex-fill bd-highlight">
                 <label th:for="'like_'+${post.p_id}" class="like btn-block text-center">
                     <input type="checkbox" th:id="'like_'+${post.p_id}"
-                           th:checked="${post.p_like_flag==1}" style="display: none" th:attr="data-pid=${post.p_id}" onclick="toggleLike(this)">
+                           th:checked="${post.p_like_flag==1}" style="display: none" th:attr="data-pid=${post.p_id}"
+                           onclick="toggleLike(this)">
                     <i class="fas fa-heart icon-size"></i>
                 </label>
             </div>
-            <div class="p-2 flex-fill bd-highlight"><a th:href="@{'/posts/'+${post.getP_id()}}" class="btn-block text-center"><i
+            <div class="p-2 flex-fill bd-highlight"><a th:href="@{'/posts/'+${post.getP_id()}}"
+                                                       class="btn-block text-center"><i
                     class="far fa-comment-dots icon-size"></i></a></div>
             <div class="p-2 flex-fill bd-highlight"><!--<a href="#"><i class="far fa-bookmark icon-size"></i></a>-->
                 <label th:for="'fav_'+${post.p_id}" class="fav btn-block text-center">
                     <input type="checkbox" th:id="'fav_'+${post.p_id}"
-                           th:checked="${post.p_fav_flag==1}" style="display: none" th:attr="data-pid=${post.p_id}" onclick="toggleFav(this)">
+                           th:checked="${post.p_fav_flag==1}" style="display: none" th:attr="data-pid=${post.p_id}"
+                           onclick="toggleFav(this)">
                     <i class="fas fa-bookmark icon-size"></i>
                 </label>
             </div>
@@ -609,13 +623,13 @@
 </th:block>
 <th:block th:fragment="likeAndFav">
     <script th:inline="javascript" type="text/javascript">
-        function toggleLike(obj){
+        function toggleLike(obj) {
             let user = /*[[${session.user}]]*/"";
-            if (user==null){
-                window.location.href=/*[[@{/login}]]*/"";
+            if (user == null) {
+                window.location.href =/*[[@{/login}]]*/"";
             }
             let pid = $(obj).data('pid');
-            console.log("toggle like "+ pid);
+            console.log("toggle like " + pid);
             $.ajax({
                 url: /*[[@{/toggleLike}]]*/"",
                 data: {id: pid},
@@ -626,13 +640,14 @@
                 }
             })
         }
-        function toggleFav(obj){
+
+        function toggleFav(obj) {
             let user = /*[[${session.user}]]*/"";
-            if (user==null){
-                window.location.href=/*[[@{/login}]]*/"";
+            if (user == null) {
+                window.location.href =/*[[@{/login}]]*/"";
             }
             let pid = $(obj).data('pid');
-            console.log("toggle fav "+ pid);
+            console.log("toggle fav " + pid);
             $.ajax({
                 url: /*[[@{/toggleFav}]]*/"",
                 data: {id: pid},

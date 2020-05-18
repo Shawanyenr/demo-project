@@ -87,6 +87,7 @@ public class AdminController {
             reportDaoService.updateReport(pid, duration);
             userDaoService.freezeAccount(uid, duration);
             postDaoService.setPublicityByPid(pid,0);
+            new ProductWebSocket().systemSendToUser(userDaoService.findById(uid).getUsername(),"sb");
         }
         return "ok";
     }

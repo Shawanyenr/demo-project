@@ -156,7 +156,7 @@ public class ProductWebSocket {
         try {
             if (webSocketSet.get(sendUserId) != null) {
                 Map<String, Object> map = new HashMap<>();
-                map.put("userId", "system");
+                map.put("userId", "sys");
                 map.put("message", message);
                 map.put("userAvatar", "");
                 map.put("id", "");
