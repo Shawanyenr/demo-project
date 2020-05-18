@@ -19,7 +19,7 @@
 <nav class="navbar fixed-top shadow-sm nav-m p-0" style="border-bottom: 1px solid #dbdbdb;">
     <div class="container d-flex flex-row align-items-center flex-nowrap"
          style="max-width: 992px;height:54px">
-        <a href="#" class="pl-2 pr-3 pt-2 pb-2" onClick="history.back(-1);"><i class="fas fa-angle-left"
+        <a th:href="@{/user/message}" class="pl-2 pr-3 pt-2 pb-2"><i class="fas fa-angle-left"
                                                                                style="font-size: 150%"></i></a>
         <div>评论</div>
         <div></div>
@@ -76,7 +76,7 @@
     };
     //接收到消息的回调方法
     websocket.onmessage = function (event) {
-        $('#message-list').load(/*[[@{/user/reloadMessage}]]*/"");
+        $('#message-list').load(/*[[@{/user/reloadLike}]]*/"");
     };
     //连接关闭的回调方法
     websocket.onclose = function () {

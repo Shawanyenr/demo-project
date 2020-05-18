@@ -71,11 +71,11 @@ public class TestController {
             } else {
                 System.out.println(post);
                 model.addAttribute("post", post);
-                model.addAttribute("blocked", userDaoService.checkBlock(post.getU_id(),user.getId()));
+                model.addAttribute("blocked", userDaoService.checkBlock(post.getU_id(), user.getId()));
 
                 model.addAttribute("allUnchecked", notificationDaoService.allUnchecked(user.getId()));
                 model.addAttribute("allUnreadMessage", messageDaoService.allUnread(user.getUsername()));
-                model.addAttribute("reddot", messageDaoService.allUnreadNote(user.getId(),user.getUsername()));
+                model.addAttribute("reddot", messageDaoService.allUnreadNote(user.getId(), user.getUsername()));
             }
         }
         List<Comment> comments = commentDaoService.selectCommentsByPid(id);
@@ -96,7 +96,7 @@ public class TestController {
 //            model.addAttribute("posts", posts);
             model.addAttribute("allUnchecked", notificationDaoService.allUnchecked(user.getId()));
             model.addAttribute("allUnreadMessage", messageDaoService.allUnread(user.getUsername()));
-            model.addAttribute("reddot", messageDaoService.allUnreadNote(user.getId(),user.getUsername()));
+            model.addAttribute("reddot", messageDaoService.allUnreadNote(user.getId(), user.getUsername()));
         }
         return "index";
     }
@@ -107,9 +107,9 @@ public class TestController {
         System.out.println(user);
 
 
-            model.addAttribute("allUnchecked", notificationDaoService.allUnchecked(user.getId()));
-            model.addAttribute("allUnreadMessage", messageDaoService.allUnread(user.getUsername()));
-            model.addAttribute("reddot", messageDaoService.allUnreadNote(user.getId(),user.getUsername()));
+        model.addAttribute("allUnchecked", notificationDaoService.allUnchecked(user.getId()));
+        model.addAttribute("allUnreadMessage", messageDaoService.allUnread(user.getUsername()));
+        model.addAttribute("reddot", messageDaoService.allUnreadNote(user.getId(), user.getUsername()));
         return "subscription";
     }
 
@@ -125,16 +125,16 @@ public class TestController {
             System.out.println("allOfOneUser: " + allOfOneUser);
             model.addAttribute("one", one);
         } else {
-            if (user.getId()==id) return "redirect:/home";
-            Integer checkSub = userDaoService.checkSub(user.getId(),id);
-            List<Post> posts  = postDaoService.findAllOfOneUser(user.getId(),id);
+            if (user.getId() == id) return "redirect:/home";
+            Integer checkSub = userDaoService.checkSub(user.getId(), id);
+            List<Post> posts = postDaoService.findAllOfOneUser(user.getId(), id);
             Integer checkBlock = userDaoService.checkBlock(user.getId(), id);
             model.addAttribute("posts", posts);
             model.addAttribute("one", one);
             model.addAttribute("subState", checkSub);
             model.addAttribute("blocked", checkBlock);
             model.addAttribute("allUnreadMessage", messageDaoService.allUnread(user.getUsername()));
-            model.addAttribute("reddot", messageDaoService.allUnreadNote(user.getId(),user.getUsername()));
+            model.addAttribute("reddot", messageDaoService.allUnreadNote(user.getId(), user.getUsername()));
         }
         return "oneUser";
     }
@@ -143,16 +143,16 @@ public class TestController {
     public String ws(Model model, HttpSession session, @PathVariable Integer id) {
         User user = (User) session.getAttribute("user");
         System.out.println(user);
-        if (null == user || null == id){
+        if (null == user || null == id) {
             return "redirect:/login";
         }
         User one = userDaoService.findById(id);
         one.setPassword("");
         model.addAttribute("one", one);
-        List<Message> messageList = messageDaoService.listMessage(user.getUsername(),one.getUsername(),one.getUsername(),user.getUsername());
+        List<Message> messageList = messageDaoService.listMessage(user.getUsername(), one.getUsername(), one.getUsername(), user.getUsername());
         model.addAttribute("messageList", messageList);
         System.out.println("chat history: \n" + messageList);
-        model.addAttribute("blocked", userDaoService.checkBlock(id,user.getId()));
+        model.addAttribute("blocked", userDaoService.checkBlock(id, user.getId()));
         return "ws";
     }
 
@@ -164,7 +164,7 @@ public class TestController {
     }*/
 
     @RequestMapping("/infinite")
-    public String infinite(){
+    public String infinite() {
         return "infinite";
     }
 
@@ -172,26 +172,26 @@ public class TestController {
     public String loadMore(@RequestParam(value = "start", defaultValue = "1") int start, @RequestParam(value = "size", defaultValue = "5") int size, Model model, HttpSession session) throws Exception {
         User user = (User) session.getAttribute("user");
         Integer uid = null;
-        if (user!=null) uid=user.getId();
+        if (user != null) uid = user.getId();
         System.out.println("请求第" + start + "页");
         PageHelper.startPage(start, size);
         List<Post> cs = postDaoService.findAll(uid);
         PageInfo<Post> pageInfo = new PageInfo<>(cs);
         List<Post> data = new ArrayList<>(pageInfo.getList());
 //        System.out.println(data);
-        model.addAttribute("posts",data);
+        model.addAttribute("posts", data);
         return "include::genaralPosts";
     }
 
     @RequestMapping("/posts/subs")
     public String subPosts(@RequestParam(value = "start", defaultValue = "1") int start, @RequestParam(value = "size", defaultValue = "5") int size, Model model, HttpSession session) throws Exception {
         User user = (User) session.getAttribute("user");
-        if (user==null) return null;
+        if (user == null) return null;
         PageHelper.startPage(start, size);
-        List<Post> cs = postDaoService.mySubs(user.getId(),user.getId());
+        List<Post> cs = postDaoService.mySubs(user.getId(), user.getId());
         PageInfo<Post> pageInfo = new PageInfo<>(cs);
         List<Post> data = new ArrayList<>(pageInfo.getList());
-        model.addAttribute("posts",data);
+        model.addAttribute("posts", data);
         return "include::genaralPosts";
     }
 

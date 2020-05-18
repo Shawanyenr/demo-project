@@ -57,6 +57,22 @@ public class MessageController {
         return "message :: messageList";
     }
 
+    @RequestMapping("/reloadLike")
+    public String reloadLike(HttpSession session, Model model){
+        User user = (User) session.getAttribute("user");
+        model.addAttribute("likeNotifyList", likeNotificationDaoService.listLikeNotification(user.getId()));
+        likeNotificationDaoService.emptyLikeUnchecked(user.getId());
+        return "likeNotify :: messageList";
+    }
+
+    @RequestMapping("/reloadComment")
+    public String reloadComment(HttpSession session, Model model){
+        User user = (User) session.getAttribute("user");
+        model.addAttribute("commentNotiList", notificationDaoService.listNotification(user.getId()));
+        notificationDaoService.emptyUnchecked(user.getId());
+        return "commentNotify :: messageList";
+    }
+
     @Transactional
     @ResponseBody
     @RequestMapping("/message/setRead")

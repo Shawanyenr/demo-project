@@ -175,6 +175,7 @@ public class PostController {
                 postDaoService.addPostFlag(pid, user.getId(), 1, 0);
                 if (postOwner.getId()!=user.getId()){
                     likeNotificationDaoService.addLikeNotification(postDaoService.onePost(pid,null).getU_id(),pid,user.getId());
+                    new ProductWebSocket().systemSendToUser(postOwner.getUsername(), "@"+user.getUsername()+"给你的帖子点了赞");
                 }
             } else if (check == 0) {
                 postDaoService.addLike(pid, user.getId());
