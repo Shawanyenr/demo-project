@@ -234,7 +234,6 @@
             $(element).addClass("is-valid").removeClass("is-invalid");
         },
         submitHandler: function () {
-            alert($('#profileInfo').serialize());
             $.post({
                 url: /*[[@{updateProfile}]]*/"",
                 data: $('#profileInfo').serialize(),

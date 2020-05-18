@@ -267,13 +267,11 @@
         if (confirm('确认操作？')) {
             let params = "/" + $('input[name=id]').val() + "/" + $('input[name=pid]').val() + "/" + $('input[name=duration]:checked').val();
             let url = "/admin/freeze" + params;
-            alert(url);
             $.post({
                 url: url,
                 /*contentType: 'application/json;charset=UTF-8',
                 dataType: 'json',*/
                 success: function (data) {
-                    alert(data);
                     if (data === "ok") {
                         alert("操作成功");
                         window.location.reload();

@@ -31,7 +31,7 @@ public class UserTest {
         System.out.println(one);
     }
 
-    @Test
+   /* @Test
     public void saveUser() {
         User user = new User();
         user.setName("吼吼");
@@ -39,7 +39,7 @@ public class UserTest {
         user.setPassword("123456");
         Integer check = userDaoService.saveUser(user);
         System.out.println(check);
-    }
+    }*/
 
     @Test
     public void checkUsername() {

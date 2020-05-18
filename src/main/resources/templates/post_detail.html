@@ -36,25 +36,26 @@
                 </a>
 
                 <div class="d-flex justify-content-around">
-                    <div class="p-2 bd-highlight">
-                        <label th:for="'like_'+${post.p_id}" class="like">
+                    <div class="p-2 flex-fill bd-highlight">
+                        <label th:for="'like_'+${post.p_id}" class="like btn-block text-center">
                             <input type="checkbox" class="like" th:id="'like_'+${post.p_id}"
-                                   th:checked="${post.p_like_flag==1}" style="display: none">
+                                   th:checked="${post.p_like_flag==1}" style="display: none" th:attr="data-pid=${post.p_id}" onclick="toggleLike(this)">
                             <i class="fas fa-heart icon-size"></i>
                         </label>
                     </div>
-                    <div class="p-2 bd-highlight"><a href="#comment-edit"><i class="far fa-comment-dots icon-size"></i></a></div>
-                    <div class="p-2 bd-highlight">
-                        <label th:for="'fav_'+${post.p_id}" class="fav">
+                    <div class="p-2 flex-fill bd-highlight"><a th:href="@{'/posts/'+${post.getP_id()}}" class="btn-block text-center"><i
+                            class="far fa-comment-dots icon-size"></i></a></div>
+                    <div class="p-2 flex-fill bd-highlight">
+                        <label th:for="'fav_'+${post.p_id}" class="fav btn-block text-center">
                             <input type="checkbox" class="fav" th:id="'fav_'+${post.p_id}"
-                                   th:checked="${post.p_fav_flag==1}" style="display: none">
+                                   th:checked="${post.p_fav_flag==1}" style="display: none" th:attr="data-pid=${post.p_id}" onclick="toggleFav(this)">
                             <i class="fas fa-bookmark icon-size"></i>
                         </label>
                     </div>
-                    <div class="p-2 bd-highlight dropdown">
+                    <div class="p-2 flex-fill bd-highlight dropdown">
                         <a href="#" role="button" th:id="'dropdown'+${post.p_id}" data-toggle="dropdown"
                            aria-haspopup="true"
-                           aria-expanded="false">
+                           aria-expanded="false" class="btn-block text-center">
                             <i class="fas fa-ellipsis-h"></i>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-left"
@@ -68,7 +69,10 @@
                                    th:onclick="'deletePost('+${post.p_id}+')'"><i class="fas fa-trash-alt"></i>
                                     删除</a>
                             </div>
-                            <a class="dropdown-item" th:if="${session.user}" th:onclick="'sendReport('+${post.p_id}+')'"><i class="fas fa-exclamation-circle"></i> 举报</a>
+                            <div th:if="${session.user}">
+                                <a class="dropdown-item" th:if="${post.getU_id()!=session.user.getId()}" href="#"
+                                   th:onclick="'sendReport('+${post.p_id}+')'"><i class="fas fa-exclamation-circle"></i> 举报</a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -146,6 +150,7 @@
 <script type="text/javascript" th:inline="javascript" th:src="@{/static/js/customize.js}"></script>
 <th:block th:replace="include :: notification"></th:block>
 <th:block th:replace="include :: genaralUpload"></th:block>
+<th:block th:replace="include :: likeAndFav"></th:block>
 <script th:inline="javascript" type="text/javascript">
 
     function reply(obj){
